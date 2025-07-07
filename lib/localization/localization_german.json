@@ -1,0 +1,10 @@
+{
+    "languageName": "Deutsch",
+    "languageCode": "de",
+    "countryCode": "de",
+    "appTitle": "Flutter Spielplatz",
+    "appBar": {
+        "language": "Sprache",
+        "settings": "Einstellungen"
+    }
+}

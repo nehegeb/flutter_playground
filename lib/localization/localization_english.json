@@ -1,0 +1,11 @@
+{
+    "languageName": "English",
+    "languageCode": "en",
+    "countryCode": "us",
+    "appTitle": "Flutter Playground",
+    "appBar": {
+        "language": "Language",
+        "settings": "Settings"
+    },
+    "testKey": "This is for performing a valid test where only the English localization has this key."
+}
