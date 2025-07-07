@@ -1,3 +1,3 @@
-# flutter_playground
+# Flutter Playground
 
-A new Flutter project.
+A playground for creating and testing FLUTTER features.
