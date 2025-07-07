@@ -31,9 +31,9 @@ void main() {
     // Test that getText returns a valid localized string for both languages.
     test('getText returns correct localized string', () async {
       await Localization.setCurrentLanguage('en');
-      expect(Localization.getText('appTitle'), isNot('[NO_LOCALIZATION]'));
+      expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
       await Localization.setCurrentLanguage('de');
-      expect(Localization.getText('appTitle'), isNot('[NO_LOCALIZATION]'));
+      expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
     });
 
     // Test that getText falls back to English if the key is missing in German.

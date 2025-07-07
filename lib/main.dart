@@ -1,33 +1,33 @@
 /// main.dart
 ///
-/// Entry point and main app widget for Flutter Playground.
-/// Handles localization loading, theme, and the [FlutterPlaygroundAppBar].
+/// Entry point and main app widget for the app.
+/// Handles localization loading, theme, and the [MainAppBar].
 library main;
 
 import 'package:flutter/material.dart';
 import 'localization/localization.dart';
 import 'helpers/loading_overlay.dart';
 import 'app_bar.dart';
+import 'module_bar.dart';
 
 /// The main function that starts the Flutter app.
 void main() {
-  runApp(const FlutterPlaygroundApp());
+  runApp(const MainApp());
 }
 
-/// The root widget of the Flutter Playground app.
-class FlutterPlaygroundApp extends StatefulWidget {
-  const FlutterPlaygroundApp({super.key});
+/// The root widget of the app.
+class MainApp extends StatefulWidget {
+  const MainApp({super.key});
 
   @override
-  State<FlutterPlaygroundApp> createState() => _FlutterPlaygroundAppState();
+  State<MainApp> createState() => _MainAppState();
 }
 
-/// State for [FlutterPlaygroundApp].
+/// State for [MainApp].
 ///
 /// Loads localization files on startup, manages the current language,
 /// and rebuilds the app when the language changes.
-class _FlutterPlaygroundAppState extends State<FlutterPlaygroundApp> {
-  final Color _seedColor = Colors.green; // Seed color for the theme.
+class _MainAppState extends State<MainApp> {
   bool _initialized = false; // Track if initialization is complete.
   String _currentLanguage =
       Localization.getCurrentLanguage; // Current app language.
@@ -59,9 +59,11 @@ class _FlutterPlaygroundAppState extends State<FlutterPlaygroundApp> {
 
   @override
   Widget build(BuildContext context) {
+    // Define a seed color for the theme of the app.
+    Color seedColor = Colors.purple;
     // Show a white screen with a loading indicator until initialization is complete.
     if (!_initialized) {
-      return SplashScreen(seedColor: _seedColor);
+      return SplashScreen(seedColor: seedColor);
     }
     // Main app with theme and home screen.
     return MaterialApp(
@@ -70,13 +72,13 @@ class _FlutterPlaygroundAppState extends State<FlutterPlaygroundApp> {
       navigatorKey: LoadingOverlay.navigatorKey,
       // The theme of the app.
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: _seedColor),
+        colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
           backgroundColor: Color.alphaBlend(
             Colors.black26,
-            ColorScheme.fromSeed(seedColor: _seedColor).primary,
+            ColorScheme.fromSeed(seedColor: seedColor).primary,
           ),
           foregroundColor: Colors.white,
         ),
@@ -84,30 +86,31 @@ class _FlutterPlaygroundAppState extends State<FlutterPlaygroundApp> {
           bodyMedium: TextStyle(fontSize: 18, color: Colors.black87),
         ),
       ),
-      // The localization delegate for the app.
-      home: HomeScreen(onLanguageChanged: _onLanguageChanged),
+      home: MainScreen(onLanguageChanged: _onLanguageChanged),
     );
   }
 }
 
 /// The main home screen of the app.
-class HomeScreen extends StatelessWidget {
+class MainScreen extends StatelessWidget {
   final void Function(String language) onLanguageChanged;
-  const HomeScreen({super.key, required this.onLanguageChanged});
+  const MainScreen({super.key, required this.onLanguageChanged});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlutterPlaygroundAppBar(
-        title: Localization.getText('appTitle'),
+      // The upper app bar.
+      appBar: MainAppBar(
+        title: Localization.getText('appName'),
         onLanguageChanged: onLanguageChanged,
       ),
-      body: Center(child: Text(Localization.getText('placeholder5'))),
+      // The lower body with a module bar and the module content area.
+      body: ModuleBar(),
     );
   }
 }
 
-/// Widget shown during app initialization.
+/// A splash screen shown during app initialization.
 class SplashScreen extends StatelessWidget {
   final Color seedColor;
   const SplashScreen({super.key, required this.seedColor});

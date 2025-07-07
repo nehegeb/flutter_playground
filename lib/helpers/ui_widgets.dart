@@ -1,6 +1,6 @@
 /// ui_widgets.dart
 ///
-/// Provides a collection of custom UI widgets for the Flutter Playground app.
+/// Provides a collection of custom UI widgets for the app.
 library ui_widgets;
 
 import 'package:flutter/material.dart';
