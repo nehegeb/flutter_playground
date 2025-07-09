@@ -3,15 +3,14 @@
 /// Provides a reusable, customizable AppBar widget for the app.
 ///
 /// The [MainAppBar] widget displays a given title, optional action widgets,
-/// and a language selector popup menu. It notifies the parent widget when the
-/// language changes and integrates with the app's localization system.
+/// and a language selector popup menu. It integrates with the app's localization system
+/// and uses the global currentLanguageNotifier for language changes.
 ///
 /// Example usage:
 /// ```dart
 /// MainAppBar(
 ///   title: 'My App',
 ///   actions: [IconButton(icon: Icon(Icons.info), onPressed: () {})],
-///   onLanguageChanged: (lang) => print('Language changed: $lang'),
 /// )
 /// ```
 library appbar;
@@ -29,16 +28,8 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   /// Additional action widgets to display in the app bar.
   final List<Widget>? actions;
 
-  /// Callback when the user selects a new language.
-  final void Function(String language)? onLanguageChanged;
-
   /// Creates a [MainAppBar].
-  const MainAppBar({
-    super.key,
-    required this.title,
-    this.actions,
-    this.onLanguageChanged,
-  });
+  const MainAppBar({super.key, required this.title, this.actions});
 
   @override
   State<MainAppBar> createState() => _MainAppBarState();
@@ -48,17 +39,14 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _MainAppBarState extends State<MainAppBar> {
-  late String _currentLanguage;
-
   @override
   void initState() {
     super.initState();
-    // Initialize the app language from the global localization state.
-    _currentLanguage = Localization.getCurrentLanguage;
   }
 
   @override
   Widget build(BuildContext context) {
+    final String currentLanguage = currentLanguageNotifier.value;
     return SafeArea(
       child: AppBar(
         title: Text(widget.title),
@@ -71,23 +59,15 @@ class _MainAppBarState extends State<MainAppBar> {
               shape: Circle(),
               width: 30,
             ),
-            tooltip: "",
-            initialValue: _currentLanguage,
+            tooltip: "", // Remove unnecessary tooltip.
+            initialValue: currentLanguage,
             onSelected: (selectedLanguage) async {
-              setState(() {
-                _currentLanguage = selectedLanguage;
-              });
-              // Update the global localization state.
               await Localization.setCurrentLanguage(selectedLanguage);
-              // Notify the parent widget about the new language, if a callback is provided.
-              if (widget.onLanguageChanged != null) {
-                widget.onLanguageChanged!(selectedLanguage);
-              }
             },
             itemBuilder: (context) => [
               PopupMenuEntryCompact(
                 value: 'en',
-                selected: _currentLanguage == 'en',
+                selected: currentLanguage == 'en',
                 child: FlagMenuItem(
                   countryCode: 'us',
                   label: Localization.getText(
@@ -97,7 +77,7 @@ class _MainAppBarState extends State<MainAppBar> {
               ),
               PopupMenuEntryCompact(
                 value: 'de',
-                selected: _currentLanguage == 'de',
+                selected: currentLanguage == 'de',
                 child: FlagMenuItem(
                   countryCode: 'de',
                   label: Localization.getText('appBar.languageSelector.german'),
@@ -105,7 +85,7 @@ class _MainAppBarState extends State<MainAppBar> {
               ),
               PopupMenuEntryCompact(
                 value: 'foo',
-                selected: _currentLanguage == 'foo',
+                selected: currentLanguage == 'foo',
                 child: FlagMenuItem(
                   countryCode: 'xx',
                   label: Localization.getText('placeholder'),

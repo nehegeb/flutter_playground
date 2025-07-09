@@ -28,47 +28,51 @@ class MainApp extends StatefulWidget {
 /// Loads localization files on startup, manages the current language,
 /// and rebuilds the app when the language changes.
 class _MainAppState extends State<MainApp> {
-  bool _initialized = false; // Track if initialization is complete.
-  String _currentLanguage =
-      Localization.getCurrentLanguage; // Current app language.
+  bool _isAppInitialized = false; // Track if app initialization is complete.
 
   @override
   void initState() {
     super.initState();
     // Get the language the user uses and initialize localization.
-    final initialLanguage = Localization.getUserLanguage();
-    _currentLanguage = initialLanguage;
     _initLocalization();
+    // Listen to language changes and rebuild UI when changed.
+    currentLanguageNotifier.addListener(_onLanguageChanged);
   }
 
-  /// Loads localization files and sets the initial language.
+  @override
+  void dispose() {
+    currentLanguageNotifier.removeListener(_onLanguageChanged);
+    super.dispose();
+  }
+
+  /// Load localization JSON files and set the initial language for the whole app.
   Future<void> _initLocalization() async {
-    await Localization.setCurrentLanguage(_currentLanguage, force: true);
+    final initialLanguage = Localization.getUserLanguage();
+    await Localization.setCurrentLanguage(initialLanguage, force: true);
     setState(() {
-      _initialized = true;
+      _isAppInitialized = true;
     });
   }
 
-  /// Called when the user selects a new language from the app bar.
-  /// Updates the app's current language and triggers a rebuild.
-  void _onLanguageChanged(String selectedLanguage) {
-    setState(() {
-      _currentLanguage = selectedLanguage;
-    });
+  /// Called when the language notifier changes.
+  void _onLanguageChanged() {
+    // Rebuild whole app to update all localization.
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     // Define a seed color for the theme of the app.
-    Color seedColor = Colors.purple;
+    Color seedColor = Colors.teal;
     // Show a white screen with a loading indicator until initialization is complete.
-    if (!_initialized) {
+    if (!_isAppInitialized) {
+      // The [SplashScreen] doesn't have a theme, therefore the seedColor is passed.
       return SplashScreen(seedColor: seedColor);
     }
     // Main app with theme and home screen.
     return MaterialApp(
-      // Set the navigator key for the loading overlay.
-      // This allows the loading overlay to be shown from anywhere in the app.
+      // Set the navigator key for the [LoadingOverlay].
+      // This allows the [LoadingOverlay] to be shown from anywhere in the app.
       navigatorKey: LoadingOverlay.navigatorKey,
       // The theme of the app.
       theme: ThemeData(
@@ -85,25 +89,23 @@ class _MainAppState extends State<MainApp> {
         textTheme: const TextTheme(
           bodyMedium: TextStyle(fontSize: 18, color: Colors.black87),
         ),
+        progressIndicatorTheme: ProgressIndicatorThemeData(color: seedColor),
       ),
-      home: MainScreen(onLanguageChanged: _onLanguageChanged),
+      home: MainScreen(),
     );
   }
 }
 
 /// The main home screen of the app.
 class MainScreen extends StatelessWidget {
-  final void Function(String language) onLanguageChanged;
-  const MainScreen({super.key, required this.onLanguageChanged});
+  MainScreen({super.key});
+  // NOTE: The MainScreen cannot be 'const' in order to update localization.
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // The upper app bar.
-      appBar: MainAppBar(
-        title: Localization.getText('appName'),
-        onLanguageChanged: onLanguageChanged,
-      ),
+      appBar: MainAppBar(title: Localization.getText('appName')),
       // The lower body with a module bar and the module content area.
       body: ModuleBar(),
     );
