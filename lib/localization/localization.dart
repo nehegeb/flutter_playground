@@ -16,7 +16,12 @@ import 'package:flutter/material.dart';
 import 'package:lorem_ipsum/lorem_ipsum.dart';
 import 'package:flutter_playground/helpers/loading_overlay.dart';
 
-Map<String, dynamic>? localizationPrimary; // English is always loade.
+/// Notifier for the currently selected app language.
+final ValueNotifier<String> currentLanguageNotifier = ValueNotifier<String>(
+  'en',
+);
+
+Map<String, dynamic>? localizationPrimary; // English is always loaded.
 Map<String, dynamic>? localizationSecondary; // Secondary localization.
 
 /// Loads localization JSON files and parses them into maps.
@@ -151,12 +156,9 @@ class Localization {
   final String language;
   Localization(this.language);
 
-  // Initialize with device language, never null.
-  static String _currentLanguage = _getInitialLanguage();
-
   /// Returns a Localization instance for the current language.
   static Localization of(BuildContext context) {
-    return Localization(_currentLanguage);
+    return Localization(currentLanguageNotifier.value);
   }
 
   /// Sets the current language for the app.
@@ -165,15 +167,16 @@ class Localization {
     bool force = false,
   }) async {
     // Only update if the new language is different from the current one or if it is forced.
-    if (_currentLanguage != language || force) {
+    if (currentLanguageNotifier.value != language || force) {
       // Load localization files and then update the current language.
       await _loadLocalizations(language);
-      _currentLanguage = language;
+      // Update the language notifier with the new language.
+      currentLanguageNotifier.value = language;
     }
   }
 
   /// Get the current language of the app.
-  static String get getCurrentLanguage => _currentLanguage;
+  static String get getCurrentLanguage => currentLanguageNotifier.value;
 
   /// Get the language the user has set.
   static String getUserLanguage() {
@@ -182,6 +185,6 @@ class Localization {
 
   /// Get a localized string using the current language.
   static String getText(String key) {
-    return _getLocalizedText(key, _currentLanguage);
+    return _getLocalizedText(key, currentLanguageNotifier.value);
   }
 }

@@ -1,17 +1,16 @@
 /// app_bar.dart
 ///
-/// Provides a reusable, customizable AppBar widget for the Flutter Playground app.
+/// Provides a reusable, customizable AppBar widget for the app.
 ///
-/// The [FlutterPlaygroundAppBar] widget displays a given title, optional action widgets,
-/// and a language selector popup menu. It notifies the parent widget when the
-/// language changes and integrates with the app's localization system.
+/// The [MainAppBar] widget displays a given title, optional action widgets,
+/// and a language selector popup menu. It integrates with the app's localization system
+/// and uses the global currentLanguageNotifier for language changes.
 ///
 /// Example usage:
 /// ```dart
-/// FlutterPlaygroundAppBar(
+/// MainAppBar(
 ///   title: 'My App',
 ///   actions: [IconButton(icon: Icon(Icons.info), onPressed: () {})],
-///   onLanguageChanged: (lang) => print('Language changed: $lang'),
 /// )
 /// ```
 library appbar;
@@ -21,88 +20,80 @@ import 'package:country_flags/country_flags.dart';
 import 'localization/localization.dart';
 import 'helpers/ui_widgets.dart';
 
-/// A customizable app bar for the Flutter Playground app.
-class FlutterPlaygroundAppBar extends StatefulWidget
-    implements PreferredSizeWidget {
+/// A customizable app bar for the app.
+class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   /// The title to display in the app bar.
   final String title;
 
   /// Additional action widgets to display in the app bar.
   final List<Widget>? actions;
 
-  /// Callback when the user selects a new language.
-  final void Function(String language)? onLanguageChanged;
-
-  /// Creates a [FlutterPlaygroundAppBar].
-  const FlutterPlaygroundAppBar({
-    super.key,
-    required this.title,
-    this.actions,
-    this.onLanguageChanged,
-  });
+  /// Creates a [MainAppBar].
+  const MainAppBar({super.key, required this.title, this.actions});
 
   @override
-  State<FlutterPlaygroundAppBar> createState() =>
-      _FlutterPlaygroundAppBarState();
+  State<MainAppBar> createState() => _MainAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _FlutterPlaygroundAppBarState extends State<FlutterPlaygroundAppBar> {
-  late String _appLanguage;
-
+class _MainAppBarState extends State<MainAppBar> {
   @override
   void initState() {
     super.initState();
-    // Initialize the app language from the global localization state.
-    _appLanguage = Localization.getCurrentLanguage;
   }
 
   @override
   Widget build(BuildContext context) {
+    final String currentLanguage = currentLanguageNotifier.value;
     return SafeArea(
       child: AppBar(
         title: Text(widget.title),
         actions: [
           ...?widget.actions,
+          // Language selector.
           PopupMenuButton<String>(
             icon: CountryFlag.fromCountryCode(
               Localization.getText('countryCode'),
               shape: Circle(),
               width: 30,
             ),
-            tooltip: Localization.getText('appBar.language'),
-            initialValue: _appLanguage,
+            tooltip: "", // Remove unnecessary tooltip.
+            initialValue: currentLanguage,
             onSelected: (selectedLanguage) async {
-              setState(() {
-                _appLanguage = selectedLanguage;
-              });
-              // Update the global localization state.
               await Localization.setCurrentLanguage(selectedLanguage);
-              // Notify the parent widget about the new language, if a callback is provided.
-              if (widget.onLanguageChanged != null) {
-                widget.onLanguageChanged!(selectedLanguage);
-              }
             },
             itemBuilder: (context) => [
               PopupMenuEntryCompact(
                 value: 'en',
-                selected: _appLanguage == 'en',
-                child: const FlagMenuItem(countryCode: 'us', label: 'English'),
+                selected: currentLanguage == 'en',
+                child: FlagMenuItem(
+                  countryCode: 'us',
+                  label: Localization.getText(
+                    'appBar.languageSelector.english',
+                  ),
+                ),
               ),
               PopupMenuEntryCompact(
                 value: 'de',
-                selected: _appLanguage == 'de',
-                child: const FlagMenuItem(countryCode: 'de', label: 'Deutsch'),
+                selected: currentLanguage == 'de',
+                child: FlagMenuItem(
+                  countryCode: 'de',
+                  label: Localization.getText('appBar.languageSelector.german'),
+                ),
               ),
               PopupMenuEntryCompact(
                 value: 'foo',
-                selected: _appLanguage == 'foo',
-                child: const FlagMenuItem(countryCode: 'xx', label: 'FooBar'),
+                selected: currentLanguage == 'foo',
+                child: FlagMenuItem(
+                  countryCode: 'xx',
+                  label: Localization.getText('placeholder'),
+                ),
               ),
             ],
           ),
+          const SizedBox(width: 8),
         ],
       ),
     );

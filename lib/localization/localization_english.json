@@ -2,10 +2,22 @@
     "languageName": "English",
     "languageCode": "en",
     "countryCode": "us",
-    "appTitle": "Flutter Playground",
+    "appName": "Flutter Playground",
     "appBar": {
-        "language": "Language",
+        "languageSelector": {
+            "english": "English",
+            "german": "German"
+        },
         "settings": "Settings"
+    },
+    "dashboardModule": {
+        "title": "Dashboard"
+    },
+    "firebaseModule": {
+        "title": "Firebase"
+    },
+    "sqlDatabaseModule": {
+        "title": "SQL Database"
     },
     "testKey": "This is for performing a valid test where only the English localization has this key."
 }

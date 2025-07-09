@@ -14,26 +14,28 @@ void main() {
       expect(['en', 'de'], contains(lang));
     });
 
-    // Test setting and getting the current language.
-    test('setCurrentLanguage and getCurrentLanguage', () async {
+    // Test setting and getting the current language using the notifier.
+    test('setCurrentLanguage and currentLanguageNotifier', () async {
       await Localization.setCurrentLanguage('de');
+      expect(currentLanguageNotifier.value, 'de');
       expect(Localization.getCurrentLanguage, 'de');
       await Localization.setCurrentLanguage('en');
+      expect(currentLanguageNotifier.value, 'en');
       expect(Localization.getCurrentLanguage, 'en');
     });
 
     // Test that the 'of' method returns a Localization instance with the correct language.
     test('of returns correct instance', () {
       final loc = Localization.of(TestBuildContext());
-      expect(loc.language, Localization.getCurrentLanguage);
+      expect(loc.language, currentLanguageNotifier.value);
     });
 
     // Test that getText returns a valid localized string for both languages.
     test('getText returns correct localized string', () async {
       await Localization.setCurrentLanguage('en');
-      expect(Localization.getText('appTitle'), isNot('[NO_LOCALIZATION]'));
+      expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
       await Localization.setCurrentLanguage('de');
-      expect(Localization.getText('appTitle'), isNot('[NO_LOCALIZATION]'));
+      expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
     });
 
     // Test that getText falls back to English if the key is missing in German.
