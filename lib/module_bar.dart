@@ -14,6 +14,7 @@
 library module_bar;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/helpers/global_notifiers.dart';
 import 'package:flutter_playground/localization/localization.dart';
 import 'package:flutter_playground/module_dashboard/module_dashboard.dart';
 import 'package:flutter_playground/module_firebase/module_firebase.dart';
@@ -36,6 +37,8 @@ class _ModuleBarState extends State<ModuleBar> {
   void _onModuleSelected(String module) {
     setState(() {
       _selectedModule = module;
+      currentModuleNotifier.value = module; // Update the global notifier.
+      // NOTE: The global notifier for modules isn't used anywhere yet!
     });
   }
 
