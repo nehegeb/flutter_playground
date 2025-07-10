@@ -8,9 +8,12 @@
 library main_app_bar;
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:country_flags/country_flags.dart';
 import 'localization/localization.dart';
 import 'helpers/ui_widgets.dart';
+import 'helpers/app_permissions.dart';
+import 'module_pages/login_page.dart';
 
 /// A customizable app bar for the app.
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -36,6 +39,18 @@ class _MainAppBarState extends State<MainAppBar> {
     super.initState();
   }
 
+  /// Converts a string to name case (capitalize each word).
+  String toNameCase(String input) {
+    return input
+        .split(' ')
+        .map(
+          (word) => word.isNotEmpty
+              ? '${word[0].toUpperCase()}${word.substring(1)}'
+              : '',
+        )
+        .join(' ');
+  }
+
   @override
   Widget build(BuildContext context) {
     final String currentLanguage = currentLanguageNotifier.value;
@@ -49,7 +64,7 @@ class _MainAppBarState extends State<MainAppBar> {
             icon: CountryFlag.fromCountryCode(
               Localization.getText('countryCode'),
               shape: Circle(),
-              width: 30,
+              width: 24,
             ),
             tooltip: "", // Remove unnecessary tooltip.
             initialValue: currentLanguage,
@@ -84,6 +99,99 @@ class _MainAppBarState extends State<MainAppBar> {
                 ),
               ),
             ],
+          ),
+          const SizedBox(width: 8),
+
+          // Logout selector.
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.person),
+            tooltip: '', // Remove unnecessary tooltip.
+            onSelected: (selectedAction) async {
+              if (selectedAction == 'login') {
+                await context.push('/login');
+              } else if (selectedAction == 'logout') {
+                LoginPage.logout(context);
+              }
+            },
+            itemBuilder: (context) {
+              final isLoggedIn = currentUserNotifier.value != null;
+              return [
+                // User Card.
+                PopupMenuItem<String>(
+                  enabled: false,
+                  height: 80, // double the default height (default is 48)
+                  child: ValueListenableBuilder<User?>(
+                    valueListenable: currentUserNotifier,
+                    builder: (context, user, _) {
+                      final username = user?.username ?? '';
+                      final role = user?.role ?? '';
+                      return Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.primary.withAlpha(60),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.account_circle, size: 32),
+                            const SizedBox(width: 12),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  username.isNotEmpty
+                                      ? toNameCase(username)
+                                      : '',
+                                  style: Theme.of(context).textTheme.titleMedium
+                                      ?.copyWith(fontWeight: FontWeight.bold),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  role.isNotEmpty
+                                      ? Localization.getText(
+                                          'authorization.roles.$role',
+                                        )
+                                      : Localization.getText(
+                                          'authorization.roles.guest',
+                                        ),
+                                  style: Theme.of(context).textTheme.titleMedium
+                                      ?.copyWith(fontWeight: FontWeight.normal),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                // Login/Logout options.
+                if (!isLoggedIn)
+                  PopupMenuEntryCompact(
+                    value: 'login',
+                    selected: false,
+                    child: Text(
+                      Localization.getText('appBar.profileSelector.login'),
+                    ),
+                  ),
+                if (isLoggedIn)
+                  PopupMenuEntryCompact(
+                    value: 'logout',
+                    selected: false,
+                    child: Text(
+                      Localization.getText('appBar.profileSelector.logout'),
+                    ),
+                  ),
+              ];
+            },
           ),
           const SizedBox(width: 8),
         ],

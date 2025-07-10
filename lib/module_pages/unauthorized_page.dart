@@ -14,8 +14,19 @@ class UnauthorizedPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(Localization.getText('unauthorizedPage.title')),
-        Text(Localization.getText('unauthorizedPage.message')),
+        // Title of the unauthorized page.
+        Text(
+          Localization.getText('unauthorizedPage.title'),
+          style: Theme.of(context).textTheme.headlineSmall,
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 16),
+        // Message explaining the unauthorized access.
+        Text(
+          Localization.getText('unauthorizedPage.message'),
+          style: Theme.of(context).textTheme.bodyMedium,
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }

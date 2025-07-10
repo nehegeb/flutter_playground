@@ -66,7 +66,8 @@ class _ModuleBarState extends State<ModuleBar> {
                       // Only render module buttons button if user has permission.
                       // Dashboard module.
                       if (user != null &&
-                          user.permissions.contains('module_dashboard'))
+                              user.permissions.contains('module_dashboard') ||
+                          user?.role == 'admin')
                         _ModuleBarButton(
                           icon: Icons.dashboard,
                           label: Localization.getText('dashboardModule.title'),
@@ -75,7 +76,8 @@ class _ModuleBarState extends State<ModuleBar> {
                         ),
                       // Firebase module.
                       if (user != null &&
-                          user.permissions.contains('module_firebase'))
+                              user.permissions.contains('module_firebase') ||
+                          user?.role == 'admin')
                         _ModuleBarButton(
                           icon: Icons.cloud,
                           label: Localization.getText('firebaseModule.title'),
@@ -84,7 +86,10 @@ class _ModuleBarState extends State<ModuleBar> {
                         ),
                       // SQL Database module.
                       if (user != null &&
-                          user.permissions.contains('module_sql_database'))
+                              user.permissions.contains(
+                                'module_sql_database',
+                              ) ||
+                          user?.role == 'admin')
                         _ModuleBarButton(
                           icon: Icons.storage,
                           label: Localization.getText(

@@ -8,6 +8,10 @@
             "english": "Englisch",
             "german": "Deutsch"
         },
+        "profileSelector": {
+            "login": "Anmelden",
+            "logout": "Abmelden"
+        },
         "settings": "Einstellungen"
     },
     "loginPage": {
@@ -15,7 +19,7 @@
         "username": "Benutzername",
         "password": "Passwort",
         "loginButton": "Anmelden",
-        "errorMessage": "Ungültiger Benutzername oder Passwort"
+        "messageInvalidLogin": "Ungültiger Benutzername oder Passwort"
     },
     "unauthorizedPage": {
         "title": "Unbefugter Zugriff",
@@ -29,5 +33,12 @@
     },
     "sqlDatabaseModule": {
         "title": "SQL Datenbank"
+    },
+    "authorization": {
+        "roles": {
+            "admin": "Administrator",
+            "user": "Mitglied",
+            "guest": "Gast"
+        }
     }
 }

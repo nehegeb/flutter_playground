@@ -8,6 +8,10 @@
             "english": "English",
             "german": "German"
         },
+        "profileSelector": {
+            "login": "Login",
+            "logout": "Logout"
+        },
         "settings": "Settings"
     },
     "loginPage": {
@@ -15,7 +19,7 @@
         "username": "Username",
         "password": "Password",
         "loginButton": "Login",
-        "errorMessage": "Invalid username or password"
+        "messageInvalidLogin": "Invalid username or password"
     },
     "unauthorizedPage": {
         "title": "Unauthorized Access",
@@ -29,6 +33,13 @@
     },
     "sqlDatabaseModule": {
         "title": "SQL Database"
+    },
+    "authorization": {
+        "roles": {
+            "admin": "Administrator",
+            "user": "Member",
+            "guest": "Guest"
+        }
     },
     "testKey": "This is for performing a valid test where only the English localization has this key."
 }

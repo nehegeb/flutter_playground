@@ -31,20 +31,22 @@ final GoRouter appRouter = GoRouter(
         child: MainScreen(module: ''), // No value blanks the module area.
         state: state,
       ),
-    ),
-    GoRoute(
-      path: "/login",
-      pageBuilder: (context, state) => pageTransition(
-        child: MainScreen(module: 'LoginPage'),
-        state: state,
-      ),
-    ),
-    GoRoute(
-      path: "/unauthorized",
-      pageBuilder: (context, state) => pageTransition(
-        child: MainScreen(module: 'UnauthorizedPage'),
-        state: state,
-      ),
+      routes: [
+        GoRoute(
+          path: "login",
+          pageBuilder: (context, state) => pageTransition(
+            child: MainScreen(module: 'LoginPage'),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: "unauthorized",
+          pageBuilder: (context, state) => pageTransition(
+            child: MainScreen(module: 'UnauthorizedPage'),
+            state: state,
+          ),
+        ),
+      ],
     ),
     GoRoute(
       path: "/dashboard",
@@ -53,12 +55,15 @@ final GoRouter appRouter = GoRouter(
         state: state,
       ),
       redirect: (context, state) {
+        return _checkUserPermission('module_dashboard');
+        /*
         final user = currentUserNotifier.value;
         if (user == null) return '/login';
         if (!user.permissions.contains('module_dashboard')) {
           return '/unauthorized';
         }
         return null;
+        */
       },
     ),
     GoRoute(
@@ -68,12 +73,15 @@ final GoRouter appRouter = GoRouter(
         state: state,
       ),
       redirect: (context, state) {
+        return _checkUserPermission('module_firebase');
+        /*
         final user = currentUserNotifier.value;
         if (user == null) return '/login';
         if (!user.permissions.contains('module_firebase')) {
           return '/unauthorized';
         }
         return null;
+        */
       },
     ),
     GoRoute(
@@ -83,12 +91,15 @@ final GoRouter appRouter = GoRouter(
         state: state,
       ),
       redirect: (context, state) {
+        return _checkUserPermission('module_sql_database');
+        /*
         final user = currentUserNotifier.value;
         if (user == null) return '/login';
         if (!user.permissions.contains('module_sql_database')) {
           return '/unauthorized';
         }
         return null;
+        */
       },
     ),
   ],
@@ -106,4 +117,16 @@ CustomTransitionPage<T> pageTransition<T>({
       return FadeTransition(opacity: animation, child: child);
     },
   );
+}
+
+String? _checkUserPermission(String permissionName) {
+  if (permissionName.isEmpty) return null; // No permission check needed.
+  final user = currentUserNotifier.value; // Get the current user.
+  if (user == null) return '/login'; // User is not logged in.
+  if (user.role == 'admin') return null; // Admins have all permissions.
+  // Check if the user has the required permission.
+  if (!user.permissions.contains(permissionName)) {
+    return '/unauthorized';
+  }
+  return null; // All checks passed, no redirect needed.
 }
