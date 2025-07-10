@@ -1,4 +1,4 @@
-/// module_sql_database_screen.dart
+/// module_sql_database.dart
 ///
 library module_sql_database;
 

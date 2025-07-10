@@ -1,4 +1,4 @@
-/// module_bar.dart
+/// main_module_bar.dart
 ///
 /// Provides a vertical, draggable module bar for navigation between app modules.
 ///
@@ -11,11 +11,14 @@
 /// Usage:
 ///   Place [ModuleBar] as a top-level widget in your app's layout.
 ///   The bar will handle module selection and display the corresponding module widget.
-library module_bar;
+library main_module_bar;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/helpers/app_permissions.dart';
 import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/module_pages/login_page.dart';
+import 'package:flutter_playground/module_pages/unauthorized_page.dart';
 import 'package:flutter_playground/module_dashboard/module_dashboard.dart';
 import 'package:flutter_playground/module_firebase/module_firebase.dart';
 import 'package:flutter_playground/module_sql_database/module_sql_database.dart';
@@ -37,6 +40,8 @@ class _ModuleBarState extends State<ModuleBar> {
   Widget build(BuildContext context) {
     // Get the current module from the widget parameter.
     final String currentModule = widget.module;
+    // Get the current user from the app permissions.
+    final user = currentUserNotifier.value;
 
     // Define min and max width constraints of the module bar.
     const double minWidth = 64;
@@ -58,24 +63,36 @@ class _ModuleBarState extends State<ModuleBar> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _ModuleBarButton(
-                        icon: Icons.dashboard,
-                        label: Localization.getText('dashboardModule.title'),
-                        onTap: () => context.go('/dashboard'),
-                        selected: currentModule == 'DashboardModule',
-                      ),
-                      _ModuleBarButton(
-                        icon: Icons.cloud,
-                        label: Localization.getText('firebaseModule.title'),
-                        onTap: () => context.go('/firebase'),
-                        selected: currentModule == 'FirebaseModule',
-                      ),
-                      _ModuleBarButton(
-                        icon: Icons.storage,
-                        label: Localization.getText('sqlDatabaseModule.title'),
-                        onTap: () => context.go('/sql-database'),
-                        selected: currentModule == 'SqlDatabaseModule',
-                      ),
+                      // Only render module buttons button if user has permission.
+                      // Dashboard module.
+                      if (user != null &&
+                          user.permissions.contains('module_dashboard'))
+                        _ModuleBarButton(
+                          icon: Icons.dashboard,
+                          label: Localization.getText('dashboardModule.title'),
+                          onTap: () => context.go('/dashboard'),
+                          selected: currentModule == 'DashboardModule',
+                        ),
+                      // Firebase module.
+                      if (user != null &&
+                          user.permissions.contains('module_firebase'))
+                        _ModuleBarButton(
+                          icon: Icons.cloud,
+                          label: Localization.getText('firebaseModule.title'),
+                          onTap: () => context.go('/firebase'),
+                          selected: currentModule == 'FirebaseModule',
+                        ),
+                      // SQL Database module.
+                      if (user != null &&
+                          user.permissions.contains('module_sql_database'))
+                        _ModuleBarButton(
+                          icon: Icons.storage,
+                          label: Localization.getText(
+                            'sqlDatabaseModule.title',
+                          ),
+                          onTap: () => context.go('/sql-database'),
+                          selected: currentModule == 'SqlDatabaseModule',
+                        ),
                     ],
                   ),
                 ),
@@ -125,6 +142,10 @@ class _ModuleBarState extends State<ModuleBar> {
             // The modules are defined in 'app_router.dart'.
             child: (() {
               switch (currentModule) {
+                case 'LoginPage':
+                  return LoginPage();
+                case 'UnauthorizedPage':
+                  return UnauthorizedPage();
                 case 'DashboardModule':
                   return DashboardModule();
                 case 'FirebaseModule':

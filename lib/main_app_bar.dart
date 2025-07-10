@@ -1,11 +1,11 @@
-/// app_bar.dart
+/// main_app_bar.dart
 ///
 /// Provides a reusable AppBar widget for the app.
 ///
 /// The [MainAppBar] widget displays a given title, optional action widgets,
 /// and a language selector popup menu. It integrates with the app's localization system
 /// and uses the global currentLanguageNotifier for language changes.
-library appbar;
+library main_app_bar;
 
 import 'package:flutter/material.dart';
 import 'package:country_flags/country_flags.dart';

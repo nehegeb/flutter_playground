@@ -1,4 +1,4 @@
-/// module_dashboard_screen.dart
+/// module_dashboard.dart
 ///
 library module_dashboard;
 

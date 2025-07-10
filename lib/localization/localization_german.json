@@ -10,6 +10,17 @@
         },
         "settings": "Einstellungen"
     },
+    "loginPage": {
+        "title": "Anmeldeseite",
+        "username": "Benutzername",
+        "password": "Passwort",
+        "loginButton": "Anmelden",
+        "errorMessage": "Ungültiger Benutzername oder Passwort"
+    },
+    "unauthorizedPage": {
+        "title": "Unbefugter Zugriff",
+        "message": "Sie haben keine Berechtigung, auf dieses Modul zuzugreifen."
+    },
     "dashboardModule": {
         "title": "Dashboard"
     },

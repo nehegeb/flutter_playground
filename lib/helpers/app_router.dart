@@ -15,12 +15,14 @@ library app_router;
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'app_permissions.dart';
 import 'loading_overlay.dart';
 import 'package:flutter_playground/main.dart';
 
 /// The main router for the application, using GoRouter for declarative routing.
 final GoRouter appRouter = GoRouter(
   navigatorKey: LoadingOverlay.navigatorKey,
+  refreshListenable: currentUserNotifier, // Listen to changes to the user.
   initialLocation: "/dashboard", // Set the initial route to the dashboard.
   routes: <RouteBase>[
     GoRoute(
@@ -31,11 +33,33 @@ final GoRouter appRouter = GoRouter(
       ),
     ),
     GoRoute(
+      path: "/login",
+      pageBuilder: (context, state) => pageTransition(
+        child: MainScreen(module: 'LoginPage'),
+        state: state,
+      ),
+    ),
+    GoRoute(
+      path: "/unauthorized",
+      pageBuilder: (context, state) => pageTransition(
+        child: MainScreen(module: 'UnauthorizedPage'),
+        state: state,
+      ),
+    ),
+    GoRoute(
       path: "/dashboard",
       pageBuilder: (context, state) => pageTransition(
         child: MainScreen(module: 'DashboardModule'),
         state: state,
       ),
+      redirect: (context, state) {
+        final user = currentUserNotifier.value;
+        if (user == null) return '/login';
+        if (!user.permissions.contains('module_dashboard')) {
+          return '/unauthorized';
+        }
+        return null;
+      },
     ),
     GoRoute(
       path: "/firebase",
@@ -43,6 +67,14 @@ final GoRouter appRouter = GoRouter(
         child: MainScreen(module: 'FirebaseModule'),
         state: state,
       ),
+      redirect: (context, state) {
+        final user = currentUserNotifier.value;
+        if (user == null) return '/login';
+        if (!user.permissions.contains('module_firebase')) {
+          return '/unauthorized';
+        }
+        return null;
+      },
     ),
     GoRoute(
       path: "/sql-database",
@@ -50,6 +82,14 @@ final GoRouter appRouter = GoRouter(
         child: MainScreen(module: 'SqlDatabaseModule'),
         state: state,
       ),
+      redirect: (context, state) {
+        final user = currentUserNotifier.value;
+        if (user == null) return '/login';
+        if (!user.permissions.contains('module_sql_database')) {
+          return '/unauthorized';
+        }
+        return null;
+      },
     ),
   ],
 );

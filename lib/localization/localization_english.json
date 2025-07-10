@@ -10,6 +10,17 @@
         },
         "settings": "Settings"
     },
+    "loginPage": {
+        "title": "Login Page",
+        "username": "Username",
+        "password": "Password",
+        "loginButton": "Login",
+        "errorMessage": "Invalid username or password"
+    },
+    "unauthorizedPage": {
+        "title": "Unauthorized Access",
+        "message": "You do not have permission to access this module."
+    },
     "dashboardModule": {
         "title": "Dashboard"
     },

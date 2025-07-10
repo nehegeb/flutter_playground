@@ -1,19 +1,19 @@
-/// module_firebase.dart
+/// login_page.dart
 ///
-library module_firebase;
+library login_page;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/localization/localization.dart';
 
-/// The Firebase module.
-class FirebaseModule extends StatelessWidget {
-  const FirebaseModule({super.key});
+/// The login page.
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [Text(Localization.getText('firebaseModule.title'))],
+      children: [Text(Localization.getText('loginPage.title'))],
     );
   }
 }

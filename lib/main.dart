@@ -7,8 +7,8 @@ library main;
 import 'package:flutter/material.dart';
 import 'helpers/app_router.dart';
 import 'localization/localization.dart';
-import 'app_bar.dart';
-import 'module_bar.dart';
+import 'main_app_bar.dart';
+import 'main_module_bar.dart';
 
 /// The main function that starts the Flutter app.
 void main() {
