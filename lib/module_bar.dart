@@ -14,7 +14,7 @@
 library module_bar;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/helpers/global_notifiers.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/localization/localization.dart';
 import 'package:flutter_playground/module_dashboard/module_dashboard.dart';
 import 'package:flutter_playground/module_firebase/module_firebase.dart';
@@ -22,42 +22,22 @@ import 'package:flutter_playground/module_sql_database/module_sql_database.dart'
 
 /// A vertical module bar positioned on the left side of the screen.
 class ModuleBar extends StatefulWidget {
-  const ModuleBar({super.key});
+  final String module;
+  const ModuleBar({super.key, required this.module});
 
   @override
   State<ModuleBar> createState() => _ModuleBarState();
 }
 
 class _ModuleBarState extends State<ModuleBar> {
-  // The initial selected module.
-  String _selectedModule = 'DashboardModule';
   // The initial width of the draggable module bar.
   double _moduleBarWidth = 250;
 
-  void _onModuleSelected(String module) {
-    setState(() {
-      _selectedModule = module;
-      currentModuleNotifier.value = module; // Update the global notifier.
-      // NOTE: The global notifier for modules isn't used anywhere yet!
-    });
-  }
-
-  Widget _getModuleWidget() {
-    switch (_selectedModule) {
-      case 'DashboardModule':
-        return DashboardModule();
-      case 'FirebaseModule':
-        return FirebaseModule();
-      case 'SqlDatabaseModule':
-        return SqlDatabaseModule();
-      default:
-        // Display nothing if no module is selected.
-        return Container();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    // Get the current module from the widget parameter.
+    final String currentModule = widget.module;
+
     // Define min and max width constraints of the module bar.
     const double minWidth = 64;
     final double maxWidth = MediaQuery.of(context).size.width / 3;
@@ -81,26 +61,26 @@ class _ModuleBarState extends State<ModuleBar> {
                       _ModuleBarButton(
                         icon: Icons.dashboard,
                         label: Localization.getText('dashboardModule.title'),
-                        onTap: () => _onModuleSelected('DashboardModule'),
-                        selected: _selectedModule == 'DashboardModule',
+                        onTap: () => context.go('/dashboard'),
+                        selected: currentModule == 'DashboardModule',
                       ),
                       _ModuleBarButton(
                         icon: Icons.cloud,
                         label: Localization.getText('firebaseModule.title'),
-                        onTap: () => _onModuleSelected('FirebaseModule'),
-                        selected: _selectedModule == 'FirebaseModule',
+                        onTap: () => context.go('/firebase'),
+                        selected: currentModule == 'FirebaseModule',
                       ),
                       _ModuleBarButton(
                         icon: Icons.storage,
                         label: Localization.getText('sqlDatabaseModule.title'),
-                        onTap: () => _onModuleSelected('SqlDatabaseModule'),
-                        selected: _selectedModule == 'SqlDatabaseModule',
+                        onTap: () => context.go('/sql-database'),
+                        selected: currentModule == 'SqlDatabaseModule',
                       ),
                     ],
                   ),
                 ),
               ),
-              // Add a draggable handle at the right edge
+              // Add a draggable handle at the right edge.
               Positioned(
                 right: 0,
                 top: 0,
@@ -140,7 +120,23 @@ class _ModuleBarState extends State<ModuleBar> {
           ),
         ),
         // The module content area that expands to fill the remaining space.
-        Expanded(child: Center(child: _getModuleWidget())),
+        Expanded(
+          child: Center(
+            // The modules are defined in 'app_router.dart'.
+            child: (() {
+              switch (currentModule) {
+                case 'DashboardModule':
+                  return DashboardModule();
+                case 'FirebaseModule':
+                  return FirebaseModule();
+                case 'SqlDatabaseModule':
+                  return SqlDatabaseModule();
+                default:
+                  return Container();
+              }
+            })(),
+          ),
+        ),
       ],
     );
   }

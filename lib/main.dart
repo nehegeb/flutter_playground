@@ -5,8 +5,8 @@
 library main;
 
 import 'package:flutter/material.dart';
+import 'helpers/app_router.dart';
 import 'localization/localization.dart';
-import 'helpers/loading_overlay.dart';
 import 'app_bar.dart';
 import 'module_bar.dart';
 
@@ -25,8 +25,8 @@ class MainApp extends StatefulWidget {
 
 /// State for [MainApp].
 ///
-/// Loads localization files on startup, manages the current language,
-/// and rebuilds the app when the language changes.
+/// Defines the app theme and handles initial app loading.
+/// Loads localization files on startup and sets initial language.
 class _MainAppState extends State<MainApp> {
   bool _isAppInitialized = false; // Track if app initialization is complete.
 
@@ -35,14 +35,6 @@ class _MainAppState extends State<MainApp> {
     super.initState();
     // Get the language the user uses and initialize localization.
     _initLocalization();
-    // Listen to language changes and rebuild UI when changed.
-    currentLanguageNotifier.addListener(_onLanguageChanged);
-  }
-
-  @override
-  void dispose() {
-    currentLanguageNotifier.removeListener(_onLanguageChanged);
-    super.dispose();
   }
 
   /// Load localization JSON files and set the initial language for the whole app.
@@ -54,27 +46,19 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
-  /// Called when the language notifier changes.
-  void _onLanguageChanged() {
-    // Rebuild whole app to update all localization.
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     // Define a seed color for the theme of the app.
     Color seedColor = Colors.teal;
+    /*
     // Show a white screen with a loading indicator until initialization is complete.
     if (!_isAppInitialized) {
       // The [SplashScreen] doesn't have a theme, therefore the seedColor is passed.
       return SplashScreen(seedColor: seedColor);
     }
+    */
     // Main app with theme and home screen.
-    return MaterialApp(
-      // Set the navigator key for the [LoadingOverlay].
-      // This allows the [LoadingOverlay] to be shown from anywhere in the app.
-      navigatorKey: LoadingOverlay.navigatorKey,
-      // The theme of the app.
+    return MaterialApp.router(
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
         useMaterial3: true,
@@ -91,15 +75,47 @@ class _MainAppState extends State<MainApp> {
         ),
         progressIndicatorTheme: ProgressIndicatorThemeData(color: seedColor),
       ),
-      home: MainScreen(),
+      routerConfig: appRouter, // see 'helpers/app_router.dart'.
+      builder: (context, child) {
+        // If the app is not initialized, show the splash screen.
+        if (!_isAppInitialized) {
+          return SplashScreen(seedColor: seedColor);
+        }
+        // Otherwise, return the main content.
+        return child!;
+      },
     );
   }
 }
 
 /// The main home screen of the app.
-class MainScreen extends StatelessWidget {
-  MainScreen({super.key});
-  // NOTE: The MainScreen cannot be 'const' in order to update localization.
+class MainScreen extends StatefulWidget {
+  final String module;
+  const MainScreen({super.key, required this.module});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+/// State for [MainScreen].
+///
+/// Manages the current language and rebuilds the app when the language changes.
+class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    super.initState();
+    currentLanguageNotifier.addListener(_onLanguageChanged);
+  }
+
+  @override
+  void dispose() {
+    currentLanguageNotifier.removeListener(_onLanguageChanged);
+    super.dispose();
+  }
+
+  void _onLanguageChanged() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +123,7 @@ class MainScreen extends StatelessWidget {
       // The upper app bar.
       appBar: MainAppBar(title: Localization.getText('appName')),
       // The lower body with a module bar and the module content area.
-      body: ModuleBar(),
+      body: ModuleBar(module: widget.module),
     );
   }
 }

@@ -1,18 +1,10 @@
 /// app_bar.dart
 ///
-/// Provides a reusable, customizable AppBar widget for the app.
+/// Provides a reusable AppBar widget for the app.
 ///
 /// The [MainAppBar] widget displays a given title, optional action widgets,
 /// and a language selector popup menu. It integrates with the app's localization system
 /// and uses the global currentLanguageNotifier for language changes.
-///
-/// Example usage:
-/// ```dart
-/// MainAppBar(
-///   title: 'My App',
-///   actions: [IconButton(icon: Icon(Icons.info), onPressed: () {})],
-/// )
-/// ```
 library appbar;
 
 import 'package:flutter/material.dart';
