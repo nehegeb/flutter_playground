@@ -20,6 +20,7 @@
 library loading_overlay;
 
 import 'package:flutter/material.dart';
+import 'app_theme.dart';
 
 /// A global loading overlay that blocks user interaction and displays
 /// a transparent box with a progress indicator and a customizable message.
@@ -73,6 +74,8 @@ class _LoadingOverlayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = appTheme;
+
     return Stack(
       children: [
         // Block all interaction with a transparent barrier.
@@ -95,9 +98,7 @@ class _LoadingOverlayWidget extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text(
                   message,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleMedium?.copyWith(color: Colors.black87),
+                  style: theme.textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
               ],

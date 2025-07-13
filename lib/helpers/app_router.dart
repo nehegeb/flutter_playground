@@ -46,6 +46,13 @@ final GoRouter appRouter = GoRouter(
             state: state,
           ),
         ),
+        GoRoute(
+          path: "about",
+          pageBuilder: (context, state) => pageTransition(
+            child: MainScreen(module: 'AboutPage'),
+            state: state,
+          ),
+        ),
       ],
     ),
     GoRoute(
@@ -56,14 +63,6 @@ final GoRouter appRouter = GoRouter(
       ),
       redirect: (context, state) {
         return _checkUserPermission('module_dashboard');
-        /*
-        final user = currentUserNotifier.value;
-        if (user == null) return '/login';
-        if (!user.permissions.contains('module_dashboard')) {
-          return '/unauthorized';
-        }
-        return null;
-        */
       },
     ),
     GoRoute(
@@ -74,14 +73,6 @@ final GoRouter appRouter = GoRouter(
       ),
       redirect: (context, state) {
         return _checkUserPermission('module_firebase');
-        /*
-        final user = currentUserNotifier.value;
-        if (user == null) return '/login';
-        if (!user.permissions.contains('module_firebase')) {
-          return '/unauthorized';
-        }
-        return null;
-        */
       },
     ),
     GoRoute(
@@ -92,14 +83,6 @@ final GoRouter appRouter = GoRouter(
       ),
       redirect: (context, state) {
         return _checkUserPermission('module_sql_database');
-        /*
-        final user = currentUserNotifier.value;
-        if (user == null) return '/login';
-        if (!user.permissions.contains('module_sql_database')) {
-          return '/unauthorized';
-        }
-        return null;
-        */
       },
     ),
   ],

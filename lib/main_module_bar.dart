@@ -17,8 +17,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/helpers/app_permissions.dart';
 import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/module_pages/default_page.dart';
 import 'package:flutter_playground/module_pages/login_page.dart';
 import 'package:flutter_playground/module_pages/unauthorized_page.dart';
+import 'package:flutter_playground/module_pages/about_page.dart';
 import 'package:flutter_playground/module_dashboard/module_dashboard.dart';
 import 'package:flutter_playground/module_firebase/module_firebase.dart';
 import 'package:flutter_playground/module_sql_database/module_sql_database.dart';
@@ -151,6 +153,8 @@ class _ModuleBarState extends State<ModuleBar> {
                   return LoginPage();
                 case 'UnauthorizedPage':
                   return UnauthorizedPage();
+                case 'AboutPage':
+                  return AboutPage();
                 case 'DashboardModule':
                   return DashboardModule();
                 case 'FirebaseModule':
@@ -158,7 +162,7 @@ class _ModuleBarState extends State<ModuleBar> {
                 case 'SqlDatabaseModule':
                   return SqlDatabaseModule();
                 default:
-                  return Container();
+                  return DefaultPage();
               }
             })(),
           ),

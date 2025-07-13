@@ -25,6 +25,10 @@
         "title": "Unbefugter Zugriff",
         "message": "Sie haben keine Berechtigung, auf dieses Modul zuzugreifen."
     },
+    "aboutPage": {
+        "title": "Über diese App",
+        "packagesUsed": "Verwendete Pakete zum Erstellen dieser App"
+    },
     "dashboardModule": {
         "title": "Dashboard"
     },

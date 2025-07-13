@@ -5,6 +5,7 @@
 library main;
 
 import 'package:flutter/material.dart';
+import 'helpers/app_theme.dart';
 import 'helpers/app_router.dart';
 import 'localization/localization.dart';
 import 'main_app_bar.dart';
@@ -48,38 +49,14 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    // Define a seed color for the theme of the app.
-    Color seedColor = Colors.teal;
-    /*
-    // Show a white screen with a loading indicator until initialization is complete.
-    if (!_isAppInitialized) {
-      // The [SplashScreen] doesn't have a theme, therefore the seedColor is passed.
-      return SplashScreen(seedColor: seedColor);
-    }
-    */
     // Main app with theme and home screen.
     return MaterialApp.router(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color.alphaBlend(
-            Colors.black26,
-            ColorScheme.fromSeed(seedColor: seedColor).primary,
-          ),
-          foregroundColor: Colors.white,
-        ),
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(fontSize: 18, color: Colors.black87),
-        ),
-        progressIndicatorTheme: ProgressIndicatorThemeData(color: seedColor),
-      ),
-      routerConfig: appRouter, // see 'helpers/app_router.dart'.
+      theme: appTheme,
+      routerConfig: appRouter,
       builder: (context, child) {
         // If the app is not initialized, show the splash screen.
         if (!_isAppInitialized) {
-          return SplashScreen(seedColor: seedColor);
+          return SplashScreen();
         }
         // Otherwise, return the main content.
         return child!;
@@ -130,17 +107,21 @@ class _MainScreenState extends State<MainScreen> {
 
 /// A splash screen shown during app initialization.
 class SplashScreen extends StatelessWidget {
-  final Color seedColor;
-  const SplashScreen({super.key, required this.seedColor});
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Use the app theme's progress indicator color.
+    final Color indicatorColor =
+        appTheme.progressIndicatorTheme.color ?? Colors.teal;
+
+    // Show a centered loading indicator.
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
         body: Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(seedColor),
+            valueColor: AlwaysStoppedAnimation<Color>(indicatorColor),
           ),
         ),
       ),
