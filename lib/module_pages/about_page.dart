@@ -4,10 +4,22 @@ library about_page;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/licensing/licensing.dart';
 
 /// The about page.
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
+
+  @override
+  State<AboutPage> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+  @override
+  void initState() {
+    super.initState();
+    Licensing.initLicensingData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +44,32 @@ class AboutPage extends StatelessWidget {
                 initiallyExpanded: false,
                 children: [
                   // go_router package.
-                  PackageLicenseInfo(
-                    packageName: 'aboutPage.packageGoRouterName',
-                    packageLicense: 'aboutPage.packageGoRouterLicense',
+                  LicenseInfo(
+                    packageName: 'go_router',
+                    copyright: '2021 The go_router Authors',
+                    license: 'BSD3',
+                    packageUrl: 'https://pub.dev/packages/go_router',
                   ),
                   // url_launcher package.
-                  PackageLicenseInfo(
-                    packageName: 'aboutPage.packageUrlLauncherName',
-                    packageLicense: 'aboutPage.packageUrlLauncherLicense',
+                  LicenseInfo(
+                    packageName: 'url_launcher',
+                    copyright: '2013 The Flutter Authors',
+                    license: 'BSD3',
+                    packageUrl: 'https://pub.dev/packages/url_launcher',
                   ),
-                  //pluto_grid package.
-                  PackageLicenseInfo(
-                    packageName: 'aboutPage.packagePlutoGridName',
-                    packageLicense: 'aboutPage.packagePlutoGridLicense',
+                  // pluto_grid package.
+                  LicenseInfo(
+                    packageName: 'pluto_grid',
+                    copyright: '2020 Bosskmk',
+                    license: 'MIT',
+                    packageUrl: 'https://github.com/bosskmk/pluto_grid',
                   ),
                   // lorem_ipsum package.
-                  PackageLicenseInfo(
-                    packageName: 'aboutPage.packageLoremIpsumName',
-                    packageLicense: 'aboutPage.packageLoremIpsumLicense',
+                  LicenseInfo(
+                    packageName: 'lorem_ipsum',
+                    copyright: '2019-2025 lorem_ipsum contributors',
+                    license: 'MIT',
+                    packageUrl: 'https://pub.dev/packages/lorem_ipsum',
                   ),
                 ],
               ),
@@ -57,38 +77,6 @@ class AboutPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-/// Widget to display a package name and its license.
-class PackageLicenseInfo extends StatelessWidget {
-  final String packageName;
-  final String packageLicense;
-
-  const PackageLicenseInfo({
-    super.key,
-    required this.packageName,
-    required this.packageLicense,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          Localization.getText(packageName),
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        RichText(
-          text: Localization.getRichText(
-            packageLicense,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ),
-        const SizedBox(height: 16),
-      ],
     );
   }
 }

@@ -27,7 +27,11 @@
     },
     "aboutPage": {
         "title": "Über diese App",
-        "packagesUsed": "Verwendete Pakete zum Erstellen dieser App"
+        "packagesUsed": "Verwendete Pakete zum Erstellen dieser App",
+        "licLoading": "Lizenzdaten werden geladen...",
+        "licError": "Lizenzdaten konnten nicht geladen werden. Versuchen Sie, die Seite neu zu laden (F5).",
+        "licDetails": "Lizenzdetails anzeigen",
+        "licSource": "Quelle"
     },
     "dashboardModule": {
         "title": "Dashboard"

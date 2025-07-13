@@ -13,10 +13,7 @@ library localization;
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:lorem_ipsum/lorem_ipsum.dart';
-import 'package:flutter_playground/helpers/app_theme.dart';
 import 'package:flutter_playground/helpers/loading_overlay.dart';
 
 /// Notifier for the currently selected app language.
@@ -189,44 +186,5 @@ class Localization {
   /// Get a localized string using the current language.
   static String getText(String key) {
     return _getLocalizedText(key, currentLanguageNotifier.value);
-  }
-
-  /// Get a RichText widget with clickable URLs for the given key.
-  static TextSpan getRichText(String key, {TextStyle? style}) {
-    final text = _getLocalizedText(key, currentLanguageNotifier.value);
-    final urlRegex = RegExp(r'(https?:\/\/[^\s]+)', caseSensitive: false);
-    final spans = <TextSpan>[];
-    int start = 0;
-
-    // Split the text into spans based on URLs.
-    urlRegex.allMatches(text).forEach((match) {
-      if (match.start > start) {
-        spans.add(
-          TextSpan(text: text.substring(start, match.start), style: style),
-        );
-      }
-      final url = match.group(0)!;
-      spans.add(
-        TextSpan(
-          text: url,
-          style: style?.copyWith(color: appTheme.colorScheme.primary),
-          recognizer: TapGestureRecognizer()
-            ..onTap = () async {
-              final uri = Uri.parse(url);
-              if (await canLaunchUrl(uri)) {
-                await launchUrl(uri, mode: LaunchMode.externalApplication);
-              }
-            },
-        ),
-      );
-      start = match.end;
-    });
-
-    // Add any remaining text after the last URL.
-    if (start < text.length) {
-      spans.add(TextSpan(text: text.substring(start), style: style));
-    }
-
-    return TextSpan(children: spans, style: style);
   }
 }
