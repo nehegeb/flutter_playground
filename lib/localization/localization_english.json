@@ -14,8 +14,13 @@
         },
         "settings": "Settings"
     },
+    "homePage": {
+        "title": "Home",
+        "messageWelcome": "Welcome",
+        "messageLogin": "You are currently in guest mode. Click here to log in..."
+    },
     "loginPage": {
-        "title": "Login Page",
+        "title": "Login",
         "username": "Username",
         "password": "Password",
         "loginButton": "Login",
@@ -37,10 +42,10 @@
         "title": "Dashboard"
     },
     "firebaseModule": {
-        "title": "Firebase"
+        "title": "Modul 1"
     },
     "sqlDatabaseModule": {
-        "title": "SQL Database"
+        "title": "Modul 2"
     },
     "authorization": {
         "roles": {

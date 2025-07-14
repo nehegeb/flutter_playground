@@ -1,40 +1,33 @@
-/// main_module_bar.dart
-///
-/// Provides a vertical, draggable module bar for navigation between app modules.
-///
-/// Features:
-/// - Displays a bar on the left side of the screen with buttons for each module.
-/// - Highlights the selected module.
-/// - Allows resizing the bar width by dragging the right edge.
-/// - Shows the selected module's content in the main area.
-///
-/// Usage:
-///   Place [ModuleBar] as a top-level widget in your app's layout.
-///   The bar will handle module selection and display the corresponding module widget.
-library main_module_bar;
+// main_module_bar.dart
+//
+// Provides a vertical, draggable module bar for navigation between app modules.
+//
+// Features:
+// - Displays a bar on the left side of the screen with buttons for each module.
+// - Highlights the selected module.
+// - Allows resizing the bar width by dragging the right edge.
+// - Shows the selected module's content in the main area.
+//
+// Usage:
+//   Place [MainModuleBar] as a top-level widget in your app's layout.
+//   The bar will handle module selection and display the corresponding module widget.
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/helpers/app_router.dart';
 import 'package:flutter_playground/helpers/app_permissions.dart';
 import 'package:flutter_playground/localization/localization.dart';
-import 'package:flutter_playground/module_pages/default_page.dart';
-import 'package:flutter_playground/module_pages/login_page.dart';
-import 'package:flutter_playground/module_pages/unauthorized_page.dart';
-import 'package:flutter_playground/module_pages/about_page.dart';
-import 'package:flutter_playground/module_dashboard/module_dashboard.dart';
-import 'package:flutter_playground/module_firebase/module_firebase.dart';
-import 'package:flutter_playground/module_sql_database/module_sql_database.dart';
 
 /// A vertical module bar positioned on the left side of the screen.
-class ModuleBar extends StatefulWidget {
+class MainModuleBar extends StatefulWidget {
   final String module;
-  const ModuleBar({super.key, required this.module});
+  const MainModuleBar({super.key, required this.module});
 
   @override
-  State<ModuleBar> createState() => _ModuleBarState();
+  State<MainModuleBar> createState() => _MainModuleBarState();
 }
 
-class _ModuleBarState extends State<ModuleBar> {
+class _MainModuleBarState extends State<MainModuleBar> {
   // The initial width of the draggable module bar.
   double _moduleBarWidth = 250;
 
@@ -65,6 +58,13 @@ class _ModuleBarState extends State<ModuleBar> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Home page.
+                      _ModuleBarButton(
+                        icon: Icons.home,
+                        label: Localization.getText('homePage.title'),
+                        onTap: () => context.go('/home'),
+                        selected: currentModule == 'HomePage',
+                      ),
                       // Only render module buttons button if user has permission.
                       // Dashboard module.
                       if (user != null &&
@@ -145,27 +145,7 @@ class _ModuleBarState extends State<ModuleBar> {
         ),
         // The module content area that expands to fill the remaining space.
         Expanded(
-          child: Center(
-            // The modules are defined in 'app_router.dart'.
-            child: (() {
-              switch (currentModule) {
-                case 'LoginPage':
-                  return LoginPage();
-                case 'UnauthorizedPage':
-                  return UnauthorizedPage();
-                case 'AboutPage':
-                  return AboutPage();
-                case 'DashboardModule':
-                  return DashboardModule();
-                case 'FirebaseModule':
-                  return FirebaseModule();
-                case 'SqlDatabaseModule':
-                  return SqlDatabaseModule();
-                default:
-                  return DefaultPage();
-              }
-            })(),
-          ),
+          child: Center(child: ModuleBarNavigation(module: currentModule)),
         ),
       ],
     );

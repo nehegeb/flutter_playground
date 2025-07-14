@@ -4,6 +4,10 @@
 /// Handles localization loading, theme, and the [MainAppBar].
 library main;
 
+// TODO: Implement dark theme support and add it to the AppBar.
+// TODO: Refactor all files to remove library comments at the top.
+// TODO: Implement persistent storage for notifiers using shared_preferences.
+
 import 'package:flutter/material.dart';
 import 'helpers/app_theme.dart';
 import 'helpers/app_router.dart';
@@ -98,9 +102,9 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // The upper app bar.
-      appBar: MainAppBar(title: Localization.getText('appName')),
-      // The lower body with a module bar and the module content area.
-      body: ModuleBar(module: widget.module),
+      appBar: MainAppBar(),
+      // The lower part with a module bar and the module content area.
+      body: MainModuleBar(module: widget.module),
     );
   }
 }

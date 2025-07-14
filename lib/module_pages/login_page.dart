@@ -14,7 +14,8 @@ class LoginPage extends StatefulWidget {
   /// Static logout function to clear the current user and navigate to login page.
   static void logout(BuildContext context) {
     currentUserNotifier.value = null;
-    context.go('/login');
+    // Navigate to the home page, even if the user is already there.
+    context.go('/home', extra: DateTime.now().millisecondsSinceEpoch);
   }
 
   @override
@@ -42,8 +43,8 @@ class _LoginPageState extends State<LoginPage> {
         _invalidLogin = false;
       });
       currentUserNotifier.value = user;
-      //context.go('/dashboard'); // Navigate to the dashboard.
-      context.pop(); // Remove the login page from the stack.
+      context.go('/home'); // Navigate to the home page.
+      //context.pop(); // Remove the login page from the stack.
     } else {
       // Invalid login, clear password field and show error message.
       setState(() {

@@ -1,14 +1,13 @@
 /// main_app_bar.dart
 ///
-/// Provides a reusable AppBar widget for the app.
-///
-/// The [MainAppBar] widget displays a given title, optional action widgets,
-/// and a language selector popup menu. It integrates with the app's localization system
-/// and uses the global currentLanguageNotifier for language changes.
+/// Provides a reusable [MainAppBar] widget for the app.
+/// It displays a given module title and a language selector popup menu,
+/// as well as a user profile menu with login/logout options.
 library main_app_bar;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/helpers/app_router.dart';
 import 'package:country_flags/country_flags.dart';
 import 'localization/localization.dart';
 import 'helpers/ui_widgets.dart';
@@ -17,14 +16,7 @@ import 'module_pages/login_page.dart';
 
 /// A customizable app bar for the app.
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
-  /// The title to display in the app bar.
-  final String title;
-
-  /// Additional action widgets to display in the app bar.
-  final List<Widget>? actions;
-
-  /// Creates a [MainAppBar].
-  const MainAppBar({super.key, required this.title, this.actions});
+  const MainAppBar({super.key});
 
   @override
   State<MainAppBar> createState() => _MainAppBarState();
@@ -39,7 +31,22 @@ class _MainAppBarState extends State<MainAppBar> {
     super.initState();
   }
 
-  /// Converts a string to name case (capitalize each word).
+  // Generate the title to display in the app bar.
+  String getAppBarTitle() {
+    final appName = Localization.getText('appName');
+
+    // Get the module title from the url.
+    final moduleName = AppRouter.getModuleTitle(context);
+
+    // Build the title based on the module.
+    if (moduleName.isNotEmpty && moduleName != '') {
+      return '$appName | $moduleName';
+    }
+    return appName;
+  }
+
+  // Converts a string to name case (capitalize each word).
+  // TODO: Move to helper_methods.dart (or helper_widgets.dart).
   String toNameCase(String input) {
     return input
         .split(' ')
@@ -56,9 +63,8 @@ class _MainAppBarState extends State<MainAppBar> {
     final String currentLanguage = currentLanguageNotifier.value;
     return SafeArea(
       child: AppBar(
-        title: Text(widget.title),
+        title: Text(getAppBarTitle()),
         actions: [
-          ...?widget.actions,
           // Language selector.
           PopupMenuButton<String>(
             icon: CountryFlag.fromCountryCode(
@@ -90,14 +96,7 @@ class _MainAppBarState extends State<MainAppBar> {
                   label: Localization.getText('appBar.languageSelector.german'),
                 ),
               ),
-              PopupMenuEntryCompact(
-                value: 'foo',
-                selected: currentLanguage == 'foo',
-                child: FlagMenuItem(
-                  countryCode: 'xx',
-                  label: Localization.getText('placeholder'),
-                ),
-              ),
+              // NOTE: Add more languages here as needed.
             ],
           ),
           const SizedBox(width: 8),

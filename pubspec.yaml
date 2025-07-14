@@ -10,8 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_web_plugins:
-    sdk: flutter
+    sdk: flutter 
   go_router: ^13.2.2
+  #shared_preferences: ^2.2.3   # TODO: Implement persistent storage for notifiers.
   url_launcher: ^6.2.6
   pluto_grid: ^7.0.0
   lorem_ipsum: ^0.0.3

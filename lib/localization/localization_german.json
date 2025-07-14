@@ -14,8 +14,13 @@
         },
         "settings": "Einstellungen"
     },
+    "homePage": {
+        "title": "Startseite",
+        "messageWelcome": "Willkommen",
+        "messageLogin": "Sie befinden sich derzeit im Gastmodus. Klicken Sie hier, um sich anzumelden..."
+    },
     "loginPage": {
-        "title": "Anmeldeseite",
+        "title": "Anmelden",
         "username": "Benutzername",
         "password": "Passwort",
         "loginButton": "Anmelden",
@@ -37,10 +42,10 @@
         "title": "Dashboard"
     },
     "firebaseModule": {
-        "title": "Firebase"
+        "title": "Module 1"
     },
     "sqlDatabaseModule": {
-        "title": "SQL Datenbank"
+        "title": "Module 2"
     },
     "authorization": {
         "roles": {
