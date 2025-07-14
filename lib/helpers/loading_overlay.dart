@@ -22,6 +22,7 @@ library loading_overlay;
 import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'app_theme.dart';
 
 /// A global loading overlay that blocks user interaction and displays
@@ -96,13 +97,23 @@ class _LoadingOverlayWidget extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Platform.isIOS
-                    ? const CupertinoActivityIndicator()
-                    : CircularProgressIndicator(
+                (kIsWeb // Check if running on web.
+                    // Web throws errors when using Platform.isIOS without checking kIsWeb before.
+                    ? CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
                           appTheme.progressIndicatorTheme.color ?? Colors.black,
                         ),
-                      ),
+                      )
+                    : (Platform.isIOS
+                          // If it's iOS, use Cupertino.
+                          ? const CupertinoActivityIndicator()
+                          // Otherwise, use Material.
+                          : CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                appTheme.progressIndicatorTheme.color ??
+                                    Colors.black,
+                              ),
+                            ))),
                 const SizedBox(height: 24),
                 Text(
                   message,

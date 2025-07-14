@@ -24,10 +24,9 @@ class GlobalNotifiers {
   }
 
   /// Set the current device type.
-  static bool setMobile(bool isMobile) {
+  static void setMobile(bool isMobile) {
     currentDeviceNotifier.value = [
       {'isMobile': isMobile},
     ];
-    return isMobile;
   }
 }

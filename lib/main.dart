@@ -15,6 +15,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'helpers/app_theme.dart';
 import 'helpers/app_router.dart';
 import 'helpers/global_notifiers.dart';
@@ -51,12 +52,11 @@ class MainApp extends StatefulWidget {
 /// Loads localization files on startup and sets initial language.
 class _MainAppState extends State<MainApp> {
   bool _isAppInitialized = false; // Track if app initialization is complete.
+  bool _isMobilePrevious = false;
 
   @override
   void initState() {
     super.initState();
-    // Check the device type and update the notifier.
-    _checkDeviceType();
     // Get the language the user uses and initialize localization.
     _initLocalization();
   }
@@ -70,14 +70,6 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
-  /// Check the device type and update the current device notifier.
-  void _checkDeviceType() {
-    final isMobile = Platform.isIOS || Platform.isAndroid;
-    // 600 is a common breakpoint for mobile devices.
-    //final isMobile = MediaQuery.of(context).size.width < 600;
-    GlobalNotifiers.setMobile(isMobile);
-  }
-
   @override
   Widget build(BuildContext context) {
     // Main app with theme and home screen.
@@ -85,10 +77,25 @@ class _MainAppState extends State<MainApp> {
       theme: appTheme,
       routerConfig: appRouter,
       builder: (context, child) {
+        // Check if the device type has changed since the last build.
+        // This is necessary to update the global notifier if the window size changes.
+        final isMobile =
+            GlobalNotifiers.isMobile; // Should be false by default.
+        if (_isMobilePrevious != isMobile) {
+          if (MediaQuery.of(context).size.width < 600) {
+            _isMobilePrevious = true;
+            GlobalNotifiers.setMobile(true);
+          } else {
+            _isMobilePrevious = false;
+            GlobalNotifiers.setMobile(false);
+          }
+        }
+
         // If the app is not initialized, show the splash screen.
         if (!_isAppInitialized) {
           return SplashScreen();
         }
+
         // Show SplashScreen if window is too small.
         return LayoutBuilder(
           builder: (context, constraints) {
@@ -185,13 +192,22 @@ class SplashScreen extends StatelessWidget {
                             context,
                           ).textTheme.bodyMedium?.copyWith(color: Colors.red),
                         )
-                      : (Platform.isIOS
-                            ? const CupertinoActivityIndicator()
-                            : CircularProgressIndicator(
+                      : (kIsWeb // Check if running on web.
+                            // Web throws errors when using Platform.isIOS without checking kIsWeb before.
+                            ? CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(
                                   indicatorColor,
                                 ),
-                              )),
+                              )
+                            : (Platform.isIOS
+                                  // If it's iOS, use Cupertino.
+                                  ? const CupertinoActivityIndicator()
+                                  // Otherwise, use Material.
+                                  : CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        indicatorColor,
+                                      ),
+                                    ))),
                 ],
               );
             },
