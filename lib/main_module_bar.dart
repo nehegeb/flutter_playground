@@ -17,6 +17,13 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/helpers/app_router.dart';
 import 'package:flutter_playground/helpers/app_permissions.dart';
 import 'package:flutter_playground/localization/localization.dart';
+import 'helpers/global_notifiers.dart';
+
+/// Notifier for the currently selected app language.
+final ValueNotifier<List<Map<String, dynamic>>> currentModuleBarNotifier =
+    ValueNotifier<List<Map<String, dynamic>>>([
+      {'isBarHidden': true, 'isBarWide': true},
+    ]);
 
 /// A vertical module bar positioned on the left side of the screen.
 class MainModuleBar extends StatefulWidget {
@@ -27,46 +34,122 @@ class MainModuleBar extends StatefulWidget {
   State<MainModuleBar> createState() => _MainModuleBarState();
 }
 
+/// State for [MainModuleBar].
 class _MainModuleBarState extends State<MainModuleBar> {
-  // The initial width of the draggable module bar.
-  double _moduleBarWidth = 250;
+  // Listen to the notifier for isBarWide.
+  @override
+  void initState() {
+    super.initState();
+    currentModuleBarNotifier.addListener(_onNotifierChanged);
+  }
+
+  @override
+  void dispose() {
+    currentModuleBarNotifier.removeListener(_onNotifierChanged);
+    super.dispose();
+  }
+
+  void _onNotifierChanged() {
+    setState(() {}); // Rebuild when notifier changes.
+  }
+
+  // The [MainModuleBar] itself, which contains buttons for each module.
+  @override
+  Widget build(BuildContext context) {
+    final String currentModule = widget.module;
+    final user = currentUserNotifier.value;
+    final isMobileDevice = GlobalNotifiers.isMobile();
+
+    // Get isBarWide from the notifier (default to true if not set).
+    final isBarWide = currentModuleBarNotifier.value.isNotEmpty
+        ? (currentModuleBarNotifier.value.first['isBarWide'] as bool? ?? true)
+        : true;
+
+    // Get isBarHidden from the notifier (default to true if not set).
+    final isBarHidden = currentModuleBarNotifier.value.isNotEmpty
+        ? (currentModuleBarNotifier.value.first['isBarHidden'] as bool? ?? true)
+        : true;
+
+    return Container(
+      child: isMobileDevice
+          ? Stack(
+              children: [
+                // For mobile devices, fill the whole screen with the module area...
+                Center(child: ModuleBarNavigation(module: currentModule)),
+                // ... and display the module bar as a floating side bar to the left.
+                isBarHidden
+                    // Hide the module bar if isBarHidden is true.
+                    ? SizedBox.shrink()
+                    // Otherwise, display the floating module bar.
+                    : _ModuleBarFloating(
+                        isWide:
+                            false, // Always use narrow bar on mobile devices.
+                        currentModule: currentModule,
+                        user: user,
+                      ),
+              ],
+            )
+          : Row(
+              children: [
+                // For wide screens, display the module bar on the left side...
+                _ModuleBar(
+                  isWide: isBarWide,
+                  currentModule: currentModule,
+                  user: user,
+                ),
+                // ... and to its right the module area that fills the remaining space.
+                Expanded(
+                  child: Center(
+                    child: ModuleBarNavigation(module: currentModule),
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+/// A widget module bar of [MainModuleBar] itself.
+class _ModuleBar extends StatelessWidget {
+  final bool isWide;
+  final String currentModule;
+  final dynamic user;
+
+  static const double barWidthWide = 250;
+  static const double barWidthNarrow = 65;
+
+  const _ModuleBar({
+    required this.isWide,
+    required this.currentModule,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // Get the current module from the widget parameter.
-    final String currentModule = widget.module;
-    // Get the current user from the app permissions.
-    final user = currentUserNotifier.value;
-
-    // Define min and max width constraints of the module bar.
-    const double minWidth = 64;
-    final double maxWidth = MediaQuery.of(context).size.width / 3;
-    // Use the state variable and clamp it.
-    double moduleBarWidth = _moduleBarWidth.clamp(minWidth, maxWidth);
-
-    return Row(
-      children: [
-        // The module bar itself, which contains buttons for each module.
-        SizedBox(
-          width: moduleBarWidth,
-          child: Stack(
-            children: [
-              Container(
-                color: Theme.of(context).colorScheme.surface,
-                child: SafeArea(
+    return SizedBox(
+      width: isWide ? barWidthWide : barWidthNarrow,
+      child: Container(
+        color: Theme.of(context).colorScheme.surface,
+        child: SafeArea(
+          // LayoutBuilder ensures the scroll view fills the available height.
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.zero,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Home page.
+                      // Home Page.
                       _ModuleBarButton(
                         icon: Icons.home,
                         label: Localization.getText('homePage.title'),
                         onTap: () => context.go('/home'),
                         selected: currentModule == 'HomePage',
                       ),
-                      // Only render module buttons button if user has permission.
-                      // Dashboard module.
+                      // Dashboard Module.
                       if (user != null &&
                               user.permissions.contains('module_dashboard') ||
                           user?.role == 'admin')
@@ -76,7 +159,7 @@ class _MainModuleBarState extends State<MainModuleBar> {
                           onTap: () => context.go('/dashboard'),
                           selected: currentModule == 'DashboardModule',
                         ),
-                      // Firebase module.
+                      // Firebase Module.
                       if (user != null &&
                               user.permissions.contains('module_firebase') ||
                           user?.role == 'admin')
@@ -86,7 +169,7 @@ class _MainModuleBarState extends State<MainModuleBar> {
                           onTap: () => context.go('/firebase'),
                           selected: currentModule == 'FirebaseModule',
                         ),
-                      // SQL Database module.
+                      // SQL Database Module.
                       if (user != null &&
                               user.permissions.contains(
                                 'module_sql_database',
@@ -103,55 +186,41 @@ class _MainModuleBarState extends State<MainModuleBar> {
                     ],
                   ),
                 ),
-              ),
-              // Add a draggable handle at the right edge.
-              Positioned(
-                right: 0,
-                top: 0,
-                bottom: 0,
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.resizeLeftRight,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onHorizontalDragUpdate: (details) {
-                      setState(() {
-                        _moduleBarWidth += details.delta.dx;
-                        _moduleBarWidth = _moduleBarWidth.clamp(
-                          minWidth,
-                          maxWidth,
-                        );
-                      });
-                    },
-                    child: Container(
-                      width: 8,
-                      color: Colors.transparent,
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        width: 3,
-                        margin: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withAlpha(5),
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              );
+            },
           ),
         ),
-        // The module content area that expands to fill the remaining space.
-        Expanded(
-          child: Center(child: ModuleBarNavigation(module: currentModule)),
-        ),
-      ],
+      ),
     );
   }
 }
 
+/// A widget that uses the [_ModuleBar] in a floating side bar.
+class _ModuleBarFloating extends StatelessWidget {
+  final bool isWide;
+  final String currentModule;
+  final dynamic user;
+
+  const _ModuleBarFloating({
+    required this.isWide,
+    required this.currentModule,
+    required this.user,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: isWide ? _ModuleBar.barWidthWide : _ModuleBar.barWidthNarrow,
+      child: _ModuleBar(
+        isWide: isWide,
+        currentModule: currentModule,
+        user: user,
+      ),
+    );
+  }
+}
+
+/// A widget for the buttons in the [MainModuleBar].
 class _ModuleBarButton extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -169,7 +238,13 @@ class _ModuleBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
-        onTap: onTap,
+        onTap: () {
+          // Set isBarHidden to true when a button is tapped.
+          if (currentModuleBarNotifier.value.isNotEmpty) {
+            currentModuleBarNotifier.value.first['isBarHidden'] = true;
+          }
+          onTap();
+        },
         child: Container(
           color: selected
               ? Theme.of(context).colorScheme.primary.withAlpha(32)

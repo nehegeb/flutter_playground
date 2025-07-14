@@ -7,16 +7,33 @@ library main;
 // TODO: Implement dark theme support and add it to the AppBar.
 // TODO: Refactor all files to remove library comments at the top.
 // TODO: Implement persistent storage for notifiers using shared_preferences.
+// TODO: Feedback widget!
+// TODO: home_widget for mobile widgets?!
+// TODO: Widgets to keep in mind: CircleAvatar, SnackBar, SelectableText
 
+import 'dart:io' show Platform;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'helpers/app_theme.dart';
 import 'helpers/app_router.dart';
+import 'helpers/global_notifiers.dart';
 import 'localization/localization.dart';
 import 'main_app_bar.dart';
 import 'main_module_bar.dart';
 
 /// The main function that starts the Flutter app.
 void main() {
+  WidgetsFlutterBinding.ensureInitialized(); // Needed for SystemChrome.
+  // Set the system UI overlay style for the app.
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
+
   runApp(const MainApp());
 }
 
@@ -38,6 +55,8 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     super.initState();
+    // Check the device type and update the notifier.
+    _checkDeviceType();
     // Get the language the user uses and initialize localization.
     _initLocalization();
   }
@@ -51,6 +70,14 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
+  /// Check the device type and update the current device notifier.
+  void _checkDeviceType() {
+    final isMobile = Platform.isIOS || Platform.isAndroid;
+    // 600 is a common breakpoint for mobile devices.
+    //final isMobile = MediaQuery.of(context).size.width < 600;
+    GlobalNotifiers.setMobile(isMobile);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Main app with theme and home screen.
@@ -62,8 +89,15 @@ class _MainAppState extends State<MainApp> {
         if (!_isAppInitialized) {
           return SplashScreen();
         }
-        // Otherwise, return the main content.
-        return child!;
+        // Show SplashScreen if window is too small.
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth < 400 || constraints.maxHeight < 300) {
+              return SplashScreen(isTooSmall: true);
+            }
+            return child!;
+          },
+        );
       },
     );
   }
@@ -111,21 +145,56 @@ class _MainScreenState extends State<MainScreen> {
 
 /// A splash screen shown during app initialization.
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({super.key, this.isTooSmall = false});
+  final bool isTooSmall;
 
   @override
   Widget build(BuildContext context) {
     // Use the app theme's progress indicator color.
     final Color indicatorColor =
-        appTheme.progressIndicatorTheme.color ?? Colors.teal;
+        appTheme.progressIndicatorTheme.color ?? Colors.black;
 
     // Show a centered loading indicator.
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
         body: Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(indicatorColor),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final double logoHeight = 120;
+              final bool hideLogo =
+                  constraints.maxHeight < (logoHeight + 50) ||
+                  constraints.maxWidth < 200;
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (!hideLogo)
+                    Hero(
+                      tag: 'logo',
+                      child: Image.asset(
+                        'lib/img/appLogo.png',
+                        height: logoHeight,
+                      ),
+                    ),
+                  if (!hideLogo) const SizedBox(height: 20),
+                  // Adjust the loading indicator based on the platform (iOs vs Android/rest).
+                  isTooSmall
+                      ? Text(
+                          Localization.getText('errors.windowTooSmall'),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.red),
+                        )
+                      : (Platform.isIOS
+                            ? const CupertinoActivityIndicator()
+                            : CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  indicatorColor,
+                                ),
+                              )),
+                ],
+              );
+            },
           ),
         ),
       ),

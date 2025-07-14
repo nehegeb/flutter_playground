@@ -44,7 +44,6 @@ class _LoginPageState extends State<LoginPage> {
       });
       currentUserNotifier.value = user;
       context.go('/home'); // Navigate to the home page.
-      //context.pop(); // Remove the login page from the stack.
     } else {
       // Invalid login, clear password field and show error message.
       setState(() {

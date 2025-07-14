@@ -196,6 +196,9 @@ class _LicensePopup extends StatelessWidget {
 class Licensing {
   /// Loads the licensing data from the JSON files.
   static Future<void> initLicensingData() async {
-    await _loadLicenseDescriptions();
+    // Only load the license data if it hasn't been loaded yet.
+    if (licenseData == null) {
+      await _loadLicenseDescriptions();
+    }
   }
 }

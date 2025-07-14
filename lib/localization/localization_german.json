@@ -1,8 +1,10 @@
 {
-    "languageName": "Deutsch",
-    "languageCode": "de",
-    "countryCode": "de",
     "appName": "Flutter Playground",
+    "language": {
+        "languageName": "Deutsch",
+        "languageCode": "de",
+        "countryCode": "de"
+    },
     "appBar": {
         "languageSelector": {
             "english": "Englisch",
@@ -11,8 +13,7 @@
         "profileSelector": {
             "login": "Anmelden",
             "logout": "Abmelden"
-        },
-        "settings": "Einstellungen"
+        }
     },
     "homePage": {
         "title": "Startseite",
@@ -53,5 +54,8 @@
             "user": "Mitglied",
             "guest": "Gast"
         }
+    },
+    "errors": {
+        "windowTooSmall": "Fenster zu klein!"
     }
 }

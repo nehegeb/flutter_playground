@@ -10,8 +10,10 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/helpers/app_router.dart';
 import 'package:country_flags/country_flags.dart';
 import 'localization/localization.dart';
+import 'main_module_bar.dart';
 import 'helpers/ui_widgets.dart';
 import 'helpers/app_permissions.dart';
+import 'helpers/global_notifiers.dart';
 import 'module_pages/login_page.dart';
 
 /// A customizable app bar for the app.
@@ -40,7 +42,7 @@ class _MainAppBarState extends State<MainAppBar> {
 
     // Build the title based on the module.
     if (moduleName.isNotEmpty && moduleName != '') {
-      return '$appName | $moduleName';
+      return '$appName   |   $moduleName';
     }
     return appName;
   }
@@ -61,14 +63,90 @@ class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
     final String currentLanguage = currentLanguageNotifier.value;
+    final double spacingWidth = 8;
+
+    // Regarding the back button in the leading section.
+    bool hasBackButton = Navigator.of(context).canPop();
+    double leadingWidth = hasBackButton ? 100 : 56;
+
+    // Check the device type.
+    final bool isMobileDevice = GlobalNotifiers.isMobile();
+
+    // Toggle the width of the module bar between wide and narrow, updating the notifier.
+    void toggleBarNotifier(String key) {
+      // Only allow specific keys.
+      if (key != 'isBarHidden' && key != 'isBarWide') {
+        throw ArgumentError(
+          "Invalid key: $key. Allowed keys are 'isBarHidden', 'isBarWide'.",
+        );
+      }
+      // Toggle the specified key in the notifier.
+      final current = currentModuleBarNotifier.value.isNotEmpty
+          ? currentModuleBarNotifier.value.first
+          : {key: true, key: false};
+      final updated = {...current, key: !(current[key] as bool)};
+      // Update the notifier with the new value.
+      currentModuleBarNotifier.value = [updated];
+    }
+
     return SafeArea(
       child: AppBar(
-        title: Text(getAppBarTitle()),
+        leadingWidth: leadingWidth,
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(width: spacingWidth),
+            // Show the back button if the navigator can pop.
+            if (hasBackButton) ...[
+              IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).maybePop(),
+                tooltip: '',
+              ),
+              SizedBox(width: spacingWidth),
+            ],
+            // Menu button for the [MainModuleBar].
+            IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                // Do different things depending on the screen size / device type.
+                if (isMobileDevice) {
+                  // Toggle the visibility of the module bar on mobile devices.
+                  toggleBarNotifier('isBarHidden');
+                } else {
+                  // Toggle the width of the module bar for wide screens.
+                  toggleBarNotifier('isBarWide');
+                }
+              },
+              tooltip: '', // Remove unnecessary tooltip.
+            ),
+          ],
+        ),
+        title: Row(
+          children: [
+            // App logo.
+            Hero(
+              tag: 'logo',
+              child: SizedBox(
+                height: 35,
+                child: Image.asset('lib/img/appLogo.png', fit: BoxFit.contain),
+              ),
+            ),
+            SizedBox(width: 20),
+            Flexible(
+              child: Text(
+                getAppBarTitle(),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ),
+          ],
+        ),
         actions: [
           // Language selector.
           PopupMenuButton<String>(
             icon: CountryFlag.fromCountryCode(
-              Localization.getText('countryCode'),
+              Localization.getText('language.countryCode'),
               shape: Circle(),
               width: 24,
             ),
@@ -99,7 +177,7 @@ class _MainAppBarState extends State<MainAppBar> {
               // NOTE: Add more languages here as needed.
             ],
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: spacingWidth),
 
           // Logout selector.
           PopupMenuButton<String>(
@@ -139,7 +217,7 @@ class _MainAppBarState extends State<MainAppBar> {
                         child: Row(
                           children: [
                             const Icon(Icons.account_circle, size: 32),
-                            const SizedBox(width: 12),
+                            SizedBox(width: spacingWidth),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -192,7 +270,7 @@ class _MainAppBarState extends State<MainAppBar> {
               ];
             },
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: spacingWidth),
         ],
       ),
     );

@@ -1,8 +1,10 @@
 {
-    "languageName": "English",
-    "languageCode": "en",
-    "countryCode": "us",
     "appName": "Flutter Playground",
+    "language": {
+        "languageName": "English",
+        "languageCode": "en",
+        "countryCode": "us"
+    },
     "appBar": {
         "languageSelector": {
             "english": "English",
@@ -11,8 +13,7 @@
         "profileSelector": {
             "login": "Login",
             "logout": "Logout"
-        },
-        "settings": "Settings"
+        }
     },
     "homePage": {
         "title": "Home",
@@ -53,6 +54,9 @@
             "user": "Member",
             "guest": "Guest"
         }
+    },
+    "errors": {
+        "windowTooSmall": "Window too small!"
     },
     "testKey": "This is for performing a valid test where only the English localization has this key."
 }

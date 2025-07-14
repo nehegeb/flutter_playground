@@ -19,6 +19,8 @@
 /// The overlay is automatically removed when [dismiss] is called.
 library loading_overlay;
 
+import 'dart:io' show Platform;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 
@@ -94,7 +96,13 @@ class _LoadingOverlayWidget extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const CircularProgressIndicator(),
+                Platform.isIOS
+                    ? const CupertinoActivityIndicator()
+                    : CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          appTheme.progressIndicatorTheme.color ?? Colors.black,
+                        ),
+                      ),
                 const SizedBox(height: 24),
                 Text(
                   message,
