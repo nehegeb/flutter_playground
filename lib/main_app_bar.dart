@@ -13,6 +13,7 @@ import 'localization/localization.dart';
 import 'main_module_bar.dart';
 import 'helpers/ui_widgets.dart';
 import 'helpers/app_permissions.dart';
+import 'helpers/app_theme.dart';
 import 'helpers/global_notifiers.dart';
 import 'module_pages/login_page.dart';
 
@@ -40,10 +41,20 @@ class _MainAppBarState extends State<MainAppBar> {
     // Get the module title from the url.
     final moduleName = AppRouter.getModuleTitle(context);
 
+    // Check the device type.
+    final bool isMobileDevice = GlobalNotifiers.isMobile();
+
     // Build the title based on the module.
     if (moduleName.isNotEmpty && moduleName != '') {
-      return '$appName   |   $moduleName';
+      if (isMobileDevice) {
+        // On mobile devices, show only the module name.
+        return moduleName;
+      } else {
+        // On wide screens, show both the app name and the module name.
+        return '$appName   |   $moduleName';
+      }
     }
+    // If no module name is available, just return the app name.
     return appName;
   }
 
@@ -129,7 +140,10 @@ class _MainAppBarState extends State<MainAppBar> {
               tag: 'logo',
               child: SizedBox(
                 height: 35,
-                child: Image.asset('lib/img/appLogo.png', fit: BoxFit.contain),
+                child: Image.asset(
+                  'assets/images/appLogo.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             SizedBox(width: 20),
@@ -142,52 +156,58 @@ class _MainAppBarState extends State<MainAppBar> {
             ),
           ],
         ),
-        actions: [
-          // Language selector.
-          PopupMenuButton<String>(
-            icon: CountryFlag.fromCountryCode(
-              Localization.getText('language.countryCode'),
-              shape: Circle(),
-              width: 24,
-            ),
-            tooltip: "", // Remove unnecessary tooltip.
-            initialValue: currentLanguage,
-            onSelected: (selectedLanguage) async {
-              await Localization.setCurrentLanguage(selectedLanguage);
-            },
-            itemBuilder: (context) => [
-              PopupMenuEntryCompact(
-                value: 'en',
-                selected: currentLanguage == 'en',
-                child: FlagMenuItem(
-                  countryCode: 'us',
-                  label: Localization.getText(
-                    'appBar.languageSelector.english',
-                  ),
-                ),
-              ),
-              PopupMenuEntryCompact(
-                value: 'de',
-                selected: currentLanguage == 'de',
-                child: FlagMenuItem(
-                  countryCode: 'de',
-                  label: Localization.getText('appBar.languageSelector.german'),
-                ),
-              ),
-              // NOTE: Add more languages here as needed.
-            ],
-          ),
-          SizedBox(width: spacingWidth),
 
-          // Logout selector.
+        actions: [
+          // Light/Dark mode toggle for wide screens.
+          if (!isMobileDevice) ...[
+            IconButton(
+              icon: Icon(
+                AppTheme.isDarkMode
+                    ? Icons.wb_sunny_outlined
+                    : Icons.nightlight_round,
+              ),
+              onPressed: () {
+                setState(() {
+                  AppTheme.toggleMode();
+                });
+              },
+              tooltip: '', // Remove unnecessary tooltip.
+            ),
+            SizedBox(width: spacingWidth),
+          ],
+
+          // Language selector for wide screens.
+          if (!isMobileDevice) ...[
+            PopupMenuButton<String>(
+              icon: CountryFlag.fromCountryCode(
+                Localization.getText('language.countryCode'),
+                shape: Circle(),
+                width: 24,
+              ),
+              tooltip: "", // Remove unnecessary tooltip.
+              initialValue: currentLanguage,
+              onSelected: (selectedLanguage) async {
+                await Localization.setCurrentLanguage(selectedLanguage);
+              },
+              itemBuilder: (context) =>
+                  languageSelectorMenuEntries(currentLanguage),
+            ),
+            SizedBox(width: spacingWidth),
+          ],
+
+          // Menu.
           PopupMenuButton<String>(
-            icon: const Icon(Icons.person),
+            icon: const Icon(Icons.more_vert),
             tooltip: '', // Remove unnecessary tooltip.
             onSelected: (selectedAction) async {
               if (selectedAction == 'login') {
                 await context.push('/login');
               } else if (selectedAction == 'logout') {
                 LoginPage.logout(context);
+              } else if (selectedAction == 'toggleThemeMode') {
+                setState(() {
+                  AppTheme.toggleMode();
+                });
               }
             },
             itemBuilder: (context) {
@@ -196,7 +216,7 @@ class _MainAppBarState extends State<MainAppBar> {
                 // User Card.
                 PopupMenuItem<String>(
                   enabled: false,
-                  height: 80, // double the default height (default is 48)
+                  height: 80, // Bigger than default height (default is 48).
                   child: ValueListenableBuilder<User?>(
                     valueListenable: currentUserNotifier,
                     builder: (context, user, _) {
@@ -250,22 +270,106 @@ class _MainAppBarState extends State<MainAppBar> {
                     },
                   ),
                 ),
+
+                // Move some buttons from the app bar into this menu for mobile devices.
+                if (isMobileDevice) ...[
+                  PopupMenuDivider(), // Separator line.
+                  // Theme mode toggle for mobile devices.
+                  PopupMenuEntryCompact(
+                    value: 'toggleThemeMode',
+                    selected: false,
+                    child: Row(
+                      children: [
+                        Icon(
+                          AppTheme.isDarkMode
+                              ? Icons.wb_sunny_outlined
+                              : Icons.nightlight_round,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          Localization.getText('appBar.menu.switchThemeMode'),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Language selector for mobile devices as a button.
+                  PopupMenuEntryCompact(
+                    value: '', // No value, handle tap manually.
+                    selected: false,
+                    child: Builder(
+                      builder: (context) {
+                        return GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () async {
+                            // Close the current menu.
+                            Navigator.of(context).pop();
+                            // Wait for the menu to close before showing the next.
+                            await Future.delayed(
+                              const Duration(milliseconds: 100),
+                            );
+                            // Show the language selector popup.
+                            final RenderBox button =
+                                context.findRenderObject() as RenderBox;
+                            final RenderBox overlay =
+                                Overlay.of(context).context.findRenderObject()
+                                    as RenderBox;
+                            final Offset position = button.localToGlobal(
+                              Offset.zero,
+                              ancestor: overlay,
+                            );
+                            final selectedLanguage = await showMenu<String>(
+                              context: context,
+                              position: RelativeRect.fromLTRB(
+                                position.dx,
+                                position.dy,
+                                position.dx + button.size.width,
+                                position.dy + button.size.height,
+                              ),
+                              items: languageSelectorMenuEntries(
+                                currentLanguage,
+                              ),
+                            );
+                            if (selectedLanguage != null) {
+                              await Localization.setCurrentLanguage(
+                                selectedLanguage,
+                              );
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              CountryFlag.fromCountryCode(
+                                Localization.getText('language.countryCode'),
+                                shape: Circle(),
+                                width: 24,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                Localization.getText(
+                                  'appBar.menu.switchLanguage',
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  PopupMenuDivider(), // Separator line.
+                ],
+
                 // Login/Logout options.
                 if (!isLoggedIn)
                   PopupMenuEntryCompact(
                     value: 'login',
                     selected: false,
-                    child: Text(
-                      Localization.getText('appBar.profileSelector.login'),
-                    ),
+                    child: Text(Localization.getText('appBar.menu.login')),
                   ),
                 if (isLoggedIn)
                   PopupMenuEntryCompact(
                     value: 'logout',
                     selected: false,
-                    child: Text(
-                      Localization.getText('appBar.profileSelector.logout'),
-                    ),
+                    child: Text(Localization.getText('appBar.menu.logout')),
                   ),
               ];
             },
@@ -304,3 +408,26 @@ class FlagMenuItem extends StatelessWidget {
     );
   }
 }
+
+// Reusable function for language selector menu entries.
+List<PopupMenuEntry<String>> languageSelectorMenuEntries(
+  String currentLanguage,
+) => [
+  PopupMenuEntryCompact(
+    value: 'en',
+    selected: currentLanguage == 'en',
+    child: FlagMenuItem(
+      countryCode: 'us',
+      label: Localization.getText('appBar.languageSelector.english'),
+    ),
+  ),
+  PopupMenuEntryCompact(
+    value: 'de',
+    selected: currentLanguage == 'de',
+    child: FlagMenuItem(
+      countryCode: 'de',
+      label: Localization.getText('appBar.languageSelector.german'),
+    ),
+  ),
+  // NOTE: Add more languages here as needed.
+];

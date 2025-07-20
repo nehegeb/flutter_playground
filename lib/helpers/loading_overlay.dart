@@ -77,7 +77,7 @@ class _LoadingOverlayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = appTheme;
+    final appTheme = AppTheme.appTheme;
 
     return Stack(
       children: [
@@ -117,7 +117,7 @@ class _LoadingOverlayWidget extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text(
                   message,
-                  style: theme.textTheme.bodyMedium,
+                  style: appTheme.textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
               ],

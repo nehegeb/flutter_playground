@@ -82,8 +82,7 @@ class _MainModuleBarState extends State<MainModuleBar> {
                     ? SizedBox.shrink()
                     // Otherwise, display the floating module bar.
                     : _ModuleBarFloating(
-                        isWide:
-                            false, // Always use narrow bar on mobile devices.
+                        isWide: true, // Always use wide bar on mobile devices.
                         currentModule: currentModule,
                         user: user,
                       ),

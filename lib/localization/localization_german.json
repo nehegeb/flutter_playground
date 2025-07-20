@@ -6,13 +6,15 @@
         "countryCode": "de"
     },
     "appBar": {
+        "menu": {
+            "login": "Anmelden",
+            "logout": "Abmelden",
+            "switchThemeMode": "Modus wechseln",
+            "switchLanguage": "Sprache wechseln"
+        },
         "languageSelector": {
             "english": "Englisch",
             "german": "Deutsch"
-        },
-        "profileSelector": {
-            "login": "Anmelden",
-            "logout": "Abmelden"
         }
     },
     "homePage": {

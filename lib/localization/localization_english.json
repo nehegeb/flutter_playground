@@ -6,13 +6,15 @@
         "countryCode": "us"
     },
     "appBar": {
+        "menu": {
+            "login": "Login",
+            "logout": "Logout",
+            "switchThemeMode": "Switch mode",
+            "switchLanguage": "Switch language"
+        },
         "languageSelector": {
             "english": "English",
             "german": "German"
-        },
-        "profileSelector": {
-            "login": "Login",
-            "logout": "Logout"
         }
     },
     "homePage": {

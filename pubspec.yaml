@@ -28,4 +28,4 @@ flutter:
   assets:
     - lib/localization/
     - lib/licensing/
-    - lib/img/
+    - assets/images/

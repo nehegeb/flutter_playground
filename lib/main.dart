@@ -59,6 +59,18 @@ class _MainAppState extends State<MainApp> {
     super.initState();
     // Get the language the user uses and initialize localization.
     _initLocalization();
+    // Listen for theme changes to rebuild the app when the theme changes.
+    currentThemeNotifier.addListener(_onThemeChanged);
+  }
+
+  @override
+  void dispose() {
+    currentThemeNotifier.removeListener(_onThemeChanged);
+    super.dispose();
+  }
+
+  void _onThemeChanged() {
+    setState(() {});
   }
 
   /// Load localization JSON files and set the initial language for the whole app.
@@ -74,7 +86,8 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     // Main app with theme and home screen.
     return MaterialApp.router(
-      theme: appTheme,
+      //theme: currentThemeNotifier.value.first['appTheme'] as ThemeData,
+      theme: AppTheme.appTheme,
       routerConfig: appRouter,
       builder: (context, child) {
         // Check if the device type has changed since the last build.
@@ -159,7 +172,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Use the app theme's progress indicator color.
     final Color indicatorColor =
-        appTheme.progressIndicatorTheme.color ?? Colors.black;
+        AppTheme.appTheme.progressIndicatorTheme.color ?? Colors.black;
 
     // Show a centered loading indicator.
     return MaterialApp(
@@ -179,7 +192,7 @@ class SplashScreen extends StatelessWidget {
                     Hero(
                       tag: 'logo',
                       child: Image.asset(
-                        'lib/img/appLogo.png',
+                        'assets/images/appLogo.png',
                         height: logoHeight,
                       ),
                     ),

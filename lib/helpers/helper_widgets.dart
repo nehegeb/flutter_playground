@@ -25,7 +25,7 @@ class Helpers {
       spans.add(
         TextSpan(
           text: url,
-          style: style?.copyWith(color: appTheme.colorScheme.primary),
+          style: style?.copyWith(color: AppTheme.appTheme.colorScheme.primary),
           recognizer: TapGestureRecognizer()
             ..onTap = () async {
               final uri = Uri.parse(url);
