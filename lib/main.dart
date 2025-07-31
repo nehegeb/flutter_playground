@@ -1,12 +1,14 @@
-/// main.dart
-///
-/// Entry point and main app widget for the app.
-/// Handles localization loading, theme, and the [MainAppBar].
-library main;
+// main.dart
+//
+// Entry point and main app widget for the app.
+// Handles localization loading, theme, and the [MainAppBar].
 
-// TODO: Implement dark theme support and add it to the AppBar.
-// TODO: Refactor all files to remove library comments at the top.
+// TODO: Implement changenotes in all modules.
+// TODO: Make the ExpansionTile title background color different when expanded.
+// TODO: Make the "about" page more pretty when both ExpansionTiles are expanded.
+// TODO: Implement some error handling for Helpers.dateToReadableText().
 // TODO: Implement persistent storage for notifiers using shared_preferences.
+// -----
 // TODO: Feedback widget!
 // TODO: home_widget for mobile widgets?!
 // TODO: Widgets to keep in mind: CircleAvatar, SnackBar, SelectableText
@@ -16,12 +18,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'helpers/app_theme.dart';
-import 'helpers/app_router.dart';
-import 'helpers/global_notifiers.dart';
-import 'localization/localization.dart';
-import 'main_app_bar.dart';
-import 'main_module_bar.dart';
+import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/app/app_theme.dart';
+import 'package:flutter_playground/app/app_router.dart';
+import 'package:flutter_playground/app/app_notifiers.dart';
+import 'package:flutter_playground/app/main_app_bar/main_app_bar.dart';
+import 'package:flutter_playground/app/main_module_bar/main_module_bar.dart';
 
 /// The main function that starts the Flutter app.
 void main() {
@@ -59,6 +61,8 @@ class _MainAppState extends State<MainApp> {
     super.initState();
     // Get the language the user uses and initialize localization.
     _initLocalization();
+    // Get the display mode based on the user's device settings.
+    AppTheme.setInitialDisplayMode();
     // Listen for theme changes to rebuild the app when the theme changes.
     currentThemeNotifier.addListener(_onThemeChanged);
   }

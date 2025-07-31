@@ -1,0 +1,99 @@
+{
+    "module": "main",
+    "current_version": "1.0.0",
+    "versions": {
+        "1.2.0": {
+            "date": "2001-11-29",
+            "summary": "And yet another release with new features. Maybe.",
+            "changenotes": {
+                "1": {
+                    "type": "added",
+                    "title": "Initial Release",
+                    "description": "Initial release of the Flutter Playground app."
+                },
+                "2": {
+                    "type": "removed",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                },
+                "3": {
+                    "type": "bugfix",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                },
+                "4": {
+                    "type": "",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                },
+                "5": {
+                    "type": "added",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                }
+            }
+        },
+        "1.1.0": {
+            "date": "2000-05-13",
+            "summary": "This is the first release since the launch of the app.",
+            "changenotes": {
+                "1": {
+                    "type": "added",
+                    "title": "Initial Release",
+                    "description": "Initial release of the Flutter Playground app."
+                },
+                "2": {
+                    "type": "removed",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                },
+                "3": {
+                    "type": "bugfix",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                },
+                "4": {
+                    "type": "",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                },
+                "5": {
+                    "type": "added",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                }
+            }
+        },
+        "1.0.0": {
+            "date": "2000-01-01",
+            "summary": "Initial release of the Flutter Playground app.",
+            "changenotes": {
+                "1": {
+                    "type": "added",
+                    "title": "Initial Release",
+                    "description": "Initial release of the Flutter Playground app."
+                },
+                "2": {
+                    "type": "removed",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                },
+                "3": {
+                    "type": "bugfix",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                },
+                "4": {
+                    "type": "",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                },
+                "5": {
+                    "type": "added",
+                    "title": "Foo Bar",
+                    "description": "Lorem Ipsum Dolor Sit Amet."
+                }
+            }
+        }
+    }
+}

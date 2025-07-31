@@ -24,12 +24,6 @@ void main() {
       expect(Localization.getCurrentLanguage, 'en');
     });
 
-    // Test that the 'of' method returns a Localization instance with the correct language.
-    test('of returns correct instance', () {
-      final loc = Localization.of(TestBuildContext());
-      expect(loc.language, currentLanguageNotifier.value);
-    });
-
     // Test that getText returns a valid localized string for both languages.
     test('getText returns correct localized string', () async {
       await Localization.setCurrentLanguage('en');

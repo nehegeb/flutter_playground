@@ -1,0 +1,89 @@
+{
+    "appName": "Flutter Playground",
+    "language": {
+        "languageName": "Deutsch",
+        "languageCode": "de",
+        "countryCode": "de"
+    },
+    "modules": {
+        "dashboard": {
+            "title": "Dashboard"
+        },
+        "template": {
+            "title": "Modul Vorlage"
+        }
+    },
+    "pages": {
+        "home": {
+            "title": "Startseite",
+            "messageWelcome": "Willkommen",
+            "messageLogin": "Sie befinden sich derzeit im Gastmodus. Klicken Sie hier, um sich anzumelden..."
+        },
+        "login": {
+            "title": "Anmelden",
+            "username": "Benutzername",
+            "password": "Passwort",
+            "loginButton": "Anmelden",
+            "messageInvalidLogin": "Ungültiger Benutzername oder Passwort"
+        },
+        "about": {
+            "title": "Über diese App"
+        },
+        "pageNotFound": {
+            "title": "404 - Seite nicht gefunden",
+            "message": "Die von Ihnen gesuchte Seite existiert nicht."
+        }
+    },
+    "appBar": {
+        "menu": {
+            "login": "Anmelden",
+            "logout": "Abmelden",
+            "switchThemeMode": "Modus wechseln",
+            "switchLanguage": "Sprache wechseln"
+        },
+        "languageSelector": {
+            "english": "Englisch",
+            "german": "Deutsch"
+        }
+    },
+    "authorization": {
+        "roles": {
+            "admin": "Administrator",
+            "user": "Mitglied",
+            "guest": "Gast"
+        }
+    },
+    "changelog": {
+        "title": "Changelog für <<module>>",
+        "loading": "Lade Changelog...",
+        "notLoadedError": "Changelog konnte nicht geladen werden. Versuchen Sie, die Seite neu zu laden (F5)."
+    },
+    "licensing": {
+        "title": "Verwendete Pakete in dieser App",
+        "packageLoading": "Lade verwendete Pakete...",
+        "packageNotLoadedError": "Pakete konnten nicht geladen werden. Versuchen Sie, die Seite neu zu laden (F5).",
+        "licenseLoading": "Lade Lizenzen...",
+        "licenseNotLoadedError": "Lizenzen konnten nicht geladen werden. Versuchen Sie, die Seite neu zu laden (F5).",
+        "licenseDetails": "Lizenzdetails anzeigen",
+        "licenseSource": "Quelle"
+    },
+    "misc": {
+        "months": {
+            "january": "Januar",
+            "february": "Februar",
+            "march": "März",
+            "april": "April",
+            "may": "Mai",
+            "june": "Juni",
+            "july": "Juli",
+            "august": "August",
+            "september": "September",
+            "october": "Oktober",
+            "november": "November",
+            "december": "Dezember"
+        }
+    },
+    "errors": {
+        "windowTooSmall": "Fenster zu klein!"
+    }
+}

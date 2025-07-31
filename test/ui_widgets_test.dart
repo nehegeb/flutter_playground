@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_playground/helpers/ui_widgets.dart';
+import 'package:flutter_playground/misc/ui_widgets/popup_menu_entry_compact.dart';
 
 void main() {
   testWidgets('PopupMenuEntryCompact displays child and returns value on tap', (

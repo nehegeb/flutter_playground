@@ -1,0 +1,90 @@
+{
+    "appName": "Flutter Playground",
+    "language": {
+        "languageName": "English",
+        "languageCode": "en",
+        "countryCode": "us"
+    },
+    "modules": {
+        "dashboard": {
+            "title": "Dashboard"
+        },
+        "template": {
+            "title": "Module Template"
+        }
+    },
+    "pages": {
+        "home": {
+            "title": "Home",
+            "messageWelcome": "Welcome",
+            "messageLogin": "You are currently in guest mode. Click here to log in..."
+        },
+        "login": {
+            "title": "Login",
+            "username": "Username",
+            "password": "Password",
+            "loginButton": "Login",
+            "messageInvalidLogin": "Invalid username or password"
+        },
+        "about": {
+            "title": "About this app"
+        },
+        "pageNotFound": {
+            "title": "404 - Page Not Found",
+            "message": "The page you are looking for does not exist."
+        }
+    },
+    "appBar": {
+        "menu": {
+            "login": "Login",
+            "logout": "Logout",
+            "switchThemeMode": "Switch mode",
+            "switchLanguage": "Switch language"
+        },
+        "languageSelector": {
+            "english": "English",
+            "german": "German"
+        }
+    },
+    "authorization": {
+        "roles": {
+            "admin": "Administrator",
+            "user": "Member",
+            "guest": "Guest"
+        }
+    },
+    "changelog": {
+        "title": "Changelog for <<module>>",
+        "loading": "Loading changelog...",
+        "notLoadedError": "Changelog could not be loaded. Try reloading the page (F5)."
+    },
+    "licensing": {
+        "title": "Packages used in this app",
+        "packageLoading": "Loading used packages...",
+        "packageNotLoadedError": "Packages could not be loaded. Try reloading the page (F5).",
+        "licenseLoading": "Loading licenses...",
+        "licenseNotLoadedError": "Licenses could not be loaded. Try reloading the page (F5).",
+        "licenseDetails": "Show license details",
+        "licenseSource": "Source"
+    },
+    "misc": {
+        "months": {
+            "january": "January",
+            "february": "February",
+            "march": "March",
+            "april": "April",
+            "may": "May",
+            "june": "June",
+            "july": "July",
+            "august": "August",
+            "september": "September",
+            "october": "October",
+            "november": "November",
+            "december": "December"
+        }
+    },
+    "errors": {
+        "windowTooSmall": "Window too small!"
+    },
+    "testKey": "This is for performing a valid test where only the English localization has this key."
+}
