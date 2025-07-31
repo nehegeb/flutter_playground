@@ -5,19 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/localization/localization.dart';
 import 'package:flutter_playground/changelog/changelog.dart';
 import 'package:flutter_playground/changelog/ui_widgets/changelog_expansion_tile.dart';
-import 'package:flutter_playground/licensing/licensing.dart';
-import 'package:flutter_playground/licensing/ui_widgets/license_expansion_tile.dart';
 
-/// The about page of the app.
-class AboutPage extends StatefulWidget {
-  const AboutPage({super.key});
+/// The about page of the dashboard module.
+class DashboardAboutPage extends StatefulWidget {
+  const DashboardAboutPage({super.key});
 
   @override
-  State<AboutPage> createState() => _AboutPageState();
+  State<DashboardAboutPage> createState() => _DashboardAboutPageState();
 }
 
-class _AboutPageState extends State<AboutPage> {
-  static const String module = 'main';
+class _DashboardAboutPageState extends State<DashboardAboutPage> {
+  static const String module = 'dashboard';
 
   @override
   void initState() {
@@ -28,7 +26,6 @@ class _AboutPageState extends State<AboutPage> {
   // Load data for the about page.
   Future<void> _initData() async {
     await Changelog.initChangelogData(module: module);
-    await Licensing.initLicensingData();
   }
 
   @override
@@ -43,16 +40,13 @@ class _AboutPageState extends State<AboutPage> {
             children: [
               // Title of the about page.
               Text(
-                Localization.getText('pages.about.title'),
+                Localization.getText('modules.$module.pages.about.title'),
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 16),
 
               // Changelog section.
               ChangelogExpansionTile(module: module),
-
-              // Packages used in this app.
-              const LicenseExpansionTile(),
             ],
           ),
         ),

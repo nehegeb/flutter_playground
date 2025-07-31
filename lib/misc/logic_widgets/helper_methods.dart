@@ -55,9 +55,13 @@ class Helpers {
   /// Converts a date string in the format 'YYYY-MM-DD' to a more readable text format.
   /// Returns a string in the format 'DD Month YYYY'.
   static String dateToReadableText(String date) {
-    // TODO: Some error handling for invalid date formats.
-    final DateTime parsedDate = DateTime.parse(date);
-    return '${parsedDate.day} ${Helpers.monthNumberToText(parsedDate.month)} ${parsedDate.year}';
+    try {
+      final DateTime parsedDate = DateTime.parse(date);
+      return '${parsedDate.day} ${Helpers.monthNumberToText(parsedDate.month)} ${parsedDate.year}';
+    } catch (e) {
+      // If parsing fails, return something else to display instead of crashing.
+      return '1 January 2000'; // Fallback date.
+    }
   }
 
   /// Converts a month number to its corresponding text representation.

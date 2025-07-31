@@ -7,10 +7,20 @@
     },
     "modules": {
         "dashboard": {
-            "title": "Dashboard"
+            "title": "Dashboard",
+            "pages": {
+                "about": {
+                    "title": "Über dieses Modul"
+                }
+            }
         },
         "template": {
-            "title": "Modul Vorlage"
+            "title": "Modul Vorlage",
+            "pages": {
+                "about": {
+                    "title": "Über dieses Modul"
+                }
+            }
         }
     },
     "pages": {
@@ -27,7 +37,8 @@
             "messageInvalidLogin": "Ungültiger Benutzername oder Passwort"
         },
         "about": {
-            "title": "Über diese App"
+            "title": "Über diese App",
+            "titleModule": "Über dieses Modul"
         },
         "pageNotFound": {
             "title": "404 - Seite nicht gefunden",

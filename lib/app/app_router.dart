@@ -18,12 +18,22 @@ import 'package:flutter_playground/main.dart';
 import 'package:flutter_playground/localization/localization.dart';
 import 'package:flutter_playground/app/app_permissions.dart';
 import 'package:flutter_playground/misc/ui_widgets/loading_overlay.dart';
+
+// Main pages imports.
 import 'package:flutter_playground/pages/home/home.dart';
 import 'package:flutter_playground/pages/login/login.dart';
 import 'package:flutter_playground/pages/page_not_found/page_not_found.dart';
 import 'package:flutter_playground/pages/about/about.dart';
-import 'package:flutter_playground/modules/dashboard/main.dart';
+
+// Template module imports.
 import 'package:flutter_playground/modules/template/main.dart';
+import 'package:flutter_playground/modules/template/pages/home/home.dart';
+import 'package:flutter_playground/modules/template/pages/about/about.dart';
+
+// Dashboard module imports.
+import 'package:flutter_playground/modules/dashboard/main.dart';
+import 'package:flutter_playground/modules/dashboard/pages/home/home.dart';
+import 'package:flutter_playground/modules/dashboard/pages/about/about.dart';
 
 /// The main router for the application, using GoRouter for declarative routing.
 final GoRouter appRouter = GoRouter(
@@ -110,7 +120,7 @@ class ModuleBarNavigation extends StatelessWidget {
       case 'LoginPage':
         return LoginPage();
       case 'PageNotFoundPage':
-        return const PageNotFoundPage();
+        return PageNotFoundPage();
       case 'AboutPage':
         return AboutPage();
       case 'DashboardModule':

@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/changelog/ui_widgets/changenote_info.dart';
 import 'package:flutter_playground/misc/logic_widgets/helper_methods.dart';
+import 'package:flutter_playground/misc/ui_widgets/expansion_tile_compact.dart';
 
 /// An expansion tile for a changelog entry with version, title, and date.
 class VersionExpansionTile extends StatelessWidget {
@@ -21,31 +22,26 @@ class VersionExpansionTile extends StatelessWidget {
     final String date = versionData['date'] ?? '';
     final String dateReadable = Helpers.dateToReadableText(date);
 
-    return ExpansionTile(
-      title: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    return ExpansionTileCompact(
+      title: SizedBox(
         child: Row(
           children: [
-            // Version number
-            Text(version, style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(width: 12),
-            // Summary
+            // Version number.
+            Text(version, style: Theme.of(context).textTheme.bodyLarge),
+            const SizedBox(width: 16),
+
+            // Summary.
             Expanded(
               child: Text(
                 summary,
-                style: const TextStyle(fontSize: 16),
+                style: Theme.of(context).textTheme.bodyLarge,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            const SizedBox(width: 12),
-            // Date
-            Text(
-              dateReadable,
-              style: TextStyle(
-                color: Theme.of(context).textTheme.bodySmall?.color,
-                fontSize: 13,
-              ),
-            ),
+            const SizedBox(width: 16),
+
+            // Date.
+            Text(dateReadable),
           ],
         ),
       ),

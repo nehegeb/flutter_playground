@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/localization/localization.dart';
 import 'package:flutter_playground/app/app_permissions.dart';
 
-/// The unauthorized page.
+/// The home page of the app.
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Main content column stretched across the screen.
+        // Scrollable main content column stretched across the screen.
         Positioned.fill(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -72,6 +72,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
+
         // 'About' button at bottom right.
         Positioned(
           bottom: 16,

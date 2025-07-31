@@ -29,16 +29,16 @@ class ChangenoteInfo extends StatelessWidget {
     final String description = noteData['description'] ?? '';
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Icon centered at the front.
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Icon(_iconForType(type), size: 24)],
+            children: [Icon(_iconForType(type), size: 20)],
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 16),
 
           // Texts: title above, description below.
           Expanded(
@@ -46,24 +46,12 @@ class ChangenoteInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Title text with bold font weight.
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                // Changenote title.
+                Text(title, style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(height: 2),
 
-                // Description text with smaller font size.
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Theme.of(context).textTheme.bodySmall?.color,
-                  ),
-                ),
+                // Changenote description.
+                Text(description, style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
           ),

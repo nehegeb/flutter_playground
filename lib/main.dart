@@ -4,9 +4,6 @@
 // Handles localization loading, theme, and the [MainAppBar].
 
 // TODO: Implement changenotes in all modules.
-// TODO: Make the ExpansionTile title background color different when expanded.
-// TODO: Make the "about" page more pretty when both ExpansionTiles are expanded.
-// TODO: Implement some error handling for Helpers.dateToReadableText().
 // TODO: Implement persistent storage for notifiers using shared_preferences.
 // -----
 // TODO: Feedback widget!

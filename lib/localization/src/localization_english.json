@@ -7,10 +7,20 @@
     },
     "modules": {
         "dashboard": {
-            "title": "Dashboard"
+            "title": "Dashboard",
+            "pages": {
+                "about": {
+                    "title": "About this module"
+                }
+            }
         },
         "template": {
-            "title": "Module Template"
+            "title": "Module Template",
+            "pages": {
+                "about": {
+                    "title": "About this module"
+                }
+            }
         }
     },
     "pages": {
