@@ -14,10 +14,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_playground/main.dart';
-import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/screens/main_screen.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_permissions.dart';
-import 'package:flutter_playground/misc/ui_widgets/loading_overlay.dart';
+import 'package:flutter_playground/app/misc/ui_widgets/loading_overlay.dart';
 
 // Main pages imports.
 import 'package:flutter_playground/pages/home/home.dart';

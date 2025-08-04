@@ -7,16 +7,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:country_flags/country_flags.dart';
-import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_router.dart';
 import 'package:flutter_playground/app/app_permissions.dart';
-import 'package:flutter_playground/app/app_theme.dart';
+import 'package:flutter_playground/app/app_theme/app_theme.dart';
 import 'package:flutter_playground/app/app_notifiers.dart';
-import 'package:flutter_playground/app/main_module_bar/main_module_bar.dart';
-import 'package:flutter_playground/misc/ui_widgets/popup_menu_entry_compact.dart';
+import 'package:flutter_playground/app/main_app_bar/ui_widgets/language_menu.dart';
+import 'package:flutter_playground/app/main_module_bar/main_module_bar_utils.dart';
+import 'package:flutter_playground/app/misc/logic_widgets/helper_methods.dart';
+import 'package:flutter_playground/app/misc/ui_widgets/popup_menu_entry_compact.dart';
 import 'package:flutter_playground/pages/login/login.dart';
 
-/// A customizable app bar for the app.
+/// A horizontal app bar at the top of the app.
+/// It contains a menu button to toggle the [MainModuleBar],
+/// a title with the app name and module name,
+/// and a user settings menu with the user's profile and several options.
+///
+/// The [MainAppBar] is responsive and adapts to mobile and wide screen layouts.
+/// For wide screens, it uses the whole width including some option buttons to the right.
+/// On mobile devices, it shows a compact version and moves the options to the user settings menu.
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MainAppBar({super.key});
 
@@ -57,22 +66,9 @@ class _MainAppBarState extends State<MainAppBar> {
     return appName;
   }
 
-  // Converts a string to name case (capitalize each word).
-  // TODO: Move to helper_methods.dart (or helper_widgets.dart).
-  String toNameCase(String input) {
-    return input
-        .split(' ')
-        .map(
-          (word) => word.isNotEmpty
-              ? '${word[0].toUpperCase()}${word.substring(1)}'
-              : '',
-        )
-        .join(' ');
-  }
-
   @override
   Widget build(BuildContext context) {
-    final String currentLanguage = currentLanguageNotifier.value;
+    final String appLanguage = Localization.appLanguage;
     final double spacingWidth = 8;
 
     // Regarding the back button in the leading section.
@@ -81,23 +77,6 @@ class _MainAppBarState extends State<MainAppBar> {
 
     // Check the device type.
     final bool isMobileDevice = GlobalNotifiers.isMobile();
-
-    // Toggle the width of the module bar between wide and narrow, updating the notifier.
-    void toggleBarNotifier(String key) {
-      // Only allow specific keys.
-      if (key != 'isBarHidden' && key != 'isBarWide') {
-        throw ArgumentError(
-          "Invalid key: $key. Allowed keys are 'isBarHidden', 'isBarWide'.",
-        );
-      }
-      // Toggle the specified key in the notifier.
-      final current = currentModuleBarNotifier.value.isNotEmpty
-          ? currentModuleBarNotifier.value.first
-          : {key: true, key: false};
-      final updated = {...current, key: !(current[key] as bool)};
-      // Update the notifier with the new value.
-      currentModuleBarNotifier.value = [updated];
-    }
 
     return SafeArea(
       child: AppBar(
@@ -122,10 +101,10 @@ class _MainAppBarState extends State<MainAppBar> {
                 // Do different things depending on the screen size / device type.
                 if (isMobileDevice) {
                   // Toggle the visibility of the module bar on mobile devices.
-                  toggleBarNotifier('isBarHidden');
+                  MainModuleBarUtils.toggleVisibility();
                 } else {
                   // Toggle the width of the module bar for wide screens.
-                  toggleBarNotifier('isBarWide');
+                  MainModuleBarUtils.toggleWidth();
                 }
               },
               tooltip: '', // Remove unnecessary tooltip.
@@ -140,7 +119,7 @@ class _MainAppBarState extends State<MainAppBar> {
               child: SizedBox(
                 height: 35,
                 child: Image.asset(
-                  'assets/images/appLogo.png',
+                  'assets/app/images/appLogo.png',
                   fit: BoxFit.contain,
                 ),
               ),
@@ -167,7 +146,7 @@ class _MainAppBarState extends State<MainAppBar> {
               ),
               onPressed: () {
                 setState(() {
-                  AppTheme.toggleMode();
+                  AppTheme.toggleBrightness();
                 });
               },
               tooltip: '', // Remove unnecessary tooltip.
@@ -177,19 +156,11 @@ class _MainAppBarState extends State<MainAppBar> {
 
           // Language selector for wide screens.
           if (!isMobileDevice) ...[
-            PopupMenuButton<String>(
-              icon: CountryFlag.fromCountryCode(
-                Localization.getText('language.countryCode'),
-                shape: Circle(),
-                width: 24,
-              ),
-              tooltip: "", // Remove unnecessary tooltip.
-              initialValue: currentLanguage,
+            LanguageMenu(
+              appLanguage: appLanguage,
               onSelected: (selectedLanguage) async {
-                await Localization.setCurrentLanguage(selectedLanguage);
+                await Localization.setLanguage(language: selectedLanguage);
               },
-              itemBuilder: (context) =>
-                  languageSelectorMenuEntries(currentLanguage),
             ),
             SizedBox(width: spacingWidth),
           ],
@@ -205,7 +176,7 @@ class _MainAppBarState extends State<MainAppBar> {
                 LoginPage.logout(context);
               } else if (selectedAction == 'toggleThemeMode') {
                 setState(() {
-                  AppTheme.toggleMode();
+                  AppTheme.toggleBrightness();
                 });
               }
             },
@@ -243,8 +214,10 @@ class _MainAppBarState extends State<MainAppBar> {
                               children: [
                                 Text(
                                   username.isNotEmpty
-                                      ? toNameCase(username)
-                                      : '',
+                                      ? Helpers.toNameCase(username)
+                                      : Localization.getText(
+                                          'authorization.roles.guest',
+                                        ),
                                   style: Theme.of(context).textTheme.titleMedium
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                   overflow: TextOverflow.ellipsis,
@@ -255,7 +228,7 @@ class _MainAppBarState extends State<MainAppBar> {
                                           'authorization.roles.$role',
                                         )
                                       : Localization.getText(
-                                          'authorization.roles.guest',
+                                          'authorization.roles.unauthorized',
                                         ),
                                   style: Theme.of(context).textTheme.titleMedium
                                       ?.copyWith(fontWeight: FontWeight.normal),
@@ -325,13 +298,14 @@ class _MainAppBarState extends State<MainAppBar> {
                                 position.dx + button.size.width,
                                 position.dy + button.size.height,
                               ),
-                              items: languageSelectorMenuEntries(
-                                currentLanguage,
+                              items: LanguageMenu.menuItems(
+                                context,
+                                appLanguage,
                               ),
                             );
                             if (selectedLanguage != null) {
-                              await Localization.setCurrentLanguage(
-                                selectedLanguage,
+                              await Localization.setLanguage(
+                                language: selectedLanguage,
                               );
                             }
                           },
@@ -379,54 +353,3 @@ class _MainAppBarState extends State<MainAppBar> {
     );
   }
 }
-
-/// A menu item for the language selector that displays a country flag and a label.
-class FlagMenuItem extends StatelessWidget {
-  final String countryCode;
-  final String label;
-
-  const FlagMenuItem({
-    required this.countryCode,
-    required this.label,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CountryFlag.fromCountryCode(
-          countryCode,
-          shape: RoundedRectangle(4),
-          width: 30,
-          height: 20,
-        ),
-        const SizedBox(width: 8),
-        Text(label),
-      ],
-    );
-  }
-}
-
-// Reusable function for language selector menu entries.
-List<PopupMenuEntry<String>> languageSelectorMenuEntries(
-  String currentLanguage,
-) => [
-  PopupMenuEntryCompact(
-    value: 'en',
-    selected: currentLanguage == 'en',
-    child: FlagMenuItem(
-      countryCode: 'us',
-      label: Localization.getText('appBar.languageSelector.english'),
-    ),
-  ),
-  PopupMenuEntryCompact(
-    value: 'de',
-    selected: currentLanguage == 'de',
-    child: FlagMenuItem(
-      countryCode: 'de',
-      label: Localization.getText('appBar.languageSelector.german'),
-    ),
-  ),
-  // NOTE: Add more languages here as needed.
-];

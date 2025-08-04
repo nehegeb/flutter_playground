@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 
 /// The home page of the template module.
 class TemplateHomePage extends StatelessWidget {

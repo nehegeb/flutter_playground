@@ -3,8 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_permissions.dart';
+import 'package:flutter_playground/app/misc/logic_widgets/helper_methods.dart';
 
 /// The home page of the app.
 class HomePage extends StatelessWidget {
@@ -19,16 +20,8 @@ class HomePage extends StatelessWidget {
     if (user == null || userName.isEmpty) {
       return '${Localization.getText('pages.home.messageWelcome')}!';
     }
-    // Otherwise, convert the user name to PascalCase for nicer display and add it.
-    final pascalName = userName
-        .split(RegExp(r'\s+'))
-        .map(
-          (word) => word.isEmpty
-              ? ''
-              : '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}',
-        )
-        .join('');
-    return '${Localization.getText('pages.home.messageWelcome')} $pascalName!';
+    // Otherwise, display the user name next to the welcome message.
+    return '${Localization.getText('pages.home.messageWelcome')} ${Helpers.toNameCase(userName)}!';
   }
 
   @override

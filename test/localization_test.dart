@@ -1,40 +1,23 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 
 void main() {
   // Ensure the Flutter test environment is initialized.
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Localization', () {
-    // Test that getUserLanguage returns a valid language code.
-    test('getUserLanguage returns a valid language code', () {
-      final lang = Localization.getUserLanguage();
-      expect(lang, isNotNull);
-      expect(['en', 'de'], contains(lang));
-    });
-
-    // Test setting and getting the current language using the notifier.
-    test('setCurrentLanguage and currentLanguageNotifier', () async {
-      await Localization.setCurrentLanguage('de');
-      expect(currentLanguageNotifier.value, 'de');
-      expect(Localization.getCurrentLanguage, 'de');
-      await Localization.setCurrentLanguage('en');
-      expect(currentLanguageNotifier.value, 'en');
-      expect(Localization.getCurrentLanguage, 'en');
-    });
-
     // Test that getText returns a valid localized string for both languages.
     test('getText returns correct localized string', () async {
-      await Localization.setCurrentLanguage('en');
+      await Localization.setLanguage(language: 'en');
       expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
-      await Localization.setCurrentLanguage('de');
+      await Localization.setLanguage(language: 'de');
       expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
     });
 
     // Test that getText falls back to English if the key is missing in German.
     test('getText falls back to English if key missing in German', () async {
-      await Localization.setCurrentLanguage('de');
+      await Localization.setLanguage(language: 'de');
       expect(
         Localization.getText('testKey'),
         equals(
@@ -45,7 +28,7 @@ void main() {
 
     // Test that getText returns a placeholder for a missing key.
     test('getText returns placeholder for missing key', () async {
-      await Localization.setCurrentLanguage('en');
+      await Localization.setLanguage(language: 'en');
       expect(Localization.getText('nonexistent_key'), '[NO_LOCALIZATION]');
     });
 

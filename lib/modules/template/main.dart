@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 
 /// The template module.
 class TemplateModule extends StatelessWidget {

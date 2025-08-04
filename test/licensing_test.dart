@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_playground/licensing/licensing.dart';
-import 'package:flutter_playground/licensing/logic_widgets/load_license_descriptions.dart';
+import 'package:flutter_playground/app/licensing/licensing.dart';
+import 'package:flutter_playground/app/licensing/logic_widgets/load_license_descriptions.dart';
 
 void main() {
   group('Licensing', () {

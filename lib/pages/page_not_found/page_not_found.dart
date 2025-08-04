@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/localization/localization.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 
 /// The page not found (404) page.
 class PageNotFoundPage extends StatelessWidget {

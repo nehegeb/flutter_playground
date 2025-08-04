@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_playground/misc/ui_widgets/loading_overlay.dart';
+import 'package:flutter_playground/app/misc/ui_widgets/loading_overlay.dart';
 
 void main() {
   testWidgets('LoadingOverlay shows and hides overlay', (
