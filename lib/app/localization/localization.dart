@@ -10,9 +10,9 @@
 // - Supports multiple languages and can easily updated to support more.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/localization/logic_widgets/get_localized_text.dart';
-import 'package:flutter_playground/app/localization/logic_widgets/set_app_language.dart';
-import 'package:flutter_playground/app/localization/logic_widgets/set_initial_language.dart';
+import 'package:flutter_playground/app/localization/logic/get_localized_text.dart';
+import 'package:flutter_playground/app/localization/logic/set_app_language.dart';
+import 'package:flutter_playground/app/localization/logic/set_initial_language.dart';
 
 /// Notifier for the currently selected app language.
 /// Defaults to English ('en').

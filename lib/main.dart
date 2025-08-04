@@ -1,9 +1,10 @@
 // main.dart
 //
 
-// TODO: Implement persistent storage for notifiers using shared_preferences.
 // TODO: Implement basic submodulebar structure. Open module home page first.
+// TODO: Implement basic roles and module permissions feature.
 // TODO: Implement feedback feature.
+// TODO: Add custom icons for the modules. Add in assets/modules/<module>/images/moduleIcon.png.
 // -----
 // TODO: Feedback widget!
 // TODO: home_widget for mobile widgets?!
@@ -13,10 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_playground/screens/main_screen.dart';
 import 'package:flutter_playground/screens/splash_screen.dart';
-import 'package:flutter_playground/app/misc/logic_widgets/init_app_settings.dart';
+import 'package:flutter_playground/app/misc/logic/init_app_settings.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
-import 'package:flutter_playground/app/app_router.dart';
-import 'package:flutter_playground/app/app_notifiers.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
+import 'package:flutter_playground/app/app_notifiers/user_device_notifier.dart';
 
 /// The main function that starts the Flutter app.
 void main() {
@@ -86,16 +87,15 @@ class _MainAppState extends State<MainApp> {
       routerConfig: appRouter,
       builder: (context, child) {
         // Check if the device type has changed since the last build.
-        // This is necessary to update the [GlobalNotifiers] if the window size changes.
-        final isMobile =
-            GlobalNotifiers.isMobile; // Should be false by default.
+        // This is necessary to update the [UserDeviceNotifier] if the window size changes.
+        final bool isMobile = UserDeviceNotifier.isMobile;
         if (_isMobilePrevious != isMobile) {
           if (MediaQuery.of(context).size.width < 600) {
             _isMobilePrevious = true;
-            GlobalNotifiers.setMobile(true);
+            UserDeviceNotifier.setMobile(true);
           } else {
             _isMobilePrevious = false;
-            GlobalNotifiers.setMobile(false);
+            UserDeviceNotifier.setMobile(false);
           }
         }
 

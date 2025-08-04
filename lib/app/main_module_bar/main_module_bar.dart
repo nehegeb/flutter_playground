@@ -8,12 +8,12 @@
 // - Shows the selected module's content in the main area.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/app_router.dart';
-import 'package:flutter_playground/app/app_permissions.dart';
-import 'package:flutter_playground/app/app_notifiers.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
+import 'package:flutter_playground/app/app_user/app_user.dart';
+import 'package:flutter_playground/app/app_notifiers/user_device_notifier.dart';
 import 'package:flutter_playground/app/main_module_bar/main_module_bar_utils.dart';
-import 'package:flutter_playground/app/main_module_bar/ui_widgets/module_bar.dart';
-import 'package:flutter_playground/app/main_module_bar/ui_widgets/module_bar_floating.dart';
+import 'package:flutter_playground/app/main_module_bar/widgets/module_bar.dart';
+import 'package:flutter_playground/app/main_module_bar/widgets/module_bar_floating.dart';
 
 /// Notifier for the [MainModuleBar].
 ///
@@ -63,8 +63,8 @@ class _MainModuleBarState extends State<MainModuleBar> {
   @override
   Widget build(BuildContext context) {
     final String currentModule = widget.module;
-    final user = currentUserNotifier.value;
-    final isMobileDevice = GlobalNotifiers.isMobile();
+    final user = appUserNotifier.value;
+    final bool isMobileDevice = UserDeviceNotifier.isMobile;
 
     // Get [MainModuleBar] settings.
     final isBarWide = MainModuleBarUtils.isWide;

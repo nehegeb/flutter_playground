@@ -1,21 +1,18 @@
 // main_app_bar.dart
 //
-// Provides a reusable [MainAppBar] widget for the app.
-// It displays a given module title and a language selector popup menu,
-// as well as a user profile menu with login/logout options.
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/app_router.dart';
-import 'package:flutter_playground/app/app_permissions.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
+import 'package:flutter_playground/app/app_user/app_user.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
-import 'package:flutter_playground/app/app_notifiers.dart';
-import 'package:flutter_playground/app/main_app_bar/ui_widgets/language_menu.dart';
+import 'package:flutter_playground/app/app_notifiers/user_device_notifier.dart';
+import 'package:flutter_playground/app/main_app_bar/widgets/language_menu.dart';
 import 'package:flutter_playground/app/main_module_bar/main_module_bar_utils.dart';
-import 'package:flutter_playground/app/misc/logic_widgets/helper_methods.dart';
-import 'package:flutter_playground/app/misc/ui_widgets/popup_menu_entry_compact.dart';
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
+import 'package:flutter_playground/app/misc/widgets/popup_menu_entry_compact.dart';
 import 'package:flutter_playground/pages/login/login.dart';
 
 /// A horizontal app bar at the top of the app.
@@ -50,7 +47,7 @@ class _MainAppBarState extends State<MainAppBar> {
     final moduleName = AppRouter.getModuleTitle(context);
 
     // Check the device type.
-    final bool isMobileDevice = GlobalNotifiers.isMobile();
+    final bool isMobileDevice = UserDeviceNotifier.isMobile;
 
     // Build the title based on the module.
     if (moduleName.isNotEmpty && moduleName != '') {
@@ -76,7 +73,7 @@ class _MainAppBarState extends State<MainAppBar> {
     double leadingWidth = hasBackButton ? 100 : 56;
 
     // Check the device type.
-    final bool isMobileDevice = GlobalNotifiers.isMobile();
+    final bool isMobileDevice = UserDeviceNotifier.isMobile;
 
     return SafeArea(
       child: AppBar(
@@ -181,14 +178,14 @@ class _MainAppBarState extends State<MainAppBar> {
               }
             },
             itemBuilder: (context) {
-              final isLoggedIn = currentUserNotifier.value != null;
+              final isLoggedIn = appUserNotifier.value != null;
               return [
                 // User Card.
                 PopupMenuItem<String>(
                   enabled: false,
                   height: 80, // Bigger than default height (default is 48).
-                  child: ValueListenableBuilder<User?>(
-                    valueListenable: currentUserNotifier,
+                  child: ValueListenableBuilder<AppUser?>(
+                    valueListenable: appUserNotifier,
                     builder: (context, user, _) {
                       final username = user?.username ?? '';
                       final role = user?.role ?? '';
@@ -214,7 +211,7 @@ class _MainAppBarState extends State<MainAppBar> {
                               children: [
                                 Text(
                                   username.isNotEmpty
-                                      ? Helpers.toNameCase(username)
+                                      ? AppHelper.toNameCase(username)
                                       : Localization.getText(
                                           'authorization.roles.guest',
                                         ),

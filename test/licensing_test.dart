@@ -1,8 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_playground/app/licensing/licensing.dart';
-import 'package:flutter_playground/app/licensing/logic_widgets/load_license_descriptions.dart';
+import 'package:flutter_playground/app/licensing/logic/load_license_descriptions.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   group('Licensing', () {
     setUp(() {
       // Reset licenseData before each test if possible.
@@ -13,6 +14,12 @@ void main() {
       licenseData = null;
       await Licensing.initLicensingData();
       expect(licenseData, isNotNull, reason: 'License data should be loaded');
+      expect(licenseData is Map, true, reason: 'License data should be a Map');
+      expect(
+        licenseData!.isNotEmpty,
+        true,
+        reason: 'License data should not be empty',
+      );
     });
 
     test('initLicensingData does not reload if already loaded', () async {

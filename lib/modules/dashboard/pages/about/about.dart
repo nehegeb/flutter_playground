@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/changelog/changelog.dart';
-import 'package:flutter_playground/app/changelog/ui_widgets/changelog_expansion_tile.dart';
+import 'package:flutter_playground/app/changelog/widgets/changelog_expansion_tile.dart';
 
 /// The about page of the dashboard module.
 class DashboardAboutPage extends StatefulWidget {

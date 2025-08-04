@@ -1,10 +1,10 @@
 // main_module_bar_utils.dart
 //
 
-import 'package:flutter_playground/app/main_module_bar/logic_widgets/set_bar_width.dart';
-import 'package:flutter_playground/app/main_module_bar/logic_widgets/set_bar_visibility.dart';
-import 'package:flutter_playground/app/main_module_bar/logic_widgets/set_initial_bar_width.dart';
-import 'package:flutter_playground/app/main_module_bar/logic_widgets/set_initial_bar_visibility.dart';
+import 'package:flutter_playground/app/main_module_bar/logic/set_bar_width.dart';
+import 'package:flutter_playground/app/main_module_bar/logic/set_bar_visibility.dart';
+import 'package:flutter_playground/app/main_module_bar/logic/set_initial_bar_width.dart';
+import 'package:flutter_playground/app/main_module_bar/logic/set_initial_bar_visibility.dart';
 import 'package:flutter_playground/app/main_module_bar/main_module_bar.dart';
 
 /// Utility class for [MainModuleBar] management.

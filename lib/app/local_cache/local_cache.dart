@@ -1,11 +1,11 @@
 // local_cache.dart
 //
 
-import 'package:flutter_playground/app/local_cache/logic_widgets/check_in_cache.dart';
-import 'package:flutter_playground/app/local_cache/logic_widgets/save_to_cache.dart';
-import 'package:flutter_playground/app/local_cache/logic_widgets/load_from_cache.dart';
-import 'package:flutter_playground/app/local_cache/logic_widgets/delete_from_cache.dart';
-import 'package:flutter_playground/app/local_cache/logic_widgets/clear_cache.dart';
+import 'package:flutter_playground/app/local_cache/logic/check_in_cache.dart';
+import 'package:flutter_playground/app/local_cache/logic/save_to_cache.dart';
+import 'package:flutter_playground/app/local_cache/logic/load_from_cache.dart';
+import 'package:flutter_playground/app/local_cache/logic/delete_from_cache.dart';
+import 'package:flutter_playground/app/local_cache/logic/clear_cache.dart';
 
 /// Utility class for saving and loading app settings using SharedPreferences.
 ///

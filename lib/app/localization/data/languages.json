@@ -1,0 +1,22 @@
+{
+    "en": {
+        "name": "English",
+        "nativeName": "English",
+        "code": "en"
+    },
+    "de": {
+        "name": "German",
+        "nativeName": "Deutsch",
+        "code": "de"
+    },
+    "es": {
+        "name": "Spanish",
+        "nativeName": "Español",
+        "code": "es"
+    },
+    "fr": {
+        "name": "French",
+        "nativeName": "Français",
+        "code": "fr"
+    }
+}

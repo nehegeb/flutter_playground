@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/app_permissions.dart';
+import 'package:flutter_playground/app/app_user/app_user.dart';
 
 /// The login page.
 class LoginPage extends StatefulWidget {
@@ -12,7 +12,7 @@ class LoginPage extends StatefulWidget {
 
   /// Static logout function to clear the current user and navigate to login page.
   static void logout(BuildContext context) {
-    currentUserNotifier.value = null;
+    appUserNotifier.value = null;
     // Navigate to the home page, even if the user is already there.
     context.go('/home', extra: DateTime.now().millisecondsSinceEpoch);
   }
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _invalidLogin = false;
       });
-      currentUserNotifier.value = user;
+      appUserNotifier.value = user;
       context.go('/home'); // Navigate to the home page.
     } else {
       // Invalid login, clear password field and show error message.

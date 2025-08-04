@@ -1,0 +1,21 @@
+{
+    "admin": {
+        "id": "admin",
+        "permissions": [
+            "*"
+        ]
+    },
+    "member": {
+        "id": "member",
+        "permissions": [
+            "read",
+            "write"
+        ]
+    },
+    "guest": {
+        "id": "guest",
+        "permissions": [
+            "read"
+        ]
+    }
+}

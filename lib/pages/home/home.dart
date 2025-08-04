@@ -4,8 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/app_permissions.dart';
-import 'package:flutter_playground/app/misc/logic_widgets/helper_methods.dart';
+import 'package:flutter_playground/app/app_user/app_user.dart';
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
 
 /// The home page of the app.
 class HomePage extends StatelessWidget {
@@ -14,14 +14,14 @@ class HomePage extends StatelessWidget {
   // Define the welcome message for the home page.
   static String get welcomeMessage {
     // Get the current user from the app permissions.
-    final user = currentUserNotifier.value;
+    final AppUser? user = appUserNotifier.value;
     final String userName = user?.username ?? '';
     // If no user is logged in, return a generic welcome message.
     if (user == null || userName.isEmpty) {
       return '${Localization.getText('pages.home.messageWelcome')}!';
     }
     // Otherwise, display the user name next to the welcome message.
-    return '${Localization.getText('pages.home.messageWelcome')} ${Helpers.toNameCase(userName)}!';
+    return '${Localization.getText('pages.home.messageWelcome')} ${AppHelper.toNameCase(userName)}!';
   }
 
   @override
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   // A notification with a link to the login page if the user is not logged in.
-                  if (currentUserNotifier.value == null)
+                  if (appUserNotifier.value == null)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Center(

@@ -2,9 +2,9 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/app_theme/ui_widgets/app_theme_light.dart';
-import 'package:flutter_playground/app/app_theme/logic_widgets/set_app_brightness.dart';
-import 'package:flutter_playground/app/app_theme/logic_widgets/set_initial_brightness.dart';
+import 'package:flutter_playground/app/app_theme/widgets/app_theme_light.dart';
+import 'package:flutter_playground/app/app_theme/logic/set_app_brightness.dart';
+import 'package:flutter_playground/app/app_theme/logic/set_initial_brightness.dart';
 
 /// Notifier for the currently selected app theme.
 /// Defaults to light theme [ThemeData] with dark mode disabled.
