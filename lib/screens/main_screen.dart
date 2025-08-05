@@ -8,8 +8,8 @@ import 'package:flutter_playground/app/module_bar/module_bar.dart';
 
 /// The main screen of the app.
 class MainScreen extends StatefulWidget {
-  final String module;
-  const MainScreen({super.key, required this.module});
+  final String routedPage;
+  const MainScreen({super.key, required this.routedPage});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
       // The upper app bar.
       appBar: TopAppBar(),
       // The lower part with a module bar and the module content area.
-      body: ModuleBar(module: widget.module),
+      body: ModuleBar(routedPage: widget.routedPage),
     );
   }
 }

@@ -5,7 +5,6 @@
 // TODO: Change localization using a JSON for the languages.
 // TODO: Implement basic roles and module permissions feature.
 // TODO: Implement feedback feature.
-// TODO: Add custom icons for the modules. Add in assets/modules/<module>/images/moduleIcon.png.
 // TODO: Refactor the AppBar and then close the user menu in set_is_mobile.dart.
 // TODO: Web page errors 404 etc.
 // TODO: (?) Implement a global error handler for the app.

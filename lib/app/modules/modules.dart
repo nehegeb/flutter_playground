@@ -1,5 +1,8 @@
 // modules.dart
 //
+// Displayed pages are managed by the [appRouter], yet the notifiers in this file
+// are used to to keep track of which main and sub module are currently active.
+// Setting a main or sub module will not change the displayed page at all.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/modules/logic/set_app_main_module.dart';

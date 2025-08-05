@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/app_router/app_router.dart';
+import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_user/app_user.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
@@ -43,8 +43,8 @@ class _TopAppBarState extends State<TopAppBar> {
   String getAppBarTitle(bool isMobile) {
     final appName = Localization.getText('appName');
 
-    // Get the module title from the url.
-    final moduleName = AppRouter.getModuleTitle(context);
+    // Get the module title.
+    final moduleName = AppRouterUtils.getMainModuleTitle(context);
 
     // Build the title based on the module.
     if (moduleName.isNotEmpty && moduleName != '') {

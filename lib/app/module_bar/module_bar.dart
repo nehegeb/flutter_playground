@@ -8,13 +8,13 @@
 // - Shows the selected module's content in the main area.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/app_user/app_user.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 import 'package:flutter_playground/app/module_bar/widgets/module_bar_widget.dart';
 import 'package:flutter_playground/app/module_bar/widgets/module_bar_floating.dart';
+import 'package:flutter_playground/app/module_bar/widgets/module_bar_navigation.dart';
 
 /// A vertical module bar positioned on the left side of the screen.
 /// It contains buttons for each module.
@@ -24,8 +24,8 @@ import 'package:flutter_playground/app/module_bar/widgets/module_bar_floating.da
 /// For wide screens, it can be toggled between wide and narrow states.
 /// On mobile devices, it can be hidden or shown based, always displaying the wide state.
 class ModuleBar extends StatefulWidget {
-  final String module;
-  const ModuleBar({super.key, required this.module});
+  final String routedPage;
+  const ModuleBar({super.key, required this.routedPage});
 
   @override
   State<ModuleBar> createState() => _ModuleBarState();
@@ -57,7 +57,7 @@ class _ModuleBarState extends State<ModuleBar> {
   // The [ModuleBar] itself, which contains buttons for each module.
   @override
   Widget build(BuildContext context) {
-    final String mainModule = widget.module;
+    final String routedPage = widget.routedPage;
     final user = appUserNotifier.value;
 
     // Get [ModuleBar] settings.
@@ -72,7 +72,7 @@ class _ModuleBarState extends State<ModuleBar> {
               ? Stack(
                   children: [
                     // For mobile devices, fill the whole screen with the module area...
-                    Center(child: ModuleBarNavigation(module: mainModule)),
+                    Center(child: ModuleBarNavigation(module: routedPage)),
                     // ... and display the module bar as a floating side bar to the left.
                     isBarHidden
                         // Hide the module bar if isBarHidden is true.
@@ -81,7 +81,7 @@ class _ModuleBarState extends State<ModuleBar> {
                         : ModuleBarFloating(
                             isWide:
                                 true, // Always use wide bar on mobile devices.
-                            mainModule: mainModule,
+                            mainModule: routedPage,
                             user: user,
                           ),
                   ],
@@ -91,13 +91,13 @@ class _ModuleBarState extends State<ModuleBar> {
                     // For wide screens, display the module bar on the left side...
                     ModuleBarWidget(
                       isWide: isBarWide,
-                      mainModule: mainModule,
+                      mainModule: routedPage,
                       user: user,
                     ),
                     // ... and to its right the module area that fills the remaining space.
                     Expanded(
                       child: Center(
-                        child: ModuleBarNavigation(module: mainModule),
+                        child: ModuleBarNavigation(module: routedPage),
                       ),
                     ),
                   ],
