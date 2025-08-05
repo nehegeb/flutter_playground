@@ -29,7 +29,7 @@ class ChangenoteInfo extends StatelessWidget {
     final String description = noteData['description'] ?? '';
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

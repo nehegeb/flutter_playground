@@ -22,15 +22,6 @@ class _AboutPageState extends State<AboutPage> {
   @override
   void initState() {
     super.initState();
-    _initData();
-  }
-
-  // Load data for the about page.
-  Future<void> _initData() async {
-    await Changelog.initChangelogData(module: module);
-    await Licensing.initLicensingData();
-
-    setState(() {});
   }
 
   @override
@@ -51,10 +42,26 @@ class _AboutPageState extends State<AboutPage> {
               const SizedBox(height: 16),
 
               // Changelog section.
-              ChangelogExpansionTile(module: module),
+              FutureBuilder<void>(
+                future: Changelog.initChangelogData(module: module),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return ChangelogExpansionTile(module: module);
+                },
+              ),
 
               // Packages used in this app.
-              const LicenseExpansionTile(),
+              FutureBuilder<void>(
+                future: Licensing.initLicensingData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return const LicenseExpansionTile();
+                },
+              ),
             ],
           ),
         ),

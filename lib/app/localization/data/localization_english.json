@@ -6,6 +6,8 @@
         "countryCode": "us"
     },
     "modules": {
+        "loading": "Loading modules...",
+        "notLoadedError": "Modules could not be loaded. Try reloading the page (F5).",
         "dashboard": {
             "title": "Dashboard",
             "pages": {

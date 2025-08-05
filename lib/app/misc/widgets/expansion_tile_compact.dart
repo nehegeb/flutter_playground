@@ -56,8 +56,7 @@ class _ExpansionTileCompactState extends State<ExpansionTileCompact> {
     final EdgeInsetsGeometry compactTilePadding =
         widget.tilePadding ?? EdgeInsets.symmetric(horizontal: 12, vertical: 0);
     final EdgeInsetsGeometry compactChildrenPadding =
-        widget.childrenPadding ??
-        EdgeInsets.symmetric(horizontal: 0, vertical: 0);
+        widget.childrenPadding ?? EdgeInsets.fromLTRB(0, 0, 0, 4);
 
     return Container(
       decoration: BoxDecoration(
@@ -86,6 +85,7 @@ class _ExpansionTileCompactState extends State<ExpansionTileCompact> {
           initiallyExpanded: widget.initiallyExpanded,
           tilePadding: compactTilePadding,
           childrenPadding: compactChildrenPadding,
+          shape: const Border(), // Remove all borders.
           onExpansionChanged: (expanded) {
             setState(() {
               _expanded = expanded;

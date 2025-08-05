@@ -46,7 +46,17 @@ class _DashboardAboutPageState extends State<DashboardAboutPage> {
               const SizedBox(height: 16),
 
               // Changelog section.
-              ChangelogExpansionTile(module: module),
+
+              // Changelog section.
+              FutureBuilder<void>(
+                future: Changelog.initChangelogData(module: module),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return ChangelogExpansionTile(module: module);
+                },
+              ),
             ],
           ),
         ),

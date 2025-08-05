@@ -3,8 +3,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/main_app_bar/main_app_bar.dart';
-import 'package:flutter_playground/app/main_module_bar/main_module_bar.dart';
+import 'package:flutter_playground/app/top_app_bar/top_app_bar.dart';
+import 'package:flutter_playground/app/module_bar/module_bar.dart';
 
 /// The main screen of the app.
 class MainScreen extends StatefulWidget {
@@ -38,9 +38,9 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // The upper app bar.
-      appBar: MainAppBar(),
+      appBar: TopAppBar(),
       // The lower part with a module bar and the module content area.
-      body: MainModuleBar(module: widget.module),
+      body: ModuleBar(module: widget.module),
     );
   }
 }

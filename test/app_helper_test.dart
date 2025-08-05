@@ -29,7 +29,7 @@ void main() {
         span.children!.any(
           (child) =>
               child is TextSpan &&
-              (child as TextSpan).text!.contains('https://flutter.dev'),
+              (child).text!.contains('https://flutter.dev'),
         ),
         true,
       );

@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_playground/notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
+import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 
 void main() {
   group('IsMobileDeviceNotifier', () {

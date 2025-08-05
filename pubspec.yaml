@@ -28,9 +28,15 @@ flutter:
   assets:
     - lib/app/licensing/data/
     - lib/app/localization/data/
+    - lib/app/app_user/data/
+    - lib/app/modules/data/
+    - lib/app/roles/data/
+    - lib/app/permissions/data/
     # Changelogs
     - lib/app/changelog/data/
     - lib/modules/dashboard/changelog/
     - lib/modules/template/changelog/
     # Assets
     - assets/app/images/
+    - assets/modules/dashboard/images/
+    - assets/modules/template/images/

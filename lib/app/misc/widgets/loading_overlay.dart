@@ -8,13 +8,8 @@
 // - Can be shown or hidden from anywhere in the app with a single call.
 //
 // Usage:
-//   1. Set [LoadingOverlay.navigatorKey] as your app's navigatorKey:
-//        MaterialApp(
-//          navigatorKey: LoadingOverlay.navigatorKey,
-//          ...
-//        )
-//   2. Show overlay:   LoadingOverlay.initiate('Please wait...');
-//      Hide overlay:   LoadingOverlay.dismiss();
+//   Show overlay:   LoadingOverlay.initiate('Please wait...');
+//   Hide overlay:   LoadingOverlay.dismiss();
 //
 // The overlay is automatically removed when [dismiss] is called.
 
@@ -64,8 +59,9 @@ class LoadingOverlay {
     await Future.delayed(const Duration(milliseconds: 100));
     if (_overlayEntry != null && _overlayEntry!.mounted) {
       _overlayEntry!.remove();
+      _overlayEntry = null;
+      await Future.delayed(const Duration(milliseconds: 100));
     }
-    _overlayEntry = null;
   }
 }
 

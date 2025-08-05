@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/changelog/widgets/changenote_info.dart';
 import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/misc/widgets/expansion_tile_compact.dart';
-import 'package:flutter_playground/notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
+import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 
 /// An expansion tile for a changelog entry with version, title, and date.
 class VersionExpansionTile extends StatelessWidget {
@@ -29,6 +29,7 @@ class VersionExpansionTile extends StatelessWidget {
         final isMobile = value ? (value as bool? ?? false) : false;
         final double titleHeight = isMobile ? 64.0 : 30.0;
         return ExpansionTileCompact(
+          tilePadding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
           titleHeight: titleHeight,
           title: isMobile
               // If on mobile, show version and date in one row and the summary below.
@@ -72,9 +73,8 @@ class VersionExpansionTile extends StatelessWidget {
                   ],
                 ),
           children: [
-            ...versionData['changenotes'].entries.map((entry) {
-              final Map<String, dynamic> data = entry.value;
-              return ChangenoteInfo(noteData: data);
+            ...(versionData['changenotes'] as List<dynamic>).map((data) {
+              return ChangenoteInfo(noteData: data as Map<String, dynamic>);
             }),
           ],
         );

@@ -6,6 +6,11 @@
 // TODO: Implement basic roles and module permissions feature.
 // TODO: Implement feedback feature.
 // TODO: Add custom icons for the modules. Add in assets/modules/<module>/images/moduleIcon.png.
+// TODO: Refactor the AppBar and then close the user menu in set_is_mobile.dart.
+// TODO: Web page errors 404 etc.
+// TODO: (?) Implement a global error handler for the app.
+// TODO: Pass the URL through the login screen.
+// TODO: Finish the new-module README.
 // -----
 // TODO: Feedback widget!
 // TODO: home_widget for mobile widgets?!
@@ -18,7 +23,7 @@ import 'package:flutter_playground/screens/splash_screen.dart';
 import 'package:flutter_playground/app/misc/logic/init_app_settings.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 import 'package:flutter_playground/app/app_router/app_router.dart';
-import 'package:flutter_playground/notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
+import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 
 /// The main function that starts the Flutter app.
 void main() {

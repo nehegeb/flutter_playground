@@ -29,6 +29,11 @@ class LicenseExpansionTile extends StatelessWidget {
 
     return ExpansionTile(
       title: Text(Localization.getText('licensing.title')),
+      tilePadding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+      childrenPadding: EdgeInsets.fromLTRB(0, 0, 0, 12),
+      shape: const Border(
+        bottom: BorderSide(color: Colors.grey, width: 1),
+      ), // Only bottom border when expanded.
       initiallyExpanded: false,
       children: (packageData.isNotEmpty)
           ? packageData.entries

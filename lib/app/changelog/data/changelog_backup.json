@@ -5,13 +5,13 @@
         "1.0.0": {
             "date": "2000-01-01",
             "summary": "Initial release of the Flutter Playground app.",
-            "changenotes": {
-                "1": {
+            "changenotes": [
+                {
                     "type": "added",
                     "title": "Initial Release",
                     "description": "Initial release of the Flutter Playground app."
                 }
-            }
+            ]
         }
     }
 }

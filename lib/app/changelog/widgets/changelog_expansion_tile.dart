@@ -42,11 +42,17 @@ class ChangelogExpansionTile extends StatelessWidget {
 
     return ExpansionTile(
       title: Text(title),
+      tilePadding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+      childrenPadding: EdgeInsets.fromLTRB(0, 0, 0, 12),
+      shape: const Border(
+        bottom: BorderSide(color: Colors.grey, width: 1),
+      ), // Only bottom border when expanded.
       children: [
         if (moduleVersions != null && moduleVersions.isNotEmpty)
           ...moduleVersions.entries.map((entry) {
             final String version = entry.key;
             final Map<String, dynamic> data = entry.value;
+
             // Generate a VersionExpansionTile for each version entry.
             return VersionExpansionTile(version: version, versionData: data);
           }),
