@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/app_helper/app_helper.dart';
+// import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 
 /// A widget for the buttons in the [ModuleBar].
@@ -23,9 +23,11 @@ class MainModuleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Check, if the icon exists.
-    final bool iconExists = iconPath != null && iconPath!.isNotEmpty
-        ? AppHelper.fileExists(path: iconPath!)
-        : false;
+    final bool iconExists = iconPath != null && iconPath!.isNotEmpty;
+    // TODO: AppHelper.fileExists() doesn't work on web. Remove the function!
+    // final bool iconExists = iconPath != null && iconPath!.isNotEmpty
+    //     ? AppHelper.fileExists(path: iconPath!)
+    //     : false;
 
     return Material(
       child: InkWell(

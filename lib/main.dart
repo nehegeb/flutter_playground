@@ -10,6 +10,7 @@
 // TODO: (?) Implement a global error handler for the app.
 // TODO: Pass the URL through the login screen.
 // TODO: Finish the new-module README.
+// TODO: Make a search for all TODOs and clean up the code.
 // -----
 // TODO: Feedback widget!
 // TODO: home_widget for mobile widgets?!
