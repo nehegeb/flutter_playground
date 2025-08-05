@@ -30,7 +30,7 @@ class LicenseExpansionTile extends StatelessWidget {
     return ExpansionTile(
       title: Text(Localization.getText('licensing.title')),
       initiallyExpanded: false,
-      children: (packageData != null && packageData.isNotEmpty)
+      children: (packageData.isNotEmpty)
           ? packageData.entries
                 .map(
                   // Generate a LicenseInfo for each package entry.

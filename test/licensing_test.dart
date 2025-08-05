@@ -1,3 +1,7 @@
+// licensing_test.dart
+//
+// Unit tests for Licensing.
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_playground/app/licensing/licensing.dart';
 import 'package:flutter_playground/app/licensing/logic/load_license_descriptions.dart';

@@ -1,3 +1,7 @@
+// localization_test.dart
+//
+// Unit tests for Localization.
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_playground/app/localization/localization.dart';

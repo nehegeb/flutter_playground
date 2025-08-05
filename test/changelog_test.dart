@@ -1,3 +1,7 @@
+// changelog_test.dart
+//
+// Unit tests for Changelog.
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_playground/app/changelog/changelog.dart';
 
