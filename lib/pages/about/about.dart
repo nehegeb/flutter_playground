@@ -29,6 +29,8 @@ class _AboutPageState extends State<AboutPage> {
   Future<void> _initData() async {
     await Changelog.initChangelogData(module: module);
     await Licensing.initLicensingData();
+
+    setState(() {});
   }
 
   @override

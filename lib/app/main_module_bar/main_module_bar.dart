@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/app_user/app_user.dart';
-import 'package:flutter_playground/app/app_notifiers/user_device_notifier.dart';
+import 'package:flutter_playground/notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 import 'package:flutter_playground/app/main_module_bar/main_module_bar_utils.dart';
 import 'package:flutter_playground/app/main_module_bar/widgets/module_bar.dart';
 import 'package:flutter_playground/app/main_module_bar/widgets/module_bar_floating.dart';
@@ -64,46 +64,51 @@ class _MainModuleBarState extends State<MainModuleBar> {
   Widget build(BuildContext context) {
     final String currentModule = widget.module;
     final user = appUserNotifier.value;
-    final bool isMobileDevice = UserDeviceNotifier.isMobile;
 
     // Get [MainModuleBar] settings.
     final isBarWide = MainModuleBarUtils.isWide;
     final isBarHidden = MainModuleBarUtils.isHidden;
 
-    return Container(
-      child: isMobileDevice
-          ? Stack(
-              children: [
-                // For mobile devices, fill the whole screen with the module area...
-                Center(child: ModuleBarNavigation(module: currentModule)),
-                // ... and display the module bar as a floating side bar to the left.
-                isBarHidden
-                    // Hide the module bar if isBarHidden is true.
-                    ? SizedBox.shrink()
-                    // Otherwise, display the floating module bar.
-                    : ModuleBarFloating(
-                        isWide: true, // Always use wide bar on mobile devices.
-                        currentModule: currentModule,
-                        user: user,
+    return ValueListenableBuilder<bool>(
+      valueListenable: isMobileDeviceNotifier,
+      builder: (context, isMobileDevice, _) {
+        return Container(
+          child: isMobileDevice
+              ? Stack(
+                  children: [
+                    // For mobile devices, fill the whole screen with the module area...
+                    Center(child: ModuleBarNavigation(module: currentModule)),
+                    // ... and display the module bar as a floating side bar to the left.
+                    isBarHidden
+                        // Hide the module bar if isBarHidden is true.
+                        ? SizedBox.shrink()
+                        // Otherwise, display the floating module bar.
+                        : ModuleBarFloating(
+                            isWide:
+                                true, // Always use wide bar on mobile devices.
+                            currentModule: currentModule,
+                            user: user,
+                          ),
+                  ],
+                )
+              : Row(
+                  children: [
+                    // For wide screens, display the module bar on the left side...
+                    ModuleBar(
+                      isWide: isBarWide,
+                      currentModule: currentModule,
+                      user: user,
+                    ),
+                    // ... and to its right the module area that fills the remaining space.
+                    Expanded(
+                      child: Center(
+                        child: ModuleBarNavigation(module: currentModule),
                       ),
-              ],
-            )
-          : Row(
-              children: [
-                // For wide screens, display the module bar on the left side...
-                ModuleBar(
-                  isWide: isBarWide,
-                  currentModule: currentModule,
-                  user: user,
+                    ),
+                  ],
                 ),
-                // ... and to its right the module area that fills the remaining space.
-                Expanded(
-                  child: Center(
-                    child: ModuleBarNavigation(module: currentModule),
-                  ),
-                ),
-              ],
-            ),
+        );
+      },
     );
   }
 }

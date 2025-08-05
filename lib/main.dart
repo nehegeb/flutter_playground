@@ -2,6 +2,7 @@
 //
 
 // TODO: Implement basic submodulebar structure. Open module home page first.
+// TODO: Change localization using a JSON for the languages.
 // TODO: Implement basic roles and module permissions feature.
 // TODO: Implement feedback feature.
 // TODO: Add custom icons for the modules. Add in assets/modules/<module>/images/moduleIcon.png.
@@ -17,7 +18,7 @@ import 'package:flutter_playground/screens/splash_screen.dart';
 import 'package:flutter_playground/app/misc/logic/init_app_settings.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 import 'package:flutter_playground/app/app_router/app_router.dart';
-import 'package:flutter_playground/app/app_notifiers/user_device_notifier.dart';
+import 'package:flutter_playground/notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 
 /// The main function that starts the Flutter app.
 void main() {
@@ -48,7 +49,6 @@ class MainApp extends StatefulWidget {
 /// After that, the [MainScreen] provided by the [appRouter] is shown.
 class _MainAppState extends State<MainApp> {
   bool _isAppInitialized = false; // Track if app initialization is complete.
-  bool _isMobilePrevious = false;
 
   @override
   void initState() {
@@ -86,18 +86,8 @@ class _MainAppState extends State<MainApp> {
       theme: AppTheme.appTheme,
       routerConfig: appRouter,
       builder: (context, child) {
-        // Check if the device type has changed since the last build.
-        // This is necessary to update the [UserDeviceNotifier] if the window size changes.
-        final bool isMobile = UserDeviceNotifier.isMobile;
-        if (_isMobilePrevious != isMobile) {
-          if (MediaQuery.of(context).size.width < 600) {
-            _isMobilePrevious = true;
-            UserDeviceNotifier.setMobile(true);
-          } else {
-            _isMobilePrevious = false;
-            UserDeviceNotifier.setMobile(false);
-          }
-        }
+        // Check if the device type has changed. Updates while resizing.
+        IsMobileDeviceNotifier.checkAndSet(context);
 
         // If the app is not initialized, show the [SplashScreen].
         if (!_isAppInitialized) {

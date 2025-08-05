@@ -14,6 +14,7 @@ class ExpansionTileCompact extends StatefulWidget {
   final Widget? leading;
   final Widget? trailing;
   final ValueChanged<bool>? onExpansionChanged;
+  final double? titleHeight;
 
   const ExpansionTileCompact({
     super.key,
@@ -26,6 +27,7 @@ class ExpansionTileCompact extends StatefulWidget {
     this.leading,
     this.trailing,
     this.onExpansionChanged,
+    this.titleHeight,
   });
 
   @override
@@ -43,18 +45,19 @@ class _ExpansionTileCompactState extends State<ExpansionTileCompact> {
 
   @override
   Widget build(BuildContext context) {
+    final double titleHeight = widget.titleHeight ?? 30;
+
     // Use the highlight color if provided, otherwise use the theme's secondary color with alpha.
     final Color highlight =
         widget.highlightColor ??
         Theme.of(context).colorScheme.secondary.withAlpha(0);
 
-    // Use smaller paddings for a more compact look
+    // Use minimal padding for a more compact look.
     final EdgeInsetsGeometry compactTilePadding =
-        widget.tilePadding ??
-        const EdgeInsets.symmetric(horizontal: 12, vertical: 0);
+        widget.tilePadding ?? EdgeInsets.symmetric(horizontal: 12, vertical: 0);
     final EdgeInsetsGeometry compactChildrenPadding =
         widget.childrenPadding ??
-        const EdgeInsets.symmetric(horizontal: 0, vertical: 0);
+        EdgeInsets.symmetric(horizontal: 0, vertical: 0);
 
     return Container(
       decoration: BoxDecoration(
@@ -63,19 +66,22 @@ class _ExpansionTileCompactState extends State<ExpansionTileCompact> {
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
-          listTileTheme: const ListTileThemeData(
+          listTileTheme: ListTileThemeData(
             minVerticalPadding: 0,
             minLeadingWidth: 0,
-            dense: true,
+            dense: false, // Allow custom height.
             horizontalTitleGap: 8,
+            visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+            contentPadding: EdgeInsets.zero,
           ),
         ),
         child: ExpansionTile(
           leading: widget.leading,
           trailing: widget.trailing,
-          title: SizedBox(
-            height: 30,
-            child: Align(alignment: Alignment.centerLeft, child: widget.title),
+          title: Container(
+            height: titleHeight,
+            alignment: Alignment.centerLeft,
+            child: widget.title,
           ),
           initiallyExpanded: widget.initiallyExpanded,
           tilePadding: compactTilePadding,

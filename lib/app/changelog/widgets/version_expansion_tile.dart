@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/changelog/widgets/changenote_info.dart';
 import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/misc/widgets/expansion_tile_compact.dart';
+import 'package:flutter_playground/notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 
 /// An expansion tile for a changelog entry with version, title, and date.
 class VersionExpansionTile extends StatelessWidget {
@@ -22,36 +23,62 @@ class VersionExpansionTile extends StatelessWidget {
     final String date = versionData['date'] ?? '';
     final String dateReadable = AppHelper.dateToReadableText(date);
 
-    return ExpansionTileCompact(
-      title: SizedBox(
-        child: Row(
+    return ValueListenableBuilder(
+      valueListenable: isMobileDeviceNotifier,
+      builder: (context, value, child) {
+        final isMobile = value ? (value as bool? ?? false) : false;
+        final double titleHeight = isMobile ? 64.0 : 30.0;
+        return ExpansionTileCompact(
+          titleHeight: titleHeight,
+          title: isMobile
+              // If on mobile, show version and date in one row and the summary below.
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            version,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Text(dateReadable),
+                      ],
+                    ),
+                    Text(
+                      summary,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                )
+              // If on wide screen, show version, summary, and date in one row.
+              : Row(
+                  children: [
+                    Text(version, style: Theme.of(context).textTheme.bodyLarge),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        summary,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Text(dateReadable),
+                  ],
+                ),
           children: [
-            // Version number.
-            Text(version, style: Theme.of(context).textTheme.bodyLarge),
-            const SizedBox(width: 16),
-
-            // Summary.
-            Expanded(
-              child: Text(
-                summary,
-                style: Theme.of(context).textTheme.bodyLarge,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SizedBox(width: 16),
-
-            // Date.
-            Text(dateReadable),
+            ...versionData['changenotes'].entries.map((entry) {
+              final Map<String, dynamic> data = entry.value;
+              return ChangenoteInfo(noteData: data);
+            }),
           ],
-        ),
-      ),
-      children: [
-        ...versionData['changenotes'].entries.map((entry) {
-          final Map<String, dynamic> data = entry.value;
-          // Generate a ChangenoteInfo for each changenote entry.
-          return ChangenoteInfo(noteData: data);
-        }),
-      ],
+        );
+      },
     );
   }
 }
