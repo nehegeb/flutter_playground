@@ -89,11 +89,7 @@ class _ModuleBarState extends State<ModuleBar> {
               : Row(
                   children: [
                     // For wide screens, display the module bar on the left side...
-                    ModuleBarWidget(
-                      isWide: isBarWide,
-                      mainModule: routedPage,
-                      user: user,
-                    ),
+                    ModuleBarWidget(isWide: isBarWide, user: user),
                     // ... and to its right the module area that fills the remaining space.
                     Expanded(
                       child: Center(

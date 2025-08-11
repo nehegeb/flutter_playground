@@ -10,18 +10,12 @@ import 'package:flutter_playground/app/module_bar/widgets/main_module_button.dar
 /// A widget module bar of [ModuleBar] itself.
 class ModuleBarWidget extends StatelessWidget {
   final bool isWide;
-  final String mainModule;
   final dynamic user;
 
   static const double barWidthWide = 250;
   static const double barWidthNarrow = 65;
 
-  const ModuleBarWidget({
-    super.key,
-    required this.isWide,
-    required this.mainModule,
-    required this.user,
-  });
+  const ModuleBarWidget({super.key, required this.isWide, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -41,18 +35,33 @@ class ModuleBarWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (Modules.getModulesData() != null)
-                        for (final entry in Modules.getModulesData()!.entries)
-                          // Main Module Button.
-                          MainModuleButton(
-                            iconPath:
-                                'assets/modules/${entry.key}/images/moduleLogo.png',
-                            label: Localization.getText(
-                              'modules.${entry.key}.title',
-                            ),
-                            onTap: () => context.go('/${entry.key}'),
-                            selected: mainModule == entry.key,
-                          ),
+                      ValueListenableBuilder<String>(
+                        valueListenable: mainModuleNotifier,
+                        builder: (context, mainModule, child) {
+                          return Column(
+                            children: [
+                              MainModuleButton(
+                                iconPath: 'assets/app/images/homeIcon.png',
+                                label: Localization.getText('pages.home.title'),
+                                onTap: () => context.go('/home'),
+                                selected: mainModule == 'home',
+                              ),
+
+                              ...?Modules.getModulesData()?.entries.map(
+                                (entry) => MainModuleButton(
+                                  iconPath:
+                                      'assets/modules/${entry.key}/images/moduleIcon.png',
+                                  label: Localization.getText(
+                                    'modules.${entry.key}.title',
+                                  ),
+                                  onTap: () => context.go('/${entry.key}'),
+                                  selected: mainModule == entry.key,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

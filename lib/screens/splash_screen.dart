@@ -39,7 +39,7 @@ class SplashScreen extends StatelessWidget {
                     Hero(
                       tag: 'logo',
                       child: Image.asset(
-                        'assets/app/images/appLogo.png',
+                        'assets/app/images/appIcon.png',
                         height: logoHeight,
                       ),
                     ),

@@ -23,11 +23,7 @@ class ModuleBarFloating extends StatelessWidget {
       width: isWide
           ? ModuleBarWidget.barWidthWide
           : ModuleBarWidget.barWidthNarrow,
-      child: ModuleBarWidget(
-        isWide: isWide,
-        mainModule: mainModule,
-        user: user,
-      ),
+      child: ModuleBarWidget(isWide: isWide, user: user),
     );
   }
 }

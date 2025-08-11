@@ -17,7 +17,8 @@ import 'package:flutter_playground/app/app_router/widgets/fade_page_transition.d
 /// The main router for the application, using GoRouter for declarative routing.
 final GoRouter appRouter = GoRouter(
   navigatorKey: LoadingOverlay.navigatorKey,
-  refreshListenable: appUserNotifier, // Listen to changes to the user.
+  refreshListenable:
+      appUserNotifier, // Listen to changes to the user for permission management.
   initialLocation: "/home", // Set the initial route to the [HomePage].
   routes: <RouteBase>[
     // The home page needs to be on the first layer of the stack.
@@ -26,6 +27,8 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => fadePageTransition(
         child: MainScreen(routedPage: 'HomePage'),
         state: state,
+        mainModule: 'home',
+        subModule: 'home',
       ),
     ),
 
@@ -33,9 +36,8 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: "/",
       pageBuilder: (context, state) => fadePageTransition(
-        child: MainScreen(
-          routedPage: '',
-        ), // No value opens [HomePage] as fallback.
+        // No value for 'routedPage' opens [HomePage] as fallback.
+        child: MainScreen(routedPage: ''),
         state: state,
       ),
       routes: [
@@ -58,6 +60,8 @@ final GoRouter appRouter = GoRouter(
           pageBuilder: (context, state) => fadePageTransition(
             child: MainScreen(routedPage: 'AboutPage'),
             state: state,
+            mainModule: 'home',
+            subModule: 'about',
           ),
         ),
       ],
@@ -69,6 +73,8 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => fadePageTransition(
         child: MainScreen(routedPage: 'DashboardHomePage'),
         state: state,
+        mainModule: 'dashboard',
+        subModule: 'home',
       ),
       redirect: (context, state) {
         return AppRouterUtils.checkUserPermission('module_dashboard');
@@ -79,6 +85,8 @@ final GoRouter appRouter = GoRouter(
           pageBuilder: (context, state) => fadePageTransition(
             child: MainScreen(routedPage: 'DashboardAboutPage'),
             state: state,
+            mainModule: 'dashboard',
+            subModule: 'about',
           ),
         ),
       ],
@@ -90,6 +98,8 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => fadePageTransition(
         child: MainScreen(routedPage: 'TemplateHomePage'),
         state: state,
+        mainModule: 'template',
+        subModule: 'home',
       ),
       redirect: (context, state) {
         return AppRouterUtils.checkUserPermission('module_template');
@@ -100,6 +110,8 @@ final GoRouter appRouter = GoRouter(
           pageBuilder: (context, state) => fadePageTransition(
             child: MainScreen(routedPage: 'TemplateAboutPage'),
             state: state,
+            mainModule: 'template',
+            subModule: 'about',
           ),
         ),
       ],

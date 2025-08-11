@@ -52,18 +52,6 @@ class Modules {
     return modules;
   }
 
-  // /// Get the sub modules of a specific main module.
-  // static Map<String, dynamic>? getMainModules() {
-  //   if (modules == null) return null;
-  //   return modules;
-  // }
-
-  // /// Get the sub modules of a specific main module.
-  // static Map<String, dynamic>? getSubModules(String module) {
-  //   if (modules == null) return null;
-  //   return modules![module] as Map<String, dynamic>?;
-  // }
-
   /// Initializes the modules for the app.
   static Future<void> initModules() async {
     // Set the initial language.

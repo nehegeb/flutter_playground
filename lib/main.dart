@@ -4,6 +4,10 @@
 // TODO: Implement basic submodulebar structure. Open module home page first.
 // TODO: Change localization using a JSON for the languages.
 // TODO: Implement basic roles and module permissions feature.
+// TODO: Make the appLogo redirect to the HomePage.
+// TODO: Finish the Template README file.
+// TODO: Insert notice on HomePage if no modules are permitted for the user.
+//       Something like "You currently do not have access to any module. Ask an admin for access."
 // TODO: Implement feedback feature.
 // TODO: Refactor the AppBar and then close the user menu in set_is_mobile.dart.
 // TODO: Web page errors 404 etc.
@@ -11,7 +15,24 @@
 // TODO: Pass the URL through the login screen.
 // TODO: Finish the new-module README.
 // TODO: Make a search for all TODOs and clean up the code.
-// -----
+// TODO: Add more supported licenses. Apache, GPL, ...
+//       https://gist.github.com/nicolasdao/a7adda51f2f185e8d2700e1573d8a633
+// TODO: (?) Add "Privacy Policy", "Terms of Service" and "Cookie Notice" for internet usage.
+//       Cookie Banner: "This app stores your UI preferences (such as dark or light mode) in your browser to improve your experience. No personal or tracking data is collected."
+// ----
+// TODO: Add the main home page button to the module bar.
+// TODO: Hide main module buttons without permission, managed by framework admins.
+// TODO: Hide sub module buttons without permission, managed by main module admins.
+// TODO: Possibility to make main modules public so everybody sees them.
+// TODO: Possibility to make sub modules public so everybody with access to the main module sees them.
+// ----
+// TODO: Add license notice in about page.
+// TODO: Set up sub-module structure in temp folder.
+// TODO: Add a page template in lib/modules/template/pages/.
+// TODO: Maybe move the module_bar_navigation.dart one folder up?
+// TODO: Add simple registration feature. Just directly add the user to the JSON.
+// TODO: (?) "forgot password" and "change password" features?
+// ----
 // TODO: Feedback widget!
 // TODO: home_widget for mobile widgets?!
 // TODO: Widgets to keep in mind: CircleAvatar, SnackBar, SelectableText
