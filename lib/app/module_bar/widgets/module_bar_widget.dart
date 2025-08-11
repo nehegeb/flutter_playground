@@ -52,7 +52,7 @@ class ModuleBarWidget extends StatelessWidget {
                               ...?Modules.getPermittedData()?.entries.map(
                                 (entry) => MainModuleButton(
                                   mainModule: entry.key,
-                                  subModulesData: entry.value['subModules'],
+                                  subModules: entry.value,
                                   iconPath:
                                       'assets/modules/${entry.key}/images/${entry.key}Icon.png',
                                   label: Localization.getText(

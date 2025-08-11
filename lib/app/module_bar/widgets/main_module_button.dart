@@ -11,7 +11,7 @@ import 'package:flutter_playground/app/modules/modules.dart';
 /// A widget for the buttons in the [ModuleBar].
 class MainModuleButton extends StatefulWidget {
   final String? mainModule;
-  final Map<String, dynamic>? subModulesData;
+  final List<String>? subModules;
   final String? iconPath;
   final String label;
   final VoidCallback onTap;
@@ -20,7 +20,7 @@ class MainModuleButton extends StatefulWidget {
   const MainModuleButton({
     super.key,
     this.mainModule,
-    this.subModulesData,
+    this.subModules,
     this.iconPath,
     required this.label,
     required this.onTap,
@@ -37,7 +37,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
   Widget build(BuildContext context) {
     // Check if the mainModule is not null or empty.
     final String mainModule;
-    if (widget.subModulesData != null &&
+    if (widget.subModules != null &&
         widget.mainModule != null &&
         widget.mainModule!.isNotEmpty) {
       mainModule = widget.mainModule!;
@@ -51,7 +51,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
 
     // Check if the button has sub-modules.
     final bool hasSubModules =
-        widget.subModulesData != null && widget.subModulesData!.isNotEmpty;
+        widget.subModules != null && widget.subModules!.isNotEmpty;
 
     return ValueListenableBuilder<String>(
       valueListenable: mainModuleNotifier,
@@ -124,16 +124,16 @@ class _MainModuleButtonState extends State<MainModuleButton> {
             if (expanded)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: widget.subModulesData!.entries.map((entry) {
+                children: widget.subModules!.map((entry) {
                   return SubModuleButton(
-                    subModule: entry.key,
+                    subModule: entry,
                     iconPath:
-                        'assets/modules/$mainModule/images/${entry.key}Icon.png',
+                        'assets/modules/$mainModule/images/${entry}Icon.png',
                     label: Localization.getText(
-                      'modules.$mainModule.modules.${entry.key}.title',
+                      'modules.$mainModule.modules.$entry.title',
                     ),
-                    onTap: () => context.go('/$mainModule/${entry.key}'),
-                    selected: Modules.subModule == entry.key,
+                    onTap: () => context.go('/$mainModule/$entry'),
+                    selected: Modules.subModule == entry,
                   );
                 }).toList(),
               ),
