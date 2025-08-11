@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/modules/logic/set_app_main_module.dart';
 import 'package:flutter_playground/app/modules/logic/set_app_sub_module.dart';
 import 'package:flutter_playground/app/modules/logic/load_modules.dart';
+import 'package:flutter_playground/app/modules/logic/get_permitted_modules.dart';
 
 /// Notifier for the currently active main module.
 final ValueNotifier<String> mainModuleNotifier = ValueNotifier<String>('main');
@@ -23,7 +24,8 @@ final ValueNotifier<String> subModuleNotifier = ValueNotifier<String>('home');
 /// - [subModule]: Gets the currently active sub module.
 /// - [setMainModule]: Sets the main module.
 /// - [setSubModule]: Sets the sub module.
-/// - [getModulesData]: Retrieves the modules information.
+/// - [getPermittedData]: Get only permitted modules data for the current user.
+/// - [getModulesData]: Get the complete modules data.
 /// - [initModules]: Initializes the modules of the app.
 class Modules {
   /// Get the main module.
@@ -46,7 +48,12 @@ class Modules {
     await setAppSubModule(module: module);
   }
 
-  /// Get the main modules of the app.
+  /// Get only permitted modules data for the current user.
+  static Map<String, dynamic>? getPermittedData() {
+    return getPermittedModules();
+  }
+
+  /// Get the complete modules data.
   static Map<String, dynamic>? getModulesData() {
     if (modules == null) return null;
     return modules;

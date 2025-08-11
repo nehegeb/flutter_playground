@@ -12,7 +12,7 @@ class ModuleBarWidget extends StatelessWidget {
   final bool isWide;
   final dynamic user;
 
-  static const double barWidthWide = 250;
+  static const double barWidthWide = 300;
   static const double barWidthNarrow = 65;
 
   const ModuleBarWidget({super.key, required this.isWide, required this.user});
@@ -40,6 +40,7 @@ class ModuleBarWidget extends StatelessWidget {
                         builder: (context, mainModule, child) {
                           return Column(
                             children: [
+                              // [HomePage] button.
                               MainModuleButton(
                                 iconPath: 'assets/app/images/homeIcon.png',
                                 label: Localization.getText('pages.home.title'),
@@ -47,10 +48,13 @@ class ModuleBarWidget extends StatelessWidget {
                                 selected: mainModule == 'home',
                               ),
 
-                              ...?Modules.getModulesData()?.entries.map(
+                              // Module buttons for the user.
+                              ...?Modules.getPermittedData()?.entries.map(
                                 (entry) => MainModuleButton(
+                                  mainModule: entry.key,
+                                  subModulesData: entry.value['subModules'],
                                   iconPath:
-                                      'assets/modules/${entry.key}/images/moduleIcon.png',
+                                      'assets/modules/${entry.key}/images/${entry.key}Icon.png',
                                   label: Localization.getText(
                                     'modules.${entry.key}.title',
                                   ),

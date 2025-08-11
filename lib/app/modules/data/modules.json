@@ -1,8 +1,14 @@
 {
     "dashboard": {
-        "subModules": []
+        "isPublic": true,
+        "subModules": {
+            "about": {
+                "isPublic": false
+            }
+        }
     },
     "template": {
-        "subModules": []
+        "isPublic": false,
+        "subModules": {}
     }
 }

@@ -1,7 +1,6 @@
 // main.dart
 //
 
-// TODO: Implement basic submodulebar structure. Open module home page first.
 // TODO: Change localization using a JSON for the languages.
 // TODO: Implement basic roles and module permissions feature.
 // TODO: Make the appLogo redirect to the HomePage.

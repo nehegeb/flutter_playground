@@ -10,7 +10,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/app_user/app_user.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
-import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 import 'package:flutter_playground/app/module_bar/widgets/module_bar_widget.dart';
 import 'package:flutter_playground/app/module_bar/widgets/module_bar_floating.dart';
@@ -37,15 +36,11 @@ class _ModuleBarState extends State<ModuleBar> {
   void initState() {
     super.initState();
     moduleBarNotifier.addListener(_refreshUi);
-    mainModuleNotifier.addListener(_refreshUi);
-    subModuleNotifier.addListener(_refreshUi);
   }
 
   @override
   void dispose() {
     moduleBarNotifier.removeListener(_refreshUi);
-    mainModuleNotifier.removeListener(_refreshUi);
-    subModuleNotifier.removeListener(_refreshUi);
     super.dispose();
   }
 

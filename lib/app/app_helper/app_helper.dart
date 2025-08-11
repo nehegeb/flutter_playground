@@ -6,7 +6,6 @@ import 'package:flutter_playground/app/app_helper/logic/convert_to_name_case.dar
 import 'package:flutter_playground/app/app_helper/logic/convert_to_rich_text.dart';
 import 'package:flutter_playground/app/app_helper/logic/convert_date_to_text.dart';
 import 'package:flutter_playground/app/app_helper/logic/convert_month_to_text.dart';
-import 'package:flutter_playground/app/app_helper/logic/check_file_exists.dart';
 
 /// A helper class containing methods for various logic widgets.
 ///
@@ -15,7 +14,6 @@ import 'package:flutter_playground/app/app_helper/logic/check_file_exists.dart';
 /// - [toRichText]: Converts a string to a TextSpan with clickable URLs.
 /// - [dateToReadableText]: Converts a date string to a more readable format.
 /// - [monthNumberToText]: Converts a month number to its corresponding text representation.
-/// - [fileExists]: Checks if a file exists at the given path. Returns boolean.
 class AppHelper {
   /// Converts a string to 'Name Case' (capitalize each word).
   static String toNameCase(String input) {
@@ -49,11 +47,5 @@ class AppHelper {
     if (month == null || month < 1 || month > 12) return '';
 
     return convertMonthToText(month: month);
-  }
-
-  /// Checks if a file exists at the given path.
-  /// Returns true if the file exists, false otherwise.
-  static bool fileExists({required String path}) {
-    return checkFileExists(path: path);
   }
 }

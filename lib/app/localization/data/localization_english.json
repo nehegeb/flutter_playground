@@ -10,6 +10,11 @@
         "notLoadedError": "Modules could not be loaded. Try reloading the page (F5).",
         "dashboard": {
             "title": "Dashboard",
+            "modules": {
+                "about": {
+                    "title": "Sub Module 1"
+                }
+            },
             "pages": {
                 "about": {
                     "title": "About this module"
@@ -18,6 +23,7 @@
         },
         "template": {
             "title": "Module Template",
+            "modules": {},
             "pages": {
                 "about": {
                     "title": "About this module"
