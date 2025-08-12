@@ -1,6 +1,7 @@
 // main.dart
 //
 
+// TODO: Make sure, all permitted pages are visible in the ModuleBar.
 // TODO: Change localization using a JSON for the languages.
 // TODO: Implement basic roles and module permissions feature.
 // TODO: Finish the Template README file.
@@ -11,6 +12,7 @@
 // TODO: Web page errors 404 etc.
 // TODO: (?) Implement a global error handler for the app.
 // TODO: Finish the new-module README.
+// TODO: Make the template module 'isHidden' in the end.
 // TODO: Make a search for all TODOs and clean up the code.
 // TODO: Add more supported licenses. Apache, GPL, ...
 //       https://gist.github.com/nicolasdao/a7adda51f2f185e8d2700e1573d8a633

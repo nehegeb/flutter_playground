@@ -59,14 +59,9 @@ class _LoginPageState extends State<LoginPage> {
       User.setUser(user);
 
       // Redirect the user.
-      if (pendingRedirectUrl != null) {
-        // If the user wanted to go to a specific page, redirect there.
-        context.go(pendingRedirectUrl!);
-        pendingRedirectUrl = null;
-      } else {
-        // Otherwise, navigate to the home page.
-        context.go('/home');
-      }
+      // If the user wanted to go to a specific page, redirect there.
+      // Otherwise, navigate to the home page.
+      AppRouterUtils.gotoRedirectUrl(context);
     } else {
       // Invalid login, clear password field and show error message.
       setState(() {

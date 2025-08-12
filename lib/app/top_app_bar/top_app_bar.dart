@@ -122,6 +122,7 @@ class _TopAppBarState extends State<TopAppBar> {
                   ),
                 ),
                 SizedBox(width: 20),
+                // App title.
                 Flexible(
                   child: Text(
                     getAppBarTitle(isMobile),
@@ -168,10 +169,8 @@ class _TopAppBarState extends State<TopAppBar> {
                 tooltip: '', // Remove unnecessary tooltip.
                 onSelected: (selectedAction) async {
                   if (selectedAction == 'login') {
-                    // Save the url the user is currently in.
-                    pendingRedirectUrl = GoRouter.of(
-                      context,
-                    ).routeInformationProvider.value.uri.toString();
+                    // Save the current url for redirection after login.
+                    AppRouterUtils.saveRedirectUrl();
                     // Navigate to the [LoginPage].
                     await context.push('/login');
                   } else if (selectedAction == 'logout') {

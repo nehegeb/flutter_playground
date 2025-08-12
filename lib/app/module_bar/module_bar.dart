@@ -67,7 +67,13 @@ class _ModuleBarState extends State<ModuleBar> {
               ? Stack(
                   children: [
                     // For mobile devices, fill the whole screen with the module area...
-                    Center(child: ModuleBarNavigation(module: routedPage)),
+                    GestureDetector(
+                      // Hide [ModuleBar] when clicked beside it.
+                      onTap: () => ModuleBarUtils.setHidden(),
+                      child: Center(
+                        child: ModuleBarNavigation(module: routedPage),
+                      ),
+                    ),
                     // ... and display the module bar as a floating side bar to the left.
                     isBarHidden
                         // Hide the module bar if isBarHidden is true.

@@ -18,7 +18,7 @@ String? checkUserPermissionRouting(
   // If the user is not logged in, redirect to the login page.
   if (user == null) {
     // Save the url the user was trying to access.
-    pendingRedirectUrl = state?.uri.toString();
+    AppRouterUtils.saveRedirectUrl();
 
     return '/login';
   }

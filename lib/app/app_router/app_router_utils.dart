@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/app_router/logic/get_main_module_localized.dart';
 import 'package:flutter_playground/app/app_router/logic/get_main_module_router.dart';
 import 'package:flutter_playground/app/app_router/logic/check_user_permission_routing.dart';
+import 'package:flutter_playground/app/app_router/logic/save_pending_redirect_url.dart';
+import 'package:flutter_playground/app/app_router/logic/goto_pending_redirect_url.dart';
 
 /// Pending redirect URL for the app router.
 /// This is used if a not-logged-in user tries to access a protected route.
@@ -17,6 +19,8 @@ String? pendingRedirectUrl;
 /// - [getMainModuleTitle]: Gets the title of the current module.
 /// - [getMainModule]: Gets the current main module.
 /// - [checkUserPermission]: Checks if the user has the required permission for a module.
+/// - [saveRedirectUrl]: Save the current URL for later redirects.
+/// - [gotoRedirectUrl]: Opens the saved redirect URL.
 class AppRouterUtils {
   /// Get the main module title from the [appRouter].
   static String getMainModuleTitle(BuildContext context) {
@@ -31,5 +35,16 @@ class AppRouterUtils {
   /// Check if the user has the required permission for a module.
   static String? checkUserPermission(String permissionName) {
     return checkUserPermissionRouting(permissionName);
+  }
+
+  /// Save the current url for later redirects.
+  static void saveRedirectUrl() {
+    savePendingRedirectUrl();
+  }
+
+  /// Opens the saved redirect URL.
+  /// If none is set, go to the [HomePage].
+  static void gotoRedirectUrl(BuildContext context) {
+    gotoPendingRedirectUrl(context);
   }
 }
