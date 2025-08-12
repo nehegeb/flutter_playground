@@ -6,6 +6,11 @@ import 'package:flutter_playground/app/app_router/logic/get_main_module_localize
 import 'package:flutter_playground/app/app_router/logic/get_main_module_router.dart';
 import 'package:flutter_playground/app/app_router/logic/check_user_permission_routing.dart';
 
+/// Pending redirect URL for the app router.
+/// This is used if a not-logged-in user tries to access a protected route.
+/// If this is not null, the user will be redirected to this URL after logging in.
+String? pendingRedirectUrl;
+
 /// Provides access to routing information.
 ///
 /// Static Methods:

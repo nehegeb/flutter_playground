@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
-import 'package:flutter_playground/app/app_user/app_user.dart';
+import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 import 'package:flutter_playground/app/top_app_bar/widgets/language_menu.dart';
@@ -108,13 +108,16 @@ class _TopAppBarState extends State<TopAppBar> {
             title: Row(
               children: [
                 // App logo.
-                Hero(
-                  tag: 'logo',
-                  child: SizedBox(
-                    height: 35,
-                    child: Image.asset(
-                      'assets/app/images/appLogo.png',
-                      fit: BoxFit.contain,
+                GestureDetector(
+                  onTap: () => context.go('/'),
+                  child: Hero(
+                    tag: 'logo',
+                    child: SizedBox(
+                      height: 35,
+                      child: Image.asset(
+                        'assets/app/images/appLogo.png',
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ),
@@ -165,6 +168,11 @@ class _TopAppBarState extends State<TopAppBar> {
                 tooltip: '', // Remove unnecessary tooltip.
                 onSelected: (selectedAction) async {
                   if (selectedAction == 'login') {
+                    // Save the url the user is currently in.
+                    pendingRedirectUrl = GoRouter.of(
+                      context,
+                    ).routeInformationProvider.value.uri.toString();
+                    // Navigate to the [LoginPage].
                     await context.push('/login');
                   } else if (selectedAction == 'logout') {
                     LoginPage.logout(context);

@@ -8,23 +8,21 @@
     "modules": {
         "loading": "Module werden geladen...",
         "notLoadedError": "Module konnten nicht geladen werden. Versuchen Sie, die Seite neu zu laden (F5).",
-        "dashboard": {
-            "title": "Dashboard",
-            "modules": {},
+        "template": {
+            "title": "Modul Vorlage",
+            "modules": {
+                "template": {
+                    "title": "Untermodul Vorlage"
+                }
+            },
             "pages": {
                 "about": {
                     "title": "Über dieses Modul"
                 }
             }
         },
-        "template": {
-            "title": "Modul Vorlage",
-            "modules": {},
-            "pages": {
-                "about": {
-                    "title": "Über dieses Modul"
-                }
-            }
+        "settings": {
+            "title": "App Einstellungen"
         }
     },
     "pages": {
@@ -43,6 +41,12 @@
         "about": {
             "title": "Über diese App",
             "titleModule": "Über dieses Modul"
+        },
+        "settings": {
+            "title": "Einstellungen",
+            "users": "Benutzer",
+            "roles": "Rollen",
+            "modules": "Module"
         },
         "pageNotFound": {
             "title": "404 - Seite nicht gefunden",

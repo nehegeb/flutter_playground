@@ -52,12 +52,23 @@ class ModuleBarWidget extends StatelessWidget {
                               ...?Modules.getPermittedData()?.entries.map(
                                 (entry) => MainModuleButton(
                                   mainModule: entry.key,
-                                  subModules: entry.value,
-                                  iconPath:
-                                      'assets/modules/${entry.key}/images/${entry.key}Icon.png',
-                                  label: Localization.getText(
-                                    'modules.${entry.key}.title',
-                                  ),
+                                  subModules: entry.value['subModules'],
+                                  isThisModuleAdministrative:
+                                      entry.value['isAdministrative'] ?? false,
+                                  iconPath: entry.key != 'settings'
+                                      // Use the individual icon of the main module.
+                                      ? 'assets/modules/${entry.key}/images/${entry.key}Icon.png'
+                                      // Use the global settings icon for the settings module.
+                                      : 'assets/app/images/settingsIcon.png',
+                                  label: entry.key != 'settings'
+                                      // Use the individual text of the main module.
+                                      ? Localization.getText(
+                                          'modules.${entry.key}.title',
+                                        )
+                                      // Use the global settings page for the settings module.
+                                      : Localization.getText(
+                                          'pages.settings.title',
+                                        ),
                                   onTap: () => context.go('/${entry.key}'),
                                   selected: mainModule == entry.key,
                                 ),
@@ -77,37 +88,3 @@ class ModuleBarWidget extends StatelessWidget {
     );
   }
 }
-
-
-                    // [
-                    //   // Home Page.
-                    //   MainModuleButton(
-                    //     icon: Icons.home,
-                    //     label: Localization.getText('pages.home.title'),
-                    //     onTap: () => context.go('/home'),
-                    //     selected: mainModule == 'HomePage',
-                    //   ),
-                    //   // Dashboard Module.
-                    //   if (user != null &&
-                    //           user.permissions.contains('module_dashboard') ||
-                    //       user?.role == 'admin')
-                    //     MainModuleButton(
-                    //       icon: Icons.dashboard,
-                    //       label: Localization.getText(
-                    //         'modules.dashboard.title',
-                    //       ),
-                    //       onTap: () => context.go('/dashboard'),
-                    //       selected: mainModule == 'DashboardModule',
-                    //     ),
-                    //   // Template Module.
-                    //   if (user != null &&
-                    //           user.permissions.contains('module_template') ||
-                    //       user?.role == 'admin')
-                    //     MainModuleButton(
-                    //       icon: Icons.cloud,
-                    //       label: Localization.getText('modules.template.title'),
-                    //       onTap: () => context.go('/template'),
-                    //       selected: mainModule == 'TemplateModule',
-                    //     ),
-                    //   // NOTE: Add more modules here as needed.
-                    // ],

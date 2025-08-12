@@ -3,14 +3,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/app_user/app_user.dart';
+import 'package:flutter_playground/app/user/user.dart';
 
 /// The login page.
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
-  /// Static logout function to clear the current user and navigate to login page.
+  /// Logout function to clear the current user and navigate to the [LoginPage].
   static void logout(BuildContext context) {
     appUserNotifier.value = null;
     // Navigate to the home page, even if the user is already there.
@@ -21,6 +22,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
+/// The state for the [LoginPage].
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -28,6 +30,16 @@ class _LoginPageState extends State<LoginPage> {
   final FocusNode _passwordFocus = FocusNode();
   bool _invalidLogin = false;
 
+  @override
+  void initState() {
+    super.initState();
+    // Directly set the username field into focus when the site loads.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _usernameFocus.requestFocus();
+    });
+  }
+
+  /// Log in function to authenticate the user with the provided credentials.
   Future<void> _login() async {
     // Find a user with matching username and password.
     final user = users.cast<dynamic>().firstWhere(
@@ -36,13 +48,25 @@ class _LoginPageState extends State<LoginPage> {
           u.password == _passwordController.text,
       orElse: () => null,
     );
+
     if (user != null) {
       // Valid login, set the current user and clear the invalid login state.
       setState(() {
         _invalidLogin = false;
       });
-      appUserNotifier.value = user;
-      context.go('/home'); // Navigate to the home page.
+
+      // Set the user.
+      User.setUser(user);
+
+      // Redirect the user.
+      if (pendingRedirectUrl != null) {
+        // If the user wanted to go to a specific page, redirect there.
+        context.go(pendingRedirectUrl!);
+        pendingRedirectUrl = null;
+      } else {
+        // Otherwise, navigate to the home page.
+        context.go('/home');
+      }
     } else {
       // Invalid login, clear password field and show error message.
       setState(() {

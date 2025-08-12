@@ -6,16 +6,16 @@ import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/changelog/changelog.dart';
 import 'package:flutter_playground/app/changelog/widgets/changelog_expansion_tile.dart';
 
-/// The about page of the dashboard module.
-class DashboardAboutPage extends StatefulWidget {
-  const DashboardAboutPage({super.key});
+/// The about page of the settings main module.
+class SettingsAboutPage extends StatefulWidget {
+  const SettingsAboutPage({super.key});
 
   @override
-  State<DashboardAboutPage> createState() => _DashboardAboutPageState();
+  State<SettingsAboutPage> createState() => _SettingsAboutPageState();
 }
 
-class _DashboardAboutPageState extends State<DashboardAboutPage> {
-  static const String module = 'dashboard';
+class _SettingsAboutPageState extends State<SettingsAboutPage> {
+  static const String mainModule = 'settings';
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _DashboardAboutPageState extends State<DashboardAboutPage> {
 
   // Load data for the about page.
   Future<void> _initData() async {
-    await Changelog.initChangelogData(module: module);
+    await Changelog.initChangelogData(module: mainModule);
   }
 
   @override
@@ -40,21 +40,19 @@ class _DashboardAboutPageState extends State<DashboardAboutPage> {
             children: [
               // Title of the about page.
               Text(
-                Localization.getText('modules.$module.pages.about.title'),
+                Localization.getText('pages.about.title'),
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 16),
 
               // Changelog section.
-
-              // Changelog section.
               FutureBuilder<void>(
-                future: Changelog.initChangelogData(module: module),
+                future: Changelog.initChangelogData(module: mainModule),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  return ChangelogExpansionTile(module: module);
+                  return ChangelogExpansionTile(module: mainModule);
                 },
               ),
             ],

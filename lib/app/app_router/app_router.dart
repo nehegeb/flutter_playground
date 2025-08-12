@@ -9,7 +9,7 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/screens/main_screen.dart';
-import 'package:flutter_playground/app/app_user/app_user.dart';
+import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/misc/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_router/widgets/fade_page_transition.dart';
@@ -67,31 +67,6 @@ final GoRouter appRouter = GoRouter(
       ],
     ),
 
-    // Dashboard module.
-    GoRoute(
-      path: "/dashboard",
-      pageBuilder: (context, state) => fadePageTransition(
-        child: MainScreen(routedPage: 'DashboardHomePage'),
-        state: state,
-        mainModule: 'dashboard',
-        subModule: 'home',
-      ),
-      redirect: (context, state) {
-        return AppRouterUtils.checkUserPermission('module_dashboard');
-      },
-      routes: [
-        GoRoute(
-          path: "about",
-          pageBuilder: (context, state) => fadePageTransition(
-            child: MainScreen(routedPage: 'DashboardAboutPage'),
-            state: state,
-            mainModule: 'dashboard',
-            subModule: 'about',
-          ),
-        ),
-      ],
-    ),
-
     // Template module.
     GoRoute(
       path: "/template",
@@ -106,12 +81,64 @@ final GoRouter appRouter = GoRouter(
       },
       routes: [
         GoRoute(
+          path: "template",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'TemplateTemplateHomePage'),
+            state: state,
+            mainModule: 'template',
+            subModule: 'template',
+          ),
+        ),
+        GoRoute(
           path: "about",
           pageBuilder: (context, state) => fadePageTransition(
             child: MainScreen(routedPage: 'TemplateAboutPage'),
             state: state,
             mainModule: 'template',
             subModule: 'about',
+          ),
+        ),
+        GoRoute(
+          path: "settings",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'SettingsPage'),
+            state: state,
+            mainModule: 'template',
+            subModule: 'settings',
+          ),
+        ),
+      ],
+    ),
+
+    // Settings module.
+    GoRoute(
+      path: "/settings",
+      pageBuilder: (context, state) => fadePageTransition(
+        child: MainScreen(routedPage: 'SettingsHomePage'),
+        state: state,
+        mainModule: 'settings',
+        subModule: 'home',
+      ),
+      redirect: (context, state) {
+        return AppRouterUtils.checkUserPermission('module_settings');
+      },
+      routes: [
+        GoRoute(
+          path: "about",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'SettingsAboutPage'),
+            state: state,
+            mainModule: 'settings',
+            subModule: 'about',
+          ),
+        ),
+        GoRoute(
+          path: "settings",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'SettingsPage'),
+            state: state,
+            mainModule: 'settings',
+            subModule: 'settings',
           ),
         ),
       ],

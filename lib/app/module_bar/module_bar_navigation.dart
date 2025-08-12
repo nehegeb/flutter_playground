@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 // Main pages imports.
 import 'package:flutter_playground/pages/home/home.dart';
 import 'package:flutter_playground/pages/login/login.dart';
-import 'package:flutter_playground/pages/page_not_found/page_not_found.dart';
 import 'package:flutter_playground/pages/about/about.dart';
+import 'package:flutter_playground/pages/settings/settings.dart';
+import 'package:flutter_playground/pages/page_not_found/page_not_found.dart';
 
 // Template module imports.
-import 'package:flutter_playground/modules/template/main.dart';
 import 'package:flutter_playground/modules/template/pages/home/home.dart';
 import 'package:flutter_playground/modules/template/pages/about/about.dart';
+import 'package:flutter_playground/modules/template/modules/template/pages/home/home.dart';
 
-// Dashboard module imports.
-import 'package:flutter_playground/modules/dashboard/main.dart';
-import 'package:flutter_playground/modules/dashboard/pages/home/home.dart';
-import 'package:flutter_playground/modules/dashboard/pages/about/about.dart';
+// Settings module imports.
+import 'package:flutter_playground/modules/settings/pages/home/home.dart';
+import 'package:flutter_playground/modules/settings/pages/about/about.dart';
 
 /// A widget to display the content for the selected module.
 class ModuleBarNavigation extends StatelessWidget {
@@ -27,26 +27,33 @@ class ModuleBarNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (module) {
+      // Main pages.
       case 'HomePage':
         return HomePage();
       case 'LoginPage':
         return LoginPage();
-      case 'PageNotFoundPage':
-        return PageNotFoundPage();
       case 'AboutPage':
         return AboutPage();
-      case 'DashboardModule':
-        return DashboardModule();
-      case 'DashboardHomePage':
-        return DashboardHomePage();
-      case 'DashboardAboutPage':
-        return DashboardAboutPage();
-      case 'TemplateModule':
-        return TemplateModule();
+      case 'SettingsPage':
+        return SettingsPage();
+      case 'PageNotFoundPage':
+        return PageNotFoundPage();
+
+      // Template module pages.
       case 'TemplateHomePage':
         return TemplateHomePage();
       case 'TemplateAboutPage':
         return TemplateAboutPage();
+      // Template sub module pages.
+      case 'TemplateTemplateHomePage':
+        return TemplateTemplateHomePage();
+
+      // Settings module pages.
+      case 'SettingsHomePage':
+        return SettingsHomePage();
+      case 'SettingsAboutPage':
+        return SettingsAboutPage();
+
       // NOTE: Add more pages here as needed.
       default:
         return HomePage();

@@ -1,15 +1,15 @@
 {
-    "module": "dashboard",
-    "current_version": "0.1.0",
+    "module": "settings",
+    "current_version": "1.0.0",
     "versions": {
-        "0.1.0": {
+        "1.0.0": {
             "date": "2000-01-01",
-            "summary": "Initial release of the Dashboard module.",
+            "summary": "Initial release of the Settings module.",
             "changenotes": [
                 {
                     "type": "added",
                     "title": "Initial Release",
-                    "description": "Initial release of the Dashboard module."
+                    "description": "Initial release of the Settings module."
                 }
             ]
         }

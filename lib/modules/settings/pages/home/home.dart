@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
-/// The home page of the dashboard module.
-class DashboardHomePage extends StatelessWidget {
-  const DashboardHomePage({super.key});
-  static const String module = 'dashboard';
+/// The home page of the settings main module.
+class SettingsHomePage extends StatelessWidget {
+  const SettingsHomePage({super.key});
+  static const String mainModule = 'settings';
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class DashboardHomePage extends StatelessWidget {
                 children: [
                   // Title of the home page.
                   Text(
-                    Localization.getText('modules.$module.title'),
+                    Localization.getText('modules.$mainModule.title'),
                     style: Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.center,
                   ),
@@ -42,9 +42,11 @@ class DashboardHomePage extends StatelessWidget {
           right: 16,
           child: FloatingActionButton(
             mini: true,
-            tooltip: Localization.getText('modules.$module.pages.about.title'),
+            tooltip: Localization.getText(
+              'modules.$mainModule.pages.about.title',
+            ),
             onPressed: () {
-              context.go('/$module/about');
+              context.go('/$mainModule/about');
             },
             child: const Icon(Icons.info_outline, size: 20),
           ),

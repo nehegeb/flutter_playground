@@ -11,7 +11,8 @@ import 'package:flutter_playground/app/modules/modules.dart';
 /// A widget for the buttons in the [ModuleBar].
 class MainModuleButton extends StatefulWidget {
   final String? mainModule;
-  final List<String>? subModules;
+  final List<Map<String, dynamic>>? subModules;
+  final bool isThisModuleAdministrative;
   final String? iconPath;
   final String label;
   final VoidCallback onTap;
@@ -21,6 +22,7 @@ class MainModuleButton extends StatefulWidget {
     super.key,
     this.mainModule,
     this.subModules,
+    this.isThisModuleAdministrative = false,
     this.iconPath,
     required this.label,
     required this.onTap,
@@ -90,7 +92,11 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                                   height: 32,
                                   color: widget.selected
                                       ? Theme.of(context).colorScheme.primary
-                                      : null,
+                                      : !widget.isThisModuleAdministrative
+                                      // Use the standard color theme of the main module.
+                                      ? null
+                                      // Use a more visible color for the administrative modules.
+                                      : Colors.red[800],
                                 )
                               : const SizedBox(width: 32, height: 32),
 
@@ -104,7 +110,11 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                                   fontSize: 18,
                                   color: widget.selected
                                       ? Theme.of(context).colorScheme.primary
-                                      : null,
+                                      : !widget.isThisModuleAdministrative
+                                      // Use the standard color theme of the main module.
+                                      ? null
+                                      // Use a more visible color for administrative modules.
+                                      : Colors.red[600],
                                   fontWeight: widget.selected
                                       ? FontWeight.bold
                                       : FontWeight.normal,
@@ -125,15 +135,25 @@ class _MainModuleButtonState extends State<MainModuleButton> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: widget.subModules!.map((entry) {
+                  String subModule = entry['name'] ?? 'main';
                   return SubModuleButton(
-                    subModule: entry,
-                    iconPath:
-                        'assets/modules/$mainModule/images/${entry}Icon.png',
-                    label: Localization.getText(
-                      'modules.$mainModule.modules.$entry.title',
-                    ),
-                    onTap: () => context.go('/$mainModule/$entry'),
-                    selected: Modules.subModule == entry,
+                    subModule: subModule,
+                    isThisModuleAdministrative:
+                        entry['isAdministrative'] ?? false,
+                    iconPath: subModule != 'settings'
+                        // Use the individual icon of the sub module.
+                        ? 'assets/modules/$mainModule/images/${subModule}Icon.png'
+                        // Use the global settings icon for the settings module.
+                        : 'assets/app/images/settingsIcon.png',
+                    label: subModule != 'settings'
+                        // Use the individual text of the sub module.
+                        ? Localization.getText(
+                            'modules.$mainModule.modules.$subModule.title',
+                          )
+                        // Use the global settings page for the settings module.
+                        : Localization.getText('pages.settings.title'),
+                    onTap: () => context.go('/$mainModule/$subModule'),
+                    selected: Modules.subModule == subModule,
                   );
                 }).toList(),
               ),

@@ -17,7 +17,7 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  static const String module = 'main';
+  static const String mainModule = 'main';
 
   @override
   void initState() {
@@ -43,12 +43,12 @@ class _AboutPageState extends State<AboutPage> {
 
               // Changelog section.
               FutureBuilder<void>(
-                future: Changelog.initChangelogData(module: module),
+                future: Changelog.initChangelogData(module: mainModule),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  return ChangelogExpansionTile(module: module);
+                  return ChangelogExpansionTile(module: mainModule);
                 },
               ),
 

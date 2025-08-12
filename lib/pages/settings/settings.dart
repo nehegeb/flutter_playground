@@ -1,14 +1,12 @@
-// home.dart
+// settings.dart
 //
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
-/// The home page of the template main module.
-class TemplateHomePage extends StatelessWidget {
-  const TemplateHomePage({super.key});
-  static const String mainModule = 'template';
+/// The settings page.
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,7 @@ class TemplateHomePage extends StatelessWidget {
                 children: [
                   // Title of the home page.
                   Text(
-                    Localization.getText('modules.$mainModule.title'),
+                    Localization.getText('pages.settings.title'),
                     style: Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.center,
                   ),
@@ -33,22 +31,6 @@ class TemplateHomePage extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ),
-
-        // 'About' button at bottom right.
-        Positioned(
-          bottom: 16,
-          right: 16,
-          child: FloatingActionButton(
-            mini: true,
-            tooltip: Localization.getText(
-              'modules.$mainModule.pages.about.title',
-            ),
-            onPressed: () {
-              context.go('/$mainModule/about');
-            },
-            child: const Icon(Icons.info_outline, size: 20),
           ),
         ),
       ],

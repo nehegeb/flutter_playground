@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/app_user/app_user.dart';
+import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/app_helper/app_helper.dart';
 
 /// The home page of the app.
@@ -14,8 +14,9 @@ class HomePage extends StatelessWidget {
   // Define the welcome message for the home page.
   static String get welcomeMessage {
     // Get the current user from the app permissions.
-    final AppUser? user = appUserNotifier.value;
+    final AppUser? user = User.user;
     final String userName = user?.username ?? '';
+
     // If no user is logged in, return a generic welcome message.
     if (user == null || userName.isEmpty) {
       return '${Localization.getText('pages.home.messageWelcome')}!';

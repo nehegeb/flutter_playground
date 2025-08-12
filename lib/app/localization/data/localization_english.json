@@ -8,11 +8,11 @@
     "modules": {
         "loading": "Loading modules...",
         "notLoadedError": "Modules could not be loaded. Try reloading the page (F5).",
-        "dashboard": {
-            "title": "Dashboard",
+        "template": {
+            "title": "Module Template",
             "modules": {
-                "about": {
-                    "title": "Sub Module 1"
+                "template": {
+                    "title": "Submodule Template"
                 }
             },
             "pages": {
@@ -21,14 +21,8 @@
                 }
             }
         },
-        "template": {
-            "title": "Module Template",
-            "modules": {},
-            "pages": {
-                "about": {
-                    "title": "About this module"
-                }
-            }
+        "settings": {
+            "title": "App Settings"
         }
     },
     "pages": {
@@ -46,6 +40,12 @@
         },
         "about": {
             "title": "About this app"
+        },
+        "settings": {
+            "title": "Settings",
+            "users": "Users",
+            "roles": "Roles",
+            "modules": "Modules"
         },
         "pageNotFound": {
             "title": "404 - Page Not Found",
