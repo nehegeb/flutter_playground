@@ -21,11 +21,11 @@
             }
         },
         "settings": {
-            "title": "App Einstellungen"
-        },
-        "pages": {
-            "about": {
-                "title": "Über dieses Modul"
+            "title": "App Einstellungen",
+            "pages": {
+                "about": {
+                    "title": "Über dieses Modul"
+                }
             }
         }
     },

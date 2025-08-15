@@ -11,6 +11,7 @@
 // TODO: Refactor the AppBar and then close the user menu in set_is_mobile.dart.
 // TODO: Web page errors 404 etc.
 // TODO: (?) Implement a global error handler for the app.
+// TODO: (?) Implement a profile page to change username, password and delete account.
 // TODO: Finish the new-module README.
 // TODO: Make the template module 'isHidden' in the end.
 // TODO: Check all files and only 'show' the necessary import widgets.
