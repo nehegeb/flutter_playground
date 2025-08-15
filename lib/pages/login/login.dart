@@ -11,22 +11,15 @@ import 'package:flutter_playground/app/user/user.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
-  /// Logout function to clear the current user and navigate to the [LoginPage].
-  static void logout(BuildContext context) {
-    appUserNotifier.value = null;
-    // Navigate to the home page, even if the user is already there.
-    context.go('/home', extra: DateTime.now().millisecondsSinceEpoch);
-  }
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 /// The state for the [LoginPage].
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final FocusNode _usernameFocus = FocusNode();
+  final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   bool _invalidLogin = false;
 
@@ -35,33 +28,33 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     // Directly set the username field into focus when the site loads.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _usernameFocus.requestFocus();
+      _emailFocus.requestFocus();
     });
   }
 
   /// Log in function to authenticate the user with the provided credentials.
   Future<void> _login() async {
-    // Find a user with matching username and password.
-    final user = users.cast<dynamic>().firstWhere(
-      (u) =>
-          u.username == _usernameController.text &&
-          u.password == _passwordController.text,
-      orElse: () => null,
+    // Try to login the user.
+    bool isSuccessful = await User.login(
+      context,
+      email: _emailController.text,
+      password: _passwordController.text,
     );
 
-    if (user != null) {
+    if (isSuccessful) {
       // Valid login, set the current user and clear the invalid login state.
       setState(() {
         _invalidLogin = false;
       });
 
-      // Set the user.
-      User.setUser(user);
-
-      // Redirect the user.
-      // If the user wanted to go to a specific page, redirect there.
-      // Otherwise, navigate to the home page.
-      AppRouterUtils.gotoRedirectUrl(context);
+      // TODO: REMOVE THIS!
+      // // Redirect the user.
+      // // If the user wanted to go to a specific page, redirect there.
+      // // Otherwise, navigate to the home page.
+      // if (!mounted) {
+      //   return;
+      // } // Makes sure the widget is still available before navigating.
+      // AppRouterUtils.gotoRedirectUrl(context);
     } else {
       // Invalid login, clear password field and show error message.
       setState(() {
@@ -73,9 +66,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
-    _usernameFocus.dispose();
+    _emailFocus.dispose();
     _passwordFocus.dispose();
     super.dispose();
   }
@@ -96,15 +89,15 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 16),
 
-            // Username input.
+            // User eMail input.
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextField(
-                controller: _usernameController,
-                focusNode: _usernameFocus,
+                controller: _emailController,
+                focusNode: _emailFocus,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  labelText: Localization.getText('pages.login.username'),
+                  labelText: Localization.getText('pages.login.email'),
                   border: const OutlineInputBorder(),
                 ),
                 onSubmitted: (_) {
@@ -114,7 +107,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 12),
 
-            // Password input.
+            // User password input.
+            // TODO: Implement obscureText switch.
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextField(
@@ -151,6 +145,19 @@ class _LoginPageState extends State<LoginPage> {
                 style: const TextStyle(color: Colors.red),
               ),
             ],
+
+            // Link to the registration page.
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: () {
+                // Navigate to the registration page.
+                context.go(
+                  '/register',
+                  extra: DateTime.now().millisecondsSinceEpoch,
+                );
+              },
+              child: Text(Localization.getText('pages.login.linkToRegister')),
+            ),
           ],
         ),
       ),

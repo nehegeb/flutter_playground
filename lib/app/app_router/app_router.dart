@@ -49,6 +49,13 @@ final GoRouter appRouter = GoRouter(
           ),
         ),
         GoRoute(
+          path: "register",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'RegisterPage'),
+            state: state,
+          ),
+        ),
+        GoRoute(
           path: "page-not-found",
           pageBuilder: (context, state) => fadePageTransition(
             child: MainScreen(routedPage: 'PageNotFoundPage'),

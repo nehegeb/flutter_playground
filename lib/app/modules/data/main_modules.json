@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "idTitle": "template",
+        "isPublic": false,
+        "isHidden": false,
+        "color": null
+    },
+    {
+        "id": 2,
+        "idTitle": "settings",
+        "isPublic": false,
+        "isHidden": false,
+        "color": "red"
+    }
+]

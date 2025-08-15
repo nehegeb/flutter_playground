@@ -13,7 +13,8 @@
 // TODO: (?) Implement a global error handler for the app.
 // TODO: Finish the new-module README.
 // TODO: Make the template module 'isHidden' in the end.
-// TODO: Make a search for all TODOs and clean up the code.
+// TODO: Check all files and only 'show' the necessary import widgets.
+// TODO: Make a search for all TODOs and DEBUGs and clean up the code.
 // TODO: Add more supported licenses. Apache, GPL, ...
 //       https://gist.github.com/nicolasdao/a7adda51f2f185e8d2700e1573d8a633
 // TODO: (?) Add "Privacy Policy", "Terms of Service" and "Cookie Notice" for internet usage.

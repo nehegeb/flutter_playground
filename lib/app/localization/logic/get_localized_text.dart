@@ -2,7 +2,7 @@
 //
 
 import 'package:lorem_ipsum/lorem_ipsum.dart';
-import 'package:flutter_playground/app/localization/logic/load_localizations.dart';
+import 'package:flutter_playground/app/localization/logic/load_localizations_data.dart';
 
 /// Returns the localized value for the given key and language code.
 String getLocalizedText(String key, String language) {

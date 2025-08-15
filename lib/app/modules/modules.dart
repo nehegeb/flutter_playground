@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/modules/logic/set_app_main_module.dart';
 import 'package:flutter_playground/app/modules/logic/set_app_sub_module.dart';
-import 'package:flutter_playground/app/modules/logic/load_modules.dart';
+import 'package:flutter_playground/app/modules/logic/load_modules_data.dart';
 import 'package:flutter_playground/app/modules/logic/get_permitted_modules.dart';
 
 /// Notifier for the currently active main module.
@@ -62,6 +62,6 @@ class Modules {
   /// Initializes the modules for the app.
   static Future<void> initModules() async {
     // Set the initial language.
-    await loadModules();
+    await loadModulesData();
   }
 }

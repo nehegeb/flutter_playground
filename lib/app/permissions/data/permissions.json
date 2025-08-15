@@ -1,0 +1,8 @@
+[
+    "mainRead",
+    "mainWrite",
+    "templateRead",
+    "settingsRead",
+    "settingsWrite",
+    "settingsDelete"
+]

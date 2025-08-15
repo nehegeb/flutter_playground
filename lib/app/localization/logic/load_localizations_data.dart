@@ -1,4 +1,4 @@
-// load_localizations.dart
+// load_localizations_data.dart
 //
 
 import 'dart:convert';
@@ -10,7 +10,7 @@ Map<String, dynamic>? localizationSecondary; // Secondary localization.
 
 /// Loads localization JSON files and parses them into maps.
 /// Only loads English and the specified language, if any.
-Future<void> loadLocalizations(String? language) async {
+Future<void> loadLocalizationsData(String? language) async {
   // Display a loading overlay while localizations are being loaded.
   // NOTE: Cannot use localization text here as it is not loaded yet.
   LoadingOverlay.initiate('Loading localizations...');

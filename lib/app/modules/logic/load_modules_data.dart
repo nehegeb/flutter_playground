@@ -1,4 +1,4 @@
-// load_modules.dart
+// load_modules_data.dart
 //
 
 import 'dart:convert';
@@ -10,7 +10,7 @@ Map<String, dynamic>? modules;
 
 /// Loads modules JSON files and parses them into maps.
 /// It loads the modules of the app.
-Future<void> loadModules() async {
+Future<void> loadModulesData() async {
   // Display a loading overlay while modules are being loaded.
   // But before displaying the loading overlay, wait for the UI to settle.
   await Future.delayed(const Duration(milliseconds: 10));

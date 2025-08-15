@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
   static String get welcomeMessage {
     // Get the current user from the app permissions.
     final AppUser? user = User.user;
-    final String userName = user?.username ?? '';
+    final String userName = user?.name ?? '';
 
     // If no user is logged in, return a generic welcome message.
     if (user == null || userName.isEmpty) {

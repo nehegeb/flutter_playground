@@ -27,7 +27,8 @@ Map<String, dynamic>? getPermittedModules() {
     final user = User.user;
     // Check if the user is an admin.
     // Admins can always access all modules.
-    final userIsAdmin = user?.role == 'admin';
+    final userIsAdmin =
+        user?.roles.contains('admin') ?? false; // TODO: Update roles.
 
     // Loop through all main modules.
     if (mainModuleData['isPublic'] == true || userIsAdmin) {

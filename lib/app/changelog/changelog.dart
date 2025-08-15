@@ -1,7 +1,7 @@
 // changelog.dart
 //
 
-import 'package:flutter_playground/app/changelog/logic/load_changelog.dart';
+import 'package:flutter_playground/app/changelog/logic/load_changelog_data.dart';
 
 /// Utility class to access changelog data.
 /// Provides static methods to access to all changelogs, regardless of the module.
@@ -24,6 +24,6 @@ class Changelog {
     }
 
     // Load the changelog file for the specified module.
-    await loadChangelog(module);
+    await loadChangelogData(module);
   }
 }

@@ -7,7 +7,6 @@
     },
     "modules": {
         "loading": "Loading modules...",
-        "notLoadedError": "Modules could not be loaded. Try reloading the page (F5).",
         "template": {
             "title": "Module Template",
             "modules": {
@@ -23,6 +22,11 @@
         },
         "settings": {
             "title": "App Settings"
+        },
+        "pages": {
+            "about": {
+                "title": "About this module"
+            }
         }
     },
     "pages": {
@@ -33,10 +37,20 @@
         },
         "login": {
             "title": "Login",
-            "username": "Username",
+            "email": "eMail address",
             "password": "Password",
             "loginButton": "Login",
-            "messageInvalidLogin": "Invalid username or password"
+            "messageInvalidLogin": "Invalid eMail address or password",
+            "linkToRegister": "Don't have an account? Register now!"
+        },
+        "register": {
+            "title": "Register",
+            "username": "Username",
+            "email": "eMail address",
+            "password": "Password",
+            "confirmPassword": "Confirm password",
+            "registerButton": "Register",
+            "messageInvalidRegister": "This eMail address is already in use."
         },
         "about": {
             "title": "About this app"
@@ -64,13 +78,15 @@
             "german": "German"
         }
     },
-    "authorization": {
-        "roles": {
-            "admin": "Administrator",
-            "user": "Member",
-            "guest": "Guest",
-            "unauthorized": "Not logged in"
-        }
+    "users": {
+        "loading": "Loading users..."
+    },
+    "roles": {
+        "loading": "Loading roles...",
+        "admin": "Administrator",
+        "user": "Member",
+        "guest": "Guest",
+        "unauthorized": "Not logged in"
     },
     "changelog": {
         "title": "Changelog for <<module>>",
@@ -103,7 +119,13 @@
         }
     },
     "errors": {
-        "windowTooSmall": "Window too small!"
+        "windowTooSmall": "Window too small!",
+        "dataNotLoaded": "<<data>> could not be loaded. Try reloading the page (F5).",
+        "passwordTooShort": "Password must be at least 8 characters long.",
+        "passwordNoUppercase": "Password must contain at least one uppercase letter.",
+        "passwordNoLowercase": "Password must contain at least one lowercase letter.",
+        "passwordNoNumber": "Password must contain at least one number.",
+        "passwordNoSpecial": "Password must contain at least one special character."
     },
     "testKey": "This is for performing a valid test where only the English localization has this key."
 }

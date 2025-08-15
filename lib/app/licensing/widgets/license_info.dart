@@ -24,11 +24,6 @@ class LicenseInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(
-      license == "MIT" || license == "BSD3",
-      'Only the following licenses are available currently: MIT, BSD3',
-    );
-
     // Make sure the license data is available.
     final Map<String, dynamic>? licenseData = Licensing.getLicenseData();
     if (licenseData == null) {

@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "idTitle": "template",
+        "mainModuleIdTitle": "template",
+        "isPublic": false,
+        "isHidden": false,
+        "color": null
+    },
+    {
+        "id": 2,
+        "idTitle": "template",
+        "mainModuleIdTitle": "settings",
+        "isPublic": false,
+        "isHidden": false,
+        "color": "red"
+    },
+    {
+        "id": 3,
+        "idTitle": "settings",
+        "mainModuleIdTitle": "settings",
+        "isPublic": false,
+        "isHidden": false,
+        "color": "red"
+    }
+]

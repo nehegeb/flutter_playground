@@ -1,32 +1,56 @@
 {
+    "flutter": {
+        "name": "flutter",
+        "copyright": "2014 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/flutter"
+    },
+    "flutter_web_plugins": {
+        "name": "flutter_web_plugins",
+        "copyright": "2014 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/flutter_web_plugins"
+    },
     "go_router": {
         "name": "go_router",
-        "copyright": "2021 The go_router Authors",
-        "license": "BSD3",
+        "copyright": "2013 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
         "packageUrl": "https://pub.dev/packages/go_router"
+    },
+    "shared_preferences": {
+        "name": "shared_preferences",
+        "copyright": "2013 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/shared_preferences"
     },
     "url_launcher": {
         "name": "url_launcher",
-        "copyright": "2013 The Flutter Authors",
-        "license": "BSD3",
+        "copyright": "2013 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
         "packageUrl": "https://pub.dev/packages/url_launcher"
+    },
+    "argon2": {
+        "name": "argon2",
+        "copyright": "2021 Graciliano M. Passos",
+        "license": "Apache-2.0",
+        "packageUrl": "https://pub.dev/packages/argon2"
     },
     "lorem_ipsum": {
         "name": "lorem_ipsum",
-        "copyright": "2019-2025 lorem_ipsum contributors",
+        "copyright": "2020 Damian Rincon",
         "license": "MIT",
         "packageUrl": "https://pub.dev/packages/lorem_ipsum"
     },
     "country_flags": {
         "name": "country_flags",
-        "copyright": "2020-present country_flags contributors",
+        "copyright": "Arturo Grau",
         "license": "MIT",
         "packageUrl": "https://pub.dev/packages/country_flags"
     },
     "pluto_grid": {
         "name": "pluto_grid",
-        "copyright": "2020 Bosskmk",
+        "copyright": "2020 PlutoGrid",
         "license": "MIT",
-        "packageUrl": "https://github.com/bosskmk/pluto_grid"
+        "packageUrl": "https://pub.dev/packages/pluto_grid"
     }
 }

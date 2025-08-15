@@ -3,6 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
+import 'package:flutter_playground/pages/settings/widgets/users_settings_tab.dart';
+import 'package:flutter_playground/pages/settings/widgets/roles_settings_tab.dart';
+import 'package:flutter_playground/pages/settings/widgets/modules_settings_tab.dart';
 
 /// The settings page.
 class SettingsPage extends StatelessWidget {
@@ -16,20 +19,46 @@ class SettingsPage extends StatelessWidget {
         Positioned.fill(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Title of the home page.
-                  Text(
-                    Localization.getText('pages.settings.title'),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Tab bar for different settings categories.
+                DefaultTabController(
+                  length: 3,
+                  child: Column(
+                    children: [
+                      // Tab bar headers.
+                      TabBar(
+                        tabs: [
+                          Tab(
+                            text: Localization.getText('pages.settings.users'),
+                          ),
+                          Tab(
+                            text: Localization.getText('pages.settings.roles'),
+                          ),
+                          Tab(
+                            text: Localization.getText(
+                              'pages.settings.modules',
+                            ),
+                          ),
+                        ],
+                      ),
+                      // Tab content.
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height - 146,
+                        child: TabBarView(
+                          children: [
+                            UsersSettingsTab(),
+                            RolesSettingsTab(),
+                            ModulesSettingsTab(),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

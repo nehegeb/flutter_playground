@@ -1,8 +1,8 @@
 // licensing.dart
 //
 
-import 'package:flutter_playground/app/licensing/logic/load_license_descriptions.dart';
-import 'package:flutter_playground/app/licensing/logic/load_used_packages.dart';
+import 'package:flutter_playground/app/licensing/logic/load_license_descriptions_data.dart';
+import 'package:flutter_playground/app/licensing/logic/load_used_packages_data.dart';
 
 /// Utility class to access license information.
 /// Provides static methods to retrieve package and license information.
@@ -24,7 +24,7 @@ class Licensing {
 
   /// Loads the licensing data from the JSON files.
   static Future<void> initLicensingData() async {
-    await loadUsedPackages();
-    await loadLicenseDescriptions();
+    await loadUsedPackagesData();
+    await loadLicenseDescriptionsData();
   }
 }

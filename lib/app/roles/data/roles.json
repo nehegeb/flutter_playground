@@ -1,21 +1,44 @@
-{
-    "admin": {
-        "id": "admin",
-        "permissions": [
-            "*"
-        ]
+[
+    {
+        "id": "1",
+        "idTitle": "admin",
+        "mainModuleIdTitle": "main",
+        "isImmutable": true,
+        "permissions": "*"
     },
-    "member": {
-        "id": "member",
-        "permissions": [
-            "read",
-            "write"
-        ]
+    {
+        "id": "2",
+        "idTitle": "member",
+        "moduleImainModuleIdTitleTitle": "main",
+        "isImmutable": true,
+        "permissions": "mainRead,mainWrite"
     },
-    "guest": {
-        "id": "guest",
-        "permissions": [
-            "read"
-        ]
+    {
+        "id": "3",
+        "idTitle": "guest",
+        "mainModuleIdTitle": "main",
+        "isImmutable": true,
+        "permissions": "mainRead"
+    },
+    {
+        "id": "4",
+        "idTitle": "admin",
+        "mainModuleIdTitle": "template",
+        "isImmutable": true,
+        "permissions": "*"
+    },
+    {
+        "id": "5",
+        "idTitle": "member",
+        "mainModuleIdTitle": "template",
+        "isImmutable": true,
+        "permissions": "templateRead"
+    },
+    {
+        "id": "6",
+        "idTitle": "admin",
+        "mainModuleIdTitle": "settings",
+        "isImmutable": true,
+        "permissions": "*"
     }
-}
+]

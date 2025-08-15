@@ -1,4 +1,4 @@
-// load_license_descriptions.dart
+// load_license_descriptions_data.dart
 //
 
 import 'dart:convert';
@@ -9,7 +9,7 @@ import 'package:flutter_playground/app/misc/widgets/loading_overlay.dart';
 Map<String, dynamic>? licenseData;
 
 /// Loads license JSON files and parses them into maps.
-Future<void> loadLicenseDescriptions() async {
+Future<void> loadLicenseDescriptionsData() async {
   // Display a loading overlay while license data is being loaded.
   // But before displaying the loading overlay, wait for the UI to settle.
   await Future.delayed(const Duration(milliseconds: 10));

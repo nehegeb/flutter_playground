@@ -1,4 +1,4 @@
-// load_changelog.dart
+// load_changelog_data.dart
 //
 
 import 'dart:convert';
@@ -11,7 +11,7 @@ Map<String, dynamic>? changelog;
 /// Loads changelog JSON files and parses them into maps.
 /// It loads the changelog for the specified module.
 /// If no moudule is specified, it loads the changelog for the main framework.
-Future<void> loadChangelog(String? module) async {
+Future<void> loadChangelogData(String? module) async {
   // Display a loading overlay while changelog is being loaded.
   // But before displaying the loading overlay, wait for the UI to settle.
   await Future.delayed(const Duration(milliseconds: 10));

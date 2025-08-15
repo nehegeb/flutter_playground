@@ -174,7 +174,7 @@ class _TopAppBarState extends State<TopAppBar> {
                     // Navigate to the [LoginPage].
                     await context.push('/login');
                   } else if (selectedAction == 'logout') {
-                    LoginPage.logout(context);
+                    User.logout(context);
                   } else if (selectedAction == 'toggleThemeMode') {
                     setState(() {
                       AppTheme.toggleBrightness();
@@ -191,8 +191,9 @@ class _TopAppBarState extends State<TopAppBar> {
                       child: ValueListenableBuilder<AppUser?>(
                         valueListenable: appUserNotifier,
                         builder: (context, user, _) {
-                          final username = user?.username ?? '';
-                          final role = user?.role ?? '';
+                          final username = user?.name ?? '';
+                          final role =
+                              user?.roles ?? ''; // TODO: Update roles display!
                           return Container(
                             width: double.infinity,
                             padding: const EdgeInsets.symmetric(
@@ -216,9 +217,7 @@ class _TopAppBarState extends State<TopAppBar> {
                                     Text(
                                       username.isNotEmpty
                                           ? AppHelper.toNameCase(username)
-                                          : Localization.getText(
-                                              'authorization.roles.guest',
-                                            ),
+                                          : Localization.getText('roles.guest'),
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium
@@ -229,11 +228,9 @@ class _TopAppBarState extends State<TopAppBar> {
                                     ),
                                     Text(
                                       role.isNotEmpty
-                                          ? Localization.getText(
-                                              'authorization.roles.$role',
-                                            )
+                                          ? Localization.getText('roles.$role')
                                           : Localization.getText(
-                                              'authorization.roles.unauthorized',
+                                              'roles.unauthorized',
                                             ),
                                       style: Theme.of(context)
                                           .textTheme
