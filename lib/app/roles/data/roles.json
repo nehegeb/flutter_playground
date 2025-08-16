@@ -2,43 +2,37 @@
     {
         "id": "1",
         "idTitle": "admin",
-        "mainModuleIdTitle": "main",
         "isImmutable": true,
-        "permissions": "*"
+        "permissions": "*,main.*"
     },
     {
         "id": "2",
         "idTitle": "member",
-        "moduleImainModuleIdTitleTitle": "main",
         "isImmutable": true,
-        "permissions": "mainRead,mainWrite"
+        "permissions": "main.access"
     },
     {
         "id": "3",
         "idTitle": "guest",
-        "mainModuleIdTitle": "main",
         "isImmutable": true,
-        "permissions": "mainRead"
+        "permissions": "main.access"
     },
     {
         "id": "4",
         "idTitle": "admin",
-        "mainModuleIdTitle": "template",
         "isImmutable": true,
-        "permissions": "*"
+        "permissions": "template.*"
     },
     {
         "id": "5",
         "idTitle": "member",
-        "mainModuleIdTitle": "template",
         "isImmutable": true,
-        "permissions": "templateRead"
+        "permissions": "template.access,template.read"
     },
     {
         "id": "6",
         "idTitle": "admin",
-        "mainModuleIdTitle": "settings",
         "isImmutable": true,
-        "permissions": "*"
+        "permissions": "settings.*"
     }
 ]

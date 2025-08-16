@@ -2,6 +2,7 @@
 //
 
 import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/app/permissions/permissions.dart';
 
 /// Sets the [AppUser] for the [appUserNotifier].
@@ -13,7 +14,7 @@ void setAppUser({
   String name = '',
   String passwordHash = '',
   String passwordSalt = '',
-  String roles = '',
+  List<AppRole>? roles,
 }) {
   // If an argument is not given, use the one already set for [AppUser].
   email = email.isNotEmpty ? email : User.user?.email ?? '';
@@ -25,14 +26,18 @@ void setAppUser({
       ? passwordSalt
       : User.user?.passwordSalt ?? '';
 
+  // Get the user's title.
+  String title = ''; // TODO: Get title.
+
   // If none are given, gather the users permission roles.
-  roles = roles.isNotEmpty ? roles : (Permissions.getAppUserRoles() ?? '');
+  // roles = roles.isNotEmpty ? roles : (Permissions.getAppUserRoles() ?? ''); // TODO: Get roles.
 
   // Set the [AppUser] for the [appUserNotifier].
   final AppUser user = AppUser(
     id,
     email,
     name,
+    title,
     passwordHash,
     passwordSalt,
     roles,

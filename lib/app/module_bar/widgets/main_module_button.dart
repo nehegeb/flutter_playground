@@ -10,21 +10,13 @@ import 'package:flutter_playground/app/modules/modules.dart';
 
 /// A widget for the buttons in the [ModuleBar].
 class MainModuleButton extends StatefulWidget {
-  final String? mainModule;
-  final List<Map<String, dynamic>>? subModules;
-  final bool isThisModuleAdministrative;
-  final String? iconPath;
-  final String label;
+  final String mainModule;
   final VoidCallback onTap;
   final bool selected;
 
   const MainModuleButton({
     super.key,
-    this.mainModule,
-    this.subModules,
-    this.isThisModuleAdministrative = false,
-    this.iconPath,
-    required this.label,
+    required this.mainModule,
     required this.onTap,
     this.selected = false,
   });
@@ -37,28 +29,63 @@ class MainModuleButton extends StatefulWidget {
 class _MainModuleButtonState extends State<MainModuleButton> {
   @override
   Widget build(BuildContext context) {
-    // Check if the mainModule is not null or empty.
-    final String mainModule;
-    if (widget.subModules != null &&
-        widget.mainModule != null &&
-        widget.mainModule!.isNotEmpty) {
-      mainModule = widget.mainModule!;
-    } else {
-      mainModule = '';
+    final AppMainModule? appMainModule = Modules.getMainModule(
+      mainModule: widget.mainModule,
+    );
+
+    // Define the label of the [AppMainModule].
+    String label = '';
+    switch (widget.mainModule) {
+      case 'home':
+        // Use the global home page for the home module.
+        label = Localization.getText('pages.home.title');
+        break;
+      case 'settings':
+        // Use the global settings page for the settings module.
+        label = Localization.getText('pages.settings.title');
+        break;
+      default:
+        // Use the individual text of the [MainAppModule], if it exists.
+        label = Localization.getText('modules.${appMainModule?.idTitle}.title');
     }
 
-    // Check if the icon exists.
-    final bool iconExists =
-        widget.iconPath != null && widget.iconPath!.isNotEmpty;
+    // Define the icon path of the [AppMainModule].
+    String iconPath = '';
+    bool iconExists = false;
+    switch (widget.mainModule) {
+      case 'home':
+        // Use the global home icon for the home page.
+        iconPath = 'assets/app/images/homeIcon.png';
+        iconExists = true;
+        break;
+      case 'settings':
+        // Use the global settings icon for the settings module.
+        iconPath = 'assets/app/images/settingsIcon.png';
+        iconExists = true;
+        break;
+      default:
+        // Use the individual icon of the [AppMainModule], if it exists.
+        iconPath =
+            'assets/modules/${appMainModule?.idTitle}/images/${appMainModule?.idTitle}Icon.png';
+        iconExists = appMainModule?.idTitle != null;
+    }
 
-    // Check if the button has sub-modules.
+    // Check if the button has sub modules.
+    final List<AppSubModule>? appSubModules = Modules.subModules
+        ?.where(
+          (subModule) => subModule.mainModuleIdTitle == appMainModule?.idTitle,
+        )
+        .toList();
     final bool hasSubModules =
-        widget.subModules != null && widget.subModules!.isNotEmpty;
+        appSubModules != null && appSubModules.isNotEmpty;
 
-    return ValueListenableBuilder<String>(
-      valueListenable: mainModuleNotifier,
-      builder: (context, currentModule, _) {
-        final bool expanded = hasSubModules && currentModule == mainModule;
+    // Listen for changes in the active [AppMainModule].
+    // This will rebuild the [ModuleBar] when the active module changes.
+    return ValueListenableBuilder<AppMainModule?>(
+      valueListenable: activeMainModuleNotifier,
+      builder: (context, activeAppMainModule, _) {
+        final bool expanded =
+            hasSubModules && activeAppMainModule == appMainModule;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,7 +93,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
             Material(
               child: Tooltip(
                 // Display a tooltip if the [ModuleBar] is narrow.
-                message: ModuleBarUtils.isNarrow ? widget.label : '',
+                message: ModuleBarUtils.isNarrow ? label : '',
                 waitDuration: const Duration(milliseconds: 400),
                 child: InkWell(
                   onTap: () {
@@ -87,16 +114,15 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                           // Icon to the left.
                           iconExists
                               ? Image.asset(
-                                  widget.iconPath!,
+                                  iconPath,
                                   width: 32,
                                   height: 32,
                                   color: widget.selected
                                       ? Theme.of(context).colorScheme.primary
-                                      : !widget.isThisModuleAdministrative
-                                      // Use the standard color theme of the main module.
-                                      ? null
-                                      // Use a more visible color for the administrative modules.
-                                      : Colors.red[800],
+                                      : Modules.getColor(
+                                          appMainModule: appMainModule,
+                                          shade: 800,
+                                        ),
                                 )
                               : const SizedBox(width: 32, height: 32),
 
@@ -105,16 +131,14 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16),
                               child: Text(
-                                widget.label,
+                                label,
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: widget.selected
                                       ? Theme.of(context).colorScheme.primary
-                                      : !widget.isThisModuleAdministrative
-                                      // Use the standard color theme of the main module.
-                                      ? null
-                                      // Use a more visible color for administrative modules.
-                                      : Colors.red[600],
+                                      : Modules.getColor(
+                                          appMainModule: appMainModule,
+                                        ),
                                   fontWeight: widget.selected
                                       ? FontWeight.bold
                                       : FontWeight.normal,
@@ -134,28 +158,19 @@ class _MainModuleButtonState extends State<MainModuleButton> {
             if (expanded)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: widget.subModules!.map((entry) {
-                  String subModule = entry['name'] ?? 'main';
-                  return SubModuleButton(
-                    subModule: subModule,
-                    isThisModuleAdministrative:
-                        entry['isAdministrative'] ?? false,
-                    iconPath: subModule != 'settings'
-                        // Use the individual icon of the sub module.
-                        ? 'assets/modules/$mainModule/images/${subModule}Icon.png'
-                        // Use the global settings icon for the settings module.
-                        : 'assets/app/images/settingsIcon.png',
-                    label: subModule != 'settings'
-                        // Use the individual text of the sub module.
-                        ? Localization.getText(
-                            'modules.$mainModule.modules.$subModule.title',
-                          )
-                        // Use the global settings page for the settings module.
-                        : Localization.getText('pages.settings.title'),
-                    onTap: () => context.go('/$mainModule/$subModule'),
-                    selected: Modules.subModule == subModule,
-                  );
-                }).toList(),
+                children:
+                    // Sub module buttons for which the [AppUser] has access to.
+                    appSubModules
+                        .map(
+                          (entry) => SubModuleButton(
+                            subModule: entry.idTitle,
+                            onTap: () => context.go(
+                              '/${widget.mainModule}/${entry.idTitle}',
+                            ),
+                            selected: Modules.subModule == entry,
+                          ),
+                        )
+                        .toList(),
               ),
           ],
         );

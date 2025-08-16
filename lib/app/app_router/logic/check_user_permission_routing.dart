@@ -15,18 +15,15 @@ String? checkUserPermissionRouting(String? permissionName) {
   if (user == null) {
     // Save the url the user was trying to access.
     AppRouterUtils.saveRedirectUrl();
-
     return '/login';
   }
 
-  // If the user is an admin, they have all permissions.
-  if (user.roles == 'admin') return null; // TODO: Update roles.
-
   // Check if the user has the required permission.
   // Redirect to page not found if permission is denied.
-  if (permissionName == null || !user.roles.contains(permissionName)) {
-    return '/page-not-found'; // TODO: Implement proper HTML error page.
+  if (!User.checkPermission(permission: permissionName)) {
+    return '/page-not-found';
   }
+  ; // TODO: Implement proper HTML error page.
 
   // All checks passed, no redirect needed.
   return null;

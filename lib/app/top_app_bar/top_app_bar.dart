@@ -188,12 +188,13 @@ class _TopAppBarState extends State<TopAppBar> {
                     PopupMenuItem<String>(
                       enabled: false,
                       height: 80, // Bigger than default height (default is 48).
+                      // Listen for changes in the active [AppUser].
+                      // This will rebuild the [UserCard] when the active user changes.
                       child: ValueListenableBuilder<AppUser?>(
                         valueListenable: appUserNotifier,
-                        builder: (context, user, _) {
-                          final username = user?.name ?? '';
-                          final role =
-                              user?.roles ?? ''; // TODO: Update roles display!
+                        builder: (context, appUser, _) {
+                          final userName = appUser?.name ?? '';
+                          final userTitle = appUser?.title ?? '';
                           return Container(
                             width: double.infinity,
                             padding: const EdgeInsets.symmetric(
@@ -214,9 +215,10 @@ class _TopAppBarState extends State<TopAppBar> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    // The currently logged in [AppUser]'s name.
                                     Text(
-                                      username.isNotEmpty
-                                          ? AppHelper.toNameCase(username)
+                                      appUser != null
+                                          ? AppHelper.toNameCase(userName)
                                           : Localization.getText('roles.guest'),
                                       style: Theme.of(context)
                                           .textTheme
@@ -226,9 +228,13 @@ class _TopAppBarState extends State<TopAppBar> {
                                           ),
                                       overflow: TextOverflow.ellipsis,
                                     ),
+
+                                    // The currently logged in [AppUser]'s title.
                                     Text(
-                                      role.isNotEmpty
-                                          ? Localization.getText('roles.$role')
+                                      appUser != null
+                                          ? Localization.getText(
+                                              'roles.$userTitle',
+                                            )
                                           : Localization.getText(
                                               'roles.unauthorized',
                                             ),

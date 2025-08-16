@@ -2,12 +2,15 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/app/user/logic/login_app_user.dart';
 import 'package:flutter_playground/app/user/logic/logout_app_user.dart';
 import 'package:flutter_playground/app/user/logic/register_new_user.dart';
 import 'package:flutter_playground/app/user/logic/check_entered_password_strength.dart';
 import 'package:flutter_playground/app/user/logic/set_user_password.dart';
+import 'package:flutter_playground/app/user/logic/check_app_user_permission.dart';
 
+/// Notifier for the currently logged in [AppUser].
 final ValueNotifier<AppUser?> appUserNotifier = ValueNotifier<AppUser?>(null);
 
 /// Utility class for user management.
@@ -16,10 +19,11 @@ final ValueNotifier<AppUser?> appUserNotifier = ValueNotifier<AppUser?>(null);
 /// Static Methods:
 /// - [user]: Gets the currently logged in [AppUser].
 /// - [register]: Registers a new user. Returns Boolean.
-/// - [login]: Logs in a user. Returns Boolean.
-/// - [logout]: Logs out the logged in user. Returns Boolean.
-/// - [setPassword]: Sets a new password for the logged in user. Returns Boolean.
-/// - [checkPasswordStrength]: Checks the strength of the password. Returns String.
+/// - [login]: Logs in an [AppUser]. Returns Boolean.
+/// - [logout]: Logs out the logged in [AppUser]. Returns Boolean.
+/// - [setPassword]: Sets a new password for the logged in [AppUser]. Returns Boolean.
+/// - [checkPasswordStrength]: Checks the strength of a password. Returns String.
+/// - [checkPermission]: Checks if the user has permission for something. Returns Boolean.
 class User {
   /// Get the currently logged in [AppUser] from the [appUserNotifier].
   static AppUser? get user {
@@ -69,20 +73,37 @@ class User {
   static String checkPasswordStrength({required String password}) {
     return checkEnteredPasswordStrength(password: password);
   }
+
+  /// Checks if the currently logged in [AppUser] has permission for something.
+  /// It checks the user's roles against the requested permission.
+  /// Returns true if the user has permission, otherwise false.
+  static bool checkPermission({required String? permission}) {
+    return checkAppUserPermission(permission: permission);
+  }
 }
 
 /// A user of the app.
+///
+/// Arguments:
+/// - [id]: The unique identifier of the user, as an integer.
+/// - [email]: The email address of the user.
+/// - [name]: The name of the user.
+/// - [passwordHash]: The hashed password of the user.
+/// - [passwordSalt]: The salt used to hash the password.
+/// - [roles]: A list of [AppRole]s the user has.
 class AppUser {
   final int id;
   final String email;
   final String name;
+  final String title;
   final String passwordHash;
   final String passwordSalt;
-  final String roles;
+  final List<AppRole>? roles;
   AppUser(
     this.id,
     this.email,
     this.name,
+    this.title,
     this.passwordHash,
     this.passwordSalt,
     this.roles,

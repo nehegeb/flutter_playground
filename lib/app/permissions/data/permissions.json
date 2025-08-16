@@ -1,8 +1,15 @@
 [
-    "mainRead",
-    "mainWrite",
-    "templateRead",
-    "settingsRead",
-    "settingsWrite",
-    "settingsDelete"
+    "main.access",
+    "template.access",
+    "template.template.access",
+    "template.template.read",
+    "template.settings.access",
+    "template.settings.read",
+    "template.settings.write",
+    "template.settings.delete",
+    "settings.access",
+    "settings.settings.access",
+    "settings.settings.read",
+    "settings.settings.write",
+    "settings.settings.delete"
 ]

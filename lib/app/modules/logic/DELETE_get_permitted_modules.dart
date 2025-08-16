@@ -2,12 +2,11 @@
 //
 
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/app/modules/modules.dart';
 
 /// Get only permitted modules data for the current user.
 Map<String, dynamic>? getPermittedModules() {
   // Get the complete modules data.
-  final modulesData = Modules.getModulesData();
+  final modulesData = {};
 
   // Make sure modulesData is valid.
   if (modulesData == null || modulesData.isEmpty) {
@@ -28,7 +27,7 @@ Map<String, dynamic>? getPermittedModules() {
     // Check if the user is an admin.
     // Admins can always access all modules.
     final userIsAdmin =
-        user?.roles.contains('admin') ?? false; // TODO: Update roles.
+        user?.roles!.contains('admin') ?? false; // TODO: Update roles.
 
     // Loop through all main modules.
     if (mainModuleData['isPublic'] == true || userIsAdmin) {

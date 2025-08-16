@@ -3,12 +3,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/user/user.dart';
 
 /// Logs out the currently logged in [AppUser].
 void logoutAppUser(BuildContext context) {
   // Clear the [appUserNotifier].
   appUserNotifier.value = null;
+
+  // Clear the [mainModulesNotifier] and [subModulesNotifier].
+  Modules.clearModules();
 
   // Navigate to the [HomePage], even if the user is already there.
   context.go('/home', extra: DateTime.now().millisecondsSinceEpoch);

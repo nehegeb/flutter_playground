@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
+import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/user/logic/load_users_data.dart';
 import 'package:flutter_playground/app/user/logic/generate_argon2_hash.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
@@ -46,6 +47,13 @@ Future<bool> loginAppUser(
     passwordHash: userData['passwordArgon2'],
     passwordSalt: userData['argon2Salt'],
   );
+
+  // Load the [AppMainModules] and [AppSubModules] the user has access for.
+  Modules.initModules();
+
+  // Load the [AppMainModule]s and [AppSubModule]s the [AppUser] has access to.
+  Modules.setMainModules();
+  Modules.setSubModules();
 
   // Clear the users data afterwards.
   // NOTE: This is necessary to prevent unnecessary data for all users from being kept in memory.

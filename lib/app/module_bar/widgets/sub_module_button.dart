@@ -2,31 +2,67 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
+import 'package:flutter_playground/app/modules/modules.dart';
 
 /// A widget for the buttons in the [ModuleBar].
 class SubModuleButton extends StatelessWidget {
   final String subModule;
-  final bool isThisModuleAdministrative;
-  final String? iconPath;
-  final String label;
   final VoidCallback onTap;
   final bool selected;
 
   const SubModuleButton({
     super.key,
     required this.subModule,
-    this.isThisModuleAdministrative = false,
-    this.iconPath,
-    required this.label,
     required this.onTap,
     this.selected = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Check if the icon exists.
-    final bool iconExists = iconPath != null && iconPath!.isNotEmpty;
+    final AppSubModule? appSubModule = Modules.getSubModule(
+      subModule: subModule,
+    );
+
+    // Define the label of the [AppSubModule].
+    String label = '';
+    switch (subModule) {
+      case 'home':
+        // Use the global home page for the home module.
+        label = Localization.getText('pages.home.title');
+        break;
+      case 'settings':
+        // Use the global settings page for the settings module.
+        label = Localization.getText('pages.settings.title');
+        break;
+      default:
+        // Use the individual text of the [MainAppModule], if it exists.
+        label = Localization.getText(
+          'modules.${appSubModule?.mainModuleIdTitle}.modules.${appSubModule?.idTitle}.title',
+        );
+    }
+
+    // Define the icon path of the [AppSubModule].
+    String iconPath = '';
+    bool iconExists = false;
+    switch (subModule) {
+      case 'home':
+        // Use the global home icon for the home page.
+        iconPath = 'assets/app/images/homeIcon.png';
+        iconExists = true;
+        break;
+      case 'settings':
+        // Use the global settings icon for the settings module.
+        iconPath = 'assets/app/images/settingsIcon.png';
+        iconExists = true;
+        break;
+      default:
+        // Use the individual icon of the [AppSubModule], if it exists.
+        iconPath =
+            'assets/modules/${appSubModule?.mainModuleIdTitle}/images/${appSubModule?.idTitle}Icon.png';
+        iconExists = appSubModule?.idTitle != null;
+    }
 
     return Material(
       child: Tooltip(
@@ -51,16 +87,15 @@ class SubModuleButton extends StatelessWidget {
                   const SizedBox(width: 6),
                   iconExists
                       ? Image.asset(
-                          iconPath!,
+                          iconPath,
                           width: 20,
                           height: 20,
                           color: selected
                               ? Theme.of(context).colorScheme.primary
-                              : !isThisModuleAdministrative
-                              // Use the standard color theme of the main module.
-                              ? null
-                              // Use a more visible color for the administrative modules.
-                              : Colors.red[800],
+                              : Modules.getColor(
+                                  appSubModule: appSubModule,
+                                  shade: 800,
+                                ),
                         )
                       : const SizedBox(width: 20, height: 20),
                   const SizedBox(width: 6),
@@ -75,11 +110,7 @@ class SubModuleButton extends StatelessWidget {
                           fontSize: 14,
                           color: selected
                               ? Theme.of(context).colorScheme.primary
-                              : !isThisModuleAdministrative
-                              // Use the standard color theme of the main module.
-                              ? null
-                              // Use a more visible color for the administrative modules.
-                              : Colors.red[600],
+                              : Modules.getColor(appSubModule: appSubModule),
                           fontWeight: selected
                               ? FontWeight.bold
                               : FontWeight.normal,
