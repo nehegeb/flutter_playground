@@ -4,7 +4,6 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/app/user/logic/load_users_data.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 
 /// Update the entry in the users data JSON file by the users ID.
@@ -14,14 +13,15 @@ Future<bool> updateUsersData({
   int id = 0,
   String email = '',
   String name = '',
-  String passwordArgon2 = '',
-  String argon2Salt = '',
+  String passwordHash = '',
+  String passwordSalt = '',
+  List<int> rolesIds = const [],
 }) async {
   // Load the users data, if it's not already loaded.
   bool wasAlreadyLoaded = true;
-  if (usersData == null) {
+  if (User.dbUsersData == null) {
     wasAlreadyLoaded = false;
-    await loadUsersData();
+    await User.initDbUsersData();
   }
 
   bool isNewUser = id == 0 ? true : false;
@@ -30,45 +30,56 @@ Future<bool> updateUsersData({
   // If its a NEW USER, try to add it to the users data.
   if (isNewUser) {
     // Check, if the eMail address already exists in the users data.
-    final existingUser = usersData!.firstWhere(
+    final existingUser = User.dbUsersData!.firstWhere(
       (user) => user['email'] == email,
       orElse: () => null,
     );
 
     // If the eMail address already exists in the users data, return false.
     if (existingUser != null) {
+      // Clear the users data as soon as its not needed anymore, if it was not already loaded before.
+      // If it was already loaded before, it should stay in memory and be cleared later on.
+      if (!wasAlreadyLoaded) {
+        User.clearDbUsersData();
+      }
+
       return false;
     }
 
     // Add the new user to the users data.
     final newUser = {
-      'id': usersData!.length + 1,
+      'id': User.dbUsersData!.length + 1,
       'email': email,
       'name': name,
-      'passwordArgon2': passwordArgon2,
-      'argon2Salt': argon2Salt,
+      'passwordArgon2': passwordHash,
+      'argon2Salt': passwordSalt,
+      'rolesIds': rolesIds.isNotEmpty ? rolesIds : [],
     };
 
-    usersData!.add(newUser);
+    User.dbUsersData!.add(newUser);
 
     usersDataUpdated = true;
   }
 
   // If its a KNOWN USER, update the given values for the users id in the users data.
   if (!isNewUser) {
-    for (var user in usersData!) {
+    for (var user in User.dbUsersData!) {
       if (user['id'] == id) {
         email = email.isNotEmpty ? email : user['email'];
         name = name.isNotEmpty ? name : user['name'];
-        passwordArgon2 = passwordArgon2.isNotEmpty
-            ? passwordArgon2
+        passwordHash = passwordHash.isNotEmpty
+            ? passwordHash
             : user['passwordArgon2'];
-        argon2Salt = argon2Salt.isNotEmpty ? argon2Salt : user['argon2Salt'];
+        passwordSalt = passwordSalt.isNotEmpty
+            ? passwordSalt
+            : user['argon2Salt'];
+        rolesIds = rolesIds.isNotEmpty ? rolesIds : user['rolesIds'] ?? [];
 
         user['email'] = email;
         user['name'] = name;
-        user['passwordArgon2'] = passwordArgon2;
-        user['argon2Salt'] = argon2Salt;
+        user['passwordArgon2'] = passwordHash;
+        user['argon2Salt'] = passwordSalt;
+        user['rolesIds'] = rolesIds;
 
         usersDataUpdated = true;
         break;
@@ -76,32 +87,30 @@ Future<bool> updateUsersData({
     }
   }
 
-  // If the users data could not be updated, return false.
-  if (!usersDataUpdated) {
-    return false;
+  // If the users data has been updated
+  // save the updated users data back to the JSON file.
+  if (usersDataUpdated) {
+    final file = File('lib/app/user/data/users.json');
+    final jsonString = jsonEncode(User.dbUsersData);
+    await file.writeAsString(jsonString);
   }
 
-  // Save the updated users data back to the JSON file.
-  final file = File('lib/app/user/data/users.json');
-  final jsonString = jsonEncode(usersData);
-  await file.writeAsString(jsonString);
-
-  // If its a KNOWN USER, set the [AppUser] for the [appUserNotifier].
-  if (!isNewUser) {
-    setAppUser(
-      id: id,
-      email: email,
-      name: name,
-      passwordHash: passwordArgon2,
-      passwordSalt: argon2Salt,
-    );
-  }
-
-  // Clear the users data afterwards, if it was not already loaded before.
+  // Clear the users data as soon as its not needed anymore, if it was not already loaded before.
   // If it was already loaded before, it should stay in memory and be cleared later on.
   // NOTE: This is necessary to prevent unnecessary data for all users from being kept in memory.
   if (!wasAlreadyLoaded) {
-    usersData = null;
+    User.clearDbUsersData();
+  }
+
+  // If its a KNOWN USER, set the [AppUser] for the [appUserNotifier].
+  if (!isNewUser) {
+    await setAppUser(
+      id: id,
+      email: email,
+      name: name,
+      passwordHash: passwordHash,
+      passwordSalt: passwordSalt,
+    );
   }
 
   return true;

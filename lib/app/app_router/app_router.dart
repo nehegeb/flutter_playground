@@ -20,6 +20,7 @@ final GoRouter appRouter = GoRouter(
   refreshListenable:
       appUserNotifier, // Listen to changes to the user for permission management.
   initialLocation: "/home", // Set the initial route to the [HomePage].
+  errorBuilder: (context, state) => MainScreen(routedPage: 'PageNotFoundPage'),
   routes: <RouteBase>[
     // The home page needs to be on the first layer of the stack.
     GoRoute(
@@ -33,6 +34,7 @@ final GoRouter appRouter = GoRouter(
     ),
 
     // Main pages of the app.
+    // These are all open for public. No permission checks required.
     GoRoute(
       path: "/",
       pageBuilder: (context, state) => fadePageTransition(
@@ -41,6 +43,15 @@ final GoRouter appRouter = GoRouter(
         state: state,
       ),
       routes: [
+        GoRoute(
+          path: "about",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'AboutPage'),
+            state: state,
+            mainModule: 'home',
+            subModule: 'about',
+          ),
+        ),
         GoRoute(
           path: "login",
           pageBuilder: (context, state) => fadePageTransition(
@@ -62,15 +73,6 @@ final GoRouter appRouter = GoRouter(
             state: state,
           ),
         ),
-        GoRoute(
-          path: "about",
-          pageBuilder: (context, state) => fadePageTransition(
-            child: MainScreen(routedPage: 'AboutPage'),
-            state: state,
-            mainModule: 'home',
-            subModule: 'about',
-          ),
-        ),
       ],
     ),
 
@@ -84,18 +86,9 @@ final GoRouter appRouter = GoRouter(
         subModule: 'home',
       ),
       redirect: (context, state) {
-        return AppRouterUtils.checkUserPermission('module_template');
+        return AppRouterUtils.checkUserPermission('template.access');
       },
       routes: [
-        GoRoute(
-          path: "template",
-          pageBuilder: (context, state) => fadePageTransition(
-            child: MainScreen(routedPage: 'TemplateTemplateHomePage'),
-            state: state,
-            mainModule: 'template',
-            subModule: 'template',
-          ),
-        ),
         GoRoute(
           path: "about",
           pageBuilder: (context, state) => fadePageTransition(
@@ -104,6 +97,23 @@ final GoRouter appRouter = GoRouter(
             mainModule: 'template',
             subModule: 'about',
           ),
+          redirect: (context, state) {
+            return AppRouterUtils.checkUserPermission('template.access');
+          },
+        ),
+        GoRoute(
+          path: "template",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'TemplateTemplateHomePage'),
+            state: state,
+            mainModule: 'template',
+            subModule: 'template',
+          ),
+          redirect: (context, state) {
+            return AppRouterUtils.checkUserPermission(
+              'template.template.access',
+            );
+          },
         ),
         GoRoute(
           path: "settings",
@@ -113,6 +123,11 @@ final GoRouter appRouter = GoRouter(
             mainModule: 'template',
             subModule: 'settings',
           ),
+          redirect: (context, state) {
+            return AppRouterUtils.checkUserPermission(
+              'template.settings.access',
+            );
+          },
         ),
       ],
     ),
@@ -127,7 +142,7 @@ final GoRouter appRouter = GoRouter(
         subModule: 'home',
       ),
       redirect: (context, state) {
-        return AppRouterUtils.checkUserPermission('module_settings');
+        return AppRouterUtils.checkUserPermission('settings.access');
       },
       routes: [
         GoRoute(
@@ -138,6 +153,9 @@ final GoRouter appRouter = GoRouter(
             mainModule: 'settings',
             subModule: 'about',
           ),
+          redirect: (context, state) {
+            return AppRouterUtils.checkUserPermission('settings.access');
+          },
         ),
         GoRoute(
           path: "settings",
@@ -147,6 +165,11 @@ final GoRouter appRouter = GoRouter(
             mainModule: 'settings',
             subModule: 'settings',
           ),
+          redirect: (context, state) {
+            return AppRouterUtils.checkUserPermission(
+              'settings.settings.access',
+            );
+          },
         ),
       ],
     ),

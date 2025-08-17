@@ -19,14 +19,21 @@ AppSubModule? getAppSubModule({required String? subModule}) {
   }
 
   // If no [AppSubModule]s are loaded, return null.
-  if (Modules.subModules == null || Modules.subModules!.isEmpty) {
+  if (Modules.permittedSubModules == null ||
+      Modules.permittedSubModules!.isEmpty) {
     return null;
   }
 
   // Find the [AppSubModule] with the given title ID.
-  final AppSubModule? appSubModule = Modules.subModules?.firstWhere(
-    (module) => module.idTitle == subModule,
-  );
+  AppSubModule? appSubModule;
+  try {
+    appSubModule = Modules.permittedSubModules?.firstWhere(
+      (module) => module.idTitle == subModule,
+    );
+  } catch (e) {
+    // If no [AppSubModule] could be found, return null.
+    appSubModule = null;
+  }
 
   return appSubModule;
 }

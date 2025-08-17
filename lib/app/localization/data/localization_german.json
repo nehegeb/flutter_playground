@@ -35,7 +35,8 @@
         "home": {
             "title": "Startseite",
             "messageWelcome": "Willkommen",
-            "messageLogin": "Sie befinden sich derzeit im Gastmodus. Klicken Sie hier, um sich anzumelden..."
+            "messageLogin": "Sie befinden sich derzeit im Gastmodus. Klicken Sie hier, um sich anzumelden...",
+            "messageNoModules": "Sie haben derzeit keinen Zugriff auf ein Modul!\nFragen Sie einen Modul Administrator nach Zugriff."
         },
         "login": {
             "title": "Anmelden",
@@ -87,7 +88,8 @@
     "roles": {
         "loading": "Lade Rollen...",
         "admin": "Administrator",
-        "user": "Mitglied",
+        "moderator": "Moderator",
+        "member": "Mitglied",
         "guest": "Gast",
         "unauthorized": "Nicht eingeloggt"
     },

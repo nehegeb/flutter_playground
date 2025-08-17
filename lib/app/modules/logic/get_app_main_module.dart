@@ -19,14 +19,21 @@ AppMainModule? getAppMainModule({required String? mainModule}) {
   }
 
   // If no [AppMainModule]s are loaded, return null.
-  if (Modules.mainModules == null || Modules.mainModules!.isEmpty) {
+  if (Modules.permittedMainModules == null ||
+      Modules.permittedMainModules!.isEmpty) {
     return null;
   }
 
   // Find the [AppMainModule] with the given title ID.
-  final AppMainModule? appMainModule = Modules.mainModules?.firstWhere(
-    (module) => module.idTitle == mainModule,
-  );
+  AppMainModule? appMainModule;
+  try {
+    appMainModule = Modules.permittedMainModules?.firstWhere(
+      (module) => module.idTitle == mainModule,
+    );
+  } catch (e) {
+    // If no [AppMainModule] could be found, return null.
+    appMainModule = null;
+  }
 
   return appMainModule;
 }

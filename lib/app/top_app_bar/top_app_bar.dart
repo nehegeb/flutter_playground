@@ -13,7 +13,6 @@ import 'package:flutter_playground/app/top_app_bar/widgets/language_menu.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/misc/widgets/popup_menu_entry_compact.dart';
-import 'package:flutter_playground/pages/login/login.dart';
 
 /// A horizontal app bar at the top of the app.
 /// It contains a menu button to toggle the [ModuleBar],
@@ -232,9 +231,7 @@ class _TopAppBarState extends State<TopAppBar> {
                                     // The currently logged in [AppUser]'s title.
                                     Text(
                                       appUser != null
-                                          ? Localization.getText(
-                                              'roles.$userTitle',
-                                            )
+                                          ? userTitle
                                           : Localization.getText(
                                               'roles.unauthorized',
                                             ),

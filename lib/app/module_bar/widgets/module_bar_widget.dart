@@ -49,7 +49,7 @@ class ModuleBarWidget extends StatelessWidget {
                               ),
 
                               // Main module buttons for which the [AppUser] has access to.
-                              ...?Modules.mainModules?.map(
+                              ...?Modules.permittedMainModules?.map(
                                 (entry) => MainModuleButton(
                                   mainModule: entry.idTitle,
                                   onTap: () => context.go('/${entry.idTitle}'),

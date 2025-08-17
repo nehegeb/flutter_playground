@@ -9,7 +9,7 @@ Future<void> setActiveAppSubModule({
   required String mainModule,
   required String subModule,
 }) async {
-  final activeSubModule = Modules.subModule?.idTitle;
+  final activeSubModule = Modules.activeSubModule?.idTitle;
 
   // Only update if the new sub module is different from the active one.
   if (activeSubModule != subModule) {

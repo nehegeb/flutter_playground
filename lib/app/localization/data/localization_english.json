@@ -35,7 +35,8 @@
         "home": {
             "title": "Home",
             "messageWelcome": "Welcome",
-            "messageLogin": "You are currently in guest mode. Click here to log in..."
+            "messageLogin": "You are currently in guest mode. Click here to log in...",
+            "messageNoModules": "You currently do not have access to any module!\nAsk a module administrator for access."
         },
         "login": {
             "title": "Login",
@@ -86,7 +87,8 @@
     "roles": {
         "loading": "Loading roles...",
         "admin": "Administrator",
-        "user": "Member",
+        "moderator": "Moderator",
+        "member": "Member",
         "guest": "Guest",
         "unauthorized": "Not logged in"
     },

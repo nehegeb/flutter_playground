@@ -9,10 +9,12 @@ import 'package:flutter_playground/app/user/user.dart';
 /// Logs out the currently logged in [AppUser].
 void logoutAppUser(BuildContext context) {
   // Clear the [appUserNotifier].
+  // This removes the currently logged in [AppUser] including its [AppRoles] and permissions.
   appUserNotifier.value = null;
 
   // Clear the [mainModulesNotifier] and [subModulesNotifier].
-  Modules.clearModules();
+  // This removes the [AppMainModule]s and [AppSubModule]s the [AppUser] has access to.
+  Modules.clearPermittedModules();
 
   // Navigate to the [HomePage], even if the user is already there.
   context.go('/home', extra: DateTime.now().millisecondsSinceEpoch);

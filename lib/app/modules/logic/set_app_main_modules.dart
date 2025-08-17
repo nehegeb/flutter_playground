@@ -1,8 +1,8 @@
 // set_app_main_modules.dart
 //
 
-import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_main_modules_data.dart';
 
 /// Sets all [AppMainModule]s for which the [AppUser] has access permission for the [mainModulesNotifier].
@@ -17,16 +17,23 @@ Future<bool> setAppMainModules() async {
   List<AppMainModule> appMainModules = [];
 
   // Load the main modules data, if it's not already loaded.
-  if (mainModules == null) {
+  if (Modules.dbMainModulesData == null) {
     await loadMainModulesData();
   }
 
   // Check, to which [AppMainModule]s the currently logged in [AppUser] has access to.
-  if (mainModules != null) {
-    for (final module in mainModules!) {
+  if (Modules.dbMainModulesData != null) {
+    for (final module in Modules.dbMainModulesData!) {
       final permission = '${module['idTitle']}.access';
       if (User.checkPermission(permission: permission)) {
-        appMainModules.add(module as AppMainModule);
+        AppMainModule appMainModule = AppMainModule(
+          id: module['id'],
+          idTitle: module['idTitle'],
+          isPublic: module['isPublic'],
+          isHidden: module['isHidden'],
+          color: module['color'],
+        );
+        appMainModules.add(appMainModule);
       }
     }
   }

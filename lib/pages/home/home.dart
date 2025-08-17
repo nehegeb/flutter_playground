@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   // A notification with a link to the login page if the user is not logged in.
-                  if (appUserNotifier.value == null)
+                  if (User.user == null)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Center(
@@ -55,6 +55,28 @@ class HomePage extends StatelessWidget {
                           onPressed: () => context.go('/login'),
                           child: Text(
                             Localization.getText('pages.home.messageLogin'),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  // A notification if the currently logged in [AppUser] doesn't have any module roles yet.
+                  if (User.user != null && (User.user!.roles!.isEmpty))
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest,
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Text(
+                            Localization.getText('pages.home.messageNoModules'),
                             style: Theme.of(context).textTheme.bodyMedium,
                             textAlign: TextAlign.center,
                           ),

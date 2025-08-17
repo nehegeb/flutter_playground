@@ -9,8 +9,8 @@
     },
     {
         "id": 2,
-        "idTitle": "template",
-        "mainModuleIdTitle": "settings",
+        "idTitle": "settings",
+        "mainModuleIdTitle": "template",
         "isPublic": false,
         "isHidden": false,
         "color": "red"

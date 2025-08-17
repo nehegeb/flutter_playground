@@ -1,38 +1,105 @@
 [
     {
-        "id": "1",
+        "id": 1,
         "idTitle": "admin",
         "isImmutable": true,
-        "permissions": "*,main.*"
+        "permissions": [
+            "*",
+            "main.*"
+        ]
     },
     {
-        "id": "2",
-        "idTitle": "member",
+        "id": 2,
+        "idTitle": "admin",
         "isImmutable": true,
-        "permissions": "main.access"
+        "permissions": [
+            "template.*"
+        ]
     },
     {
-        "id": "3",
+        "id": 3,
         "idTitle": "guest",
         "isImmutable": true,
-        "permissions": "main.access"
+        "permissions": [
+            "template.access",
+            "template.read"
+        ]
     },
     {
-        "id": "4",
+        "id": 4,
         "idTitle": "admin",
         "isImmutable": true,
-        "permissions": "template.*"
+        "permissions": [
+            "template.template.*"
+        ]
     },
     {
-        "id": "5",
+        "id": 5,
+        "idTitle": "guest",
+        "isImmutable": true,
+        "permissions": [
+            "template.template.access",
+            "template.template.read"
+        ]
+    },
+    {
+        "id": 6,
         "idTitle": "member",
         "isImmutable": true,
-        "permissions": "template.access,template.read"
+        "permissions": [
+            "template.template.access",
+            "template.template.read",
+            "template.template.write"
+        ]
     },
     {
-        "id": "6",
-        "idTitle": "admin",
+        "id": 7,
+        "idTitle": "moderator",
         "isImmutable": true,
-        "permissions": "settings.*"
+        "permissions": [
+            "template.template.access",
+            "template.template.read",
+            "template.template.write",
+            "template.template.delete"
+        ]
+    },
+    {
+        "id": 8,
+        "idTitle": "guest",
+        "isImmutable": true,
+        "permissions": [
+            "settings.access",
+            "settings.read"
+        ]
+    },
+    {
+        "id": 9,
+        "idTitle": "guest",
+        "isImmutable": true,
+        "permissions": [
+            "settings.settings.access",
+            "settings.settings.read"
+        ]
+    },
+    {
+        "id": 10,
+        "idTitle": "member",
+        "isImmutable": true,
+        "permissions": [
+            "settings.settings.access",
+            "settings.settings.read",
+            "settings.settings.write"
+        ]
+    },
+    {
+        "id": 11,
+        "idTitle": "moderator",
+        "isImmutable": true,
+        "permissions": [
+            "settings.settings.access",
+            "settings.settings.read",
+            "settings.settings.write",
+            "settings.settings.delete"
+        ]
     }
 ]

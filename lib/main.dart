@@ -1,9 +1,9 @@
 // main.dart
 //
 
-// TODO: Make sure, all permitted pages are visible in the ModuleBar.
+// TODO: Argon2 doesn't seem to work for web apps...
+// TODO: Check for all occurences of a NOTIFIER and maybe replace them.
 // TODO: Change localization using a JSON for the languages.
-// TODO: Implement basic roles and module permissions feature.
 // TODO: Finish the Template README file.
 // TODO: Insert notice on HomePage if no modules are permitted for the user.
 //       Something like "You currently do not have access to any module. Ask an admin for access."
@@ -21,10 +21,8 @@
 // TODO: (?) Add "Privacy Policy", "Terms of Service" and "Cookie Notice" for internet usage.
 //       Cookie Banner: "This app stores your UI preferences (such as dark or light mode) in your browser to improve your experience. No personal or tracking data is collected."
 // ----
-// TODO: Add license notice in about page.
+// TODO: Add a "Markus Kramer" license notice in the about page.
 // TODO: Add a page template in lib/modules/template/pages/.
-// TODO: Maybe move the module_bar_navigation.dart one folder up?
-// TODO: Add simple registration feature. Just directly add the user to the JSON.
 // TODO: (?) "forgot password" and "change password" features?
 // ----
 // TODO: Feedback widget!

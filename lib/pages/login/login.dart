@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
 
@@ -41,21 +40,7 @@ class _LoginPageState extends State<LoginPage> {
       password: _passwordController.text,
     );
 
-    if (isSuccessful) {
-      // Valid login, set the current user and clear the invalid login state.
-      setState(() {
-        _invalidLogin = false;
-      });
-
-      // TODO: REMOVE THIS!
-      // // Redirect the user.
-      // // If the user wanted to go to a specific page, redirect there.
-      // // Otherwise, navigate to the home page.
-      // if (!mounted) {
-      //   return;
-      // } // Makes sure the widget is still available before navigating.
-      // AppRouterUtils.gotoRedirectUrl(context);
-    } else {
+    if (!isSuccessful) {
       // Invalid login, clear password field and show error message.
       setState(() {
         _invalidLogin = true;

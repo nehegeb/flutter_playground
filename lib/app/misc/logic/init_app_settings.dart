@@ -19,10 +19,10 @@ Future<bool> initAppSettings() async {
   await AppTheme.initTheme();
 
   // Intialize the user roles.
-  await Roles.initRoles();
+  await Roles.initDbRolesData();
 
   // Intialize the modules.
-  await Modules.initModules();
+  await Modules.initDbModulesData();
 
   // Intialize the user permissions.
   await Permissions.initPermissions();

@@ -16,6 +16,6 @@ void initPage({String? mainModule = 'home', String? subModule = 'home'}) {
   }
 
   // Update the [activeMainModuleNotifier] and the [activeSubModuleNotifier].
-  Modules.setMainModule(mainModule: mainModule);
-  Modules.setSubModule(mainModule: mainModule, subModule: subModule);
+  Modules.setActiveMainModule(mainModule: mainModule);
+  Modules.setActiveSubModule(mainModule: mainModule, subModule: subModule);
 }

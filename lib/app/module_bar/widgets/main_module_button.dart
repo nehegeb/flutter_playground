@@ -71,7 +71,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
     }
 
     // Check if the button has sub modules.
-    final List<AppSubModule>? appSubModules = Modules.subModules
+    final List<AppSubModule>? appSubModules = Modules.permittedSubModules
         ?.where(
           (subModule) => subModule.mainModuleIdTitle == appMainModule?.idTitle,
         )
@@ -167,7 +167,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                             onTap: () => context.go(
                               '/${widget.mainModule}/${entry.idTitle}',
                             ),
-                            selected: Modules.subModule == entry,
+                            selected: Modules.activeSubModule == entry,
                           ),
                         )
                         .toList(),

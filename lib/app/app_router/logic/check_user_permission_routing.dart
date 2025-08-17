@@ -23,7 +23,7 @@ String? checkUserPermissionRouting(String? permissionName) {
   if (!User.checkPermission(permission: permissionName)) {
     return '/page-not-found';
   }
-  ; // TODO: Implement proper HTML error page.
+  // TODO: Implement proper HTML error page.
 
   // All checks passed, no redirect needed.
   return null;

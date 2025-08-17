@@ -13,8 +13,14 @@ Future<bool> registerNewUser(
   BuildContext context, {
   required String email,
   required String password,
+  required String passwordConfirmation,
   required String name,
 }) async {
+  // Check, if both passwords are the same. If not, return false.
+  if (password != passwordConfirmation) {
+    return false;
+  }
+
   // Generate a hash for the password.
   final salt = generateArgon2Salt();
   final hash = generateArgon2Hash(text: password, salt: salt);
@@ -23,9 +29,13 @@ Future<bool> registerNewUser(
   bool isSuccess = await updateUsersData(
     email: email,
     name: name,
-    passwordArgon2: hash,
-    argon2Salt: salt,
+    passwordHash: hash,
+    passwordSalt: salt,
+    rolesIds: [], // New users don't have any roles in the beginning.
   );
+  if (!isSuccess) {
+    return false;
+  }
 
   // Redirect the new user to the [LoginPage].
   context.go('/login', extra: DateTime.now().millisecondsSinceEpoch);

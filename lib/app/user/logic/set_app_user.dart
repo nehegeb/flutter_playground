@@ -1,46 +1,61 @@
 // set_app_user.dart
 //
 
-import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
-import 'package:flutter_playground/app/permissions/permissions.dart';
+import 'package:flutter_playground/app/modules/modules.dart';
+import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/app/user/logic/get_user_roles.dart';
+import 'package:flutter_playground/app/user/logic/get_user_title.dart';
 
 /// Sets the [AppUser] for the [appUserNotifier].
-/// If arguments are not given, it keeps the ones already set for the [AppUser].
-/// This is done after the login and whenever the users information changes.
-void setAppUser({
+/// If arguments are not given, it keeps the values already set for the currently logged in [AppUser].
+/// This always gets the users complete [AppRoles] and extends them with the given roles.
+/// This also always gets the users title for the app.
+/// This is performed after the login and whenever the users information changes.
+Future<void> setAppUser({
   required int id,
-  String email = '',
-  String name = '',
-  String passwordHash = '',
-  String passwordSalt = '',
+  String? email,
+  String? name,
+  String? passwordHash,
+  String? passwordSalt,
   List<AppRole>? roles,
-}) {
-  // If an argument is not given, use the one already set for [AppUser].
-  email = email.isNotEmpty ? email : User.user?.email ?? '';
-  name = name.isNotEmpty ? name : User.user?.name ?? '';
-  passwordHash = passwordHash.isNotEmpty
-      ? passwordHash
-      : User.user?.passwordHash ?? '';
-  passwordSalt = passwordSalt.isNotEmpty
-      ? passwordSalt
-      : User.user?.passwordSalt ?? '';
+}) async {
+  // Check all given arguments.
+  // If not given, use the value of the currently logged in [AppUser].
+  // If still nothing is found, just set an empty value.
+  email ??= User.user?.email ?? '';
+  name ??= User.user?.name ?? '';
+  passwordHash ??= User.user?.passwordHash ?? '';
+  passwordSalt ??= User.user?.passwordSalt ?? '';
+
+  // Add given roles (if any) to userRoles, avoiding duplicates.
+  List<AppRole>? userRoles = await getUserRoles(userId: id);
+  if (roles != null && roles.isNotEmpty) {
+    final Set<AppRole> combinedRoles = {...?userRoles, ...roles};
+    roles = combinedRoles.toList();
+  } else {
+    roles = userRoles;
+  }
 
   // Get the user's title.
-  String title = ''; // TODO: Get title.
-
-  // If none are given, gather the users permission roles.
-  // roles = roles.isNotEmpty ? roles : (Permissions.getAppUserRoles() ?? ''); // TODO: Get roles.
+  String title = getUserTitle(appRoles: roles);
 
   // Set the [AppUser] for the [appUserNotifier].
   final AppUser user = AppUser(
-    id,
-    email,
-    name,
-    title,
-    passwordHash,
-    passwordSalt,
-    roles,
+    id: id,
+    email: email,
+    name: name,
+    title: title,
+    passwordHash: passwordHash,
+    passwordSalt: passwordSalt,
+    roles: roles,
   );
   appUserNotifier.value = user;
+
+  // Load the modules data (anew), to make sure changed modules are reflected.
+  await Modules.initDbModulesData();
+
+  // Set the [AppMainModule]s and [AppSubModule]s the [AppUser] has access to.
+  await Modules.setPermittedMainModules();
+  await Modules.setPermittedSubModules();
 }

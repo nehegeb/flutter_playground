@@ -6,7 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/misc/widgets/loading_overlay.dart';
 
-List<dynamic>? subModules;
+List<dynamic>? subModulesData;
 
 /// Loads sub modules JSON files and parses them into maps.
 /// It loads the sub modules of the app.
@@ -22,14 +22,14 @@ Future<void> loadSubModulesData() async {
     final jsonData = await rootBundle.loadString(
       'lib/app/modules/data/sub_modules.json',
     );
-    subModules = json.decode(jsonData) as List<dynamic>;
+    subModulesData = json.decode(jsonData) as List<dynamic>;
   } finally {
     // Dismiss the loading overlay after loading is complete.
     LoadingOverlay.dismiss();
   }
 
   // Make sure the sub modules are loaded.
-  if (subModules == null) {
+  if (subModulesData == null) {
     throw Exception('Sub modules not loaded.');
   }
 }

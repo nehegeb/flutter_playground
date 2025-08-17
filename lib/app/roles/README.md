@@ -12,7 +12,7 @@ Multiple permissions (see below) can be assigned to each role. Permissions are d
 
 Structure: `<main_module>.<sub_module>.<more_pages_or_features>.<action>`
 
-*Permissions are provided to roles as a comma-separated list in one long text (string). Each individual permission is written in segments, each segment separated by a dot and each segment is written in `snake_case`.*
+*Permissions are provided to roles as a list of several strings, one per permission. Each individual permission is written in segments, each segment separated by a dot and each segment is written in `snake_case`.*
 
 For example `"template.access,template.read"` gives the user the rights to access and read the 'Template' main module.
 

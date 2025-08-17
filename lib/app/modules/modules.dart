@@ -7,6 +7,8 @@
 // Setting a [AppMainModule] or [AppSubModule] will not change the displayed page at all.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/app/modules/logic/get_empty_app_main_module.dart';
+import 'package:flutter_playground/app/modules/logic/get_empty_app_sub_module.dart';
 import 'package:flutter_playground/app/modules/logic/set_active_app_main_module.dart';
 import 'package:flutter_playground/app/modules/logic/set_active_app_sub_module.dart';
 import 'package:flutter_playground/app/modules/logic/set_app_main_modules.dart';
@@ -38,38 +40,63 @@ final ValueNotifier<List<AppSubModule>> subModulesNotifier =
 /// Provides static methods for managing modules.
 ///
 /// Static Methods:
-/// - [mainModule]: Gets the currently active [AppMainModule].
-/// - [subModule]: Gets the currently active [AppSubModule].
-/// - [mainModules]: Get the [AppMainModule]s the currently logged in [AppUser] has access to.
-/// - [subModules]: Get the [AppSubModule]s the currently logged in [AppUser] has access to.
+/// - [activeMainModule]: Gets the currently active [AppMainModule].
+/// - [activeSubModule]: Gets the currently active [AppSubModule].
+/// - [emptyMainModule]: Gets an empty [AppMainModule].
+/// - [emptySubModule]: Gets an empty [AppSubModule].
+/// - [permittedMainModules]: Get the [AppMainModule]s the currently logged in [AppUser] has access to.
+/// - [permittedSubModules]: Get the [AppSubModule]s the currently logged in [AppUser] has access to.
+/// - [dbMainModulesData]: Get the main modules data.
+/// - [dbSubModulesData]: Get the sub modules data.
 /// - [getMainModule]: Gets a specific [AppMainModule] the currently logged in [AppUser] has access to, according to its name.
 /// - [getSubModule]: Gets a specific [AppSubModule] the currently logged in [AppUser] has access to, according to its name.
 /// - [getColor]: Gets a usable color of a specific [AppMainModule] or [AppSubModule].
-/// - [setMainModule]: Sets the [AppMainModule] as active, according to its name.
-/// - [setSubModule]: Sets the [AppSubModule] as active, according to its name.
-/// - [setMainModules]: Sets the [AppMainModule]s the currently logged in [AppUser] has access to.
-/// - [setSubModules]: Sets the [AppSubModule]s the currently logged in [AppUser] has access to.
-/// - [clearModules]: Clears the modules to which the [AppUser] has access to.
-/// - [initModules]: Initializes the modules of the app.
+/// - [setActiveMainModule]: Sets the [AppMainModule] as active, according to its name.
+/// - [setActiveSubModule]: Sets the [AppSubModule] as active, according to its name.
+/// - [setPermittedMainModules]: Sets the [AppMainModule]s the currently logged in [AppUser] has access to.
+/// - [setPermittedSubModules]: Sets the [AppSubModule]s the currently logged in [AppUser] has access to.
+/// - [clearPermittedModules]: Clears the modules to which the [AppUser] has access to.
+/// - [initDbModulesData]: Initializes the modules data for the app.
+/// - [clearDbModulesData]: Clears the modules data from the app.
 class Modules {
   /// Get the currently active [AppMainModule].
-  static AppMainModule? get mainModule {
+  static AppMainModule? get activeMainModule {
     return activeMainModuleNotifier.value;
   }
 
   /// Get the currently active [AppSubModule].
-  static AppSubModule? get subModule {
+  static AppSubModule? get activeSubModule {
     return activeSubModuleNotifier.value;
   }
 
+  /// Get an empty [AppMainModule].
+  static AppMainModule get emptyMainModule {
+    return getEmptyAppMainModule();
+  }
+
+  /// Get an empty [AppSubModule].
+  static AppSubModule get emptySubModule {
+    return getEmptyAppSubModule();
+  }
+
   /// Get the [AppMainModule]s the currently logged in [AppUser] has access to.
-  static List<AppMainModule>? get mainModules {
+  static List<AppMainModule>? get permittedMainModules {
     return mainModulesNotifier.value;
   }
 
   /// Get the [AppSubModule]s the currently logged in [AppUser] has access to.
-  static List<AppSubModule>? get subModules {
+  static List<AppSubModule>? get permittedSubModules {
     return subModulesNotifier.value;
+  }
+
+  /// Get the main modules data of the database.
+  static List<dynamic>? get dbMainModulesData {
+    return mainModulesData;
+  }
+
+  /// Get the sub modules data of the database.
+  static List<dynamic>? get dbSubModulesData {
+    return subModulesData;
   }
 
   /// Get a specific [AppMainModule], according to its name.
@@ -103,13 +130,13 @@ class Modules {
 
   /// Set the currently active [AppMainModule].
   /// It uses the name of the main module to identify it.
-  static void setMainModule({required String mainModule}) {
+  static void setActiveMainModule({required String mainModule}) {
     setActiveAppMainModule(mainModule: mainModule);
   }
 
   /// Set the currently active [AppSubModule].
   /// It uses the name of the sub module to identify it.
-  static void setSubModule({
+  static void setActiveSubModule({
     required String mainModule,
     required String subModule,
   }) {
@@ -119,26 +146,32 @@ class Modules {
   /// Set the [AppMainModule]s the currently logged in [AppUser] has access to.
   /// This only works if the user is logged in.
   /// Returns true if it worked, otherwise false.
-  static Future<bool> setMainModules() async {
+  static Future<bool> setPermittedMainModules() async {
     return await setAppMainModules();
   }
 
   /// Set the [AppSubModule]s the currently logged in [AppUser] has access to.
   /// This only works if the user is logged in.
   /// Returns true if it worked, otherwise false.
-  static Future<bool> setSubModules() async {
+  static Future<bool> setPermittedSubModules() async {
     return await setAppSubModules();
   }
 
   /// Clears the modules to which the [AppUser] has access to.
-  static void clearModules() {
+  static void clearPermittedModules() {
     clearAppModules();
   }
 
-  /// Initializes the modules for the app.
-  static Future<void> initModules() async {
+  /// Initializes the modules data for the app.
+  static Future<void> initDbModulesData() async {
     await loadMainModulesData();
     await loadSubModulesData();
+  }
+
+  /// Clear the modules data of the database from the app.
+  static void clearDbModulesData() {
+    mainModulesData = null;
+    subModulesData = null;
   }
 }
 
@@ -156,13 +189,23 @@ class AppMainModule {
   final bool isPublic;
   final bool isHidden;
   final String? color;
-  AppMainModule(
-    this.id,
-    this.idTitle,
-    this.isPublic,
-    this.isHidden,
+  AppMainModule({
+    required this.id,
+    required this.idTitle,
+    this.isPublic = false,
+    this.isHidden = false,
     this.color,
-  );
+  });
+
+  factory AppMainModule.fromMap(Map<String, dynamic> map) {
+    return AppMainModule(
+      id: map['id'],
+      idTitle: map['idTitle'],
+      isPublic: map['isPublic'] ?? false,
+      isHidden: map['isHidden'] ?? false,
+      color: map['color'],
+    );
+  }
 }
 
 /// A sub module of the app.
@@ -181,12 +224,23 @@ class AppSubModule {
   final bool isPublic;
   final bool isHidden;
   final String? color;
-  AppSubModule(
-    this.id,
-    this.idTitle,
-    this.mainModuleIdTitle,
-    this.isPublic,
-    this.isHidden,
+  AppSubModule({
+    required this.id,
+    required this.idTitle,
+    required this.mainModuleIdTitle,
+    this.isPublic = false,
+    this.isHidden = false,
     this.color,
-  );
+  });
+
+  factory AppSubModule.fromMap(Map<String, dynamic> map) {
+    return AppSubModule(
+      id: map['id'],
+      idTitle: map['idTitle'],
+      mainModuleIdTitle: map['mainModuleIdTitle'],
+      isPublic: map['isPublic'] ?? false,
+      isHidden: map['isHidden'] ?? false,
+      color: map['color'],
+    );
+  }
 }

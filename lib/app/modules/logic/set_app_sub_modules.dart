@@ -17,17 +17,25 @@ Future<bool> setAppSubModules() async {
   List<AppSubModule> appSubModules = [];
 
   // Load the main modules data, if it's not already loaded.
-  if (subModules == null) {
+  if (Modules.dbSubModulesData == null) {
     await loadSubModulesData();
   }
 
   // Check, to which [AppSubModule]s the currently logged in [AppUser] has access to.
-  if (subModules != null) {
-    for (final module in subModules!) {
+  if (Modules.dbSubModulesData != null) {
+    for (final module in Modules.dbSubModulesData!) {
       final permission =
           '${module['mainModuleIdTitle']}.${module['idTitle']}.access';
       if (User.checkPermission(permission: permission)) {
-        appSubModules.add(module as AppSubModule);
+        AppSubModule appSubModule = AppSubModule(
+          id: module['id'],
+          idTitle: module['idTitle'],
+          mainModuleIdTitle: module['mainModuleIdTitle'],
+          isPublic: module['isPublic'],
+          isHidden: module['isHidden'],
+          color: module['color'],
+        );
+        appSubModules.add(appSubModule);
       }
     }
   }

@@ -7,20 +7,33 @@ import 'package:flutter_playground/app/modules/modules.dart';
 /// It uses the title ID of the main module to identify it.
 /// Also sets the [AppSubModule] to the home page of the new [AppMainModule].
 void setActiveAppMainModule({required String mainModule}) {
-  final activeMainModule = Modules.mainModule?.idTitle;
+  final activeMainModule = Modules.activeMainModule?.idTitle;
 
   // Only update if the new main module is different from the active one.
   if (activeMainModule != mainModule) {
     AppMainModule? appMainModule;
 
+    // If the [mainModule] is "home", set it as the active module.
+    // This is a special case, as "home" is a default main module page and is not in modules data.
+    if (mainModule == 'home') {
+      appMainModule = AppMainModule.fromMap({
+        'id': 0,
+        'idTitle': 'home',
+        'isPublic': true,
+        'Hidden': false,
+      });
+    }
+
     // Find the [AppMainModule] by its given title ID.
     // Searches the [mainModulesNotifier], having only modules the [AppUser] has access to.
-    try {
-      appMainModule = Modules.mainModules?.firstWhere(
-        (module) => module.idTitle == mainModule,
-      );
-    } catch (e) {
-      appMainModule = null;
+    if (appMainModule == null) {
+      try {
+        appMainModule = Modules.permittedMainModules?.firstWhere(
+          (module) => module.idTitle == mainModule,
+        );
+      } catch (e) {
+        appMainModule = null;
+      }
     }
 
     // If a valid [AppMainModule] was found, update the active modules.
@@ -30,7 +43,7 @@ void setActiveAppMainModule({required String mainModule}) {
 
       // Set the [AppSubModule] to the this [AppMainModule]'s home page.
       // This is done, because when the active main module changes, it always opens its home page first.
-      Modules.setSubModule(mainModule: mainModule, subModule: 'home');
+      Modules.setActiveSubModule(mainModule: mainModule, subModule: 'home');
     } else {
       // No [AppMainModule] to which the [AppUser] has access to found.
       // Set the [activeMainModuleNotifier] and [activeSubModuleNotifier] to null.
