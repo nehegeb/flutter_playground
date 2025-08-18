@@ -2,8 +2,8 @@
 //
 
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/app/user/logic/generate_argon2_salt.dart';
-import 'package:flutter_playground/app/user/logic/generate_argon2_hash.dart';
+import 'package:flutter_playground/app/user/logic/generate_password_salt.dart';
+import 'package:flutter_playground/app/user/logic/generate_password_hash.dart';
 import 'package:flutter_playground/app/user/logic/update_users_data.dart';
 
 /// Sets the password for the currently logged in [AppUser].
@@ -33,8 +33,8 @@ Future<bool> setUserPassword({required String password}) async {
   User.clearDbUsersData();
 
   // Generate a hash for the password.
-  final salt = generateArgon2Salt();
-  final hash = generateArgon2Hash(text: password, salt: salt);
+  final salt = generatePasswordSalt();
+  final hash = generatePasswordHash(password: password, salt: salt);
 
   // Update the user's password in the users data.
   // This also updates the [AppUser] for the [appUserNotifier].

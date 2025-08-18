@@ -1,7 +1,6 @@
 // main.dart
 //
 
-// TODO: Argon2 doesn't seem to work for web apps...
 // TODO: Check for all occurences of a NOTIFIER and maybe replace them.
 // TODO: Change localization using a JSON for the languages.
 // TODO: Finish the Template README file.

@@ -51,8 +51,8 @@ Future<bool> updateUsersData({
       'id': User.dbUsersData!.length + 1,
       'email': email,
       'name': name,
-      'passwordArgon2': passwordHash,
-      'argon2Salt': passwordSalt,
+      'passwordHash': passwordHash,
+      'passwordSalt': passwordSalt,
       'rolesIds': rolesIds.isNotEmpty ? rolesIds : [],
     };
 
@@ -69,16 +69,16 @@ Future<bool> updateUsersData({
         name = name.isNotEmpty ? name : user['name'];
         passwordHash = passwordHash.isNotEmpty
             ? passwordHash
-            : user['passwordArgon2'];
+            : user['passwordHash'];
         passwordSalt = passwordSalt.isNotEmpty
             ? passwordSalt
-            : user['argon2Salt'];
+            : user['passwordSalt'];
         rolesIds = rolesIds.isNotEmpty ? rolesIds : user['rolesIds'] ?? [];
 
         user['email'] = email;
         user['name'] = name;
-        user['passwordArgon2'] = passwordHash;
-        user['argon2Salt'] = passwordSalt;
+        user['passwordHash'] = passwordHash;
+        user['passwordSalt'] = passwordSalt;
         user['rolesIds'] = rolesIds;
 
         usersDataUpdated = true;

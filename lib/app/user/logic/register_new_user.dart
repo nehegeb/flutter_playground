@@ -3,8 +3,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_playground/app/user/logic/generate_argon2_salt.dart';
-import 'package:flutter_playground/app/user/logic/generate_argon2_hash.dart';
+import 'package:flutter_playground/app/user/logic/generate_password_salt.dart';
+import 'package:flutter_playground/app/user/logic/generate_password_hash.dart';
 import 'package:flutter_playground/app/user/logic/update_users_data.dart';
 
 /// Register a new user for the app.
@@ -22,8 +22,8 @@ Future<bool> registerNewUser(
   }
 
   // Generate a hash for the password.
-  final salt = generateArgon2Salt();
-  final hash = generateArgon2Hash(text: password, salt: salt);
+  final salt = generatePasswordSalt();
+  final hash = generatePasswordHash(password: password, salt: salt);
 
   // Add the new user to the users data.
   bool isSuccess = await updateUsersData(

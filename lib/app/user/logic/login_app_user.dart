@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
-import 'package:flutter_playground/app/user/logic/generate_argon2_hash.dart';
+import 'package:flutter_playground/app/user/logic/generate_password_hash.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 
 /// Tries to log in the [AppUser].
@@ -33,9 +33,12 @@ Future<bool> loginAppUser(
   User.clearDbUsersData();
 
   // Check, if the entered password is correct.
-  final userDataPassword = userData['passwordArgon2'];
-  final userDataSalt = userData['argon2Salt'];
-  final hashedPassword = generateArgon2Hash(text: password, salt: userDataSalt);
+  final userDataPassword = userData['passwordHash'];
+  final userDataSalt = userData['passwordSalt'];
+  final hashedPassword = generatePasswordHash(
+    password: password,
+    salt: userDataSalt,
+  );
   if (userDataPassword != hashedPassword) {
     return false;
   }
@@ -47,8 +50,8 @@ Future<bool> loginAppUser(
     id: userData['id'],
     email: userData['email'],
     name: userData['name'],
-    passwordHash: userData['passwordArgon2'],
-    passwordSalt: userData['argon2Salt'],
+    passwordHash: userData['passwordHash'],
+    passwordSalt: userData['passwordSalt'],
   );
 
   // Redirect the user.

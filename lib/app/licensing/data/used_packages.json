@@ -29,11 +29,11 @@
         "license": "BSD-3-Clause",
         "packageUrl": "https://pub.dev/packages/url_launcher"
     },
-    "argon2": {
-        "name": "argon2",
-        "copyright": "2021 Graciliano M. Passos",
-        "license": "Apache-2.0",
-        "packageUrl": "https://pub.dev/packages/argon2"
+    "pointycastle": {
+        "name": "pointycastle",
+        "copyright": "2000 - 2019 The Legion of the Bouncy Castle Inc. (https://www.bouncycastle.org)",
+        "license": "MIT",
+        "packageUrl": "https://pub.dev/packages/pointycastle"
     },
     "lorem_ipsum": {
         "name": "lorem_ipsum",

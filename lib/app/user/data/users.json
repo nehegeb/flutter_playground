@@ -3,8 +3,8 @@
         "id": 1,
         "email": "arthur.dent@megadodo.pub",
         "name": "Arthur Dent",
-        "passwordArgon2": "bcc1e3bf8c5353b982008f50f1db38c716bdf5a06389b29babcf25ebb69e086c",
-        "argon2Salt": "p4s5XIhy459MHqNhbC6Wvw==",
+        "passwordHash": "61f7b676722a1b4a7c8eba16c781474fa1f6d14d9270e5e1c13f7c8b9bcc1651",
+        "passwordSalt": "EjQY0gQbVWLxS8M_lVcLVg==",
         "rolesIds": [
             1
         ]
@@ -13,8 +13,8 @@
         "id": 2,
         "email": "ford.prefect@megadodo.pub",
         "name": "Ford Prefect",
-        "passwordArgon2": "bcc1e3bf8c5353b982008f50f1db38c716bdf5a06389b29babcf25ebb69e086c",
-        "argon2Salt": "p4s5XIhy459MHqNhbC6Wvw==",
+        "passwordHash": "61f7b676722a1b4a7c8eba16c781474fa1f6d14d9270e5e1c13f7c8b9bcc1651",
+        "passwordSalt": "EjQY0gQbVWLxS8M_lVcLVg==",
         "rolesIds": [
             2,
             5
