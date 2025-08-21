@@ -13,7 +13,7 @@ class LicenseExpansionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Make sure the package data is available.
-    final Map<String, dynamic>? packageData = Licensing.getPackageData();
+    final Map<String, dynamic>? packageData = Licensing.dbPackageData;
     if (packageData == null) {
       return Align(
         alignment: Alignment.centerLeft,

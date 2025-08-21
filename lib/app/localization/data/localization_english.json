@@ -6,9 +6,8 @@
         "countryCode": "us"
     },
     "modules": {
-        "loading": "Loading modules...",
-        "mainModulesLoading": "Loading main modules...",
-        "subModulesLoading": "Loading sub modules...",
+        "mainModulesDataLoading": "Loading main modules data...",
+        "subModulesDataLoading": "Loading sub modules data...",
         "template": {
             "title": "Module Template",
             "modules": {
@@ -82,26 +81,32 @@
         }
     },
     "users": {
-        "loading": "Loading users..."
+        "usersDataLoading": "Loading users..."
     },
     "roles": {
-        "loading": "Loading roles...",
+        "rolesDataLoading": "Loading roles data...",
         "admin": "Administrator",
         "moderator": "Moderator",
         "member": "Member",
         "guest": "Guest",
         "unauthorized": "Not logged in"
     },
+    "permissions": {
+        "permissionsDataLoading": "Loading permissions data..."
+    },
+    "localization": {
+        "languagesDataLoading": "Loading languages data..."
+    },
     "changelog": {
         "title": "Changelog for <<module>>",
-        "loading": "Loading changelog...",
+        "changelogDataLoading": "Loading changelog data...",
         "notLoadedError": "Changelog could not be loaded. Try reloading the page (F5)."
     },
     "licensing": {
         "title": "Packages used in this app",
-        "packageLoading": "Loading used packages...",
+        "packageDataLoading": "Loading used packages data...",
         "packageNotLoadedError": "Packages could not be loaded. Try reloading the page (F5).",
-        "licenseLoading": "Loading licenses...",
+        "licenseDataLoading": "Loading licenses data...",
         "licenseNotLoadedError": "Licenses could not be loaded. Try reloading the page (F5).",
         "licenseDetails": "Show license details",
         "licenseSource": "Source"

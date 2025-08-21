@@ -43,7 +43,7 @@ class _AboutPageState extends State<AboutPage> {
 
               // Changelog section.
               FutureBuilder<void>(
-                future: Changelog.initChangelogData(module: mainModule),
+                future: Changelog.initDbChangelogData(module: mainModule),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return Center(child: CircularProgressIndicator());
@@ -54,7 +54,7 @@ class _AboutPageState extends State<AboutPage> {
 
               // Packages used in this app.
               FutureBuilder<void>(
-                future: Licensing.initLicensingData(),
+                future: Licensing.initDbLicensingData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return Center(child: CircularProgressIndicator());

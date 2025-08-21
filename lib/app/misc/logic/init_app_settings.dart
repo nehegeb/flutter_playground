@@ -1,10 +1,10 @@
 // init_app_settings.dart
 //
 
-import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
-import 'package:flutter_playground/app/roles/roles.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
+import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 
@@ -12,23 +12,33 @@ import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 /// If the settings exist in the local cache, it sets them accordingly.
 /// If the a setting cannot be determined, it defaults accordingly.
 Future<bool> initAppSettings() async {
-  // Initialize the app language.
-  await Localization.initLanguage();
-
-  // Initialize the app theme.
+  // Initialize the [AppTheme] for the app.
   await AppTheme.initTheme();
 
-  // Intialize the user roles.
-  await Roles.initDbRolesData();
+  // Initialize the language the app displays.
+  await Localization.initLanguage();
 
-  // Intialize the modules.
+  // Initialize the supported languages of the app.
+  await Localization.initDbLanguagesData();
+
+  // Intialize the modules for the app.
   await Modules.initDbModulesData();
 
-  // Intialize the user permissions.
-  await Permissions.initPermissions();
+  // Intialize the roles for [AppUser]s.
+  await Roles.initDbRolesData();
 
-  // Initialize the [ModuleBar].
+  // Intialize the permissions for [AppUser]s.
+  await Permissions.initDbPermissionsData();
+
+  // Initialize the [ModuleBar] of the app.
   await ModuleBarUtils.initBar();
+
+  // NOTE: Do NOT initialize/load the users data here!
+  // This will be done upon [AppUser] login and then immediately cleared afterwards.
+  // This prevents unnecessary data from other users to be loaded all the time.
+
+  // NOTE: The initialization of 'initDb...Data' might be removed when switching to a proper database.
+  // This Flutter Core Framework is based on JSON files for simplicity, which have to be loaded to be used.
 
   // Make sure everything is done loading.
   await Future.delayed(const Duration(milliseconds: 100));

@@ -11,14 +11,18 @@ import 'package:flutter_playground/pages/about/about.dart';
 import 'package:flutter_playground/pages/settings/settings.dart';
 import 'package:flutter_playground/pages/page_not_found/page_not_found.dart';
 
-// Template module imports.
+// Template main module pages imports.
 import 'package:flutter_playground/modules/template/pages/home/home.dart';
 import 'package:flutter_playground/modules/template/pages/about/about.dart';
 import 'package:flutter_playground/modules/template/modules/template/pages/home/home.dart';
 
-// Settings module imports.
+// Settings main module pages imports.
 import 'package:flutter_playground/modules/settings/pages/home/home.dart';
 import 'package:flutter_playground/modules/settings/pages/about/about.dart';
+
+// Note: The settings page for all main modules is always the same [SettingsPage].
+// So for the basic module settings, no special settings page has to be added here.
+// It automatically always only displays the data necessary for the corresponding main module.
 
 /// A widget to display the content for the selected module.
 class ModuleBarNavigation extends StatelessWidget {

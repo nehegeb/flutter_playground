@@ -18,7 +18,7 @@ Future<List<AppRole>?> getUserRoles({required int userId}) async {
     return [];
   }
 
-  // Get the user data according to the given user ID.
+  // Get the user data according to the given [userId].
   Map<String, dynamic>? userData = User.dbUsersData
       ?.cast<Map<String, dynamic>>()
       .firstWhere((user) => user['id'] == userId, orElse: () => {});
@@ -30,7 +30,7 @@ Future<List<AppRole>?> getUserRoles({required int userId}) async {
     User.clearDbUsersData();
   }
 
-  // If no user is found, return an empty list.
+  // If no data for the given [userId] is found, return an empty list.
   if (userData == null) {
     return [];
   }
@@ -52,7 +52,7 @@ Future<List<AppRole>?> getUserRoles({required int userId}) async {
     return [];
   }
 
-  // Find all [AppRole]s of the user.
+  // Find all [AppRole]s of the user with the given [userId].
   List<AppRole> appRoles = [];
   for (var roleData in Roles.dbRolesData!) {
     int? roleId = int.tryParse(roleData['id'].toString());

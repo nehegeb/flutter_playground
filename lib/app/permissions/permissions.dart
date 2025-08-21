@@ -7,10 +7,22 @@ import 'package:flutter_playground/app/permissions/logic/load_permissions_data.d
 /// Provides static methods manage the user permissions.
 ///
 /// Static Methods:
-/// - [initPermissions]: Initializes the user permissions for the app.
+/// - [dbPermissionsData]: Gets the permissions data.
+/// - [initDbPermissionsData]: Initializes the user permissions for the app.
+/// - [clearDbPermissionsData]: Clears the user permissions from the app.
 class Permissions {
-  /// Loads the permissions data from the JSON files.
-  static Future<void> initPermissions() async {
+  /// Get the loaded permissions data of the database.
+  static List<dynamic>? get dbPermissionsData {
+    return permissionsData;
+  }
+
+  /// Loads the permissions data from the database for the app.
+  static Future<void> initDbPermissionsData() async {
     await loadPermissionsData();
+  }
+
+  /// Clear the loaded permissions data of the database from the app.
+  static void clearDbPermissionsData() {
+    permissionsData = null;
   }
 }

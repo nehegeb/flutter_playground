@@ -5,14 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 
 /// Returns a valid color of a module.
-/// Only one [AppMainModule] OR [AppSubModule] can be given.
+/// Only one [appMainModule] OR [appSubModule] can be given.
 /// If no valid color could been found or none or both arguments are given, it returns null.
+/// The [shade] alters the brightness of the color, where higher is darker. It defaults to 500.
+///
+/// Valid colors are red, blue, green, yellow, orange, purple, pink, brown, grey, black, and white.
+/// Note that black and white cannot have a [shade]. They will always stay the same.
 Color? getModuleColor({
   AppMainModule? appMainModule,
   AppSubModule? appSubModule,
   int shade = 500, // 500 is the default shade.
 }) {
-  // Make sure, only one of the arguments is given.
+  // Make sure, only [appMainModule] or [appSubModule] is given.
   if (appMainModule == null && appSubModule == null ||
       appMainModule != null && appSubModule != null) {
     return null;
@@ -30,7 +34,7 @@ Color? getModuleColor({
     colorName = appSubModule.color?.toLowerCase() ?? '';
   }
 
-  // Return a color for the module.
+  // Return a color for the module, taking the given [shade] into account.
   switch (colorName) {
     case 'red':
       return Colors.red[shade];

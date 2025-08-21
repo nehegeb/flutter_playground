@@ -18,17 +18,17 @@ class Roles {
     return getEmptyAppRole();
   }
 
-  /// Get the roles data of the database.
+  /// Get the loaded roles data of the database.
   static List<dynamic>? get dbRolesData {
     return rolesData;
   }
 
-  /// Loads the roles data from the JSON files.
+  /// Loads the roles data from the database for the app.
   static Future<void> initDbRolesData() async {
     await loadRolesData();
   }
 
-  /// Clear the roles data of the database from the app.
+  /// Clear the loaded roles data of the database from the app.
   static void clearDbRolesData() {
     rolesData = null;
   }

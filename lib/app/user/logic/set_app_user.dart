@@ -8,7 +8,7 @@ import 'package:flutter_playground/app/user/logic/get_user_roles.dart';
 import 'package:flutter_playground/app/user/logic/get_user_title.dart';
 
 /// Sets the [AppUser] for the [appUserNotifier].
-/// If arguments are not given, it keeps the values already set for the currently logged in [AppUser].
+/// If arguments are not given, it keeps the values already set for the currently logged in [AppUser], if any.
 /// This always gets the users complete [AppRoles] and extends them with the given roles.
 /// This also always gets the users title for the app.
 /// This is performed after the login and whenever the users information changes.
@@ -21,14 +21,14 @@ Future<void> setAppUser({
   List<AppRole>? roles,
 }) async {
   // Check all given arguments.
-  // If not given, use the value of the currently logged in [AppUser].
+  // If not given, use the value of the currently logged in [AppUser], if any.
   // If still nothing is found, just set an empty value.
   email ??= User.user?.email ?? '';
   name ??= User.user?.name ?? '';
   passwordHash ??= User.user?.passwordHash ?? '';
   passwordSalt ??= User.user?.passwordSalt ?? '';
 
-  // Add given roles (if any) to userRoles, avoiding duplicates.
+  // Add any given [roles] to the users existing [AppRoles], avoiding duplicates.
   List<AppRole>? userRoles = await getUserRoles(userId: id);
   if (roles != null && roles.isNotEmpty) {
     final Set<AppRole> combinedRoles = {...?userRoles, ...roles};
@@ -37,7 +37,7 @@ Future<void> setAppUser({
     roles = userRoles;
   }
 
-  // Get the user's title.
+  // Get the user's title to display in the app.
   String title = getUserTitle(appRoles: roles);
 
   // Set the [AppUser] for the [appUserNotifier].

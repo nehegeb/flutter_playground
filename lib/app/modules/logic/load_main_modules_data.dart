@@ -8,17 +8,19 @@ import 'package:flutter_playground/app/misc/widgets/loading_overlay.dart';
 
 List<dynamic>? mainModulesData;
 
-/// Loads main modules JSON files and parses them into maps.
+/// Loads main modules JSON file and parses it into a list.
 /// It loads the main modules of the app.
 Future<void> loadMainModulesData() async {
   // Display a loading overlay while modules are being loaded.
   // But before displaying the loading overlay, wait for the UI to settle.
   await Future.delayed(const Duration(milliseconds: 10));
-  LoadingOverlay.initiate(Localization.getText('modules.mainModulesLoading'));
+  LoadingOverlay.initiate(
+    Localization.getText('modules.mainModulesDataLoading'),
+  );
 
-  // Load the main modules file.
+  // Load the main modules JSON file.
   try {
-    // Load the main modules.
+    // Load the main modules data.
     final jsonData = await rootBundle.loadString(
       'lib/app/modules/data/main_modules.json',
     );

@@ -4,12 +4,13 @@
 import 'package:lorem_ipsum/lorem_ipsum.dart';
 import 'package:flutter_playground/app/localization/logic/load_localizations_data.dart';
 
-/// Returns the localized value for the given key and language code.
-String getLocalizedText(String key, String language) {
+/// Returns the localized value for the given [key] and [languageCode].
+/// The language code is the id of the language in two-letter format (e.g., 'en', 'de').
+String getLocalizedText({required String key, String languageCode = 'en'}) {
   Map<String, dynamic>? localizationSelected;
 
   // Select the appropriate localization based on the language.
-  switch (language) {
+  switch (languageCode) {
     case 'en':
       // English localization.
       localizationSelected =
@@ -22,8 +23,8 @@ String getLocalizedText(String key, String language) {
     // NOTE: Add more languages here as needed.
     default:
       // If the language is not recognized, default to English.
+      languageCode = 'en';
       localizationSelected = localizationPrimary;
-      language = 'en';
   }
 
   // If the key is 'placeholder', return a placeholder string.

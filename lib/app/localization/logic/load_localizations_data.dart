@@ -12,18 +12,18 @@ Map<String, dynamic>? localizationSecondary; // Secondary localization.
 /// Only loads English and the specified language, if any.
 Future<void> loadLocalizationsData(String? language) async {
   // Display a loading overlay while localizations are being loaded.
-  // NOTE: Cannot use localization text here as it is not loaded yet.
+  // NOTE: Cannot use localized text here as it is not loaded yet.
   LoadingOverlay.initiate('Loading localizations...');
 
-  // Load the localization files.
+  // Load the localization JSON files.
   try {
-    // Load the primary localization (English).
+    // Load the primary localization (English) data.
     final jsonEn = await rootBundle.loadString(
       'lib/app/localization/data/localization_english.json',
     );
     localizationPrimary = json.decode(jsonEn) as Map<String, dynamic>;
 
-    // Make sure the primary localization is loaded.
+    // Make sure the primary localization data is loaded.
     if (localizationPrimary == null) {
       throw Exception('Primary localization not loaded.');
     }
@@ -32,7 +32,7 @@ Future<void> loadLocalizationsData(String? language) async {
     bool hasSecondaryLocalization = true;
     switch (language) {
       case 'de':
-        // Load German localization if requested.
+        // Load German localization data if requested.
         final jsonDe = await rootBundle.loadString(
           'lib/app/localization/data/localization_german.json',
         );
@@ -40,12 +40,12 @@ Future<void> loadLocalizationsData(String? language) async {
         break;
       // NOTE: Add more languages here as needed.
       default:
-        // No secondary localization available.
+        // No secondary localization data available.
         localizationSecondary = null;
         hasSecondaryLocalization = false;
     }
 
-    // Make sure the secondary localization is loaded.
+    // Make sure the secondary localization data is loaded.
     if (hasSecondaryLocalization && localizationSecondary == null) {
       throw Exception('Secondary localization not loaded.');
     }

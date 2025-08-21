@@ -3,9 +3,9 @@
 
 import 'package:flutter_playground/app/localization/localization.dart';
 
-/// Checks the strength of a password and returns an appropriate message.
+/// Checks the strength of a given [password] and returns an appropriate message.
 String checkEnteredPasswordStrength({required String password}) {
-  // Check the password and return an error message if it's too weak.
+  // Check the given [password] and return an error message if it's too weak.
   if (password.length < 8) {
     return Localization.getText('passwordTooShort');
   }

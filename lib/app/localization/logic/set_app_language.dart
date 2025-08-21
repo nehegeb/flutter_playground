@@ -5,20 +5,21 @@ import 'package:flutter_playground/app/local_cache/local_cache.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/localization/logic/load_localizations_data.dart';
 
-/// Sets the language for the app and saves it to local cache.
+/// Sets the given [language] for the app and saves it to [LocalCache].
+/// If [force] is 'true', it will always load the localization data, even if the language is already loaded.
 Future<void> setAppLanguage({
   required String language,
   bool force = false,
 }) async {
-  // Only update if the new language is different from the current one or if it is forced.
+  // Only update if the given [language] is different from the current one, or if it is forced.
   if (Localization.appLanguage != language || force) {
-    // Load localization files.
+    // Load localization data.
     await loadLocalizationsData(language);
 
-    // Update the language notifier with the new language.
+    // Update the [appLanguageNotifier] with the given [language].
     appLanguageNotifier.value = language;
 
-    // Save the new language setting to local cache.
+    // Save the new language setting to [LocalCache].
     LocalCache.save(setting: 'appLanguage', value: language);
   }
 }

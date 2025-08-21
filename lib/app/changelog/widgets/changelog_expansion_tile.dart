@@ -15,7 +15,7 @@ class ChangelogExpansionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Make sure the changelog data is available.
-    final Map<String, dynamic>? changelogData = Changelog.changelogData;
+    final Map<String, dynamic>? changelogData = Changelog.dbChangelogData;
     if (changelogData == null) {
       return Align(
         alignment: Alignment.centerLeft,

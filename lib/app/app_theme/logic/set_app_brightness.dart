@@ -6,10 +6,10 @@ import 'package:flutter_playground/app/app_theme/widgets/app_theme_light.dart';
 import 'package:flutter_playground/app/app_theme/widgets/app_theme_dark.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 
-/// Sets the brightness for the app and saves it to local cache.
+/// Sets the given [brightness] for the app and saves it to [LocalCache].
 /// The brightness can be 'light', 'dark', or 'toggle'.
 void setAppBrightness({required String brightness}) {
-  // Check if the given brightness is valid.
+  // Check if the given [brightness] is valid.
   const allowedModes = ['light', 'dark', 'toggle'];
   if (!allowedModes.contains(brightness)) {
     throw ArgumentError(
@@ -17,34 +17,34 @@ void setAppBrightness({required String brightness}) {
     );
   }
 
-  // Set the app brightness and save it to local cache.
+  // Set the app brightness and save it to [LocalCache].
   switch (brightness) {
     case 'light':
-      // If the given brightness is 'light', set the app theme to light mode.
+      // If the given [brightness] is 'light', set the [AppTheme] to light mode.
 
       // Set the app theme to light mode.
       appThemeNotifier.value = [
         {'appTheme': appThemeLight, 'isDarkMode': false},
       ];
 
-      // Save the light mode setting to local cache.
+      // Save the light mode setting to [LocalCache].
       LocalCache.save(setting: 'appBrightness', value: 'light');
 
       break;
     case 'dark':
-      // If the given brightness is 'dark', set the app theme to dark mode.
+      // If the given [brightness] is 'dark', set the [AppTheme] to dark mode.
 
       // Set the app theme to dark mode.
       appThemeNotifier.value = [
         {'appTheme': appThemeDark, 'isDarkMode': true},
       ];
 
-      // Save the dark mode setting to local cache.
+      // Save the dark mode setting to [LocalCache].
       LocalCache.save(setting: 'appBrightness', value: 'dark');
 
       break;
     case 'toggle':
-      // If the given brightness is 'toggle', switch between light and dark mode.
+      // If the given [brightness] is 'toggle', switch between light and dark mode.
 
       // Set the app theme to the opposite mode.
       setAppBrightness(brightness: AppTheme.isLightMode ? 'dark' : 'light');

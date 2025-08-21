@@ -7,7 +7,7 @@ import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/user/logic/generate_password_hash.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 
-/// Tries to log in the [AppUser].
+/// Tries to log in the [AppUser], using its [email] and [password].
 /// Returns true if the login was successful, otherwise false.
 Future<bool> loginAppUser(
   BuildContext context, {
@@ -17,22 +17,22 @@ Future<bool> loginAppUser(
   // Load the users data.
   await User.initDbUsersData();
 
-  // Find the user within the users data by the users eMail.
+  // Find the user within the users data by the given [email].
   final userData = User.dbUsersData!.firstWhere(
     (user) => user['email'] == email,
     orElse: () => null,
   );
-  if (userData == null) {
-    // No user found. Clear the users data and return false.
-    User.clearDbUsersData();
-    return false;
-  }
 
   // Clear the users data as soon as its not needed anymore.
   // NOTE: This is necessary to prevent unnecessary data for all users from being kept in memory.
   User.clearDbUsersData();
 
-  // Check, if the entered password is correct.
+  // If no data with the given [email] is found, return false.
+  if (userData == null) {
+    return false;
+  }
+
+  // Check, if the given [password] is correct.
   final userDataPassword = userData['passwordHash'];
   final userDataSalt = userData['passwordSalt'];
   final hashedPassword = generatePasswordHash(
@@ -40,10 +40,11 @@ Future<bool> loginAppUser(
     salt: userDataSalt,
   );
   if (userDataPassword != hashedPassword) {
+    // The password does not match the saved one, return false.
     return false;
   }
 
-  // Set the [AppUser] to the appUserNotifier.
+  // Set the [AppUser] to the [appUserNotifier].
   // This will also set the [AppUser]s [AppRole]s and permissions.
   // This will also set the [AppMainModule]s and [AppSubModule]s the [AppUser] has access to.
   await setAppUser(

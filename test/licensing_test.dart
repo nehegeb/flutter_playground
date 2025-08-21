@@ -16,7 +16,7 @@ void main() {
 
     test('initLicensingData loads license data if not loaded', () async {
       licenseData = null;
-      await Licensing.initLicensingData();
+      await Licensing.initDbLicensingData();
       expect(licenseData, isNotNull, reason: 'License data should be loaded');
       expect(licenseData is Map, true, reason: 'License data should be a Map');
       expect(
@@ -28,7 +28,7 @@ void main() {
 
     test('initLicensingData does not reload if already loaded', () async {
       licenseData = {'dummy': 'data'};
-      await Licensing.initLicensingData();
+      await Licensing.initDbLicensingData();
       expect(
         licenseData,
         equals({'dummy': 'data'}),

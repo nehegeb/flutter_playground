@@ -181,7 +181,7 @@ class _TopAppBarState extends State<TopAppBar> {
                   }
                 },
                 itemBuilder: (context) {
-                  final isLoggedIn = appUserNotifier.value != null;
+                  final isUserLoggedIn = User.user != null;
                   return [
                     // User Card.
                     PopupMenuItem<String>(
@@ -347,13 +347,13 @@ class _TopAppBarState extends State<TopAppBar> {
                     ],
 
                     // Login/Logout options.
-                    if (!isLoggedIn)
+                    if (!isUserLoggedIn)
                       PopupMenuEntryCompact(
                         value: 'login',
                         selected: false,
                         child: Text(Localization.getText('appBar.menu.login')),
                       ),
-                    if (isLoggedIn)
+                    if (isUserLoggedIn)
                       PopupMenuEntryCompact(
                         value: 'logout',
                         selected: false,

@@ -3,7 +3,7 @@
 
 import 'package:flutter_playground/app/localization/localization.dart';
 
-/// Converts a month number to its corresponding text representation.
+/// Converts the given [month] number to its corresponding text representation.
 /// Returns an empty string if the month number is invalid.
 String convertMonthToText({required int month}) {
   switch (month) {

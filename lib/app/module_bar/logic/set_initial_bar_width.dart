@@ -5,14 +5,14 @@ import 'package:flutter_playground/app/local_cache/local_cache.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 
 /// Initializes the [ModuleBar] width setting.
-/// If the setting exists in the local cache, it sets the [ModuleBar] width accordingly.
+/// If the setting exists in the [LocalCache], it sets the [ModuleBar] width accordingly.
 /// If it does not exist, it sets the width according to [moduleBarNotifier].
 /// If the width cannot be determined, it defaults to wide.
 Future<void> setInitialBarWidth() async {
-  // Check, if there's something in the local cache already.
+  // Check, if there's something in the [LocalCache] already.
   final settingExists = await LocalCache.check(setting: 'ModuleBarIsWide');
   if (settingExists) {
-    // If the setting exists, load it from the cache.
+    // If the setting exists, load it from the [LocalCache].
     final setting = await LocalCache.load(setting: 'ModuleBarIsWide');
 
     // Set the app brightness based on the loaded setting.

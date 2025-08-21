@@ -6,14 +6,14 @@ import 'package:flutter_playground/app/local_cache/local_cache.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
 /// Initializes the app language setting.
-/// If the setting exists in the local cache, it sets the app language accordingly.
+/// If the setting exists in the [LocalCache], it sets the app language accordingly.
 /// If it does not exist, it sets the language based on the user's device settings.
 /// If the language cannot be determined or it is not supported, it defaults to English.
 Future<void> setInitialLanguage() async {
-  // Check, if there's something in the local cache already.
+  // Check, if there's something in the local [LocalCache].
   final settingExists = await LocalCache.check(setting: 'appLanguage');
   if (settingExists) {
-    // If the setting exists, load it from the cache.
+    // If the setting exists, load it from the [LocalCache].
     final setting = await LocalCache.load(setting: 'appLanguage');
 
     // Set the app language based on the loaded setting.

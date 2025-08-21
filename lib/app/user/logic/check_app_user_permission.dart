@@ -5,21 +5,22 @@ import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/app/user/user.dart';
 
-/// Checks if the [AppUser] has permission for something.
-///
-/// This only works if the user is logged in and
-/// only if the modules data has already been loaded, otherwise it returns false.
+/// Checks if the [AppUser] has the given [permission].
 ///
 /// It checks the modules [isHidden] and [isPublic] parameters.
-/// It also checks the user's roles against the requested permission.
-/// Returns true if the user has permission, otherwise false.
+/// It also checks the [AppUser]'s [AppRole]s against the requested permission.
+/// Returns true if the [AppUser] has permission, otherwise false.
+///
+/// NOTE: This only works if an [AppUser] is logged in and
+/// only if the modules data has already been loaded,
+/// otherwise it returns false!
 bool checkAppUserPermission({required String? permission}) {
-  // If no user is logged in, return false.
+  // If no [AppUser] is logged in, return false.
   if (User.user == null) {
     return false;
   }
 
-  // If no permission is specified, return false.
+  // If no [permission] is given, return false.
   if (permission == null || permission.isEmpty) {
     return false;
   }
@@ -43,7 +44,7 @@ bool checkAppUserPermission({required String? permission}) {
   }
 
   // Check for the [isHidden] and [isPublic] parameters of the [AppMainModule].
-  // This MUST NOT be done if the permission is about the "main" main modules.
+  // This MUST NOT be done if the given [permission] is about the "main" main modules.
   // This is, because all pages of the "main" main module are not treated as proper [AppMainModule]s.
   if (permissionMainModule.isNotEmpty &&
       permissionMainModule != 'main' &&
@@ -63,15 +64,15 @@ bool checkAppUserPermission({required String? permission}) {
     if (appMainModule == null || appMainModule['isPublic']) {
       String permissionCheck = '';
 
-      // If the main module is public
-      // and the permission is for access to that specific module, always grant access.
+      // If the main module is public and
+      // the permission is for access to that specific module, always grant access.
       permissionCheck = '$permissionMainModule.access';
       if (permission == permissionCheck) {
         return true;
       }
 
-      // If the main module is public
-      // and the permission is for read on that specific module, always grant access.
+      // If the main module is public and
+      // the permission is for read on that specific module, always grant access.
       permissionCheck = '$permissionMainModule.read';
       if (permission == permissionCheck) {
         return true;
@@ -98,15 +99,15 @@ bool checkAppUserPermission({required String? permission}) {
     if (appSubModule == null || appSubModule['isPublic']) {
       String permissionCheck = '';
 
-      // If the sub module is public
-      // and the permission is for access to that specific module, always grant access.
+      // If the sub module is public and
+      // the permission is for access to that specific module, always grant access.
       permissionCheck = '$permissionMainModule.$permissionSubModule.access';
       if (permission == permissionCheck) {
         return true;
       }
 
-      // If the sub module is public
-      // and the permission is for read on that specific module, always grant access.
+      // If the sub module is public and
+      // the permission is for read on that specific module, always grant access.
       permissionCheck = '$permissionMainModule.$permissionSubModule.read';
       if (permission == permissionCheck) {
         return true;
@@ -116,7 +117,7 @@ bool checkAppUserPermission({required String? permission}) {
 
   // CHECK USER
 
-  // Get all roles of the [AppUser].
+  // Get all [AppRole]s of the [AppUser].
   List<AppRole>? userRoles = User.user!.roles;
 
   // Check, if the [AppUser] has any [AppRole]s assigned.
@@ -125,7 +126,7 @@ bool checkAppUserPermission({required String? permission}) {
   }
 
   // Collect all permissions from the [AppUser]'s roles into a list of strings.
-  // Generates a set that contains all unique permissions.
+  // Generates a set that contains all unique permissions of the currently logged in [AppUser].
   final userPermissions = userRoles
       .expand((role) => role.permissions ?? [])
       .map((perm) => perm.trim())
@@ -133,11 +134,13 @@ bool checkAppUserPermission({required String? permission}) {
       .toSet();
 
   // If the [AppUser] has a simple '*' permission, always grant full app access.
+  // This is, because a simple '*' permission is treated as an administrator for the whole app.
   if (userPermissions.contains('*')) {
     return true;
   }
 
-  // If the [AppUser] has a '*' for the permission context, always grant context access.
+  // If the [AppUser] has a '.*' for the permission context, always grant context access.
+  // This is, because a '.*' permission is treated as an administrator for the module specified before the dot.
   final permissionContext = permission.contains('.')
       ? permission.substring(0, permission.lastIndexOf('.'))
       : '';
@@ -145,7 +148,7 @@ bool checkAppUserPermission({required String? permission}) {
     return true;
   }
 
-  // If the [AppUser] has the exact given permission, grant access.
+  // If the [AppUser] has the exact given [permission], grant access.
   if (userPermissions.contains(permission)) {
     return true;
   }

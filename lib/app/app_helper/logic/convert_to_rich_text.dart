@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 
-/// Make a TextSpan to use in a RichText widget with clickable URLs out of the given text.
+/// Make a TextSpan to use in a RichText widget with clickable URLs out of the given [text].
+/// A [style] can be applied to the text spans, otherwise it uses the default style.
 TextSpan convertToRichText({required String text, TextStyle? style}) {
   final urlRegex = RegExp(r'(https?:\/\/[^\s]+)', caseSensitive: false);
   final spans = <TextSpan>[];
   int start = 0;
 
-  // Split the text into spans based on URLs.
+  // Split the [text] into spans based on URLs.
   urlRegex.allMatches(text).forEach((match) {
     if (match.start > start) {
       spans.add(

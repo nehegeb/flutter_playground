@@ -1,19 +1,20 @@
 // get_app_sub_module.dart
 //
 
-import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/app/modules/modules.dart';
 
 /// Gets a specific [AppSubModule], according to its title ID.
-/// Only takes modules into account to which the currently logged in [AppUser] has access to.
-/// This only works if the user is logged in.
+/// It only takes [subModule]s into account to which the currently logged in [AppUser] has access to.
+///
+/// NOTE: This only works if an [AppUser] is logged in!
 AppSubModule? getAppSubModule({required String? subModule}) {
-  // If no sub module is provided, return null.
-  if (subModule == null) {
+  // If no [subModule] is provided, return null.
+  if (subModule == null || subModule.isEmpty) {
     return null;
   }
 
-  // If no user is logged in, return null.
+  // If no [AppUser] is logged in, return null.
   if (User.user == null) {
     return null;
   }

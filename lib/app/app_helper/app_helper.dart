@@ -16,11 +16,11 @@ import 'package:flutter_playground/app/app_helper/logic/convert_month_to_text.da
 /// - [monthNumberToText]: Converts a month number to its corresponding text representation.
 class AppHelper {
   /// Converts a string to 'Name Case' (capitalize each word).
-  static String toNameCase(String input) {
-    // If the input is empty, return an empty string.
-    if (input.isEmpty) return '';
+  static String toNameCase(String text) {
+    // If the given [text] is empty, return an empty string.
+    if (text.isEmpty) return '';
 
-    return convertToNameCase(input: input);
+    return convertToNameCase(text: text);
   }
 
   /// Make a TextSpan to use in a RichText widget with clickable URLs out of the given text.

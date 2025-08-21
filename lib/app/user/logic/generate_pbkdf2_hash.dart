@@ -4,7 +4,7 @@
 import 'dart:convert';
 import 'package:pointycastle/export.dart';
 
-/// Generates a hash for the given text using PBKDF2.
+/// Generates a hash for the given [text] and [salt] using PBKDF2.
 ///
 /// NOTE: Changing the [iterations] will result in existing passwords becoming invalid!
 String generatePbkdf2Hash({

@@ -89,12 +89,12 @@ class Modules {
     return subModulesNotifier.value;
   }
 
-  /// Get the main modules data of the database.
+  /// Get the loaded main modules data of the database.
   static List<dynamic>? get dbMainModulesData {
     return mainModulesData;
   }
 
-  /// Get the sub modules data of the database.
+  /// Get the loaded sub modules data of the database.
   static List<dynamic>? get dbSubModulesData {
     return subModulesData;
   }
@@ -162,13 +162,13 @@ class Modules {
     clearAppModules();
   }
 
-  /// Initializes the modules data for the app.
+  /// Initializes the modules data from the database for the app.
   static Future<void> initDbModulesData() async {
     await loadMainModulesData();
     await loadSubModulesData();
   }
 
-  /// Clear the modules data of the database from the app.
+  /// Clear the loaded modules data of the database from the app.
   static void clearDbModulesData() {
     mainModulesData = null;
     subModulesData = null;

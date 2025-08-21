@@ -3,7 +3,7 @@
 
 import 'package:flutter_playground/app/app_helper/app_helper.dart';
 
-/// Converts a date string in the format 'YYYY-MM-DD' to a more readable text format.
+/// Converts the given [date] string in the format 'YYYY-MM-DD' to a more readable text format.
 /// Returns a string in the format 'DD Month YYYY'.
 String convertDateToText({required String date}) {
   try {

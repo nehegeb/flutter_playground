@@ -1,15 +1,16 @@
 // set_app_sub_modules.dart
 //
 
-import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_sub_modules_data.dart';
 
-/// Sets all [AppSubModule]s for which the [AppUser] has access permission for the [subModulesNotifier].
-/// This will be called whenever the user logs in or their permissions change.
-/// This only works if the user is logged in.
+/// Sets all [AppSubModule]s for which the [AppUser] has access permission to for the [subModulesNotifier].
+/// This will be called whenever an [AppUser] logs in or their permissions change.
+///
+/// NOTE: This only works if an [AppUser] is logged in!
 Future<bool> setAppSubModules() async {
-  // If no user is logged in, return false.
+  // If no [AppUser] is logged in, return false.
   if (User.user == null) {
     return false;
   }

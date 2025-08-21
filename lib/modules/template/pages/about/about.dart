@@ -25,7 +25,7 @@ class _TemplateAboutPageState extends State<TemplateAboutPage> {
 
   // Load data for the about page.
   Future<void> _initData() async {
-    await Changelog.initChangelogData(module: mainModule);
+    await Changelog.initDbChangelogData(module: mainModule);
   }
 
   @override
@@ -47,7 +47,7 @@ class _TemplateAboutPageState extends State<TemplateAboutPage> {
 
               // Changelog section.
               FutureBuilder<void>(
-                future: Changelog.initChangelogData(module: mainModule),
+                future: Changelog.initDbChangelogData(module: mainModule),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return Center(child: CircularProgressIndicator());

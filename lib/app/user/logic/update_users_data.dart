@@ -6,8 +6,11 @@ import 'dart:convert';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 
+// TODO: Instead of bool, it should return error messages like checkEnteredPasswordStrength.
+
 /// Update the entry in the users data JSON file by the users ID.
-/// Also sets the [AppUser] for the [appUserNotifier] afterwards.
+/// If no [id] is given, it assumes this is a new user for the app and adds it.
+/// Otherwise it also sets the [AppUser] for the [appUserNotifier] afterwards.
 /// Returns true if the update was successful, false otherwise.
 Future<bool> updateUsersData({
   int id = 0,
@@ -35,14 +38,13 @@ Future<bool> updateUsersData({
       orElse: () => null,
     );
 
-    // If the eMail address already exists in the users data, return false.
+    // If the given [email] already exists in the users data, return false.
     if (existingUser != null) {
       // Clear the users data as soon as its not needed anymore, if it was not already loaded before.
       // If it was already loaded before, it should stay in memory and be cleared later on.
       if (!wasAlreadyLoaded) {
         User.clearDbUsersData();
       }
-
       return false;
     }
 
@@ -55,7 +57,6 @@ Future<bool> updateUsersData({
       'passwordSalt': passwordSalt,
       'rolesIds': rolesIds.isNotEmpty ? rolesIds : [],
     };
-
     User.dbUsersData!.add(newUser);
 
     usersDataUpdated = true;

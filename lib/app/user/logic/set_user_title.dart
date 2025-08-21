@@ -6,28 +6,22 @@ import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/user/logic/get_user_title.dart';
 
 /// Sets the displayed title of the currently logged in [AppUser].
-/// If no arguments are given, it uses the main app titles.
-/// If the [mainModuleName] is given, it uses the titles of the [AppMainModule].
-/// This only works if the user is logged in.
+/// If no [mainModuleName] is given, it uses the main app titles.
+/// Otherwise it uses the titles of the [AppMainModule].
+///
+/// NOTE: This only works if an [AppUser] is logged in!
 void setUserTitle({String? mainModuleName}) {
-  List<AppRole>? titleRoles = [];
-  bool hasNoTitle = false;
-
-  // If no user is logged in, set no title.
-  if (User.user == null) {
-    hasNoTitle = true;
-  }
+  String userTitle = '';
+  List<AppRole>? userRoles;
 
   // If an [AppUser] is currently logged in, get its [AppRoles].
-  if (!hasNoTitle) {
-    // Get the [AppRoles] of the currently logged in [AppUser].
-    final List<AppRole>? userRoles = User.user!.roles;
+  if (User.user != null) {
+    userRoles = User.user!.roles;
+  }
 
-    // If the user does not have any [AppRole]s, set no title.
-    if (userRoles == null || userRoles.isEmpty) {
-      hasNoTitle = true;
-      return;
-    }
+  // If the [AppUser] has any [AppRole]s, find the appropriate title.
+  if (userRoles != null && userRoles.isNotEmpty) {
+    List<AppRole>? titleRoles = [];
 
     // Check, if the [AppUser] is an administrator.
     final AppRole adminRole = userRoles.firstWhere(
@@ -55,11 +49,7 @@ void setUserTitle({String? mainModuleName}) {
           )
           .toList();
     }
-  }
 
-  // Get the user title to display.
-  String userTitle = '';
-  if (!hasNoTitle) {
     // Get the user title from its filtered [AppRole]s.
     userTitle = getUserTitle(appRoles: titleRoles);
   }

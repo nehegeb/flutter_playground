@@ -25,7 +25,7 @@ class LicenseInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Make sure the license data is available.
-    final Map<String, dynamic>? licenseData = Licensing.getLicenseData();
+    final Map<String, dynamic>? licenseData = Licensing.dbLicenseData;
     if (licenseData == null) {
       return Align(
         alignment: Alignment.centerLeft,

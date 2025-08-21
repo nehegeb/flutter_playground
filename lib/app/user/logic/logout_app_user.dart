@@ -16,6 +16,6 @@ void logoutAppUser(BuildContext context) {
   // This removes the [AppMainModule]s and [AppSubModule]s the [AppUser] has access to.
   Modules.clearPermittedModules();
 
-  // Navigate to the [HomePage], even if the user is already there.
+  // Navigate to the main [HomePage] of the app.
   context.go('/home', extra: DateTime.now().millisecondsSinceEpoch);
 }

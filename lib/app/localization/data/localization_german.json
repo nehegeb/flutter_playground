@@ -6,9 +6,8 @@
         "countryCode": "de"
     },
     "modules": {
-        "loading": "Module werden geladen...",
-        "mainModulesLoading": "Hauptmodule werden geladen...",
-        "subModulesLoading": "Untermodule werden geladen...",
+        "mainModulesDataLoading": "Hauptmodule Daten werden geladen...",
+        "subModulesDataLoading": "Untermodule Daten werden geladen...",
         "template": {
             "title": "Modul Vorlage",
             "modules": {
@@ -83,26 +82,32 @@
         }
     },
     "users": {
-        "loading": "Lade Benutzer..."
+        "usersDataLoading": "Benutzer Daten werden geladen..."
     },
     "roles": {
-        "loading": "Lade Rollen...",
+        "rolesDataLoading": "Rollen Daten werden geladen...",
         "admin": "Administrator",
         "moderator": "Moderator",
         "member": "Mitglied",
         "guest": "Gast",
         "unauthorized": "Nicht eingeloggt"
     },
+    "permissions": {
+        "permissionsDataLoading": "Berechtigungen Daten werden geladen..."
+    },
+    "localization": {
+        "languagesDataLoading": "Sprachen Daten werden geladen..."
+    },
     "changelog": {
         "title": "Changelog für <<module>>",
-        "loading": "Lade Changelog...",
+        "changelogDataLoading": "Changelog Daten werden geladen...",
         "notLoadedError": "Changelog konnte nicht geladen werden. Versuchen Sie, die Seite neu zu laden (F5)."
     },
     "licensing": {
         "title": "Verwendete Pakete in dieser App",
-        "packageLoading": "Lade verwendete Pakete...",
+        "packageDataLoading": "Verwendete Pakete Daten werden geladen...",
         "packageNotLoadedError": "Pakete konnten nicht geladen werden. Versuchen Sie, die Seite neu zu laden (F5).",
-        "licenseLoading": "Lade Lizenzen...",
+        "licenseDataLoading": "Lizenzen Daten werden geladen...",
         "licenseNotLoadedError": "Lizenzen konnten nicht geladen werden. Versuchen Sie, die Seite neu zu laden (F5).",
         "licenseDetails": "Lizenzdetails anzeigen",
         "licenseSource": "Quelle"

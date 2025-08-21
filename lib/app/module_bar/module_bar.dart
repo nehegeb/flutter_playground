@@ -53,7 +53,7 @@ class _ModuleBarState extends State<ModuleBar> {
   @override
   Widget build(BuildContext context) {
     final String routedPage = widget.routedPage;
-    final user = appUserNotifier.value;
+    final user = User.user;
 
     // Get [ModuleBar] settings.
     final isBarWide = ModuleBarUtils.isWide;

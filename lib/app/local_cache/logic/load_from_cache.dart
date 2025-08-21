@@ -4,26 +4,26 @@
 import 'package:flutter_playground/app/local_cache/local_cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Loads a specific setting from SharedPreferences.
+/// Loads a specific [setting] from [SharedPreferences].
 /// If the setting does not exist, it returns null.
 Future<dynamic> loadFromCache({required String setting}) async {
   final prefs = await SharedPreferences.getInstance();
 
-  // If setting is 'allSettings', return all settings.
+  // If the given [setting] is 'allSettings', return all settings.
   if (setting == 'allSettings') {
     return Map<String, dynamic>.fromEntries(
       prefs.getKeys().map((key) => MapEntry(key, prefs.get(key))),
     );
   }
 
-  // Check if the setting settingExists in SharedPreferences.
+  // Check if the given [setting] exists in [SharedPreferences].
   final settingExists = await LocalCache.check(setting: setting);
   if (!settingExists) {
     // Return null if the setting does not exist.
     return null;
   }
 
-  // Try to get setting with its correct type.
+  // Try to get the given [setting] from [SharedPreferences] with its correct type.
   dynamic value;
   if (prefs.containsKey(setting)) {
     final object = prefs.get(setting);

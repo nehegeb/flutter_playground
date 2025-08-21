@@ -1,9 +1,9 @@
 // convert_to_name_case.dart
 //
 
-/// Converts a string to 'Name Case' (capitalize each word).
-String convertToNameCase({required String input}) {
-  return input
+/// Converts the given [text] string to 'Name Case' (capitalize each word).
+String convertToNameCase({required String text}) {
+  return text
       .split(' ')
       .map(
         (word) => word.isNotEmpty

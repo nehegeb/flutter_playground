@@ -43,7 +43,7 @@ class User {
     return getEmptyAppUser();
   }
 
-  /// Get the users data of the database.
+  /// Get the loaded users data of the database.
   static List<dynamic>? get dbUsersData {
     return usersData;
   }
@@ -107,12 +107,12 @@ class User {
     return checkAppUserPermission(permission: permission);
   }
 
-  /// Initializes the users data for the app.
+  /// Initializes the users data from the database for the app.
   static Future<void> initDbUsersData() async {
     await loadUsersData();
   }
 
-  /// Clear the users data of the database from the app.
+  /// Clear the loaded users data of the database from the app.
   static void clearDbUsersData() {
     usersData = null;
   }

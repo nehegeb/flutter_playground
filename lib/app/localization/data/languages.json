@@ -1,22 +1,22 @@
-{
-    "en": {
+[
+    {
+        "id": "en",
         "name": "English",
-        "nativeName": "English",
-        "code": "en"
+        "nativeName": "English"
     },
-    "de": {
+    {
+        "id": "de",
         "name": "German",
-        "nativeName": "Deutsch",
-        "code": "de"
+        "nativeName": "Deutsch"
     },
-    "es": {
+    {
+        "id": "es",
         "name": "Spanish",
-        "nativeName": "Español",
-        "code": "es"
+        "nativeName": "Español"
     },
-    "fr": {
+    {
+        "id": "fr",
         "name": "French",
-        "nativeName": "Français",
-        "code": "fr"
+        "nativeName": "Français"
     }
-}
+]

@@ -8,17 +8,19 @@ import 'package:flutter_playground/app/misc/widgets/loading_overlay.dart';
 
 List<dynamic>? subModulesData;
 
-/// Loads sub modules JSON files and parses them into maps.
+/// Loads sub modules JSON file and parses it into a list.
 /// It loads the sub modules of the app.
 Future<void> loadSubModulesData() async {
   // Display a loading overlay while modules are being loaded.
   // But before displaying the loading overlay, wait for the UI to settle.
   await Future.delayed(const Duration(milliseconds: 10));
-  LoadingOverlay.initiate(Localization.getText('modules.subModulesLoading'));
+  LoadingOverlay.initiate(
+    Localization.getText('modules.subModulesDataLoading'),
+  );
 
-  // Load the sub modules file.
+  // Load the sub modules JSON file.
   try {
-    // Load the sub modules.
+    // Load the sub modules data.
     final jsonData = await rootBundle.loadString(
       'lib/app/modules/data/sub_modules.json',
     );

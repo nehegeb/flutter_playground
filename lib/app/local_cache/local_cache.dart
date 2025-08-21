@@ -15,7 +15,7 @@ import 'package:flutter_playground/app/local_cache/logic/clear_cache.dart';
 /// - [load]: Loads a given setting from local storage.
 /// - [delete]: Deletes a given setting from local storage.
 /// - [clear]: Clears all settings from local storage.
-/// - [debug]: Displays all settings in local storage for debugging purposes.
+/// - [debug]: Prints out all settings in local storage for debugging purposes. (!)
 class LocalCache {
   /// Check for a specific setting in SharedPreferences.
   /// Returns true if the setting exists, false otherwise.
@@ -57,16 +57,18 @@ class LocalCache {
     await clearCache();
   }
 
-  /// Display all settings in SharedPreferences for debugging purposes.
+  /// Prints out all settings in SharedPreferences for debugging purposes.
+  ///
+  /// NOTE: This is meant for debugging purposes only!
   static Future<void> debug() async {
     final allSettings = await LocalCache.load(setting: 'allSettings');
     if (allSettings is Map<String, dynamic>) {
-      print('All settings in local cache:');
+      print('DEBUG: All settings in local cache:');
       allSettings.forEach((key, value) {
         print('  $key - $value');
       });
     } else {
-      print('No settings found in local cache.');
+      print('DEBUG: No settings found in local cache.');
     }
   }
 }
