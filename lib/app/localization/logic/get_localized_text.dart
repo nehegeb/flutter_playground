@@ -2,30 +2,13 @@
 //
 
 import 'package:lorem_ipsum/lorem_ipsum.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/localization/logic/load_localizations_data.dart';
 
-/// Returns the localized value for the given [key] and [languageCode].
-/// The language code is the id of the language in two-letter format (e.g., 'en', 'de').
-String getLocalizedText({required String key, String languageCode = 'en'}) {
+/// Returns the localized value for the given [key] and [languageId].
+/// The [languageId] is the id of the language as defined within the localization files (e.g., 'en', 'de').
+String getLocalizedText({required String key, String? languageId}) {
   Map<String, dynamic>? localizationSelected;
-
-  // Select the appropriate localization based on the language.
-  switch (languageCode) {
-    case 'en':
-      // English localization.
-      localizationSelected =
-          localizationPrimary; // Primary localization (English).
-      break;
-    case 'de':
-      // German localization.
-      localizationSelected = localizationSecondary; // Secondary localization.
-      break;
-    // NOTE: Add more languages here as needed.
-    default:
-      // If the language is not recognized, default to English.
-      languageCode = 'en';
-      localizationSelected = localizationPrimary;
-  }
 
   // If the key is 'placeholder', return a placeholder string.
   if (key.startsWith('placeholder')) {
@@ -42,7 +25,7 @@ String getLocalizedText({required String key, String languageCode = 'en'}) {
   }
 
   // If localizations are not loaded yet, return the given key in all caps.
-  if (localizationPrimary == null) {
+  if (localizationDataPrimary == null) {
     final placeholder = StringBuffer();
     placeholder.write('[');
     // Insert an underscore before every uppercase letter in the key.
@@ -57,11 +40,40 @@ String getLocalizedText({required String key, String languageCode = 'en'}) {
     return placeholder.toString();
   }
 
-  // Try selected language first, then fallback to English.
-  for (final map in [localizationSelected, localizationPrimary]) {
+  // If no [languageId] has been given, fall back to the default app language.
+  languageId = languageId ?? defaultLanguageId;
+
+  // Select the appropriate localization data based on the given [languageId].
+  if (languageId != defaultLanguageId) {
+    // Use secondary localization data.
+    localizationSelected = localizationDataSecondary;
+  } else {
+    // Use primary localization data.
+    localizationSelected = localizationDataPrimary;
+  }
+
+  // switch (languageId) {
+  //   case 'en':
+  //     // English localization.
+  //     localizationSelected =
+  //         localizationDataPrimary; // Use primary localization data.
+  //     break;
+  //   case 'de':
+  //     // German localization.
+  //     localizationSelected =
+  //         localizationDataSecondary; // Use secondary localization data.
+  //     break;
+  //   // NOTE: Add more languages here as needed.
+  //   default:
+  //     // If the language is not recognized, default to English.
+  //     languageId = 'en';
+  //     localizationSelected = localizationDataPrimary;
+  // }
+
+  // Try given [languageId] first, then fallback to the default app language.
+  for (final map in [localizationSelected, localizationDataPrimary]) {
     if (map == null) continue;
     dynamic value = map;
-    // Support nested keys in the localization JSON using dot notation.
     for (final part in key.split('.')) {
       if (value is Map<String, dynamic> && value.containsKey(part)) {
         value = value[part];

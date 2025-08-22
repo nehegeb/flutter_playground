@@ -1,10 +1,6 @@
 {
+    "languageId": "en",
     "appName": "Flutter Playground",
-    "language": {
-        "languageName": "English",
-        "languageCode": "en",
-        "countryCode": "us"
-    },
     "modules": {
         "mainModulesDataLoading": "Loading main modules data...",
         "subModulesDataLoading": "Loading sub modules data...",

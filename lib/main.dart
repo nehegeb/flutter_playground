@@ -1,7 +1,8 @@
 // main.dart
 //
 
-// TODO: Change localization using a JSON for the languages.
+// TODO: Fix the UserMenu. Also add notifier lookups directly in the file.
+// TODO: The title is always "unauthorized" after login it seems...
 // TODO: Implement password strength check and password hide/show feature.
 // TODO: Finish the Template README file.
 // TODO: Insert notice on HomePage if no modules are permitted for the user.
@@ -9,6 +10,8 @@
 // TODO: Implement feedback feature.
 // TODO: Refactor the AppBar and then close the user menu in set_is_mobile.dart.
 // TODO: Web page errors 404 etc.
+// TODO: The ModuleBar is too light in color. Make it more vibrant.
+// TODO: The questionmark icon next to licensing information messes up mobile display.
 // TODO: (?) Revamp the loading overlay, so that it is possible to stack multiple loading processes in one call.
 // TODO: (?) Implement a global error handler for the app.
 // TODO: (?) Implement a profile page to change username, password and delete account.

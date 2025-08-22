@@ -1,15 +1,15 @@
-// flag_menu_item.dart
+// language_menu_flag_entry.dart
 //
 
 import 'package:flutter/material.dart';
 import 'package:country_flags/country_flags.dart';
 
 /// A widget for the [LanguageMenu] that displays a country flag and a label.
-class FlagMenuItem extends StatelessWidget {
+class LanguageMenuFlagEntry extends StatelessWidget {
   final String countryCode;
   final String label;
 
-  const FlagMenuItem({
+  const LanguageMenuFlagEntry({
     required this.countryCode,
     required this.label,
     super.key,

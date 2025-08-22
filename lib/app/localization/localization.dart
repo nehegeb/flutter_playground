@@ -15,6 +15,9 @@ import 'package:flutter_playground/app/localization/logic/get_localized_text.dar
 import 'package:flutter_playground/app/localization/logic/set_app_language.dart';
 import 'package:flutter_playground/app/localization/logic/set_initial_language.dart';
 
+/// The default and fallback language of the app.
+String defaultLanguageId = 'en';
+
 /// Notifier for the currently selected app language.
 /// Defaults to English ('en').
 final ValueNotifier<String> appLanguageNotifier = ValueNotifier<String>('en');
@@ -43,7 +46,7 @@ class Localization {
 
   /// Get a localized string using the app language.
   static String getText(String key) {
-    return getLocalizedText(key: key, languageCode: appLanguage);
+    return getLocalizedText(key: key, languageId: appLanguage);
   }
 
   /// Sets the language for the app.

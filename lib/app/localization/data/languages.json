@@ -2,21 +2,13 @@
     {
         "id": "en",
         "name": "English",
-        "nativeName": "English"
+        "nativeName": "English",
+        "countryCode": "us"
     },
     {
         "id": "de",
         "name": "German",
-        "nativeName": "Deutsch"
-    },
-    {
-        "id": "es",
-        "name": "Spanish",
-        "nativeName": "Español"
-    },
-    {
-        "id": "fr",
-        "name": "French",
-        "nativeName": "Français"
+        "nativeName": "Deutsch",
+        "countryCode": "de"
     }
 ]

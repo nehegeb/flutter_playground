@@ -6,6 +6,10 @@ import 'package:flutter_playground/app/app_theme/widgets/app_theme_light.dart';
 import 'package:flutter_playground/app/app_theme/logic/set_app_brightness.dart';
 import 'package:flutter_playground/app/app_theme/logic/set_initial_brightness.dart';
 
+/// Defines the seed color for the app theme.
+/// This color is used to generate the color scheme for both light and dark themes.
+const Color seedColor = Colors.deepPurple;
+
 /// Notifier for the currently selected app theme.
 /// Defaults to light theme [ThemeData] with dark mode disabled.
 ///
@@ -16,10 +20,6 @@ final ValueNotifier<List<Map<String, dynamic>>> appThemeNotifier =
     ValueNotifier<List<Map<String, dynamic>>>([
       {'appTheme': appThemeLight, 'isDarkMode': false},
     ]);
-
-/// Defines the seed color for the app theme.
-/// This color is used to generate the color scheme for both light and dark themes.
-const Color seedColor = Colors.amber;
 
 /// Utility class for theme management.
 /// Provides static methods to get the current app theme and manage the brightness.

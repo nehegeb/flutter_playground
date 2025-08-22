@@ -3,16 +3,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:country_flags/country_flags.dart';
-import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/app_router/app_router_utils.dart';
-import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
+import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
-import 'package:flutter_playground/app/top_app_bar/widgets/language_menu.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
+import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
-import 'package:flutter_playground/app/app_helper/app_helper.dart';
-import 'package:flutter_playground/app/misc/widgets/popup_menu_entry_compact.dart';
+import 'package:flutter_playground/app/top_app_bar/widgets/language_menu.dart';
+import 'package:flutter_playground/app/top_app_bar/widgets/user_menu.dart';
 
 /// A horizontal app bar at the top of the app.
 /// It contains a menu button to toggle the [ModuleBar],
@@ -133,8 +131,9 @@ class _TopAppBarState extends State<TopAppBar> {
             ),
 
             actions: [
-              // Light/Dark mode toggle for wide screens.
+              // Display some buttons for wide screens.
               if (!isMobile) ...[
+                // Light/Dark mode toggle for wide screens.
                 IconButton(
                   icon: Icon(
                     AppTheme.isDarkMode
@@ -149,219 +148,30 @@ class _TopAppBarState extends State<TopAppBar> {
                   tooltip: '', // Remove unnecessary tooltip.
                 ),
                 SizedBox(width: spacingWidth),
-              ],
 
-              // Language selector for wide screens.
-              if (!isMobile) ...[
-                LanguageMenu(
-                  appLanguage: appLanguage,
-                  onSelected: (selectedLanguage) async {
-                    await Localization.setLanguage(language: selectedLanguage);
-                  },
-                ),
-                SizedBox(width: spacingWidth),
+                // Language selector for wide screens.
+                // It is only shown if there are multiple languages available.
+                if ((Localization.dbLanguagesData?.length ?? 0) > 1) ...[
+                  LanguageMenu(
+                    appLanguage: appLanguage,
+                    onSelected: (selectedLanguage) async {
+                      await Localization.setLanguage(
+                        language: selectedLanguage,
+                      );
+                    },
+                  ),
+                  SizedBox(width: spacingWidth),
+                ],
               ],
 
               // User menu.
-              PopupMenuButton<String>(
-                icon: const Icon(Icons.more_vert),
-                tooltip: '', // Remove unnecessary tooltip.
-                onSelected: (selectedAction) async {
-                  if (selectedAction == 'login') {
-                    // Save the current url for redirection after login.
-                    AppRouterUtils.saveRedirectUrl();
-                    // Navigate to the [LoginPage].
-                    await context.push('/login');
-                  } else if (selectedAction == 'logout') {
-                    User.logout(context);
-                  } else if (selectedAction == 'toggleThemeMode') {
-                    setState(() {
-                      AppTheme.toggleBrightness();
-                    });
-                  }
-                },
-                itemBuilder: (context) {
-                  final isUserLoggedIn = User.user != null;
-                  return [
-                    // User Card.
-                    PopupMenuItem<String>(
-                      enabled: false,
-                      height: 80, // Bigger than default height (default is 48).
-                      // Listen for changes in the active [AppUser].
-                      // This will rebuild the [UserCard] when the active user changes.
-                      child: ValueListenableBuilder<AppUser?>(
-                        valueListenable: appUserNotifier,
-                        builder: (context, appUser, _) {
-                          final userName = appUser?.name ?? '';
-                          final userTitle = appUser?.title ?? '';
-                          return Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 12,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primary.withAlpha(60),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.account_circle, size: 32),
-                                SizedBox(width: spacingWidth),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    // The currently logged in [AppUser]'s name.
-                                    Text(
-                                      appUser != null
-                                          ? AppHelper.toNameCase(userName)
-                                          : Localization.getText('roles.guest'),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-
-                                    // The currently logged in [AppUser]'s title.
-                                    Text(
-                                      appUser != null
-                                          ? userTitle
-                                          : Localization.getText(
-                                              'roles.unauthorized',
-                                            ),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-
-                    // Move some buttons from the app bar into this menu for mobile devices.
-                    if (isMobile) ...[
-                      PopupMenuDivider(), // Separator line.
-                      // Theme mode toggle for mobile devices.
-                      PopupMenuEntryCompact(
-                        value: 'toggleThemeMode',
-                        selected: false,
-                        child: Row(
-                          children: [
-                            Icon(
-                              AppTheme.isDarkMode
-                                  ? Icons.wb_sunny_outlined
-                                  : Icons.nightlight_round,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              Localization.getText(
-                                'appBar.menu.switchThemeMode',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Language selector for mobile devices as a button.
-                      PopupMenuEntryCompact(
-                        value: '', // No value, handle tap manually.
-                        selected: false,
-                        child: Builder(
-                          builder: (context) {
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () async {
-                                // Close the current menu.
-                                Navigator.of(context).pop();
-                                // Wait for the menu to close before showing the next.
-                                await Future.delayed(
-                                  const Duration(milliseconds: 100),
-                                );
-                                // Show the language selector popup.
-                                final RenderBox button =
-                                    context.findRenderObject() as RenderBox;
-                                final RenderBox overlay =
-                                    Overlay.of(
-                                          context,
-                                        ).context.findRenderObject()
-                                        as RenderBox;
-                                final Offset position = button.localToGlobal(
-                                  Offset.zero,
-                                  ancestor: overlay,
-                                );
-                                final selectedLanguage = await showMenu<String>(
-                                  context: context,
-                                  position: RelativeRect.fromLTRB(
-                                    position.dx,
-                                    position.dy,
-                                    position.dx + button.size.width,
-                                    position.dy + button.size.height,
-                                  ),
-                                  items: LanguageMenu.menuItems(
-                                    context,
-                                    appLanguage,
-                                  ),
-                                );
-                                if (selectedLanguage != null) {
-                                  await Localization.setLanguage(
-                                    language: selectedLanguage,
-                                  );
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  CountryFlag.fromCountryCode(
-                                    Localization.getText(
-                                      'language.countryCode',
-                                    ),
-                                    shape: Circle(),
-                                    width: 24,
-                                  ),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    Localization.getText(
-                                      'appBar.menu.switchLanguage',
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      PopupMenuDivider(), // Separator line.
-                    ],
-
-                    // Login/Logout options.
-                    if (!isUserLoggedIn)
-                      PopupMenuEntryCompact(
-                        value: 'login',
-                        selected: false,
-                        child: Text(Localization.getText('appBar.menu.login')),
-                      ),
-                    if (isUserLoggedIn)
-                      PopupMenuEntryCompact(
-                        value: 'logout',
-                        selected: false,
-                        child: Text(Localization.getText('appBar.menu.logout')),
-                      ),
-                  ];
-                },
+              UserMenu(
+                isMobile: isMobile,
+                appLanguage: appLanguage,
+                appUserNotifier: appUserNotifier,
               ),
+
+              // A spacer at the far right.
               SizedBox(width: spacingWidth),
             ],
           ),

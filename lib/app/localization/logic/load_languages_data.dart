@@ -22,7 +22,7 @@ Future<void> loadLanguagesData() async {
   try {
     // Load the languages data.
     final jsonData = await rootBundle.loadString(
-      'lib/modules/localization/data/languages.json',
+      'lib/app/localization/data/languages.json',
     );
     languagesData = json.decode(jsonData) as List<dynamic>?;
   } finally {
