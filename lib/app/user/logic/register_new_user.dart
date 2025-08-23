@@ -3,22 +3,31 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/logic/generate_password_salt.dart';
 import 'package:flutter_playground/app/user/logic/generate_password_hash.dart';
 import 'package:flutter_playground/app/user/logic/update_users_data.dart';
 
 /// Register a new user for the app.
-/// Returns true if it worked, otherwise false.
-Future<bool> registerNewUser(
+/// Returns an error message if it fails, otherwise an empty string.
+Future<String> registerNewUser(
   BuildContext context, {
   required String email,
   required String password,
   required String passwordConfirmation,
   required String name,
 }) async {
+  // Check if all parameters are given.
+  if (email.isEmpty ||
+      password.isEmpty ||
+      passwordConfirmation.isEmpty ||
+      name.isEmpty) {
+    return Localization.getText('errors.missingRequiredFields');
+  }
+
   // Check, if both passwords are the same. If not, return false.
   if (password != passwordConfirmation) {
-    return false;
+    return Localization.getText('errors.passwordsDoNotMatch');
   }
 
   // Generate a hash for the password.
@@ -34,11 +43,12 @@ Future<bool> registerNewUser(
     rolesIds: [], // New users don't have any roles in the beginning.
   );
   if (!isSuccess) {
-    return false;
+    return Localization.getText('errors.registrationFailed');
   }
 
   // Redirect the new user to the [LoginPage].
   context.go('/login', extra: DateTime.now().millisecondsSinceEpoch);
 
-  return isSuccess;
+  // If the registration was successful, return no error message.
+  return '';
 }

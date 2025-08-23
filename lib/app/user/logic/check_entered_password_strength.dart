@@ -7,19 +7,19 @@ import 'package:flutter_playground/app/localization/localization.dart';
 String checkEnteredPasswordStrength({required String password}) {
   // Check the given [password] and return an error message if it's too weak.
   if (password.length < 8) {
-    return Localization.getText('passwordTooShort');
+    return Localization.getText('errors.passwordTooShort');
   }
   if (!RegExp(r"[A-Z]").hasMatch(password)) {
-    return Localization.getText('passwordNoUppercase');
+    return Localization.getText('errors.passwordNoUppercase');
   }
   if (!RegExp(r"[a-z]").hasMatch(password)) {
-    return Localization.getText('passwordNoLowercase');
+    return Localization.getText('errors.passwordNoLowercase');
   }
   if (!RegExp(r"[0-9]").hasMatch(password)) {
-    return Localization.getText('passwordNoNumber');
+    return Localization.getText('errors.passwordNoNumber');
   }
   if (!RegExp(r"[!@#$%^&*(),.?:{}|<>]").hasMatch(password)) {
-    return Localization.getText('passwordNoSpecial');
+    return Localization.getText('errors.passwordNoSpecial');
   }
 
   // If all checks pass, return no error message.

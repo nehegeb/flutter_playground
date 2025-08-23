@@ -7,7 +7,6 @@ import 'package:flutter_playground/app/app_theme/app_theme.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 import 'package:flutter_playground/app/top_app_bar/widgets/language_menu.dart';
 import 'package:flutter_playground/app/top_app_bar/widgets/user_menu.dart';

@@ -25,6 +25,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
   bool _invalidRegister = false;
+  bool _showPassword = false;
+  bool _showConfirmPassword = false;
+  String _errorMessage = '';
 
   @override
   void initState() {
@@ -37,14 +40,38 @@ class _RegisterPageState extends State<RegisterPage> {
 
   /// Register function to create a new user with the provided credentials.
   Future<void> _register() async {
+    bool isSuccessful = true;
+    String errorMessage = '';
+
+    // Check the password strength.
+    if (isSuccessful) {
+      String passwordStrengthError = User.checkPasswordStrength(
+        password: _passwordController.text,
+      );
+      if (passwordStrengthError != '') {
+        errorMessage = passwordStrengthError;
+        isSuccessful = false;
+      } else {
+        isSuccessful = true;
+      }
+    }
+
     // Try to register the new user.
-    bool isSuccessful = await User.register(
-      context,
-      name: _usernameController.text,
-      email: _emailController.text,
-      password: _passwordController.text,
-      passwordConfirmation: _confirmPasswordController.text,
-    );
+    if (isSuccessful) {
+      String registrationError = await User.register(
+        context,
+        name: _usernameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+        passwordConfirmation: _confirmPasswordController.text,
+      );
+      if (registrationError != '') {
+        errorMessage = registrationError;
+        isSuccessful = false;
+      } else {
+        isSuccessful = true;
+      }
+    }
 
     if (!isSuccessful) {
       // Invalid registration, clear password fields and show error message.
@@ -52,6 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
         _invalidRegister = true;
         _passwordController.clear();
         _confirmPasswordController.clear();
+        _errorMessage = errorMessage;
       });
     }
   }
@@ -121,19 +149,30 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 12),
 
-            // TODO: Implement password strength check!
-            // TODO: Implement obscureText switch.
             // User password input.
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextField(
                 controller: _passwordController,
                 focusNode: _passwordFocus,
-                obscureText: true,
+                obscureText: !_showPassword,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   labelText: Localization.getText('pages.register.password'),
                   border: const OutlineInputBorder(),
+                  suffixIcon: FocusScope(
+                    canRequestFocus: false,
+                    child: IconButton(
+                      icon: Icon(
+                        _showPassword ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
+                    ),
+                  ),
                 ),
                 onSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_confirmPasswordFocus);
@@ -148,13 +187,28 @@ class _RegisterPageState extends State<RegisterPage> {
               child: TextField(
                 controller: _confirmPasswordController,
                 focusNode: _confirmPasswordFocus,
-                obscureText: true,
+                obscureText: !_showConfirmPassword,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   labelText: Localization.getText(
                     'pages.register.confirmPassword',
                   ),
                   border: const OutlineInputBorder(),
+                  suffixIcon: FocusScope(
+                    canRequestFocus: false,
+                    child: IconButton(
+                      icon: Icon(
+                        _showConfirmPassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _showConfirmPassword = !_showConfirmPassword;
+                        });
+                      },
+                    ),
+                  ),
                 ),
                 onSubmitted: (_) => _register(),
               ),
@@ -178,9 +232,12 @@ class _RegisterPageState extends State<RegisterPage> {
             // Error message for invalid registration.
             if (_invalidRegister) ...[
               const SizedBox(height: 12),
-              Text(
-                Localization.getText('pages.register.messageInvalidRegister'),
-                style: const TextStyle(color: Colors.red),
+              Center(
+                child: Text(
+                  _errorMessage,
+                  style: const TextStyle(color: Colors.red),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ],

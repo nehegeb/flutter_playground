@@ -23,8 +23,8 @@ final ValueNotifier<AppUser?> appUserNotifier = ValueNotifier<AppUser?>(null);
 /// - [user]: Gets the currently logged in [AppUser].
 /// - [emptyUser]: Gets an empty [AppUser].
 /// - [dbUsersData]: Gets the users data.
-/// - [register]: Registers a new user. Returns Boolean.
-/// - [login]: Logs in an [AppUser]. Returns Boolean.
+/// - [register]: Registers a new user. Returns an error message if it fails.
+/// - [login]: Logs in an [AppUser]. Returns an error message if it fails.
 /// - [logout]: Logs out the logged in [AppUser]. Returns Boolean.
 /// - [setTitle]: Sets the current title for the currently logged in [AppUser].
 /// - [setPassword]: Sets a new password for the currently logged in [AppUser]. Returns Boolean.
@@ -49,8 +49,8 @@ class User {
   }
 
   /// Register a new user for the app.
-  /// Returns true if it worked, otherwise false.
-  static Future<bool> register(
+  /// Returns an error message if it fails, otherwise an empty string.
+  static Future<String> register(
     BuildContext context, {
     required String email,
     required String password,
@@ -67,8 +67,8 @@ class User {
   }
 
   /// Login a user.
-  /// Returns true if it worked, otherwise false.
-  static Future<bool> login(
+  /// Returns an error message if it fails, otherwise an empty string.
+  static Future<String> login(
     BuildContext context, {
     required String email,
     required String password,

@@ -1,20 +1,14 @@
 // main.dart
 //
 
-// TODO: Implement user title management per module.
-// TODO: Implement password strength check and password hide/show feature.
 // TODO: Finish the Template README file.
-// TODO: Insert notice on HomePage if no modules are permitted for the user.
-//       Something like "You currently do not have access to any module. Ask an admin for access."
 // TODO: Implement feedback feature.
-// TODO: Refactor the AppBar and then close the user menu in set_is_mobile.dart.
 // TODO: Web page errors 404 etc.
 // TODO: The ModuleBar is too light in color. Make it more vibrant.
 // TODO: The questionmark icon next to licensing information messes up mobile display.
 // TODO: (?) Revamp the loading overlay, so that it is possible to stack multiple loading processes in one call.
 // TODO: (?) Implement a global error handler for the app.
 // TODO: (?) Implement a profile page to change username, password and delete account.
-// TODO: Finish the new-module README.
 // TODO: Make the template module 'isHidden' in the end.
 // TODO: Check all files and only 'show' the necessary import widgets.
 // TODO: Make a search for all TODOs and DEBUGs and clean up the code.

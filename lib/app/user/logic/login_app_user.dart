@@ -2,14 +2,15 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
+import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/user/logic/generate_password_hash.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 
 /// Tries to log in the [AppUser], using its [email] and [password].
-/// Returns true if the login was successful, otherwise false.
-Future<bool> loginAppUser(
+/// Returns an error message if it fails, otherwise an empty string.
+Future<String> loginAppUser(
   BuildContext context, {
   required String email,
   required String password,
@@ -29,7 +30,7 @@ Future<bool> loginAppUser(
 
   // If no data with the given [email] is found, return false.
   if (userData == null) {
-    return false;
+    return Localization.getText('errors.loginFailed');
   }
 
   // Check, if the given [password] is correct.
@@ -41,7 +42,7 @@ Future<bool> loginAppUser(
   );
   if (userDataPassword != hashedPassword) {
     // The password does not match the saved one, return false.
-    return false;
+    return Localization.getText('errors.loginFailed');
   }
 
   // Set the [AppUser] to the [appUserNotifier].
@@ -60,5 +61,6 @@ Future<bool> loginAppUser(
   // Otherwise, navigate to the [HomePage].
   AppRouterUtils.gotoRedirectUrl(context);
 
-  return true;
+  // If the login was successful, return no error message.
+  return '';
 }

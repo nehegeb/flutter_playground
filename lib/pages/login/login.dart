@@ -21,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   bool _invalidLogin = false;
+  bool _showPassword = false;
+  String _errorMessage = '';
 
   @override
   void initState() {
@@ -33,18 +35,30 @@ class _LoginPageState extends State<LoginPage> {
 
   /// Log in function to authenticate the user with the provided credentials.
   Future<void> _login() async {
+    bool isSuccessful = true;
+    String errorMessage = '';
+
     // Try to login the user.
-    bool isSuccessful = await User.login(
-      context,
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
+    if (isSuccessful) {
+      String logginError = await User.login(
+        context,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      if (logginError != '') {
+        errorMessage = logginError;
+        isSuccessful = false;
+      } else {
+        isSuccessful = true;
+      }
+    }
 
     if (!isSuccessful) {
       // Invalid login, clear password field and show error message.
       setState(() {
         _invalidLogin = true;
         _passwordController.clear();
+        _errorMessage = errorMessage;
       });
     }
   }
@@ -93,17 +107,29 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 12),
 
             // User password input.
-            // TODO: Implement obscureText switch.
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextField(
                 controller: _passwordController,
                 focusNode: _passwordFocus,
-                obscureText: true,
+                obscureText: !_showPassword,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   labelText: Localization.getText('pages.login.password'),
                   border: const OutlineInputBorder(),
+                  suffixIcon: FocusScope(
+                    canRequestFocus: false,
+                    child: IconButton(
+                      icon: Icon(
+                        _showPassword ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
+                    ),
+                  ),
                 ),
                 onSubmitted: (_) => _login(),
               ),
@@ -125,9 +151,12 @@ class _LoginPageState extends State<LoginPage> {
             // Error message for invalid login.
             if (_invalidLogin) ...[
               const SizedBox(height: 12),
-              Text(
-                Localization.getText('pages.login.messageInvalidLogin'),
-                style: const TextStyle(color: Colors.red),
+              Center(
+                child: Text(
+                  _errorMessage,
+                  style: const TextStyle(color: Colors.red),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
 
