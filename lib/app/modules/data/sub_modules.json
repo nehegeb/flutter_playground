@@ -3,7 +3,7 @@
         "id": 1,
         "idTitle": "template",
         "mainModuleIdTitle": "template",
-        "isPublic": false,
+        "isPublic": true,
         "isHidden": false,
         "color": null
     },

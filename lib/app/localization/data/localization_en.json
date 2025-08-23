@@ -84,8 +84,10 @@
         "admin": "Administrator",
         "moderator": "Moderator",
         "member": "Member",
+        "viewer": "Viewer",
         "guest": "Guest",
-        "unauthorized": "Not logged in"
+        "notLoggedIn": "Not logged in",
+        "noPermission": "No permission"
     },
     "permissions": {
         "permissionsDataLoading": "Loading permissions data..."

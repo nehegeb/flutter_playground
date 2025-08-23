@@ -39,17 +39,17 @@ class Roles {
 /// Arguments:
 /// - [id]: The unique identifier of the role, as an integer.
 /// - [idTitle]: The unique title of the role, as a string.
-/// - [isImmutable]: Whether the role is immutable or not. If true, this role cannot be modified.
+/// - [isDefaultRole]: Whether this is a default role or not. If true, this role cannot be modified.
 /// - [permissions]: A list of permissions granted to this role, as strings.
 class AppRole {
   final int id;
   final String idTitle;
-  final bool isImmutable;
+  final bool isDefaultRole;
   final List<String>? permissions;
   AppRole({
     required this.id,
     required this.idTitle,
-    this.isImmutable = false,
+    this.isDefaultRole = false,
     this.permissions = const [],
   });
 
@@ -57,7 +57,7 @@ class AppRole {
     return AppRole(
       id: map['id'] is int ? map['id'] : int.tryParse(map['id'].toString()),
       idTitle: map['idTitle'],
-      isImmutable: map['isImmutable'] ?? false,
+      isDefaultRole: map['isDefaultRole'] ?? false,
       permissions: List<String>.from(map['permissions'] ?? []),
     );
   }

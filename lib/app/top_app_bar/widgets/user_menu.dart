@@ -5,23 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
-import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/misc/widgets/popup_menu_entry_compact.dart';
 import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/app/top_app_bar/widgets/user_card.dart';
 import 'package:flutter_playground/app/top_app_bar/widgets/language_menu_mobile.dart';
 
 class UserMenu extends StatefulWidget {
   final bool isMobile;
-  final String appLanguage;
-  final ValueNotifier<AppUser?> appUserNotifier;
 
-  const UserMenu({
-    super.key,
-    required this.isMobile,
-    required this.appLanguage,
-    required this.appUserNotifier,
-  });
+  const UserMenu({super.key, required this.isMobile});
 
   @override
   State<UserMenu> createState() => _UserMenuState();
@@ -36,7 +29,7 @@ class _UserMenuState extends State<UserMenu> {
       onSelected: (selectedAction) async {
         if (selectedAction == 'login') {
           // Save the current url for redirection after login.
-          AppRouterUtils.saveRedirectUrl();
+          AppRouterUtils.saveRedirectUrl(context);
           // Navigate to the [LoginPage].
           await context.push('/login');
         } else if (selectedAction == 'logout') {
@@ -54,57 +47,7 @@ class _UserMenuState extends State<UserMenu> {
           PopupMenuItem<String>(
             enabled: false,
             height: 80, // Bigger than default height (default is 48).
-            // Listen for changes in the active [AppUser].
-            // This will rebuild the [UserCard] when the active user changes.
-            child: ValueListenableBuilder<AppUser?>(
-              valueListenable: widget.appUserNotifier,
-              builder: (context, appUser, _) {
-                final userName = appUser?.name ?? '';
-                final userTitle = appUser?.title ?? '';
-                return Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary.withAlpha(60),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.account_circle, size: 32),
-                      SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // The currently logged in [AppUser]'s name.
-                          Text(
-                            appUser != null
-                                ? AppHelper.toNameCase(userName)
-                                : Localization.getText('roles.guest'),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-
-                          // The currently logged in [AppUser]'s title.
-                          Text(
-                            appUser != null
-                                ? userTitle
-                                : Localization.getText('roles.unauthorized'),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.normal),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+            child: UserCard(),
           ),
 
           // Move some buttons from the app bar into this menu for mobile devices.
@@ -135,7 +78,7 @@ class _UserMenuState extends State<UserMenu> {
               PopupMenuEntryCompact(
                 value: 'languageSelector',
                 selected: false,
-                child: LanguageMenuMobile(appLanguage: widget.appLanguage),
+                child: LanguageMenuMobile(),
               ),
             ],
 

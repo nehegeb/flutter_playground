@@ -1,8 +1,7 @@
 // main.dart
 //
 
-// TODO: Fix the UserMenu. Also add notifier lookups directly in the file.
-// TODO: The title is always "unauthorized" after login it seems...
+// TODO: Implement user title management per module.
 // TODO: Implement password strength check and password hide/show feature.
 // TODO: Finish the Template README file.
 // TODO: Insert notice on HomePage if no modules are permitted for the user.

@@ -4,7 +4,7 @@ For every module, page or feature there can be multiple permissions. These permi
 
 ## Roles
 
-Roles can be created and modified and then assigned to different users by users with an appropriate permission. Some default roles are marked as `isImmutable`, which cannot be changed nor deleted - they are provided by the app itself for general purpose, but are mostly optional.
+Roles can be created and modified and then assigned to different users by users with an appropriate permission. Some default roles are marked as `isDefaultRole`, which cannot be changed nor deleted - they are provided by the app itself for general purpose, but are mostly optional.
 
 Multiple permissions (see below) can be assigned to each role. Permissions are defined by the app itself and correspond to different modules, pages or features within.
 

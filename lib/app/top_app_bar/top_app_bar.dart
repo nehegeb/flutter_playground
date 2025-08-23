@@ -165,11 +165,7 @@ class _TopAppBarState extends State<TopAppBar> {
               ],
 
               // User menu.
-              UserMenu(
-                isMobile: isMobile,
-                appLanguage: appLanguage,
-                appUserNotifier: appUserNotifier,
-              ),
+              UserMenu(isMobile: isMobile),
 
               // A spacer at the far right.
               SizedBox(width: spacingWidth),

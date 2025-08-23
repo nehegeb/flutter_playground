@@ -8,12 +8,12 @@ import 'package:flutter_playground/app/top_app_bar/widgets/language_menu.dart';
 
 /// Widget for language selector for mobile devices.
 class LanguageMenuMobile extends StatelessWidget {
-  final String appLanguage;
-
-  const LanguageMenuMobile({super.key, required this.appLanguage});
+  const LanguageMenuMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final String appLanguage = Localization.appLanguage;
+
     return Builder(
       builder: (context) {
         return GestureDetector(
@@ -58,7 +58,7 @@ class LanguageMenuMobile extends StatelessWidget {
                         width: 24,
                       ),
                       SizedBox(width: 8),
-                      Text(langData['nativeName'] ?? ''),
+                      Text(Localization.getText('appBar.menu.switchLanguage')),
                     ];
                   }
                   return [];

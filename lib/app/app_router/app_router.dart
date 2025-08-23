@@ -86,7 +86,7 @@ final GoRouter appRouter = GoRouter(
         subModule: 'home',
       ),
       redirect: (context, state) {
-        return AppRouterUtils.checkUserPermission('template.access');
+        return AppRouterUtils.checkUserPermission('template.access', context);
       },
       routes: [
         GoRoute(
@@ -98,7 +98,10 @@ final GoRouter appRouter = GoRouter(
             subModule: 'about',
           ),
           redirect: (context, state) {
-            return AppRouterUtils.checkUserPermission('template.access');
+            return AppRouterUtils.checkUserPermission(
+              'template.access',
+              context,
+            );
           },
         ),
         GoRoute(
@@ -112,6 +115,7 @@ final GoRouter appRouter = GoRouter(
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
               'template.template.access',
+              context,
             );
           },
         ),
@@ -126,6 +130,7 @@ final GoRouter appRouter = GoRouter(
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
               'template.settings.access',
+              context,
             );
           },
         ),
@@ -142,7 +147,7 @@ final GoRouter appRouter = GoRouter(
         subModule: 'home',
       ),
       redirect: (context, state) {
-        return AppRouterUtils.checkUserPermission('settings.access');
+        return AppRouterUtils.checkUserPermission('settings.access', context);
       },
       routes: [
         GoRoute(
@@ -154,7 +159,10 @@ final GoRouter appRouter = GoRouter(
             subModule: 'about',
           ),
           redirect: (context, state) {
-            return AppRouterUtils.checkUserPermission('settings.access');
+            return AppRouterUtils.checkUserPermission(
+              'settings.access',
+              context,
+            );
           },
         ),
         GoRoute(
@@ -168,6 +176,7 @@ final GoRouter appRouter = GoRouter(
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
               'settings.settings.access',
+              context,
             );
           },
         ),

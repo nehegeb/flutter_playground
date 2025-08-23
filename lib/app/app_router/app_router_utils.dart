@@ -33,13 +33,16 @@ class AppRouterUtils {
   }
 
   /// Check if the user has the required permission for a module.
-  static String? checkUserPermission(String permissionName) {
-    return checkUserPermissionRouting(permissionName);
+  static String? checkUserPermission(
+    String permissionName,
+    BuildContext? context,
+  ) {
+    return checkUserPermissionRouting(permissionName, context);
   }
 
   /// Save the current url for later redirects.
-  static void saveRedirectUrl() {
-    savePendingRedirectUrl();
+  static void saveRedirectUrl(BuildContext? context) {
+    savePendingRedirectUrl(context);
   }
 
   /// Opens the saved redirect URL.
