@@ -10,7 +10,6 @@
 // TODO: Add a page template in lib/modules/template/pages/.
 // TODO: Web page errors 404 etc.
 // TODO: The ModuleBar is too light in color. Make it more vibrant.
-// TODO: Add a "Markus Kramer" license notice in the about page.
 // TODO: Make the template module 'isHidden' in the end.
 // TODO: Check all files and only 'show' the necessary import widgets.
 // TODO: Make a search for all TODOs and DEBUGs and clean up the code.

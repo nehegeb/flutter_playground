@@ -35,23 +35,34 @@ class LicenseExpansionTile extends StatelessWidget {
         bottom: BorderSide(color: Colors.grey, width: 1),
       ), // Only bottom border when expanded.
       initiallyExpanded: false,
-      children: (packageData.isNotEmpty)
-          ? packageData.entries
-                .map(
-                  (entry) => GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap:
-                        () {}, // This prevents collapsing when clicked on a child.
-                    child: LicenseInfo(
-                      packageName: entry.value['name'],
-                      copyright: entry.value['copyright'],
-                      license: entry.value['license'],
-                      packageUrl: entry.value['packageUrl'],
-                    ),
-                  ),
-                )
-                .toList()
-          : [],
+      children: [
+        // Contribution to the Flutter Framework Core.
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {}, // Prevents collapsing when clicked on a child.
+          child: LicenseInfo(
+            packageName: "flutter_framework_core",
+            copyright: "2025 Markus Kramer",
+            license: "MIT",
+            packageUrl: "https://github.com/nehegeb/flutter_framework_core",
+          ),
+        ),
+
+        // List all used packages for this app.
+        if (packageData.isNotEmpty)
+          ...packageData.entries.map(
+            (entry) => GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {}, // Prevents collapsing when clicked on a child.
+              child: LicenseInfo(
+                packageName: entry.value['name'],
+                copyright: entry.value['copyright'],
+                license: entry.value['license'],
+                packageUrl: entry.value['packageUrl'],
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

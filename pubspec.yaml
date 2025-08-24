@@ -1,7 +1,7 @@
 name: flutter_playground
-description: "A new Flutter project."
+description: "A Flutter playground for testing new stuff."
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: ^3.8.1
@@ -15,7 +15,6 @@ dependencies:
   shared_preferences: ^2.2.3
   url_launcher: ^6.2.6
   pointycastle: ^4.0.0
-  pluto_grid: ^8.0.0
   lorem_ipsum: ^0.0.3
   country_flags: ^3.3.0
 

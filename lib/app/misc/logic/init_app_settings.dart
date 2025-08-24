@@ -41,7 +41,7 @@ Future<bool> initAppSettings() async {
   // This prevents unnecessary data from other users to be loaded all the time.
 
   // NOTE: The initialization of 'initDb...Data' might be removed when switching to a proper database.
-  // This Flutter Core Framework is based on JSON files for simplicity, which have to be loaded to be used.
+  // The Flutter Framework Core is based on JSON files for simplicity, which have to be loaded to be used.
 
   // Make sure everything is done loading.
   await Future.delayed(const Duration(milliseconds: 100));

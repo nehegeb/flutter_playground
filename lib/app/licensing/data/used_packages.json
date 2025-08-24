@@ -46,11 +46,5 @@
         "copyright": "Arturo Grau",
         "license": "MIT",
         "packageUrl": "https://pub.dev/packages/country_flags"
-    },
-    "pluto_grid": {
-        "name": "pluto_grid",
-        "copyright": "2020 PlutoGrid",
-        "license": "MIT",
-        "packageUrl": "https://pub.dev/packages/pluto_grid"
     }
 }
