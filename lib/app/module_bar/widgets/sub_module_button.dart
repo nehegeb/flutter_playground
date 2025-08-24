@@ -65,6 +65,7 @@ class SubModuleButton extends StatelessWidget {
     }
 
     return Material(
+      color: Colors.transparent,
       child: Tooltip(
         // Display a tooltip if the [ModuleBar] is narrow.
         message: ModuleBarUtils.isNarrow ? label : '',
@@ -77,8 +78,8 @@ class SubModuleButton extends StatelessWidget {
           },
           child: Container(
             color: selected
-                ? Theme.of(context).colorScheme.primary.withAlpha(32)
-                : Colors.transparent,
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.primary.withAlpha(50),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
@@ -91,7 +92,7 @@ class SubModuleButton extends StatelessWidget {
                           width: 20,
                           height: 20,
                           color: selected
-                              ? Theme.of(context).colorScheme.primary
+                              ? Theme.of(context).colorScheme.onPrimary
                               : Modules.getColor(
                                   appSubModule: appSubModule,
                                   shade: 800,
@@ -109,7 +110,7 @@ class SubModuleButton extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           color: selected
-                              ? Theme.of(context).colorScheme.primary
+                              ? Theme.of(context).colorScheme.onPrimary
                               : Modules.getColor(appSubModule: appSubModule),
                           fontWeight: selected
                               ? FontWeight.bold

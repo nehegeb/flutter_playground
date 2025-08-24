@@ -30,12 +30,11 @@ class PopupMenuEntryCompact extends PopupMenuEntry<String> {
 class _PopupMenuEntryCompactState extends State<PopupMenuEntryCompact> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return InkWell(
       onTap: () => Navigator.pop(context, widget.value),
       child: Container(
         color: widget.selected
-            ? theme.primaryColor.withAlpha(12)
+            ? Theme.of(context).primaryColor.withAlpha(12)
             : Colors.transparent,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: widget.child,

@@ -8,8 +8,8 @@
 // - Shows the selected module's content in the main area.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
+import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 import 'package:flutter_playground/app/module_bar/widgets/module_bar_widget.dart';
 import 'package:flutter_playground/app/module_bar/widgets/module_bar_floating.dart';

@@ -21,7 +21,7 @@ class ModuleBarWidget extends StatelessWidget {
     return SizedBox(
       width: isWide ? barWidthWide : barWidthNarrow,
       child: Container(
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.primaryContainer,
         child: SafeArea(
           // LayoutBuilder ensures the scroll view fills the available height.
           child: LayoutBuilder(

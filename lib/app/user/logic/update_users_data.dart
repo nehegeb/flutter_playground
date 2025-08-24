@@ -6,8 +6,6 @@ import 'dart:convert';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 
-// TODO: Instead of bool, it should return error messages like checkEnteredPasswordStrength.
-
 /// Update the entry in the users data JSON file by the users ID.
 /// If no [id] is given, it assumes this is a new user for the app and adds it.
 /// Otherwise it also sets the [AppUser] for the [appUserNotifier] afterwards.

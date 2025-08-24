@@ -5,20 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 
 /// Global light app theme.
+/// The [seedColor] is defined in [app_theme.dart].
 final ThemeData appThemeLight = (() {
+  final colorScheme = ColorScheme.fromSeed(seedColor: seedColor);
+
   return ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
+    brightness: Brightness.light,
+    colorScheme: colorScheme,
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
-      backgroundColor: Color.alphaBlend(
-        Colors.black26,
-        ColorScheme.fromSeed(seedColor: seedColor).primary,
-      ),
-      foregroundColor: Colors.white,
-    ),
-    textTheme: const TextTheme(
-      bodyMedium: TextStyle(fontSize: 18, color: Colors.black87),
+      backgroundColor: colorScheme.primary,
+      foregroundColor: colorScheme.onPrimary,
     ),
     progressIndicatorTheme: ProgressIndicatorThemeData(color: seedColor),
   );

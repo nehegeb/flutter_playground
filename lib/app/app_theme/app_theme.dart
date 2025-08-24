@@ -8,7 +8,7 @@ import 'package:flutter_playground/app/app_theme/logic/set_initial_brightness.da
 
 /// Defines the seed color for the app theme.
 /// This color is used to generate the color scheme for both light and dark themes.
-const Color seedColor = Colors.deepPurple;
+const Color seedColor = Colors.deepPurpleAccent;
 
 /// Notifier for the currently selected app theme.
 /// Defaults to light theme [ThemeData] with dark mode disabled.

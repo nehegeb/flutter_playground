@@ -91,6 +91,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Material(
+              color: Colors.transparent,
               child: Tooltip(
                 // Display a tooltip if the [ModuleBar] is narrow.
                 message: ModuleBarUtils.isNarrow ? label : '',
@@ -102,7 +103,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                   },
                   child: Container(
                     color: widget.selected
-                        ? Theme.of(context).colorScheme.primary.withAlpha(32)
+                        ? Theme.of(context).colorScheme.primary
                         : Colors.transparent,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -118,7 +119,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                                   width: 32,
                                   height: 32,
                                   color: widget.selected
-                                      ? Theme.of(context).colorScheme.primary
+                                      ? Theme.of(context).colorScheme.onPrimary
                                       : Modules.getColor(
                                           appMainModule: appMainModule,
                                           shade: 800,
@@ -135,7 +136,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: widget.selected
-                                      ? Theme.of(context).colorScheme.primary
+                                      ? Theme.of(context).colorScheme.onPrimary
                                       : Modules.getColor(
                                           appMainModule: appMainModule,
                                         ),

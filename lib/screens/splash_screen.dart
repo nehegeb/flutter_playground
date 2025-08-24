@@ -15,8 +15,6 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Make this use the devices brightness, maybe.
-
     // Use the app theme's progress indicator color.
     final Color indicatorColor =
         AppTheme.appTheme.progressIndicatorTheme.color ?? Colors.black;
