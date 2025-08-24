@@ -1,12 +1,14 @@
 [
     {
-        "id": "en",
+        "id": 0,
+        "idTitle": "en",
         "name": "English",
         "nativeName": "English",
         "countryCode": "us"
     },
     {
-        "id": "de",
+        "id": 1,
+        "idTitle": "de",
         "name": "German",
         "nativeName": "Deutsch",
         "countryCode": "de"

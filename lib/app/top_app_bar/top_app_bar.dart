@@ -3,12 +3,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_playground/app/app_theme/app_theme.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
-import 'package:flutter_playground/app/top_app_bar/widgets/language_menu.dart';
+import 'package:flutter_playground/app/top_app_bar/widgets/button_brightness.dart';
+import 'package:flutter_playground/app/top_app_bar/widgets/button_languages.dart';
 import 'package:flutter_playground/app/top_app_bar/widgets/user_menu.dart';
 
 /// A horizontal app bar at the top of the app.
@@ -58,7 +58,6 @@ class _TopAppBarState extends State<TopAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    final String appLanguage = Localization.appLanguage;
     final double spacingWidth = 8;
 
     // Regarding the back button in the leading section.
@@ -132,41 +131,20 @@ class _TopAppBarState extends State<TopAppBar> {
             actions: [
               // Display some buttons for wide screens.
               if (!isMobile) ...[
-                // Light/Dark mode toggle for wide screens.
-                IconButton(
-                  icon: Icon(
-                    AppTheme.isDarkMode
-                        ? Icons.wb_sunny_outlined
-                        : Icons.nightlight_round,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      AppTheme.toggleBrightness();
-                    });
-                  },
-                  tooltip: '', // Remove unnecessary tooltip.
-                ),
+                // Button to toggle app brightness for wide screens.
+                ButtonBrightness(),
                 SizedBox(width: spacingWidth),
 
-                // Language selector for wide screens.
+                // Button to show language selector for wide screens.
                 // It is only shown if there are multiple languages available.
                 if ((Localization.dbLanguagesData?.length ?? 0) > 1) ...[
-                  LanguageMenu(
-                    appLanguage: appLanguage,
-                    onSelected: (selectedLanguage) async {
-                      await Localization.setLanguage(
-                        language: selectedLanguage,
-                      );
-                    },
-                  ),
+                  ButtonLanguages(),
                   SizedBox(width: spacingWidth),
                 ],
               ],
 
               // User menu.
               UserMenu(isMobile: isMobile),
-
-              // A spacer at the far right.
               SizedBox(width: spacingWidth),
             ],
           ),

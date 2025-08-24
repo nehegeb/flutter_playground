@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/logic/generate_password_salt.dart';
 import 'package:flutter_playground/app/user/logic/generate_password_hash.dart';
 import 'package:flutter_playground/app/user/logic/update_users_data.dart';
@@ -22,12 +21,12 @@ Future<String> registerNewUser(
       password.isEmpty ||
       passwordConfirmation.isEmpty ||
       name.isEmpty) {
-    return Localization.getText('errors.missingRequiredFields');
+    return 'errors.missingRequiredFields';
   }
 
   // Check, if both passwords are the same. If not, return false.
   if (password != passwordConfirmation) {
-    return Localization.getText('errors.passwordsDoNotMatch');
+    return 'errors.passwordsDoNotMatch';
   }
 
   // Generate a hash for the password.
@@ -43,7 +42,7 @@ Future<String> registerNewUser(
     rolesIds: [], // New users don't have any roles in the beginning.
   );
   if (!isSuccess) {
-    return Localization.getText('errors.registrationFailed');
+    return 'errors.registrationFailed';
   }
 
   // Redirect the new user to the [LoginPage].

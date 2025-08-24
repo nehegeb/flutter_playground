@@ -1,5 +1,7 @@
 // permissions.dart
 //
+// Features:
+// - Provides a class [Permissions] with static methods to manipulate user permissions.
 
 import 'package:flutter_playground/app/permissions/logic/load_permissions_data.dart';
 

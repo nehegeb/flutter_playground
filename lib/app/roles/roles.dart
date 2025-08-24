@@ -1,5 +1,8 @@
 // role.dart
 //
+// Features:
+// - Provides a class [Roles] with static methods to manipulate [AppRole].
+// - Provides a class for [AppRole].
 
 import 'package:flutter_playground/app/roles/logic/get_empty_app_role.dart';
 import 'package:flutter_playground/app/roles/logic/load_roles_data.dart';

@@ -1,7 +1,6 @@
 // main.dart
 //
 
-// TODO: Change the language selector to a normal button that opens LanguageMenu.menuItems().
 // TODO: Implement settings for modules.
 // TODO: Implement settings for roles.
 // TODO: Implement settings for users.
@@ -11,6 +10,7 @@
 // TODO: Web page errors 404 etc.
 // TODO: The ModuleBar is too light in color. Make it more vibrant.
 // TODO: Make the template module 'isHidden' in the end.
+// TODO: Implement tests for all major functions (utils).
 // TODO: Check all files and only 'show' the necessary import widgets.
 // TODO: Make a search for all TODOs and DEBUGs and clean up the code.
 // TODO: Add more supported licenses. Apache, GPL, ...

@@ -20,12 +20,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    appLanguageNotifier.addListener(_refreshUi);
+    appLanguageIdNotifier.addListener(_refreshUi);
   }
 
   @override
   void dispose() {
-    appLanguageNotifier.removeListener(_refreshUi);
+    appLanguageIdNotifier.removeListener(_refreshUi);
     super.dispose();
   }
 

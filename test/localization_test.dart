@@ -15,9 +15,9 @@ void main() {
     test(
       'setLanguage sets language and getText returns correct string',
       () async {
-        await Localization.setLanguage(language: 'en');
+        await Localization.setLanguage(languageId: 'en');
         expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
-        await Localization.setLanguage(language: 'de');
+        await Localization.setLanguage(languageId: 'de');
         expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
       },
     );
@@ -25,7 +25,7 @@ void main() {
     test(
       'getText falls back to English if key missing in selected language',
       () async {
-        await Localization.setLanguage(language: 'de');
+        await Localization.setLanguage(languageId: 'de');
         expect(
           Localization.getText('testKey'),
           equals(
@@ -36,7 +36,7 @@ void main() {
     );
 
     test('getText returns placeholder for missing key', () async {
-      await Localization.setLanguage(language: 'en');
+      await Localization.setLanguage(languageId: 'en');
       expect(Localization.getText('nonexistent_key'), '[NO_LOCALIZATION]');
     });
 
@@ -50,16 +50,16 @@ void main() {
     });
 
     test('setLanguage throws or ignores invalid language codes', () async {
-      await Localization.setLanguage(language: 'xx');
+      await Localization.setLanguage(languageId: 'xx');
       expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
     });
 
     test(
       'getText returns correct value after multiple language switches',
       () async {
-        await Localization.setLanguage(language: 'en');
+        await Localization.setLanguage(languageId: 'en');
         final enText = Localization.getText('misc.months.january');
-        await Localization.setLanguage(language: 'de');
+        await Localization.setLanguage(languageId: 'de');
         final deText = Localization.getText('misc.months.january');
         expect(enText, isNot(deText));
       },

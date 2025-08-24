@@ -69,8 +69,8 @@
         "menu": {
             "login": "Anmelden",
             "logout": "Abmelden",
-            "switchThemeMode": "Modus wechseln",
-            "switchLanguage": "Sprache wechseln"
+            "switchAppBrightness": "Helligkeit wechseln",
+            "switchAppLanguage": "Sprache wechseln"
         },
         "languageSelector": {
             "english": "Englisch",

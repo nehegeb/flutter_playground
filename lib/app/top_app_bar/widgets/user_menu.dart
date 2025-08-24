@@ -2,6 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/app/top_app_bar/widgets/button_languages_mobile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
@@ -9,8 +10,11 @@ import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/misc/widgets/popup_menu_entry_compact.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/top_app_bar/widgets/user_card.dart';
-import 'package:flutter_playground/app/top_app_bar/widgets/language_menu_mobile.dart';
+import 'package:flutter_playground/app/top_app_bar/widgets/button_brightness_mobile.dart';
+import 'package:flutter_playground/app/top_app_bar/logic/show_languages_select_overlay.dart';
 
+/// The user menu for the app.
+/// It is shown when opening the menu at the top right of the [TopAppBar].
 class UserMenu extends StatefulWidget {
   final bool isMobile;
 
@@ -33,11 +37,16 @@ class _UserMenuState extends State<UserMenu> {
           // Navigate to the [LoginPage].
           await context.push('/login');
         } else if (selectedAction == 'logout') {
+          // Logout the currently logged in [AppUser].
           await User.logout(context);
-        } else if (selectedAction == 'toggleThemeMode') {
+        } else if (selectedAction == 'toggleAppBrightness') {
+          // Switch the app brightness.
           setState(() {
             AppTheme.toggleBrightness();
           });
+        } else if (selectedAction == 'switchAppLanguage') {
+          // Switch the app language.
+          showLanguagesSelectOverlay(context);
         }
       },
       itemBuilder: (context) {
@@ -55,31 +64,13 @@ class _UserMenuState extends State<UserMenu> {
             // Separator line before mobile buttons.
             PopupMenuDivider(),
 
-            // Theme mode toggle for mobile devices.
-            PopupMenuEntryCompact(
-              value: 'toggleThemeMode',
-              selected: false,
-              child: Row(
-                children: [
-                  Icon(
-                    AppTheme.isDarkMode
-                        ? Icons.wb_sunny_outlined
-                        : Icons.nightlight_round,
-                  ),
-                  SizedBox(width: 8),
-                  Text(Localization.getText('appBar.menu.switchThemeMode')),
-                ],
-              ),
-            ),
+            // Button to toggle app brightness for mobile devices.
+            buttonBrightnessMobile(context),
 
-            // Language selector for mobile devices as a button.
+            // Button to show language selector for mobile devices.
             // It is only shown if there are multiple languages available.
             if ((Localization.dbLanguagesData?.length ?? 0) > 1) ...[
-              PopupMenuEntryCompact(
-                value: 'languageSelector',
-                selected: false,
-                child: LanguageMenuMobile(),
-              ),
+              buttonLanguagesMobile(context),
             ],
 
             // Separator line after mobile buttons.

@@ -68,8 +68,8 @@
         "menu": {
             "login": "Login",
             "logout": "Logout",
-            "switchThemeMode": "Switch mode",
-            "switchLanguage": "Switch language"
+            "switchAppBrightness": "Switch brightness",
+            "switchAppLanguage": "Switch language"
         },
         "languageSelector": {
             "english": "English",

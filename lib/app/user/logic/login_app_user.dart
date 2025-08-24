@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
-import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/user/logic/generate_password_hash.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
@@ -30,7 +29,7 @@ Future<String> loginAppUser(
 
   // If no data with the given [email] is found, return false.
   if (userData == null) {
-    return Localization.getText('errors.loginFailed');
+    return 'errors.loginFailed';
   }
 
   // Check, if the given [password] is correct.
@@ -42,7 +41,7 @@ Future<String> loginAppUser(
   );
   if (userDataPassword != hashedPassword) {
     // The password does not match the saved one, return false.
-    return Localization.getText('errors.loginFailed');
+    return 'errors.loginFailed';
   }
 
   // Set the [AppUser] to the [appUserNotifier].

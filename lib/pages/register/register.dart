@@ -234,7 +234,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 12),
               Center(
                 child: Text(
-                  _errorMessage,
+                  Localization.getText(_errorMessage),
                   style: const TextStyle(color: Colors.red),
                   textAlign: TextAlign.center,
                 ),

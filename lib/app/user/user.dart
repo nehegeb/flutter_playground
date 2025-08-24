@@ -1,5 +1,8 @@
 // user.dart
 //
+// Features:
+// - Provides a class [User] with static methods to manipulate [AppUser].
+// - Provides a class for [AppUser].
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/roles/roles.dart';

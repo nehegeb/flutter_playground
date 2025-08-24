@@ -37,7 +37,8 @@ NOTE: The key `languageId` at the very top of the localization data file has to 
 ## Structure of the `languages.json` file
 
 Every language needs to have the following keys defined:
-- **id** | The language ID for that language. **THIS KEY MUST BE UNIQUE BETWEEN ALL LANGUAGES WITHIN THIS FILE!** Also it must be exactly the same language ID you named the localization data file after. For example for English with language ID `en` this key must be `en` and the file called `localization_en.json`.
+- **id** | The unique numerical ID for the table entry.
+- **idTitle** | The language ID for that language. **THIS KEY MUST BE UNIQUE BETWEEN ALL LANGUAGES WITHIN THIS FILE!** Also it must be exactly the same language ID you named the localization data file after. For example for English with language ID `en` this key must be `en` and the file called `localization_en.json`.
 - **name** | The name of that language. Best would be to keep all the language names in the default language.
 - **nativeName** | The name of that language as spelled in that language. This will be displayed in the language selector within the app, which is visible to the user.
 - **countryCode** | The proper country code of that language. This determines the flag displayed in the language selector within the app, which is visible to the user.

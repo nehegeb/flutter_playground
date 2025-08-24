@@ -5,6 +5,10 @@
 // and which of these the [AppUser] has access to.
 //
 // Setting a [AppMainModule] or [AppSubModule] here will not change the displayed page at all.
+//
+// Features:
+// - Provides a class [Modules] with static methods to manipulate [AppMainModule] and [AppSubModule].
+// - Provides a class for [AppMainModule] and one for [AppSubModule].
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/modules/logic/get_empty_app_main_module.dart';
