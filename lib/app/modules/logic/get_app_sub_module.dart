@@ -6,16 +6,10 @@ import 'package:flutter_playground/app/modules/modules.dart';
 
 /// Gets a specific [AppSubModule], according to its title ID.
 /// It only takes [subModule]s into account to which the currently logged in [AppUser] has access to.
-///
-/// NOTE: This only works if an [AppUser] is logged in!
+/// If no [AppUser] is currently logged in, it'll be only public [AppSubModule]s.
 AppSubModule? getAppSubModule({required String? subModule}) {
   // If no [subModule] is provided, return null.
   if (subModule == null || subModule.isEmpty) {
-    return null;
-  }
-
-  // If no [AppUser] is logged in, return null.
-  if (User.user == null) {
     return null;
   }
 

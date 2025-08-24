@@ -38,12 +38,16 @@ class LicenseExpansionTile extends StatelessWidget {
       children: (packageData.isNotEmpty)
           ? packageData.entries
                 .map(
-                  // Generate a LicenseInfo for each package entry.
-                  (entry) => LicenseInfo(
-                    packageName: entry.value['name'],
-                    copyright: entry.value['copyright'],
-                    license: entry.value['license'],
-                    packageUrl: entry.value['packageUrl'],
+                  (entry) => GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap:
+                        () {}, // This prevents collapsing when clicked on a child.
+                    child: LicenseInfo(
+                      packageName: entry.value['name'],
+                      copyright: entry.value['copyright'],
+                      license: entry.value['license'],
+                      packageUrl: entry.value['packageUrl'],
+                    ),
                   ),
                 )
                 .toList()

@@ -74,7 +74,12 @@ class VersionExpansionTile extends StatelessWidget {
                 ),
           children: [
             ...(versionData['changenotes'] as List<dynamic>).map((data) {
-              return ChangenoteInfo(noteData: data as Map<String, dynamic>);
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap:
+                    () {}, // This prevents collapsing when clicked on a child.
+                child: ChangenoteInfo(noteData: data as Map<String, dynamic>),
+              );
             }),
           ],
         );

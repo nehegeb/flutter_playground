@@ -1,7 +1,6 @@
 // set_active_app_sub_module.dart
 //
 
-import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 
 /// Sets the currently active [AppSubModule] for the [activeSubModuleNotifier].
@@ -9,20 +8,10 @@ import 'package:flutter_playground/app/modules/modules.dart';
 ///
 /// In order to find the correct [AppSubModule] the corresponding [AppMainModule] has to be given as well.
 /// This is, because different [AppMainModule]s might have a [AppSubModule] with the same title ID.
-///
-/// NOTE: This only works if an [AppUser] is logged in!
-/// This is, because this function only takes into account the [AppSubModule]s the currently logged in [AppUser] has access to.
 Future<void> setActiveAppSubModule({
   required String mainModule,
   required String subModule,
 }) async {
-  // If no [AppUser] is logged in,
-  // set the [activeMainModuleNotifier] and [activeSubModuleNotifier] to null.
-  if (User.user == null) {
-    activeMainModuleNotifier.value = null;
-    activeSubModuleNotifier.value = null;
-  }
-
   final activeSubModule = Modules.activeSubModule?.idTitle;
 
   // Only update if the given [subModule] is different from the active one.

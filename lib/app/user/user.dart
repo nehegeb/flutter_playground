@@ -29,7 +29,7 @@ final ValueNotifier<AppUser?> appUserNotifier = ValueNotifier<AppUser?>(null);
 /// - [setTitle]: Sets the current title for the currently logged in [AppUser].
 /// - [setPassword]: Sets a new password for the currently logged in [AppUser]. Returns Boolean.
 /// - [checkPasswordStrength]: Checks the strength of a password. Returns String.
-/// - [checkPermission]: Checks if the user has permission for something. Returns Boolean.
+/// - [checkPermission]: Checks if the user has the given permission. Returns Boolean.
 /// - [initDbUsersData]: Initializes the users data for the app.
 /// - [clearDbUsersData]: Clears the users data from the app.
 class User {
@@ -77,8 +77,8 @@ class User {
   }
 
   /// Logout the currently logged in user.
-  static void logout(BuildContext context) {
-    return logoutAppUser(context);
+  static Future<void> logout(BuildContext context) async {
+    await logoutAppUser(context);
   }
 
   /// Set the current title for the currently logged in [AppUser].
@@ -100,8 +100,9 @@ class User {
     return checkEnteredPasswordStrength(password: password);
   }
 
-  /// Checks if the currently logged in [AppUser] has permission for something.
-  /// It checks the user's roles against the requested permission.
+  /// Checks if the [AppUser] has the given [permission].
+  /// It first checks the modules [isHidden] and [isPublic] parameters.
+  /// It then checks the [AppUser]'s [AppRole]s against the given [permission].
   /// Returns true if the user has permission, otherwise false.
   static bool checkPermission({required String? permission}) {
     return checkAppUserPermission(permission: permission);

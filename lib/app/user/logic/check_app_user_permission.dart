@@ -7,19 +7,14 @@ import 'package:flutter_playground/app/user/user.dart';
 
 /// Checks if the [AppUser] has the given [permission].
 ///
-/// It checks the modules [isHidden] and [isPublic] parameters.
-/// It also checks the [AppUser]'s [AppRole]s against the requested permission.
+/// It first checks the modules [isHidden] and [isPublic] parameters.
+/// It then checks the [AppUser]'s [AppRole]s against the given [permission].
+/// If no [AppUser] is currently logged in, it'll only check the modules and then returns false.
+///
 /// Returns true if the [AppUser] has permission, otherwise false.
 ///
-/// NOTE: This only works if an [AppUser] is logged in and
-/// only if the modules data has already been loaded,
-/// otherwise it returns false!
+/// NOTE: Only if the modules data has already been loaded, otherwise it returns false!
 bool checkAppUserPermission({required String? permission}) {
-  // If no [AppUser] is logged in, return false.
-  if (User.user == null) {
-    return false;
-  }
-
   // If no [permission] is given, return false.
   if (permission == null || permission.isEmpty) {
     return false;
@@ -116,6 +111,11 @@ bool checkAppUserPermission({required String? permission}) {
   }
 
   // CHECK USER
+
+  // If no [AppUser] is logged in, return false.
+  if (User.user == null) {
+    return false;
+  }
 
   // Get all [AppRole]s of the [AppUser].
   List<AppRole>? userRoles = User.user!.roles;

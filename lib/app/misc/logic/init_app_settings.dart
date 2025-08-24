@@ -33,6 +33,9 @@ Future<bool> initAppSettings() async {
   // Initialize the [ModuleBar] of the app.
   await ModuleBarUtils.initBar();
 
+  // Load the public modules for the app.
+  await Modules.setPermittedModules();
+
   // NOTE: Do NOT initialize/load the users data here!
   // This will be done upon [AppUser] login and then immediately cleared afterwards.
   // This prevents unnecessary data from other users to be loaded all the time.

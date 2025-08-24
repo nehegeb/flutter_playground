@@ -6,16 +6,10 @@ import 'package:flutter_playground/app/modules/modules.dart';
 
 /// Gets a specific [AppMainModule], according to its title ID.
 /// It only takes [mainModule]s into account to which the currently logged in [AppUser] has access to.
-///
-/// NOTE: This only works if an [AppUser] is logged in!
+/// If no [AppUser] is currently logged in, it'll be only public [AppMainModule]s.
 AppMainModule? getAppMainModule({required String? mainModule}) {
   // If no [mainModule] is provided, return null.
   if (mainModule == null || mainModule.isEmpty) {
-    return null;
-  }
-
-  // If no [AppUser] is logged in, return null.
-  if (User.user == null) {
     return null;
   }
 

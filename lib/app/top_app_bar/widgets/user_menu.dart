@@ -33,7 +33,7 @@ class _UserMenuState extends State<UserMenu> {
           // Navigate to the [LoginPage].
           await context.push('/login');
         } else if (selectedAction == 'logout') {
-          User.logout(context);
+          await User.logout(context);
         } else if (selectedAction == 'toggleThemeMode') {
           setState(() {
             AppTheme.toggleBrightness();

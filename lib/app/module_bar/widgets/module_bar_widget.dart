@@ -38,14 +38,15 @@ class ModuleBarWidget extends StatelessWidget {
                       // This will rebuild the [ModuleBar] when the active module changes.
                       ValueListenableBuilder<AppMainModule?>(
                         valueListenable: activeMainModuleNotifier,
-                        builder: (context, appMainModule, child) {
+                        builder: (context, activeAppMainModule, child) {
                           return Column(
                             children: [
                               // [HomePage] button.
                               MainModuleButton(
                                 mainModule: 'home',
                                 onTap: () => context.go('/home'),
-                                selected: appMainModule?.idTitle == 'home',
+                                selected:
+                                    activeAppMainModule?.idTitle == 'home',
                               ),
 
                               // Main module buttons for which the [AppUser] has access to.
@@ -53,7 +54,7 @@ class ModuleBarWidget extends StatelessWidget {
                                 (entry) => MainModuleButton(
                                   mainModule: entry.idTitle,
                                   onTap: () => context.go('/${entry.idTitle}'),
-                                  selected: appMainModule == entry,
+                                  selected: activeAppMainModule == entry,
                                 ),
                               ),
                             ],

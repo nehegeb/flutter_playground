@@ -56,6 +56,5 @@ Future<void> setAppUser({
   await Modules.initDbModulesData();
 
   // Set the [AppMainModule]s and [AppSubModule]s the [AppUser] has access to.
-  await Modules.setPermittedMainModules();
-  await Modules.setPermittedSubModules();
+  await Modules.setPermittedModules();
 }

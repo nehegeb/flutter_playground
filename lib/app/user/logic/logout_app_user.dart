@@ -7,15 +7,15 @@ import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/user/user.dart';
 
 /// Logs out the currently logged in [AppUser].
-void logoutAppUser(BuildContext context) {
+Future<void> logoutAppUser(BuildContext context) async {
+  // Navigate to the main [HomePage] of the app.
+  context.go('/home', extra: DateTime.now().millisecondsSinceEpoch);
+
   // Clear the [appUserNotifier].
   // This removes the currently logged in [AppUser] including its [AppRoles] and permissions.
   appUserNotifier.value = null;
 
-  // Clear the [mainModulesNotifier] and [subModulesNotifier].
-  // This removes the [AppMainModule]s and [AppSubModule]s the [AppUser] has access to.
-  Modules.clearPermittedModules();
-
-  // Navigate to the main [HomePage] of the app.
-  context.go('/home', extra: DateTime.now().millisecondsSinceEpoch);
+  // Load only the public modules for the app.
+  // While no [AppUser] is set for the [appUserNotifier], this sets only public modules.
+  await Modules.setPermittedModules();
 }

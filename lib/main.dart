@@ -1,25 +1,28 @@
 // main.dart
 //
 
+// TODO: Change the language selector to a normal button that opens LanguageMenu.menuItems().
+// TODO: Implement settings for modules.
+// TODO: Implement settings for roles.
+// TODO: Implement settings for users.
+// TODO: Implement settings for assigning roles to users.
 // TODO: Finish the Template README file.
-// TODO: Implement feedback feature.
+// TODO: Add a page template in lib/modules/template/pages/.
 // TODO: Web page errors 404 etc.
 // TODO: The ModuleBar is too light in color. Make it more vibrant.
-// TODO: The questionmark icon next to licensing information messes up mobile display.
-// TODO: (?) Revamp the loading overlay, so that it is possible to stack multiple loading processes in one call.
-// TODO: (?) Implement a global error handler for the app.
-// TODO: (?) Implement a profile page to change username, password and delete account.
+// TODO: Add a "Markus Kramer" license notice in the about page.
 // TODO: Make the template module 'isHidden' in the end.
 // TODO: Check all files and only 'show' the necessary import widgets.
 // TODO: Make a search for all TODOs and DEBUGs and clean up the code.
 // TODO: Add more supported licenses. Apache, GPL, ...
 //       https://gist.github.com/nicolasdao/a7adda51f2f185e8d2700e1573d8a633
+// TODO: (?) Implement feedback feature.
+// TODO: (?) "forgot password" feature on login page.
+// TODO: (?) Revamp the loading overlay, so that it is possible to stack multiple loading processes in one call.
+// TODO: (?) Implement a global error handler for the app.
+// TODO: (?) Implement a profile page to change username, password and delete account.
 // TODO: (?) Add "Privacy Policy", "Terms of Service" and "Cookie Notice" for internet usage.
 //       Cookie Banner: "This app stores your UI preferences (such as dark or light mode) in your browser to improve your experience. No personal or tracking data is collected."
-// ----
-// TODO: Add a "Markus Kramer" license notice in the about page.
-// TODO: Add a page template in lib/modules/template/pages/.
-// TODO: (?) "forgot password" and "change password" features?
 // ----
 // TODO: Feedback widget!
 // TODO: home_widget for mobile widgets?!

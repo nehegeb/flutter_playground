@@ -4,19 +4,23 @@
 import 'package:flutter/material.dart';
 
 /// A widget that displays a changenote with an icon, title, and description.
+/// The icon is determined by the [type] of the changenote (e.g., "added", "improved", "removed", "bugfix").
 class ChangenoteInfo extends StatelessWidget {
   final Map<String, dynamic> noteData;
 
   const ChangenoteInfo({super.key, required this.noteData});
 
+  // Define the icon according to the [type] key of the changenote.
   IconData _iconForType(String type) {
     switch (type) {
       case 'added':
         return Icons.add;
-      case 'bugfix':
-        return Icons.bug_report;
+      case 'improved':
+        return Icons.upgrade;
       case 'removed':
         return Icons.remove;
+      case 'bugfix':
+        return Icons.bug_report;
       default:
         return Icons.info_outline;
     }

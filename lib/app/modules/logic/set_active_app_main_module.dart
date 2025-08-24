@@ -1,7 +1,6 @@
 // set_active_app_main_module.dart
 //
 
-import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 
 /// Sets the currently active [AppMainModule] for the [activeMainModuleNotifier].
@@ -9,17 +8,7 @@ import 'package:flutter_playground/app/modules/modules.dart';
 ///
 /// Also sets the [AppSubModule] to the home page of the given [AppMainModule].
 /// This is, because when switching the [AppMainModule], its home page will always open first.
-///
-/// NOTE: This only works if an [AppUser] is logged in!
-/// This is, because this function only takes into account the [AppMainModule]s the currently logged in [AppUser] has access to.
 void setActiveAppMainModule({required String mainModule}) {
-  // If no [AppUser] is logged in,
-  // set the [activeMainModuleNotifier] and [activeSubModuleNotifier] to null.
-  if (User.user == null) {
-    activeMainModuleNotifier.value = null;
-    activeSubModuleNotifier.value = null;
-  }
-
   final activeMainModule = Modules.activeMainModule?.idTitle;
 
   // Only update if the given [mainModule] is different from the active one.

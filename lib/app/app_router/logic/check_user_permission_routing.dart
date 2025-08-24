@@ -12,21 +12,27 @@ String? checkUserPermissionRouting(
   String? permissionName,
   BuildContext? context,
 ) {
-  // Get the currently logged in user.
-  final user = User.user;
-
-  // If the user is not logged in, redirect to the login page.
-  if (user == null) {
-    // Save the url the user was trying to access.
-    AppRouterUtils.saveRedirectUrl(context);
-    return '/login';
+  // If no [AppUser] is currently logged in, only allow public modules.
+  if (User.user == null) {
+    // Check if the user has the required permission.
+    // This should only allow .access and .read [permissionName]s to public modules.
+    if (!User.checkPermission(permission: permissionName)) {
+      // Access denied. Redirect to the login page.
+      // But save the URL the user was trying to access for redirecting after login.
+      AppRouterUtils.saveRedirectUrl(context);
+      return '/login';
+    }
   }
 
-  // Check if the user has the required permission.
-  // Redirect to page not found if permission is denied.
-  if (!User.checkPermission(permission: permissionName)) {
-    return '/page-not-found';
+  // If an [AppUser] is currently logged in, check for their permissions.
+  if (User.user != null) {
+    // Check if the user has the required permission.
+    if (!User.checkPermission(permission: permissionName)) {
+      // Access denied. Redirect to the page-not-found page.
+      return '/page-not-found';
+    }
   }
+
   // TODO: Implement proper HTML error page.
 
   // All checks passed, no redirect needed.

@@ -44,91 +44,77 @@ class LicenseInfo extends StatelessWidget {
     final String licDescription = licenseData[license]?['description'] ?? '';
     final String licSource = licenseData[license]?['source'] ?? '';
 
+    // A function to show the [LicensePopup] widget.
+    showLicensePopup() {
+      showDialog(
+        context: context,
+        builder: (context) =>
+            LicensePopup(licDescription: licDescription, licSource: licSource),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: SizedBox(
-        width: double.infinity, // Make the widget take full width.
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: RichText(
-                text: TextSpan(
-                  style: const TextStyle(color: Colors.black),
-                  children: [
-                    // Package name.
-                    TextSpan(
-                      text: packageName,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    TextSpan(
-                      text: '\n',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    TextSpan(
-                      text: '\n',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.titleSmall?.copyWith(fontSize: 2),
-                    ),
-
-                    // Copyright information.
-                    TextSpan(
-                      text: 'Copyright (c) $copyright',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    TextSpan(
-                      text: '\n',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-
-                    // License information.
-                    TextSpan(
-                      text: 'Licensed under the $licName.',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    TextSpan(
-                      text: '  ',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-
-                    // Icon to show license details.
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: IconButton(
-                        icon: const Icon(Icons.help_outline, size: 12),
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        tooltip: Localization.getText(
-                          'licensing.licenseDetails',
-                        ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => LicensePopup(
-                              licDescription: licDescription,
-                              licSource: licSource,
-                            ),
-                          );
-                        },
+      child: GestureDetector(
+        onTap: showLicensePopup,
+        child: SizedBox(
+          width: double.infinity, // Make the widget take full width.
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: RichText(
+                  text: TextSpan(
+                    style: const TextStyle(color: Colors.black),
+                    children: [
+                      // Package name.
+                      TextSpan(
+                        text: packageName,
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
-                    ),
-                    TextSpan(
-                      text: '\n',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                      TextSpan(
+                        text: '\n',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      TextSpan(
+                        text: '\n',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleSmall?.copyWith(fontSize: 2),
+                      ),
 
-                    // Package URL.
-                    AppHelper.toRichText(
-                      packageUrl,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
+                      // Copyright information.
+                      TextSpan(
+                        text: 'Copyright (c) $copyright',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      TextSpan(
+                        text: '\n',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+
+                      // License information.
+                      TextSpan(
+                        text: 'Licensed under the $licName.',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      TextSpan(
+                        text: '\n',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+
+                      // Package URL.
+                      AppHelper.toRichText(
+                        packageUrl,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

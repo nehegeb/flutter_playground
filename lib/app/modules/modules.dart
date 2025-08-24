@@ -2,21 +2,19 @@
 //
 // Displayed pages are managed by the [appRouter], yet the notifiers in this file
 // are used to to keep track of which main and sub module are currently active
-// and which of these the currently logged in [AppUser] has access to.
+// and which of these the [AppUser] has access to.
 //
-// Setting a [AppMainModule] or [AppSubModule] will not change the displayed page at all.
+// Setting a [AppMainModule] or [AppSubModule] here will not change the displayed page at all.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/modules/logic/get_empty_app_main_module.dart';
 import 'package:flutter_playground/app/modules/logic/get_empty_app_sub_module.dart';
 import 'package:flutter_playground/app/modules/logic/set_active_app_main_module.dart';
 import 'package:flutter_playground/app/modules/logic/set_active_app_sub_module.dart';
-import 'package:flutter_playground/app/modules/logic/set_app_main_modules.dart';
-import 'package:flutter_playground/app/modules/logic/set_app_sub_modules.dart';
 import 'package:flutter_playground/app/modules/logic/get_app_main_module.dart';
 import 'package:flutter_playground/app/modules/logic/get_app_sub_module.dart';
 import 'package:flutter_playground/app/modules/logic/get_module_color.dart';
-import 'package:flutter_playground/app/modules/logic/clear_app_modules.dart';
+import 'package:flutter_playground/app/modules/logic/set_permitted_app_modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_main_modules_data.dart';
 import 'package:flutter_playground/app/modules/logic/load_sub_modules_data.dart';
 
@@ -48,14 +46,12 @@ final ValueNotifier<List<AppSubModule>> subModulesNotifier =
 /// - [permittedSubModules]: Get the [AppSubModule]s the currently logged in [AppUser] has access to.
 /// - [dbMainModulesData]: Get the main modules data.
 /// - [dbSubModulesData]: Get the sub modules data.
-/// - [getMainModule]: Gets a specific [AppMainModule] the currently logged in [AppUser] has access to, according to its name.
-/// - [getSubModule]: Gets a specific [AppSubModule] the currently logged in [AppUser] has access to, according to its name.
+/// - [getMainModule]: Gets a specific permitted [AppMainModule], according to its name.
+/// - [getSubModule]: Gets a specific permitted [AppSubModule], according to its name.
 /// - [getColor]: Gets a usable color of a specific [AppMainModule] or [AppSubModule].
 /// - [setActiveMainModule]: Sets the [AppMainModule] as active, according to its name.
 /// - [setActiveSubModule]: Sets the [AppSubModule] as active, according to its name.
-/// - [setPermittedMainModules]: Sets the [AppMainModule]s the currently logged in [AppUser] has access to.
-/// - [setPermittedSubModules]: Sets the [AppSubModule]s the currently logged in [AppUser] has access to.
-/// - [clearPermittedModules]: Clears the modules to which the [AppUser] has access to.
+/// - [setPermittedModules]: Sets the [AppMainModule]s and [AppSubModule]s as permitted modules, returns boolean.
 /// - [initDbModulesData]: Initializes the modules data for the app.
 /// - [clearDbModulesData]: Clears the modules data from the app.
 class Modules {
@@ -99,16 +95,12 @@ class Modules {
     return subModulesData;
   }
 
-  /// Get a specific [AppMainModule], according to its name.
-  /// Only takes modules into account to which the currently logged in [AppUser] has access to.
-  /// This only works if the user is logged in.
+  /// Get a specific permitted [AppMainModule], according to its name.
   static AppMainModule? getMainModule({required String? mainModule}) {
     return getAppMainModule(mainModule: mainModule);
   }
 
-  /// Get a specific [AppSubModule], according to its name.
-  /// Only takes modules into account to which the currently logged in [AppUser] has access to.
-  /// This only works if the user is logged in.
+  /// Get a specific permitted [AppSubModule], according to its name.
   static AppSubModule? getSubModule({required String? subModule}) {
     return getAppSubModule(subModule: subModule);
   }
@@ -143,23 +135,11 @@ class Modules {
     setActiveAppSubModule(mainModule: mainModule, subModule: subModule);
   }
 
-  /// Set the [AppMainModule]s the currently logged in [AppUser] has access to.
-  /// This only works if the user is logged in.
+  /// Set the [AppMainModule]s and [AppSubModule]s as permitted modules.
+  /// If no [AppUser] is currently logged in, set only the public [AppMainModule]s and [AppSubModule]s.
   /// Returns true if it worked, otherwise false.
-  static Future<bool> setPermittedMainModules() async {
-    return await setAppMainModules();
-  }
-
-  /// Set the [AppSubModule]s the currently logged in [AppUser] has access to.
-  /// This only works if the user is logged in.
-  /// Returns true if it worked, otherwise false.
-  static Future<bool> setPermittedSubModules() async {
-    return await setAppSubModules();
-  }
-
-  /// Clears the modules to which the [AppUser] has access to.
-  static void clearPermittedModules() {
-    clearAppModules();
+  static Future<bool> setPermittedModules() async {
+    return await setPermittedAppModules();
   }
 
   /// Initializes the modules data from the database for the app.
