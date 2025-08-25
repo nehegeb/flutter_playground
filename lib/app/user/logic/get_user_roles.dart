@@ -4,7 +4,7 @@
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
 
-/// Gets the user's roles, according to their user ID.
+/// Gets the user's [AppRole]s, according to their user ID.
 /// Gets the user roles directly from the users data, not from the currently logged in [AppUser].
 Future<List<AppRole>?> getUserRoles({required int userId}) async {
   // Load the users data, if it's not already loaded.

@@ -157,7 +157,8 @@ class AppUser {
       title: map['title'],
       passwordHash: map['passwordHash'],
       passwordSalt: map['passwordSalt'],
-      roles: [Roles.emptyRole], // Default to empty role.
+      roles:
+          map['roles'] ?? [Roles.emptyRole], // Empty role if nothing is given.
     );
   }
 }

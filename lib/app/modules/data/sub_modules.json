@@ -19,7 +19,7 @@
         "id": 3,
         "idTitle": "settings",
         "mainModuleIdTitle": "settings",
-        "isPublic": false,
+        "isPublic": true,
         "isHidden": false,
         "color": "red"
     }

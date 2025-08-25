@@ -9,7 +9,7 @@
     {
         "id": 2,
         "idTitle": "settings",
-        "isPublic": false,
+        "isPublic": true,
         "isHidden": false,
         "color": "red"
     }

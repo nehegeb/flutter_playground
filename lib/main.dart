@@ -1,14 +1,14 @@
 // main.dart
 //
 
-// TODO: Implement settings for modules.
-// TODO: Implement settings for roles.
+// TODO: Make the settings lists scrollable.
+// TODO: (?) Make the role settings order by subModule.
 // TODO: Implement settings for users.
+// TODO: Implement settings for roles.
 // TODO: Implement settings for assigning roles to users.
 // TODO: Finish the Template README file.
 // TODO: Add a page template in lib/modules/template/pages/.
 // TODO: Web page errors 404 etc.
-// TODO: The ModuleBar is too light in color. Make it more vibrant.
 // TODO: Make the template module 'isHidden' in the end.
 // TODO: Implement tests for all major functions (utils).
 // TODO: Check all files and only 'show' the necessary import widgets.

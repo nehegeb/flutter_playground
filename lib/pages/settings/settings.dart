@@ -3,13 +3,31 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
+import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/pages/settings/widgets/users_settings_tab.dart';
 import 'package:flutter_playground/pages/settings/widgets/roles_settings_tab.dart';
-import 'package:flutter_playground/pages/settings/widgets/modules_settings_tab.dart';
 
 /// The settings page.
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  @override
+  void dispose() {
+    super.dispose();
+    // Clear the users data as soon as the [SettingsPage] is closed.
+    // This might have been loaded in any of the settings tabs.
+    _clearUsersData();
+  }
+
+  // Clear the users data from the app.
+  _clearUsersData() {
+    User.clearDbUsersData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +43,20 @@ class SettingsPage extends StatelessWidget {
               children: [
                 // Tab bar for different settings categories.
                 DefaultTabController(
-                  length: 3,
+                  length: 2,
                   child: Column(
                     children: [
                       // Tab bar headers.
                       TabBar(
                         tabs: [
                           Tab(
-                            text: Localization.getText('pages.settings.users'),
-                          ),
-                          Tab(
-                            text: Localization.getText('pages.settings.roles'),
+                            text: Localization.getText(
+                              'pages.settings.usersTab.title',
+                            ),
                           ),
                           Tab(
                             text: Localization.getText(
-                              'pages.settings.modules',
+                              'pages.settings.rolesTab.title',
                             ),
                           ),
                         ],
@@ -48,11 +65,7 @@ class SettingsPage extends StatelessWidget {
                       SizedBox(
                         height: MediaQuery.of(context).size.height - 146,
                         child: TabBarView(
-                          children: [
-                            UsersSettingsTab(),
-                            RolesSettingsTab(),
-                            ModulesSettingsTab(),
-                          ],
+                          children: [UsersSettingsTab(), RolesSettingsTab()],
                         ),
                       ),
                     ],

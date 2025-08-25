@@ -13,6 +13,7 @@ import 'package:flutter_playground/app/app_router/logic/goto_pending_redirect_ur
 /// If this is not null, the user will be redirected to this URL after logging in.
 String? pendingRedirectUrl;
 
+/// Utility class for [AppRouter] management.
 /// Provides access to routing information.
 ///
 /// Static Methods:

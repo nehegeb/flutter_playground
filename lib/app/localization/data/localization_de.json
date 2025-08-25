@@ -56,9 +56,22 @@
         },
         "settings": {
             "title": "Einstellungen",
-            "users": "Benutzer",
-            "roles": "Rollen",
-            "modules": "Module"
+            "usersTab": {
+                "title": "Benutzer",
+                "columnName": "Name",
+                "columnEmail": "eMail",
+                "columnRoles": "Rollen",
+                "columnActions": "",
+                "errorNoData": "Keine Benutzer für dieses Modul eingeladen."
+            },
+            "rolesTab": {
+                "title": "Rollen",
+                "columnName": "Rollenname",
+                "columnSubModule": "Untermodul",
+                "columnPermissions": "Berechtigungen",
+                "columnActions": "",
+                "errorNoData": "Keine Rollen für dieses Modul definiert."
+            }
         },
         "pageNotFound": {
             "title": "404 - Seite nicht gefunden",

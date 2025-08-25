@@ -19,5 +19,57 @@
             4,
             7
         ]
+    },
+    {
+        "id": 10,
+        "email": "lorem@megadodo.pub",
+        "name": "Lorem",
+        "passwordHash": "",
+        "passwordSalt": "",
+        "rolesIds": []
+    },
+    {
+        "id": 11,
+        "email": "ipsum@megadodo.pub",
+        "name": "Ipsum",
+        "passwordHash": "",
+        "passwordSalt": "",
+        "rolesIds": [
+            1,
+            7
+        ]
+    },
+    {
+        "id": 12,
+        "email": "dolor@megadodo.pub",
+        "name": "Dolor",
+        "passwordHash": "",
+        "passwordSalt": "",
+        "rolesIds": [
+            8
+        ]
+    },
+    {
+        "id": 13,
+        "email": "sit@megadodo.pub",
+        "name": "Sit",
+        "passwordHash": "",
+        "passwordSalt": "",
+        "rolesIds": [
+            6,
+            7,
+            8
+        ]
+    },
+    {
+        "id": 14,
+        "email": "amet@megadodo.pub",
+        "name": "Amet",
+        "passwordHash": "",
+        "passwordSalt": "",
+        "rolesIds": [
+            4,
+            6
+        ]
     }
 ]
