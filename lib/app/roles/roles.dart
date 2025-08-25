@@ -47,11 +47,15 @@ class Roles {
 class AppRole {
   final int id;
   final String idTitle;
+  final String mainModuleIdTitle;
+  final String subModuleIdTitle;
   final bool isDefaultRole;
   final List<String>? permissions;
   AppRole({
     required this.id,
     required this.idTitle,
+    required this.mainModuleIdTitle,
+    required this.subModuleIdTitle,
     this.isDefaultRole = false,
     this.permissions = const [],
   });
@@ -60,6 +64,8 @@ class AppRole {
     return AppRole(
       id: map['id'] is int ? map['id'] : int.tryParse(map['id'].toString()),
       idTitle: map['idTitle'],
+      mainModuleIdTitle: map['mainModuleIdTitle'],
+      subModuleIdTitle: map['subModuleIdTitle'],
       isDefaultRole: map['isDefaultRole'] ?? false,
       permissions: List<String>.from(map['permissions'] ?? []),
     );

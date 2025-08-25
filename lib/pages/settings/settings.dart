@@ -4,7 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/pages/settings/settings_utils.dart';
 import 'package:flutter_playground/pages/settings/widgets/users_settings_tab.dart';
+import 'package:flutter_playground/pages/settings/widgets/modules_settings_tab.dart';
 import 'package:flutter_playground/pages/settings/widgets/roles_settings_tab.dart';
 
 /// The settings page.
@@ -31,6 +33,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final String activeModule = SettingsUtils.activeMainModule;
+    final bool isMainAppModule = activeModule == "main";
+
     return Stack(
       children: [
         // Scrollable main content column stretched across the screen.
@@ -43,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 // Tab bar for different settings categories.
                 DefaultTabController(
-                  length: 2,
+                  length: isMainAppModule ? 3 : 2,
                   child: Column(
                     children: [
                       // Tab bar headers.
@@ -54,6 +59,12 @@ class _SettingsPageState extends State<SettingsPage> {
                               'pages.settings.usersTab.title',
                             ),
                           ),
+                          if (isMainAppModule)
+                            Tab(
+                              text: Localization.getText(
+                                'pages.settings.modulesTab.title',
+                              ),
+                            ),
                           Tab(
                             text: Localization.getText(
                               'pages.settings.rolesTab.title',
@@ -65,7 +76,13 @@ class _SettingsPageState extends State<SettingsPage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height - 146,
                         child: TabBarView(
-                          children: [UsersSettingsTab(), RolesSettingsTab()],
+                          children: isMainAppModule
+                              ? [
+                                  UsersSettingsTab(),
+                                  ModulesSettingsTab(),
+                                  RolesSettingsTab(),
+                                ]
+                              : [UsersSettingsTab(), RolesSettingsTab()],
                         ),
                       ),
                     ],

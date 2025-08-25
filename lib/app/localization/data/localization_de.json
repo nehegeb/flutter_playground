@@ -58,11 +58,17 @@
             "title": "Einstellungen",
             "usersTab": {
                 "title": "Benutzer",
-                "columnName": "Name",
+                "columnName": "Benutzername",
                 "columnEmail": "eMail",
                 "columnRoles": "Rollen",
                 "columnActions": "",
                 "errorNoData": "Keine Benutzer für dieses Modul eingeladen."
+            },
+            "modulesTab": {
+                "title": "Module",
+                "columnName": "Modulname",
+                "columnAdmins": "Administratoren",
+                "columnActions": ""
             },
             "rolesTab": {
                 "title": "Rollen",

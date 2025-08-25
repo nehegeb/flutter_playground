@@ -1,4 +1,4 @@
-// roles_settings_tab.dart
+// modules_settings_tab.dart
 //
 
 import 'package:flutter/material.dart';
@@ -6,17 +6,17 @@ import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/pages/settings/settings_utils.dart';
 
 /// The user settings tab of the app settings.
-class RolesSettingsTab extends StatefulWidget {
-  const RolesSettingsTab({super.key});
+class ModulesSettingsTab extends StatefulWidget {
+  const ModulesSettingsTab({super.key});
 
   @override
-  State<RolesSettingsTab> createState() => _RolesSettingsTabState();
+  State<ModulesSettingsTab> createState() => _ModulesSettingsTabState();
 }
 
-class _RolesSettingsTabState extends State<RolesSettingsTab> {
-  List<Map<String, dynamic>>? _rolesTableData;
+class _ModulesSettingsTabState extends State<ModulesSettingsTab> {
+  List<Map<String, dynamic>>? _modulesTableData;
 
-  Future<void> _loadRolesTableData() async {
+  Future<void> _loadModulesTableData() async {
     // Get the [AppRole]s for the currently active main module.
     final appRoles = SettingsUtils.appRolesForActiveMainModule;
 
@@ -30,18 +30,18 @@ class _RolesSettingsTabState extends State<RolesSettingsTab> {
         'subModule': role.subModuleIdTitle,
       });
     }
-    _rolesTableData = rolesTableData;
+    _modulesTableData = rolesTableData;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
-      future: _rolesTableData == null ? _loadRolesTableData() : null,
+      future: _modulesTableData == null ? _loadModulesTableData() : null,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (_rolesTableData == null) {
+        if (_modulesTableData == null) {
           return Center(
             child: Text(
               Localization.getText('pages.settings.rolesTab.errorNoData'),
@@ -57,27 +57,29 @@ class _RolesSettingsTabState extends State<RolesSettingsTab> {
               columns: [
                 DataColumn(
                   label: Text(
-                    Localization.getText('pages.settings.rolesTab.columnName'),
+                    Localization.getText(
+                      'pages.settings.modulesTab.columnName',
+                    ),
                   ),
                 ),
                 DataColumn(
                   label: Text(
                     Localization.getText(
-                      'pages.settings.rolesTab.columnPermissions',
+                      'pages.settings.modulesTab.columnAdmins',
                     ),
                   ),
                 ),
               ],
-              rows: _rolesTableData!.map<DataRow>((roleData) {
+              rows: _modulesTableData!.map<DataRow>((moduleData) {
                 return DataRow(
                   cells: [
                     // Column for the role name.
                     DataCell(
                       Text(
-                        (roleData['subModule'] == null ||
-                                roleData['subModule'].toString().isEmpty)
-                            ? roleData['name']?.toString() ?? ''
-                            : '${roleData['subModule'].toString()} ${roleData['name']?.toString() ?? ''}',
+                        (moduleData['subModule'] == null ||
+                                moduleData['subModule'].toString().isEmpty)
+                            ? moduleData['name']?.toString() ?? ''
+                            : '${moduleData['subModule'].toString()} ${moduleData['name']?.toString() ?? ''}',
                       ),
                     ),
                     // Column for the permissions.
@@ -88,7 +90,8 @@ class _RolesSettingsTabState extends State<RolesSettingsTab> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children:
-                              (roleData['permissions'] as List<dynamic>? ?? [])
+                              (moduleData['permissions'] as List<dynamic>? ??
+                                      [])
                                   .map<Widget>((perm) => Text(perm.toString()))
                                   .toList(),
                         ),

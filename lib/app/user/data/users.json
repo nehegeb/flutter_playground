@@ -26,7 +26,11 @@
         "name": "Lorem",
         "passwordHash": "",
         "passwordSalt": "",
-        "rolesIds": []
+        "rolesIds": [
+            7,
+            10,
+            4
+        ]
     },
     {
         "id": 11,
@@ -59,17 +63,6 @@
             6,
             7,
             8
-        ]
-    },
-    {
-        "id": 14,
-        "email": "amet@megadodo.pub",
-        "name": "Amet",
-        "passwordHash": "",
-        "passwordSalt": "",
-        "rolesIds": [
-            4,
-            6
         ]
     }
 ]

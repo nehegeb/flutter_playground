@@ -2,6 +2,8 @@
     {
         "id": 1,
         "idTitle": "admin",
+        "mainModuleIdTitle": "main",
+        "subModuleIdTitle": "",
         "isDefaultRole": true,
         "permissions": [
             "*",
@@ -11,6 +13,8 @@
     {
         "id": 2,
         "idTitle": "admin",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "",
         "isDefaultRole": true,
         "permissions": [
             "template.*"
@@ -19,6 +23,8 @@
     {
         "id": 3,
         "idTitle": "viewer",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "",
         "isDefaultRole": true,
         "permissions": [
             "template.access",
@@ -28,6 +34,8 @@
     {
         "id": 4,
         "idTitle": "member",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "",
         "isDefaultRole": true,
         "permissions": [
             "template.access",
@@ -38,6 +46,8 @@
     {
         "id": 5,
         "idTitle": "moderator",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "",
         "isDefaultRole": true,
         "permissions": [
             "template.access",
@@ -49,6 +59,8 @@
     {
         "id": 6,
         "idTitle": "admin",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "template",
         "isDefaultRole": true,
         "permissions": [
             "template.template.*"
@@ -57,6 +69,8 @@
     {
         "id": 7,
         "idTitle": "viewer",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "template",
         "isDefaultRole": true,
         "permissions": [
             "template.template.access",
@@ -66,6 +80,8 @@
     {
         "id": 8,
         "idTitle": "member",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "template",
         "isDefaultRole": true,
         "permissions": [
             "template.template.access",
@@ -76,6 +92,8 @@
     {
         "id": 9,
         "idTitle": "moderator",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "template",
         "isDefaultRole": true,
         "permissions": [
             "template.template.access",

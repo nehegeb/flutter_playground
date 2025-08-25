@@ -22,6 +22,8 @@ class _UsersSettingsTabState extends State<UsersSettingsTab> {
     await User.initDbUsersData();
     final appUsers = await SettingsUtils.appUsersForActiveMainModule;
 
+    // TODO: Implement subModule as prefix of the role.
+
     // Prepare the data for the table.
     final List<Map<String, dynamic>> usersTableData = [];
     for (final user in appUsers ?? []) {
@@ -34,7 +36,23 @@ class _UsersSettingsTabState extends State<UsersSettingsTab> {
               (idTitle) => idTitle != null && idTitle.toString().isNotEmpty,
             )
             .map((idTitle) => idTitle.toString())
-            .join(' | '),
+            .toList(),
+        'mainModule': (user.roles ?? []).map((role) {
+          if (role == null ||
+              role.mainModuleIdTitle == null ||
+              role.mainModuleIdTitle.toString().isEmpty) {
+            return '';
+          }
+          return role.mainModuleIdTitle.toString();
+        }).toList(),
+        'subModule': (user.roles ?? []).map((role) {
+          if (role == null ||
+              role.subModuleIdTitle == null ||
+              role.subModuleIdTitle.toString().isEmpty) {
+            return '';
+          }
+          return role.subModuleIdTitle.toString();
+        }).toList(),
       });
     }
     _usersTableData = usersTableData;
@@ -60,6 +78,7 @@ class _UsersSettingsTabState extends State<UsersSettingsTab> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
+              dataRowMaxHeight: double.infinity,
               columns: [
                 DataColumn(
                   label: Text(
@@ -85,7 +104,36 @@ class _UsersSettingsTabState extends State<UsersSettingsTab> {
                     // Column for the user eMail address.
                     DataCell(Text(userData['email']?.toString() ?? '')),
                     // Column for the user's roles.
-                    DataCell(Text(userData['roles'] ?? '')),
+                    DataCell(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: List<Widget>.generate(
+                            (userData['roles'] as List<dynamic>? ?? []).length,
+                            (index) {
+                              final role =
+                                  (userData['roles'] as List<dynamic>)[index];
+                              final subModule =
+                                  (userData['subModule'] as List<dynamic>? ??
+                                              [])
+                                          .length >
+                                      index
+                                  ? (userData['subModule']
+                                        as List<dynamic>)[index]
+                                  : '';
+                              return Text(
+                                (subModule == null ||
+                                        subModule.toString().isEmpty)
+                                    ? role.toString()
+                                    : '${subModule.toString()} ${role.toString()}',
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 );
               }).toList(),
