@@ -18,7 +18,7 @@
             }
         },
         "settings": {
-            "title": "App Settings",
+            "title": "Settings",
             "pages": {
                 "about": {
                     "title": "About this module"
@@ -53,8 +53,8 @@
         "about": {
             "title": "About this app"
         },
-        "settings": {
-            "title": "Settings",
+        "permissions": {
+            "title": "Permissions",
             "modulesTab": {
                 "title": "Modules",
                 "columnName": "Module Name",

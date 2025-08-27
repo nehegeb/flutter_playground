@@ -1,4 +1,4 @@
-// settings_utils.dart
+// permissions_utils.dart
 //
 
 import 'package:flutter_playground/app/roles/roles.dart';
@@ -8,20 +8,20 @@ import 'package:flutter_playground/app/user/logic/get_user_permissions.dart';
 import 'package:flutter_playground/app/modules/logic/get_sub_modules_of_main_module.dart';
 import 'package:flutter_playground/app/permissions/logic/get_main_module_of_permission.dart';
 import 'package:flutter_playground/app/permissions/logic/get_sub_module_of_permission.dart';
-import 'package:flutter_playground/pages/settings/logic/get_modules_tab_data.dart';
-import 'package:flutter_playground/pages/settings/logic/get_users_tab_data.dart';
-import 'package:flutter_playground/pages/settings/logic/get_roles_tab_data.dart';
-import 'package:flutter_playground/pages/settings/logic/get_active_main_module.dart';
-import 'package:flutter_playground/pages/settings/logic/get_main_module_app_roles.dart';
-import 'package:flutter_playground/pages/settings/logic/get_main_module_app_users.dart';
+import 'package:flutter_playground/pages/permissions/logic/get_modules_tab_data.dart';
+import 'package:flutter_playground/pages/permissions/logic/get_users_tab_data.dart';
+import 'package:flutter_playground/pages/permissions/logic/get_roles_tab_data.dart';
+import 'package:flutter_playground/pages/permissions/logic/get_active_main_module.dart';
+import 'package:flutter_playground/pages/permissions/logic/get_main_module_app_roles.dart';
+import 'package:flutter_playground/pages/permissions/logic/get_main_module_app_users.dart';
 
-/// Utility class for settings management.
-/// Provides static methods for the settings pages.
+/// Utility class for permissions management.
+/// Provides static methods for the permissions pages.
 ///
 /// Static methods:
-/// - [modulesTabData]: Gets the data for the modules settings tab.
-/// - [usersTabData]: Gets the data for the users settings tab.
-/// - [rolesTabData]: Gets the data for the roles settings tab.
+/// - [modulesTabData]: Gets the data for the modules permissions tab.
+/// - [usersTabData]: Gets the data for the users permissions tab.
+/// - [rolesTabData]: Gets the data for the roles permissions tab.
 /// - [activeMainModule]: Gets the currently active main module.
 /// - [getAppRolesForMainModule]: Gets a list of all [AppRole]s for a specific [mainModule].
 /// - [getAppUsersForMainModule]: Gets a list of all [AppUser]s for a specific [mainModule].
@@ -30,7 +30,7 @@ import 'package:flutter_playground/pages/settings/logic/get_main_module_app_user
 /// - [getSubModulesForMainModule]: Gets the sub modules for a specific main module by its [mainModule].
 /// - [getMainModuleForPermission]: Gets the main module of a specific [permission].
 /// - [getSubModuleForPermission]: Gets the sub module of a specific [permission].
-class SettingsUtils {
+class PermissionsUtils {
   /// Get the data for the modules tab.
   static Future<List<Map<String, dynamic>>?> get modulesTabData async {
     return await getModulesTabData();
@@ -69,21 +69,21 @@ class SettingsUtils {
 
   /// Get all the [AppRole]s of a specific user by its [userId].
   ///
-  /// This is a user function that is redistributed for the [SettingsUtils] to make it easier to use.
+  /// This is a user function that is redistributed for the [PermissionsUtils] to make it easier to use.
   static Future<List<AppRole>?> getRolesForUser({required int userId}) {
     return getUserRoles(userId: userId);
   }
 
   /// Get all the permissions of a specific user by its [userId].
   ///
-  /// This is a user function that is redistributed for the [SettingsUtils] to make it easier to use.
+  /// This is a user function that is redistributed for the [PermissionsUtils] to make it easier to use.
   static Future<List<dynamic>?> getPermissionsForUser({required int userId}) {
     return getUserPermissions(userId: userId);
   }
 
   /// Get all the sub modules of a specific [mainModule].
   ///
-  /// This is a modules function that is redistributed for the [SettingsUtils] to make it easier to use.
+  /// This is a modules function that is redistributed for the [PermissionsUtils] to make it easier to use.
   static Future<List<dynamic>?> getSubModulesForMainModule({
     required String mainModule,
   }) {
@@ -92,14 +92,14 @@ class SettingsUtils {
 
   /// Get the main module for the given [permission].
   ///
-  /// This is a permissions function that is redistributed for the [SettingsUtils] to make it easier to use.
+  /// This is a permissions function that is redistributed for the [PermissionsUtils] to make it easier to use.
   static String getMainModuleForPermission({required String permission}) {
     return getMainModuleOfPermission(permission: permission);
   }
 
   /// Get the sub module for the given [permission].
   ///
-  /// This is a permissions function that is redistributed for the [SettingsUtils] to make it easier to use.
+  /// This is a permissions function that is redistributed for the [PermissionsUtils] to make it easier to use.
   static String getSubModuleForPermission({required String permission}) {
     return getSubModuleOfPermission(permission: permission);
   }

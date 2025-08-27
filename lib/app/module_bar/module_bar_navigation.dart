@@ -8,7 +8,7 @@ import 'package:flutter_playground/pages/home/home.dart';
 import 'package:flutter_playground/pages/login/login.dart';
 import 'package:flutter_playground/pages/register/register.dart';
 import 'package:flutter_playground/pages/about/about.dart';
-import 'package:flutter_playground/pages/settings/settings.dart';
+import 'package:flutter_playground/pages/permissions/permissions.dart';
 import 'package:flutter_playground/pages/page_not_found/page_not_found.dart';
 
 // Template main module pages imports.
@@ -41,8 +41,8 @@ class ModuleBarNavigation extends StatelessWidget {
         return RegisterPage();
       case 'AboutPage':
         return AboutPage();
-      case 'SettingsPage':
-        return SettingsPage();
+      case 'PermissionsPage':
+        return PermissionsPage();
       case 'PageNotFoundPage':
         return PageNotFoundPage();
 

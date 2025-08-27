@@ -120,16 +120,16 @@ final GoRouter appRouter = GoRouter(
           },
         ),
         GoRoute(
-          path: "settings",
+          path: "permissions",
           pageBuilder: (context, state) => fadePageTransition(
-            child: MainScreen(routedPage: 'SettingsPage'),
+            child: MainScreen(routedPage: 'PermissionsPage'),
             state: state,
             mainModule: 'template',
-            subModule: 'settings',
+            subModule: 'permissions',
           ),
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
-              'template.settings.access',
+              'template.permissions.access',
               context,
             );
           },
@@ -166,16 +166,16 @@ final GoRouter appRouter = GoRouter(
           },
         ),
         GoRoute(
-          path: "settings",
+          path: "permissions",
           pageBuilder: (context, state) => fadePageTransition(
-            child: MainScreen(routedPage: 'SettingsPage'),
+            child: MainScreen(routedPage: 'PermissionsPage'),
             state: state,
             mainModule: 'settings',
-            subModule: 'settings',
+            subModule: 'permissions',
           ),
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
-              'settings.settings.access',
+              'settings.permissions.access',
               context,
             );
           },
@@ -183,6 +183,6 @@ final GoRouter appRouter = GoRouter(
       ],
     ),
 
-    // NOTE: Add more pages here as needed.
+    // NOTE: Add more pages as needed. Preferably before the 'settings' main module.
   ],
 );

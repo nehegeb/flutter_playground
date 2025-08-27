@@ -2,9 +2,7 @@
 //
 
 // TODO: BUG: The app diplays before the localization is loaded on initialization.
-// TODO: Make the settings lists scrollable.
 // TODO: (?) Make the role settings order by subModule?
-// TODO: (?) Maybe also display the roles under each other, like the permissions?
 // TODO: (?) Maybe implement a filter feature for the users settings?
 // TODO: Implement settings for users.
 // TODO: Implement settings for roles.

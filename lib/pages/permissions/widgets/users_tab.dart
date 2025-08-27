@@ -1,24 +1,24 @@
-// users_settings_tab.dart
+// users_tab.dart
 //
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/pages/settings/settings_utils.dart';
+import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
 
-/// The users settings tab of the app settings.
-class UsersSettingsTab extends StatefulWidget {
-  const UsersSettingsTab({super.key});
+/// The users tab of the app permissions.
+class UsersTab extends StatefulWidget {
+  const UsersTab({super.key});
 
   @override
-  State<UsersSettingsTab> createState() => _UsersSettingsTabState();
+  State<UsersTab> createState() => _UsersTabState();
 }
 
-class _UsersSettingsTabState extends State<UsersSettingsTab> {
+class _UsersTabState extends State<UsersTab> {
   List<Map<String, dynamic>>? _usersTableData;
 
-  // Load the data for the users settings tab.
+  // Load the data for the users tab.
   Future<void> _loadUsersTableData() async {
-    _usersTableData = await SettingsUtils.usersTabData;
+    _usersTableData = await PermissionsUtils.usersTabData;
   }
 
   @override
@@ -32,7 +32,7 @@ class _UsersSettingsTabState extends State<UsersSettingsTab> {
         if (_usersTableData == null) {
           return Center(
             child: Text(
-              Localization.getText('pages.settings.usersTab.errorNoData'),
+              Localization.getText('pages.permissions.usersTab.errorNoData'),
             ),
           );
         }
@@ -44,17 +44,23 @@ class _UsersSettingsTabState extends State<UsersSettingsTab> {
               columns: [
                 DataColumn(
                   label: Text(
-                    Localization.getText('pages.settings.usersTab.columnName'),
+                    Localization.getText(
+                      'pages.permissions.usersTab.columnName',
+                    ),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    Localization.getText('pages.settings.usersTab.columnEmail'),
+                    Localization.getText(
+                      'pages.permissions.usersTab.columnEmail',
+                    ),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    Localization.getText('pages.settings.usersTab.columnRoles'),
+                    Localization.getText(
+                      'pages.permissions.usersTab.columnRoles',
+                    ),
                   ),
                 ),
               ],

@@ -29,15 +29,15 @@ class SubModuleButton extends StatelessWidget {
     String label = '';
     switch (subModule) {
       case 'home':
-        // Use the global home page for the home module.
+        // Use the global home page for the home page of the [AppSubModule].
         label = Localization.getText('pages.home.title');
         break;
-      case 'settings':
-        // Use the global settings page for the settings module.
-        label = Localization.getText('pages.settings.title');
+      case 'permissions':
+        // Use the global permissions page for the permissions page of the [AppSubModule].
+        label = Localization.getText('pages.permissions.title');
         break;
       default:
-        // Use the individual text of the [MainAppModule], if it exists.
+        // Use the individual text of the [AppSubModule], if it exists.
         label = Localization.getText(
           'modules.${appSubModule?.mainModuleIdTitle}.modules.${appSubModule?.idTitle}.title',
         );
@@ -48,13 +48,13 @@ class SubModuleButton extends StatelessWidget {
     bool iconExists = false;
     switch (subModule) {
       case 'home':
-        // Use the global home icon for the home page.
+        // Use the global home icon for the home page of the [AppSubModule].
         iconPath = 'assets/app/images/homeIcon.png';
         iconExists = true;
         break;
-      case 'settings':
-        // Use the global settings icon for the settings module.
-        iconPath = 'assets/app/images/settingsIcon.png';
+      case 'permissions':
+        // Use the global permissions icon for the permissions page of the [AppSubModule].
+        iconPath = 'assets/app/images/permissionsIcon.png';
         iconExists = true;
         break;
       default:

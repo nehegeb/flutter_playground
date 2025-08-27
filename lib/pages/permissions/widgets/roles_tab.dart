@@ -1,24 +1,24 @@
-// roles_settings_tab.dart
+// roles_tab.dart
 //
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/pages/settings/settings_utils.dart';
+import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
 
-/// The user settings tab of the app settings.
-class RolesSettingsTab extends StatefulWidget {
-  const RolesSettingsTab({super.key});
+/// The roles tab of the app permissions.
+class RolesTab extends StatefulWidget {
+  const RolesTab({super.key});
 
   @override
-  State<RolesSettingsTab> createState() => _RolesSettingsTabState();
+  State<RolesTab> createState() => _RolesTabState();
 }
 
-class _RolesSettingsTabState extends State<RolesSettingsTab> {
+class _RolesTabState extends State<RolesTab> {
   List<Map<String, dynamic>>? _rolesTableData;
 
-  // Load the data for the roles settings tab.
+  // Load the data for the roles tab.
   Future<void> _loadRolesTableData() async {
-    _rolesTableData = await SettingsUtils.rolesTabData;
+    _rolesTableData = await PermissionsUtils.rolesTabData;
   }
 
   @override
@@ -32,7 +32,7 @@ class _RolesSettingsTabState extends State<RolesSettingsTab> {
         if (_rolesTableData == null) {
           return Center(
             child: Text(
-              Localization.getText('pages.settings.rolesTab.errorNoData'),
+              Localization.getText('pages.permissions.rolesTab.errorNoData'),
             ),
           );
         }
@@ -44,13 +44,15 @@ class _RolesSettingsTabState extends State<RolesSettingsTab> {
               columns: [
                 DataColumn(
                   label: Text(
-                    Localization.getText('pages.settings.rolesTab.columnName'),
+                    Localization.getText(
+                      'pages.permissions.rolesTab.columnName',
+                    ),
                   ),
                 ),
                 DataColumn(
                   label: Text(
                     Localization.getText(
-                      'pages.settings.rolesTab.columnPermissions',
+                      'pages.permissions.rolesTab.columnPermissions',
                     ),
                   ),
                 ),

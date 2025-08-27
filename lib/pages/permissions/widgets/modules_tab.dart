@@ -1,24 +1,24 @@
-// modules_settings_tab.dart
+// modules_tab.dart
 //
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/pages/settings/settings_utils.dart';
+import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
 
-/// The user settings tab of the app settings.
-class ModulesSettingsTab extends StatefulWidget {
-  const ModulesSettingsTab({super.key});
+/// The modules tab of the permissions.
+class ModulesTab extends StatefulWidget {
+  const ModulesTab({super.key});
 
   @override
-  State<ModulesSettingsTab> createState() => _ModulesSettingsTabState();
+  State<ModulesTab> createState() => _ModulesTabState();
 }
 
-class _ModulesSettingsTabState extends State<ModulesSettingsTab> {
+class _ModulesTabState extends State<ModulesTab> {
   List<Map<String, dynamic>>? _modulesTableData;
 
-  // Load the data for the modules settings tab.
+  // Load the data for the modules tab.
   Future<void> _loadModulesTableData() async {
-    _modulesTableData = await SettingsUtils.modulesTabData;
+    _modulesTableData = await PermissionsUtils.modulesTabData;
   }
 
   @override
@@ -32,7 +32,7 @@ class _ModulesSettingsTabState extends State<ModulesSettingsTab> {
         if (_modulesTableData == null) {
           return Center(
             child: Text(
-              Localization.getText('pages.settings.rolesTab.errorNoData'),
+              Localization.getText('pages.permissions.modulesTab.errorNoData'),
             ),
           );
         }
@@ -45,21 +45,21 @@ class _ModulesSettingsTabState extends State<ModulesSettingsTab> {
                 DataColumn(
                   label: Text(
                     Localization.getText(
-                      'pages.settings.modulesTab.columnName',
+                      'pages.permissions.modulesTab.columnName',
                     ),
                   ),
                 ),
                 DataColumn(
                   label: Text(
                     Localization.getText(
-                      'pages.settings.modulesTab.columnIsPublic',
+                      'pages.permissions.modulesTab.columnIsPublic',
                     ),
                   ),
                 ),
                 DataColumn(
                   label: Text(
                     Localization.getText(
-                      'pages.settings.modulesTab.columnAdmins',
+                      'pages.permissions.modulesTab.columnAdmins',
                     ),
                   ),
                 ),

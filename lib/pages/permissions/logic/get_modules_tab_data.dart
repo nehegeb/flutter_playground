@@ -4,9 +4,9 @@
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_main_modules_data.dart';
-import 'package:flutter_playground/pages/settings/settings_utils.dart';
+import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
 
-/// Get the data for the modules settings tab.
+/// Get the data for the modules permissions tab.
 Future<List<Map<String, dynamic>>?> getModulesTabData() async {
   // Make sure the main modules data is loaded.
   if (Modules.dbMainModulesData == null) {
@@ -20,7 +20,7 @@ Future<List<Map<String, dynamic>>?> getModulesTabData() async {
     ...?Modules.dbMainModulesData,
   ];
 
-  // Prepare the data for the modules settings tab.
+  // Prepare the data for the modules permissions tab.
   List<Map<String, dynamic>>? modulesTabData = [];
   for (final module in mainModules) {
     final int mainModuleId = module['id'];
@@ -35,7 +35,7 @@ Future<List<Map<String, dynamic>>?> getModulesTabData() async {
 
     // Get all [AppUser]s for the current main module.
     final List<AppUser>? moduleUsers =
-        await SettingsUtils.getAppUsersForMainModule(
+        await PermissionsUtils.getAppUsersForMainModule(
           mainModule: mainModuleName,
         );
 
@@ -48,7 +48,7 @@ Future<List<Map<String, dynamic>>?> getModulesTabData() async {
 
         // Check, if the user is an administrator for this main module.
         final List<dynamic>? userPermissions =
-            await SettingsUtils.getPermissionsForUser(userId: userId);
+            await PermissionsUtils.getPermissionsForUser(userId: userId);
         if (userPermissions != null &&
             userPermissions.contains('$mainModuleName.*')) {
           // Add the administrator to the user info for this main module.

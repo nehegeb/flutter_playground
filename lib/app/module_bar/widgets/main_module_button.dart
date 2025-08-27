@@ -37,11 +37,11 @@ class _MainModuleButtonState extends State<MainModuleButton> {
     String label = '';
     switch (widget.mainModule) {
       case 'home':
-        // Use the global home page for the home module.
+        // Use the global home page for the 'main' main module.
         label = Localization.getText('pages.home.title');
         break;
       default:
-        // Use the individual text of the [MainAppModule], if it exists.
+        // Use the individual text of the [AppMainModule], if it exists.
         label = Localization.getText('modules.${appMainModule?.idTitle}.title');
     }
 
@@ -50,13 +50,8 @@ class _MainModuleButtonState extends State<MainModuleButton> {
     bool iconExists = false;
     switch (widget.mainModule) {
       case 'home':
-        // Use the global home icon for the home page.
+        // Use the global home icon for the home page of the main module.
         iconPath = 'assets/app/images/homeIcon.png';
-        iconExists = true;
-        break;
-      case 'settings':
-        // Use the global settings icon for the settings module.
-        iconPath = 'assets/app/images/settingsIcon.png';
         iconExists = true;
         break;
       default:

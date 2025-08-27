@@ -1,28 +1,28 @@
-// settings.dart
+// permissions.dart
 //
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/pages/settings/settings_utils.dart';
-import 'package:flutter_playground/pages/settings/widgets/users_settings_tab.dart';
-import 'package:flutter_playground/pages/settings/widgets/modules_settings_tab.dart';
-import 'package:flutter_playground/pages/settings/widgets/roles_settings_tab.dart';
+import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
+import 'package:flutter_playground/pages/permissions/widgets/users_tab.dart';
+import 'package:flutter_playground/pages/permissions/widgets/modules_tab.dart';
+import 'package:flutter_playground/pages/permissions/widgets/roles_tab.dart';
 
-/// The settings page.
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+/// The permissions page.
+class PermissionsPage extends StatefulWidget {
+  const PermissionsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<PermissionsPage> createState() => _PermissionsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _PermissionsPageState extends State<PermissionsPage> {
   @override
   void dispose() {
     super.dispose();
-    // Clear the users data as soon as the [SettingsPage] is closed.
-    // This might have been loaded in any of the settings tabs.
+    // Clear the users data as soon as the [PermissionsPage] is closed.
+    // This might have been loaded in any of the permissions tabs.
     _clearUsersData();
   }
 
@@ -33,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final String activeModule = SettingsUtils.activeMainModule;
+    final String activeModule = PermissionsUtils.activeMainModule;
     final bool isMainAppModule = activeModule == "main";
 
     return Stack(
@@ -57,17 +57,17 @@ class _SettingsPageState extends State<SettingsPage> {
                           if (isMainAppModule)
                             Tab(
                               text: Localization.getText(
-                                'pages.settings.modulesTab.title',
+                                'pages.permissions.modulesTab.title',
                               ),
                             ),
                           Tab(
                             text: Localization.getText(
-                              'pages.settings.usersTab.title',
+                              'pages.permissions.usersTab.title',
                             ),
                           ),
                           Tab(
                             text: Localization.getText(
-                              'pages.settings.rolesTab.title',
+                              'pages.permissions.rolesTab.title',
                             ),
                           ),
                         ],
@@ -77,12 +77,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         height: MediaQuery.of(context).size.height - 146,
                         child: TabBarView(
                           children: isMainAppModule
-                              ? [
-                                  ModulesSettingsTab(),
-                                  UsersSettingsTab(),
-                                  RolesSettingsTab(),
-                                ]
-                              : [UsersSettingsTab(), RolesSettingsTab()],
+                              ? [ModulesTab(), UsersTab(), RolesTab()]
+                              : [UsersTab(), RolesTab()],
                         ),
                       ),
                     ],

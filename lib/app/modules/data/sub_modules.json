@@ -10,7 +10,7 @@
     },
     {
         "id": 2,
-        "idTitle": "settings",
+        "idTitle": "permissions",
         "mainModuleId": 1,
         "mainModuleIdTitle": "template",
         "isPublic": false,
@@ -19,7 +19,7 @@
     },
     {
         "id": 3,
-        "idTitle": "settings",
+        "idTitle": "permissions",
         "mainModuleId": 2,
         "mainModuleIdTitle": "settings",
         "isPublic": true,

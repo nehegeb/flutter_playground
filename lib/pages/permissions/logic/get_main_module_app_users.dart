@@ -3,7 +3,7 @@
 
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
-import 'package:flutter_playground/pages/settings/settings_utils.dart';
+import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
 
 /// Get a list of all [AppUser]s for a specific [mainModule].
 /// If none are found, return null.
@@ -14,9 +14,8 @@ Future<List<AppUser>?> getMainModuleAppUsers({
   if (mainModule.isEmpty) return null;
 
   // Get all valid [AppRole]s for the given [mainModule].
-  final List<AppRole>? validAppRoles = SettingsUtils.getAppRolesForMainModule(
-    mainModule: mainModule,
-  );
+  final List<AppRole>? validAppRoles =
+      PermissionsUtils.getAppRolesForMainModule(mainModule: mainModule);
 
   // Make sure the users data is loaded.
   if (User.dbUsersData == null) {
@@ -28,7 +27,7 @@ Future<List<AppUser>?> getMainModuleAppUsers({
   if (users != null) {
     List<AppUser> filteredAppUsers = [];
     for (var user in users) {
-      List<AppRole>? appRoles = await SettingsUtils.getRolesForUser(
+      List<AppRole>? appRoles = await PermissionsUtils.getRolesForUser(
         userId: user['id'],
       );
 
