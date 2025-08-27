@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/pages/settings/settings_utils.dart';
 
 /// The users settings tab of the app settings.
@@ -17,45 +16,9 @@ class UsersSettingsTab extends StatefulWidget {
 class _UsersSettingsTabState extends State<UsersSettingsTab> {
   List<Map<String, dynamic>>? _usersTableData;
 
+  // Load the data for the users settings tab.
   Future<void> _loadUsersTableData() async {
-    // Load the users data.
-    await User.initDbUsersData();
-    final appUsers = await SettingsUtils.appUsersForActiveMainModule;
-
-    // TODO: Implement subModule as prefix of the role.
-
-    // Prepare the data for the table.
-    final List<Map<String, dynamic>> usersTableData = [];
-    for (final user in appUsers ?? []) {
-      usersTableData.add({
-        'name': user.name,
-        'email': user.email,
-        'roles': (user.roles ?? [])
-            .map((role) => role?.idTitle)
-            .where(
-              (idTitle) => idTitle != null && idTitle.toString().isNotEmpty,
-            )
-            .map((idTitle) => idTitle.toString())
-            .toList(),
-        'mainModule': (user.roles ?? []).map((role) {
-          if (role == null ||
-              role.mainModuleIdTitle == null ||
-              role.mainModuleIdTitle.toString().isEmpty) {
-            return '';
-          }
-          return role.mainModuleIdTitle.toString();
-        }).toList(),
-        'subModule': (user.roles ?? []).map((role) {
-          if (role == null ||
-              role.subModuleIdTitle == null ||
-              role.subModuleIdTitle.toString().isEmpty) {
-            return '';
-          }
-          return role.subModuleIdTitle.toString();
-        }).toList(),
-      });
-    }
-    _usersTableData = usersTableData;
+    _usersTableData = await SettingsUtils.usersTabData;
   }
 
   @override
@@ -76,7 +39,6 @@ class _UsersSettingsTabState extends State<UsersSettingsTab> {
         return SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
             child: DataTable(
               dataRowMaxHeight: double.infinity,
               columns: [

@@ -16,21 +16,9 @@ class ModulesSettingsTab extends StatefulWidget {
 class _ModulesSettingsTabState extends State<ModulesSettingsTab> {
   List<Map<String, dynamic>>? _modulesTableData;
 
+  // Load the data for the modules settings tab.
   Future<void> _loadModulesTableData() async {
-    // Get the [AppRole]s for the currently active main module.
-    final appRoles = SettingsUtils.appRolesForActiveMainModule;
-
-    // Prepare the data for the table.
-    final List<Map<String, dynamic>> rolesTableData = [];
-    for (final role in appRoles ?? []) {
-      rolesTableData.add({
-        'name': role.idTitle,
-        'permissions': role.permissions,
-        'mainModule': role.mainModuleIdTitle,
-        'subModule': role.subModuleIdTitle,
-      });
-    }
-    _modulesTableData = rolesTableData;
+    _modulesTableData = await SettingsUtils.modulesTabData;
   }
 
   @override
@@ -51,7 +39,6 @@ class _ModulesSettingsTabState extends State<ModulesSettingsTab> {
         return SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
             child: DataTable(
               dataRowMaxHeight: double.infinity,
               columns: [
@@ -59,6 +46,13 @@ class _ModulesSettingsTabState extends State<ModulesSettingsTab> {
                   label: Text(
                     Localization.getText(
                       'pages.settings.modulesTab.columnName',
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    Localization.getText(
+                      'pages.settings.modulesTab.columnIsPublic',
                     ),
                   ),
                 ),
@@ -73,16 +67,29 @@ class _ModulesSettingsTabState extends State<ModulesSettingsTab> {
               rows: _modulesTableData!.map<DataRow>((moduleData) {
                 return DataRow(
                   cells: [
-                    // Column for the role name.
+                    // Column for the main module name.
                     DataCell(
                       Text(
-                        (moduleData['subModule'] == null ||
-                                moduleData['subModule'].toString().isEmpty)
-                            ? moduleData['name']?.toString() ?? ''
-                            : '${moduleData['subModule'].toString()} ${moduleData['name']?.toString() ?? ''}',
+                        moduleData['moduleName'] == 'main'
+                            ? Localization.getText('appName')
+                            : Localization.getText(
+                                'modules.${moduleData['moduleName']}.title',
+                              ),
                       ),
                     ),
-                    // Column for the permissions.
+                    // Column for the public flag.
+                    DataCell(
+                      Icon(
+                        moduleData['moduleIsPublic'] == true
+                            ? Icons.check
+                            : Icons.close,
+                        color: moduleData['moduleIsPublic'] == true
+                            ? Colors.green
+                            : Colors.red,
+                        size: 20,
+                      ),
+                    ),
+                    // Column for the main module's administrators.
                     DataCell(
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -90,10 +97,16 @@ class _ModulesSettingsTabState extends State<ModulesSettingsTab> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children:
-                              (moduleData['permissions'] as List<dynamic>? ??
+                              (((moduleData['users'] as Map<String, dynamic>?)
+                                          ?.values
+                                          .toList() ??
                                       [])
-                                  .map<Widget>((perm) => Text(perm.toString()))
-                                  .toList(),
+                                  .map<Widget>(
+                                    (user) => Text(
+                                      user['userName']?.toString() ?? '',
+                                    ),
+                                  )
+                                  .toList()),
                         ),
                       ),
                     ),

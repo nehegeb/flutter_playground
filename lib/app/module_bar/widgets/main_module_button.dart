@@ -40,10 +40,6 @@ class _MainModuleButtonState extends State<MainModuleButton> {
         // Use the global home page for the home module.
         label = Localization.getText('pages.home.title');
         break;
-      case 'settings':
-        // Use the global settings page for the settings module.
-        label = Localization.getText('pages.settings.title');
-        break;
       default:
         // Use the individual text of the [MainAppModule], if it exists.
         label = Localization.getText('modules.${appMainModule?.idTitle}.title');

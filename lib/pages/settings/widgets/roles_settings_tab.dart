@@ -16,21 +16,9 @@ class RolesSettingsTab extends StatefulWidget {
 class _RolesSettingsTabState extends State<RolesSettingsTab> {
   List<Map<String, dynamic>>? _rolesTableData;
 
+  // Load the data for the roles settings tab.
   Future<void> _loadRolesTableData() async {
-    // Get the [AppRole]s for the currently active main module.
-    final appRoles = SettingsUtils.appRolesForActiveMainModule;
-
-    // Prepare the data for the table.
-    final List<Map<String, dynamic>> rolesTableData = [];
-    for (final role in appRoles ?? []) {
-      rolesTableData.add({
-        'name': role.idTitle,
-        'permissions': role.permissions,
-        'mainModule': role.mainModuleIdTitle,
-        'subModule': role.subModuleIdTitle,
-      });
-    }
-    _rolesTableData = rolesTableData;
+    _rolesTableData = await SettingsUtils.rolesTabData;
   }
 
   @override
@@ -51,7 +39,6 @@ class _RolesSettingsTabState extends State<RolesSettingsTab> {
         return SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
             child: DataTable(
               dataRowMaxHeight: double.infinity,
               columns: [

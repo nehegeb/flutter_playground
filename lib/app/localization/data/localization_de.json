@@ -56,6 +56,13 @@
         },
         "settings": {
             "title": "Einstellungen",
+            "modulesTab": {
+                "title": "Module",
+                "columnName": "Modulname",
+                "columnAdmins": "Administratoren",
+                "columnIsPublic": "Öffentlich",
+                "columnActions": ""
+            },
             "usersTab": {
                 "title": "Benutzer",
                 "columnName": "Benutzername",
@@ -63,12 +70,6 @@
                 "columnRoles": "Rollen",
                 "columnActions": "",
                 "errorNoData": "Keine Benutzer für dieses Modul eingeladen."
-            },
-            "modulesTab": {
-                "title": "Module",
-                "columnName": "Modulname",
-                "columnAdmins": "Administratoren",
-                "columnActions": ""
             },
             "rolesTab": {
                 "title": "Rollen",

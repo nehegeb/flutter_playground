@@ -54,17 +54,17 @@ class _SettingsPageState extends State<SettingsPage> {
                       // Tab bar headers.
                       TabBar(
                         tabs: [
-                          Tab(
-                            text: Localization.getText(
-                              'pages.settings.usersTab.title',
-                            ),
-                          ),
                           if (isMainAppModule)
                             Tab(
                               text: Localization.getText(
                                 'pages.settings.modulesTab.title',
                               ),
                             ),
+                          Tab(
+                            text: Localization.getText(
+                              'pages.settings.usersTab.title',
+                            ),
+                          ),
                           Tab(
                             text: Localization.getText(
                               'pages.settings.rolesTab.title',
@@ -78,8 +78,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: TabBarView(
                           children: isMainAppModule
                               ? [
-                                  UsersSettingsTab(),
                                   ModulesSettingsTab(),
+                                  UsersSettingsTab(),
                                   RolesSettingsTab(),
                                 ]
                               : [UsersSettingsTab(), RolesSettingsTab()],
