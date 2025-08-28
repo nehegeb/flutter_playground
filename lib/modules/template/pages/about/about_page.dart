@@ -1,4 +1,4 @@
-// about.dart
+// about_page.dart
 //
 
 import 'package:flutter/material.dart';
@@ -6,16 +6,16 @@ import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/changelog/changelog.dart';
 import 'package:flutter_playground/app/changelog/widgets/changelog_expansion_tile.dart';
 
-/// The about page of the settings main module.
-class SettingsAboutPage extends StatefulWidget {
-  const SettingsAboutPage({super.key});
+/// The about page of the template main module.
+class TemplateAboutPage extends StatefulWidget {
+  const TemplateAboutPage({super.key});
 
   @override
-  State<SettingsAboutPage> createState() => _SettingsAboutPageState();
+  State<TemplateAboutPage> createState() => _TemplateAboutPageState();
 }
 
-class _SettingsAboutPageState extends State<SettingsAboutPage> {
-  static const String mainModule = 'settings';
+class _TemplateAboutPageState extends State<TemplateAboutPage> {
+  static const String mainModule = 'template';
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _SettingsAboutPageState extends State<SettingsAboutPage> {
             children: [
               // Title of the about page.
               Text(
-                Localization.getText('pages.about.title'),
+                Localization.getText('modules.$mainModule.pages.about.title'),
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 16),

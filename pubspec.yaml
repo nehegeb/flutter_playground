@@ -31,7 +31,6 @@ flutter:
     - lib/app/user/data/
     - lib/app/modules/data/
     - lib/app/roles/data/
-    - lib/app/permissions/data/
     # Changelogs
     - lib/app/changelog/data/
     - lib/modules/template/changelog/

@@ -2,6 +2,7 @@
 //
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 
@@ -16,7 +17,7 @@ String? checkUserPermissionRouting(
   if (User.user == null) {
     // Check if the user has the required permission.
     // This should only allow .access and .read [permissionName]s to public modules.
-    if (!User.checkPermission(permission: permissionName)) {
+    if (!Permissions.check(permission: permissionName)) {
       // Access denied. Redirect to the login page.
       // But save the URL the user was trying to access for redirecting after login.
       AppRouterUtils.saveRedirectUrl(context);
@@ -27,7 +28,7 @@ String? checkUserPermissionRouting(
   // If an [AppUser] is currently logged in, check for their permissions.
   if (User.user != null) {
     // Check if the user has the required permission.
-    if (!User.checkPermission(permission: permissionName)) {
+    if (!Permissions.check(permission: permissionName)) {
       // Access denied. Redirect to the page-not-found page.
       return '/page-not-found';
     }

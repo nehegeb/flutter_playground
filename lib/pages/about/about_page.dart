@@ -1,31 +1,27 @@
-// about.dart
+// about_page.dart
 //
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/changelog/changelog.dart';
 import 'package:flutter_playground/app/changelog/widgets/changelog_expansion_tile.dart';
+import 'package:flutter_playground/app/licensing/licensing.dart';
+import 'package:flutter_playground/app/licensing/widgets/license_expansion_tile.dart';
 
-/// The about page of the template main module.
-class TemplateAboutPage extends StatefulWidget {
-  const TemplateAboutPage({super.key});
+/// The about page of the app.
+class AboutPage extends StatefulWidget {
+  const AboutPage({super.key});
 
   @override
-  State<TemplateAboutPage> createState() => _TemplateAboutPageState();
+  State<AboutPage> createState() => _AboutPageState();
 }
 
-class _TemplateAboutPageState extends State<TemplateAboutPage> {
-  static const String mainModule = 'template';
+class _AboutPageState extends State<AboutPage> {
+  static const String mainModule = 'main';
 
   @override
   void initState() {
     super.initState();
-    _initData();
-  }
-
-  // Load data for the about page.
-  Future<void> _initData() async {
-    await Changelog.initDbChangelogData(module: mainModule);
   }
 
   @override
@@ -40,7 +36,7 @@ class _TemplateAboutPageState extends State<TemplateAboutPage> {
             children: [
               // Title of the about page.
               Text(
-                Localization.getText('modules.$mainModule.pages.about.title'),
+                Localization.getText('pages.about.title'),
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 16),
@@ -53,6 +49,17 @@ class _TemplateAboutPageState extends State<TemplateAboutPage> {
                     return Center(child: CircularProgressIndicator());
                   }
                   return ChangelogExpansionTile(module: mainModule);
+                },
+              ),
+
+              // Packages used in this app.
+              FutureBuilder<void>(
+                future: Licensing.initDbLicensingData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return const LicenseExpansionTile();
                 },
               ),
             ],

@@ -1,27 +1,31 @@
-// about.dart
+// about_page.dart
 //
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/changelog/changelog.dart';
 import 'package:flutter_playground/app/changelog/widgets/changelog_expansion_tile.dart';
-import 'package:flutter_playground/app/licensing/licensing.dart';
-import 'package:flutter_playground/app/licensing/widgets/license_expansion_tile.dart';
 
-/// The about page of the app.
-class AboutPage extends StatefulWidget {
-  const AboutPage({super.key});
+/// The about page of the settings main module.
+class SettingsAboutPage extends StatefulWidget {
+  const SettingsAboutPage({super.key});
 
   @override
-  State<AboutPage> createState() => _AboutPageState();
+  State<SettingsAboutPage> createState() => _SettingsAboutPageState();
 }
 
-class _AboutPageState extends State<AboutPage> {
-  static const String mainModule = 'main';
+class _SettingsAboutPageState extends State<SettingsAboutPage> {
+  static const String mainModule = 'settings';
 
   @override
   void initState() {
     super.initState();
+    _initData();
+  }
+
+  // Load data for the about page.
+  Future<void> _initData() async {
+    await Changelog.initDbChangelogData(module: mainModule);
   }
 
   @override
@@ -49,17 +53,6 @@ class _AboutPageState extends State<AboutPage> {
                     return Center(child: CircularProgressIndicator());
                   }
                   return ChangelogExpansionTile(module: mainModule);
-                },
-              ),
-
-              // Packages used in this app.
-              FutureBuilder<void>(
-                future: Licensing.initDbLicensingData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  return const LicenseExpansionTile();
                 },
               ),
             ],

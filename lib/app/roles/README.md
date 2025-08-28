@@ -14,10 +14,10 @@ Structure: `<main_module>.<sub_module>.<more_pages_or_features>.<action>`
 
 *Permissions are provided to roles as a list of several strings, one per permission. Each individual permission is written in segments, each segment separated by a dot and each segment is written in `snake_case`.*
 
-For example `"template.access,template.read"` gives the user the rights to access and read the 'Template' main module.
+For example `"template.access,template.view"` gives the user the rights to access and view the 'Template' main module.
 
 - A user does not need any permissions to access the main app pages. They are always accessible to everyone.
-- Modules marked as `isPublic` are always accessible to everyone. This automatically grants `.access` and `.read`, but nothing more.
+- Modules marked as `isPublic` are always accessible to everyone. This automatically grants `.access` and `.view`, but nothing more.
 - Modules marked as `isHidden` are always accessible to no one, not even to a `*` permission.
 - A simple `*` permission gives the user full rights to the whole app and everything within (except hidden modules)!
 
@@ -25,14 +25,14 @@ Everything before the `.<action>` is called `context` in the following descripti
 
 ### .access
 Grants access to the specified `context`. This makes a main or sub module visible in the module bar for the user.
-NOTE: This does not give the user read permission for the `context`!
+NOTE: This does not give the user view permission for the `context`!
 
-### .read
-Grants read rights for the specified `context`. Without this the user cannot see much or anything at all there.
+### .view
+Grants view rights for the specified `context`. Without this the user cannot see much or anything at all there.
 NOTE: This does not give the user access to a module or `context`!
 
-### .write
-Grants write rights for the specified `context`. This allows to modify elements there, but not delete them.
+### .edit
+Grants edit rights for the specified `context`. This allows to modify elements there, but not delete them.
 NOTE: This does not give the user access to a module or `context`!
 
 ### .delete

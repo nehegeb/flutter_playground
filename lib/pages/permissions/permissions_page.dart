@@ -1,10 +1,10 @@
-// permissions.dart
+// permissions_page.dart
 //
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
+import 'package:flutter_playground/pages/permissions/permissions_page_utils.dart';
 import 'package:flutter_playground/pages/permissions/widgets/users_tab.dart';
 import 'package:flutter_playground/pages/permissions/widgets/modules_tab.dart';
 import 'package:flutter_playground/pages/permissions/widgets/roles_tab.dart';
@@ -33,7 +33,7 @@ class _PermissionsPageState extends State<PermissionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final String activeModule = PermissionsUtils.activeMainModule;
+    final String activeModule = PermissionsPageUtils.activeMainModule;
     final bool isMainAppModule = activeModule == "main";
 
     return Stack(

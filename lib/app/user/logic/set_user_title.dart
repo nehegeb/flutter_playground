@@ -63,6 +63,7 @@ void setUserTitle({String? mainModuleName}) {
     passwordHash: User.user!.passwordHash,
     passwordSalt: User.user!.passwordSalt,
     roles: User.user!.roles,
+    permissions: User.user!.permissions,
   );
   appUserNotifier.value = user;
 }

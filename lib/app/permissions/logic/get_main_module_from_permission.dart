@@ -1,11 +1,11 @@
-// get_main_module_of_permission.dart
+// get_main_module_from_permission.dart
 //
 
 /// Get the main module for the given [permission].
 ///
 /// If no [permission] is given, return ''.
-/// If no main module is found, return 'main' for the 'main' main module.
-String getMainModuleOfPermission({required String permission}) {
+/// If no main module is found, return 'main' for the 'main' [AppMainModule].
+String getMainModuleFromPermission({required String permission}) {
   // If no [permission] is given, return ''.
   if (permission.isEmpty) {
     return '';

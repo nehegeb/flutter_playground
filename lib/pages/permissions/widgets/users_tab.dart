@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
+import 'package:flutter_playground/pages/permissions/logic/get_users_tab_data.dart';
 
 /// The users tab of the app permissions.
 class UsersTab extends StatefulWidget {
@@ -18,7 +18,7 @@ class _UsersTabState extends State<UsersTab> {
 
   // Load the data for the users tab.
   Future<void> _loadUsersTableData() async {
-    _usersTableData = await PermissionsUtils.usersTabData;
+    _usersTableData = await getUsersTabData();
   }
 
   @override

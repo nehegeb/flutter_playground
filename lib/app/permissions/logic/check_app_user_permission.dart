@@ -5,7 +5,7 @@ import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/app/user/user.dart';
 
-/// Checks if the [AppUser] has the given [permission].
+/// Checks if the currently logged in [AppUser] has the given [permission].
 ///
 /// It first checks the modules [isHidden] and [isPublic] parameters.
 /// It then checks the [AppUser]'s [AppRole]s against the given [permission].

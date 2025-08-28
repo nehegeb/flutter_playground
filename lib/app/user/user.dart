@@ -13,7 +13,6 @@ import 'package:flutter_playground/app/user/logic/set_user_title.dart';
 import 'package:flutter_playground/app/user/logic/register_new_user.dart';
 import 'package:flutter_playground/app/user/logic/check_entered_password_strength.dart';
 import 'package:flutter_playground/app/user/logic/set_user_password.dart';
-import 'package:flutter_playground/app/user/logic/check_app_user_permission.dart';
 import 'package:flutter_playground/app/user/logic/load_users_data.dart';
 
 /// Notifier for the currently logged in [AppUser].
@@ -32,7 +31,6 @@ final ValueNotifier<AppUser?> appUserNotifier = ValueNotifier<AppUser?>(null);
 /// - [setTitle]: Sets the current title for the currently logged in [AppUser].
 /// - [setPassword]: Sets a new password for the currently logged in [AppUser]. Returns Boolean.
 /// - [checkPasswordStrength]: Checks the strength of a password. Returns String.
-/// - [checkPermission]: Checks if the user has the given permission. Returns Boolean.
 /// - [initDbUsersData]: Initializes the users data for the app.
 /// - [clearDbUsersData]: Clears the users data from the app.
 class User {
@@ -103,14 +101,6 @@ class User {
     return checkEnteredPasswordStrength(password: password);
   }
 
-  /// Checks if the [AppUser] has the given [permission].
-  /// It first checks the modules [isHidden] and [isPublic] parameters.
-  /// It then checks the [AppUser]'s [AppRole]s against the given [permission].
-  /// Returns true if the user has permission, otherwise false.
-  static bool checkPermission({required String? permission}) {
-    return checkAppUserPermission(permission: permission);
-  }
-
   /// Initializes the users data from the database for the app.
   static Future<void> initDbUsersData() async {
     await loadUsersData();
@@ -139,6 +129,7 @@ class AppUser {
   final String passwordHash;
   final String passwordSalt;
   final List<AppRole>? roles;
+  final List<String>? permissions;
   AppUser({
     required this.id,
     required this.email,
@@ -147,6 +138,7 @@ class AppUser {
     required this.passwordHash,
     required this.passwordSalt,
     this.roles,
+    this.permissions,
   });
 
   factory AppUser.fromMap(Map<String, dynamic> map) {
@@ -159,6 +151,8 @@ class AppUser {
       passwordSalt: map['passwordSalt'],
       roles:
           map['roles'] ?? [Roles.emptyRole], // Empty role if nothing is given.
+      permissions:
+          map['permissions'] ?? [], // No permissions if nothing is given.
     );
   }
 }

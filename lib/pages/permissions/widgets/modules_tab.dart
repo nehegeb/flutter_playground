@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
+import 'package:flutter_playground/pages/permissions/logic/get_modules_tab_data.dart';
 
 /// The modules tab of the permissions.
 class ModulesTab extends StatefulWidget {
@@ -18,7 +18,7 @@ class _ModulesTabState extends State<ModulesTab> {
 
   // Load the data for the modules tab.
   Future<void> _loadModulesTableData() async {
-    _modulesTableData = await PermissionsUtils.modulesTabData;
+    _modulesTableData = await getModulesTabData();
   }
 
   @override

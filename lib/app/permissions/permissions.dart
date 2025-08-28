@@ -1,44 +1,35 @@
 // permissions.dart
 //
 // Features:
-// - Provides a class [Permissions] with static methods to manipulate user permissions.
+// - Provides a class [Permissions] with static methods to get permissions for the app.
 
-import 'package:flutter_playground/app/permissions/logic/get_main_module_of_permission.dart';
-import 'package:flutter_playground/app/permissions/logic/get_sub_module_of_permission.dart';
-import 'package:flutter_playground/app/permissions/logic/load_permissions_data.dart';
+import 'package:flutter_playground/app/permissions/logic/check_app_user_permission.dart';
+import 'package:flutter_playground/app/permissions/data/permissions_main.dart';
+import 'package:flutter_playground/app/permissions/data/permissions_template.dart';
+import 'package:flutter_playground/app/permissions/data/permissions_settings.dart';
 
-/// Utility class for permission management.
-/// Provides static methods manage the user permissions.
+/// All the permissions available in the app.
 ///
-/// Static Methods:
-/// - [dbPermissionsData]: Gets the permissions data.
-/// - [getMainModule]: Gets the main module for the given [permission].
-/// - [getSubModule]: Gets the sub module for the given [permission].
-/// - [initDbPermissionsData]: Initializes the user permissions for the app.
-/// - [clearDbPermissionsData]: Clears the user permissions from the app.
+/// To check, if the currently logged in [AppUser] has a certain permission, use
+/// "Permissions.check(Permissions.main.access)".
+///
+/// To simply get the value of a specific permission, use
+/// "Permissions.main.access".
+///
+/// Static methods:
+/// - [check]: Checks if the currently logged in [AppUser] has the given permission. Returns Boolean.
+/// - Get a specific permission like [Permissions.main.access].
 class Permissions {
-  /// Get the loaded permissions data of the database.
-  static List<dynamic>? get dbPermissionsData {
-    return permissionsData;
-  }
+  static const Main main = Main();
+  static const Template template = Template();
+  static const Settings settings = Settings();
 
-  /// Gets the main module for the given [permission].
-  static String getMainModule({required String permission}) {
-    return getMainModuleOfPermission(permission: permission);
-  }
-
-  /// Gets the sub module for the given [permission].
-  static String getSubModule({required String permission}) {
-    return getSubModuleOfPermission(permission: permission);
-  }
-
-  /// Loads the permissions data from the database for the app.
-  static Future<void> initDbPermissionsData() async {
-    await loadPermissionsData();
-  }
-
-  /// Clear the loaded permissions data of the database from the app.
-  static void clearDbPermissionsData() {
-    permissionsData = null;
+  /// Checks if the currently logged in [AppUser] has the given [permission].
+  /// It first checks the modules [isHidden] and [isPublic] parameters.
+  /// It then checks the [AppUser]'s [AppRole]s against the given [permission].
+  ///
+  /// Returns true if the user has permission, otherwise false.
+  static bool check({required String? permission}) {
+    return checkAppUserPermission(permission: permission);
   }
 }

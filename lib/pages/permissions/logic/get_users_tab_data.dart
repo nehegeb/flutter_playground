@@ -2,12 +2,12 @@
 //
 
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
+import 'package:flutter_playground/pages/permissions/permissions_page_utils.dart';
 
 /// Get the data for the users permissions tab.
 Future<List<Map<String, dynamic>>?> getUsersTabData() async {
   // Get the currently active main module name.
-  final String activeMainModule = PermissionsUtils.activeMainModule;
+  final String activeMainModule = PermissionsPageUtils.activeMainModule;
 
   // Make sure the users data is loaded.
   if (User.dbUsersData == null) {
@@ -16,7 +16,7 @@ Future<List<Map<String, dynamic>>?> getUsersTabData() async {
 
   // Get all [AppUser]s for the currently active main module.
   final List<AppUser>? appUsers =
-      await PermissionsUtils.getAppUsersForMainModule(
+      await PermissionsPageUtils.getAppUsersForMainModule(
         mainModule: activeMainModule,
       );
 

@@ -9,6 +9,7 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/screens/main_screen.dart';
+import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/misc/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
@@ -86,7 +87,10 @@ final GoRouter appRouter = GoRouter(
         subModule: 'home',
       ),
       redirect: (context, state) {
-        return AppRouterUtils.checkUserPermission('template.access', context);
+        return AppRouterUtils.checkUserPermission(
+          Permissions.template.access,
+          context,
+        );
       },
       routes: [
         GoRoute(
@@ -99,7 +103,7 @@ final GoRouter appRouter = GoRouter(
           ),
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
-              'template.access',
+              Permissions.template.access,
               context,
             );
           },
@@ -114,7 +118,7 @@ final GoRouter appRouter = GoRouter(
           ),
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
-              'template.template.access',
+              Permissions.template.template.access,
               context,
             );
           },
@@ -129,7 +133,7 @@ final GoRouter appRouter = GoRouter(
           ),
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
-              'template.permissions.access',
+              Permissions.template.permissions.access,
               context,
             );
           },
@@ -147,7 +151,10 @@ final GoRouter appRouter = GoRouter(
         subModule: 'home',
       ),
       redirect: (context, state) {
-        return AppRouterUtils.checkUserPermission('settings.access', context);
+        return AppRouterUtils.checkUserPermission(
+          Permissions.settings.access,
+          context,
+        );
       },
       routes: [
         GoRoute(
@@ -160,7 +167,7 @@ final GoRouter appRouter = GoRouter(
           ),
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
-              'settings.access',
+              Permissions.settings.access,
               context,
             );
           },
@@ -175,7 +182,7 @@ final GoRouter appRouter = GoRouter(
           ),
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
-              'settings.permissions.access',
+              Permissions.settings.permissions.access,
               context,
             );
           },

@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/pages/permissions/permissions_utils.dart';
+import 'package:flutter_playground/pages/permissions/logic/get_roles_tab_data.dart';
 
 /// The roles tab of the app permissions.
 class RolesTab extends StatefulWidget {
@@ -18,7 +18,7 @@ class _RolesTabState extends State<RolesTab> {
 
   // Load the data for the roles tab.
   Future<void> _loadRolesTableData() async {
-    _rolesTableData = await PermissionsUtils.rolesTabData;
+    _rolesTableData = await getRolesTabData();
   }
 
   @override

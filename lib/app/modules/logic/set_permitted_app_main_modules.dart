@@ -1,6 +1,7 @@
 // set_permitted_app_main_modules.dart
 //
 
+import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_main_modules_data.dart';
@@ -24,7 +25,7 @@ Future<bool> setPermittedAppMainModules() async {
     if (User.user != null) {
       for (final module in Modules.dbMainModulesData!) {
         final permission = '${module['idTitle']}.access';
-        if (User.checkPermission(permission: permission)) {
+        if (Permissions.check(permission: permission)) {
           AppMainModule appMainModule = AppMainModule(
             id: module['id'],
             idTitle: module['idTitle'],

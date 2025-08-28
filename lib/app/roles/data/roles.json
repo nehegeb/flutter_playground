@@ -28,7 +28,7 @@
         "isDefaultRole": true,
         "permissions": [
             "template.access",
-            "template.read"
+            "template.view"
         ]
     },
     {
@@ -39,8 +39,8 @@
         "isDefaultRole": true,
         "permissions": [
             "template.access",
-            "template.read",
-            "template.write"
+            "template.view",
+            "template.edit"
         ]
     },
     {
@@ -51,8 +51,8 @@
         "isDefaultRole": true,
         "permissions": [
             "template.access",
-            "template.read",
-            "template.write",
+            "template.view",
+            "template.edit",
             "template.delete"
         ]
     },
@@ -74,7 +74,7 @@
         "isDefaultRole": true,
         "permissions": [
             "template.template.access",
-            "template.template.read"
+            "template.template.view"
         ]
     },
     {
@@ -85,8 +85,8 @@
         "isDefaultRole": true,
         "permissions": [
             "template.template.access",
-            "template.template.read",
-            "template.template.write"
+            "template.template.view",
+            "template.template.edit"
         ]
     },
     {
@@ -97,8 +97,8 @@
         "isDefaultRole": true,
         "permissions": [
             "template.template.access",
-            "template.template.read",
-            "template.template.write",
+            "template.template.view",
+            "template.template.edit",
             "template.template.delete"
         ]
     }

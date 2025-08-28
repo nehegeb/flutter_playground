@@ -1,6 +1,7 @@
 // set_permitted_app_sub_modules.dart
 //
 
+import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_sub_modules_data.dart';
@@ -26,7 +27,7 @@ Future<bool> setPermittedAppSubModules() async {
       for (final module in Modules.dbSubModulesData!) {
         final permission =
             '${module['mainModuleIdTitle']}.${module['idTitle']}.access';
-        if (User.checkPermission(permission: permission)) {
+        if (Permissions.check(permission: permission)) {
           AppSubModule appSubModule = AppSubModule(
             id: module['id'],
             idTitle: module['idTitle'],

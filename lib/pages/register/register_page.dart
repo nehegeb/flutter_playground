@@ -1,4 +1,4 @@
-// register.dart
+// register_page.dart
 //
 
 import 'package:flutter/material.dart';

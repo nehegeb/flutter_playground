@@ -2,12 +2,13 @@
 //
 
 // TODO: BUG: The app diplays before the localization is loaded on initialization.
-// TODO: (?) Make the role settings order by subModule?
-// TODO: (?) Maybe implement a filter feature for the users settings?
-// TODO: Implement settings for users.
-// TODO: Implement settings for roles.
-// TODO: Implement settings for assigning roles to users.
-// TODO: Make the settings usable on mobile devices.
+// TODO: (?) Make the role permissions order by subModule?
+// TODO: (?) Maybe implement a filter feature for the users permissions?
+// TODO: Implement permissions for modules.
+// TODO: Implement permissions for users.
+// TODO: Implement permissions for roles.
+// TODO: Implement permissions for assigning roles to users.
+// TODO: Make the permissions usable on mobile devices.
 // TODO: Finish the Template README file.
 // TODO: Add a page template in lib/modules/template/pages/.
 // TODO: Web page errors 404 etc.

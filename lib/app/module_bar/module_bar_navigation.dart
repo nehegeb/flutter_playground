@@ -4,24 +4,24 @@
 import 'package:flutter/material.dart';
 
 // Main pages imports.
-import 'package:flutter_playground/pages/home/home.dart';
-import 'package:flutter_playground/pages/login/login.dart';
-import 'package:flutter_playground/pages/register/register.dart';
-import 'package:flutter_playground/pages/about/about.dart';
-import 'package:flutter_playground/pages/permissions/permissions.dart';
-import 'package:flutter_playground/pages/page_not_found/page_not_found.dart';
+import 'package:flutter_playground/pages/home/home_page.dart';
+import 'package:flutter_playground/pages/login/login_page.dart';
+import 'package:flutter_playground/pages/register/register_page.dart';
+import 'package:flutter_playground/pages/about/about_page.dart';
+import 'package:flutter_playground/pages/permissions/permissions_page.dart';
+import 'package:flutter_playground/pages/page_not_found/page_not_found_page.dart';
 
 // Template main module pages imports.
-import 'package:flutter_playground/modules/template/pages/home/home.dart';
-import 'package:flutter_playground/modules/template/pages/about/about.dart';
-import 'package:flutter_playground/modules/template/modules/template/pages/home/home.dart';
+import 'package:flutter_playground/modules/template/pages/home/home_page.dart';
+import 'package:flutter_playground/modules/template/pages/about/about_page.dart';
+import 'package:flutter_playground/modules/template/modules/template/pages/home/home_page.dart';
 
 // Settings main module pages imports.
-import 'package:flutter_playground/modules/settings/pages/home/home.dart';
-import 'package:flutter_playground/modules/settings/pages/about/about.dart';
+import 'package:flutter_playground/modules/settings/pages/home/home_page.dart';
+import 'package:flutter_playground/modules/settings/pages/about/about_page.dart';
 
-// Note: The settings page for all main modules is always the same [SettingsPage].
-// So for the basic module settings, no special settings page has to be added here.
+// Note: The permissions page for all main modules is always the same [PermissionsPage].
+// So for the basic module permissions, no special permissions page has to be added here.
 // It automatically always only displays the data necessary for the corresponding main module.
 
 /// A widget to display the content for the selected module.
