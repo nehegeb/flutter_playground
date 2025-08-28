@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/app_helper/app_helper.dart';
+import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_users_tab_data.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/widgets/users_edit_dialog.dart';
 
@@ -74,10 +74,10 @@ class _UsersTabState extends State<UsersTab> {
                   onSelectChanged: (selected) {
                     if (selected == true) {
                       // Open the edit dialog for the clicked-on table entry.
-                      AppHelper.showPopupDialog(
+                      AppPopup.widgetDialog(
                         context: context,
                         title: userName,
-                        child: UsersEditDialog(userId: userData['userId']),
+                        widget: UsersEditDialog(userId: userData['userId']),
                       );
                     }
                   },

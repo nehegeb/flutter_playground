@@ -135,7 +135,16 @@
             "close": "Schließen",
             "closeAndCancel": "Schließen und Abbrechen",
             "cancel": "Abbrechen",
-            "save": "Speichern"
+            "save": "Speichern",
+            "edit": "Bearbeiten",
+            "delete": "Löschen"
+        },
+        "messageTypes": {
+            "success": "Erfolgreich",
+            "info": "Information",
+            "warning": "Warnung",
+            "error": "Fehler",
+            "loading": "Lädt..."
         },
         "months": {
             "january": "Januar",

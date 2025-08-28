@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/app_helper/app_helper.dart';
+import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_modules_tab_data.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/widgets/modules_edit_dialog.dart';
 
@@ -78,10 +78,10 @@ class _ModulesTabState extends State<ModulesTab> {
                   onSelectChanged: (selected) {
                     if (selected == true) {
                       // Open the edit dialog for the clicked-on table entry.
-                      AppHelper.showPopupDialog(
+                      AppPopup.widgetDialog(
                         context: context,
                         title: localizedModuleName,
-                        child: ModulesEditDialog(
+                        widget: ModulesEditDialog(
                           moduleId: moduleData['moduleId'],
                         ),
                       );

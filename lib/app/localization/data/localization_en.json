@@ -134,7 +134,16 @@
             "close": "Close",
             "closeAndCancel": "Close and Cancel",
             "cancel": "Cancel",
-            "save": "Save"
+            "save": "Save",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "messageTypes": {
+            "success": "Successful",
+            "info": "Information",
+            "warning": "Warning",
+            "error": "Error",
+            "loading": "Loading..."
         },
         "months": {
             "january": "January",
