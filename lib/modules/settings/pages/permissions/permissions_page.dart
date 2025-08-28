@@ -2,12 +2,14 @@
 //
 
 import 'package:flutter/material.dart';
+// import 'package:flutter_playground/app/app_helper/widgets/error_no_view_permission.dart';
+// import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/pages/permissions/permissions_page_utils.dart';
-import 'package:flutter_playground/pages/permissions/widgets/users_tab.dart';
-import 'package:flutter_playground/pages/permissions/widgets/modules_tab.dart';
-import 'package:flutter_playground/pages/permissions/widgets/roles_tab.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/permissions_page_utils.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/widgets/users_tab.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/widgets/modules_tab.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/widgets/roles_tab.dart';
 
 /// The permissions page.
 class PermissionsPage extends StatefulWidget {
@@ -33,6 +35,12 @@ class _PermissionsPageState extends State<PermissionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // // If the [AppUser] has no '.view' permission for this page,
+    // // show them an error message instead.
+    // if (!Permissions.check(permission: Permissions.settings.view)) {
+    //   return ErrorNoViewPermission();
+    // }
+
     final String activeModule = PermissionsPageUtils.activeMainModule;
     final bool isMainAppModule = activeModule == "main";
 
@@ -48,7 +56,7 @@ class _PermissionsPageState extends State<PermissionsPage> {
               children: [
                 // Tab bar for different settings categories.
                 DefaultTabController(
-                  length: isMainAppModule ? 3 : 2,
+                  length: isMainAppModule ? 1 : 2,
                   child: Column(
                     children: [
                       // Tab bar headers.
@@ -60,16 +68,18 @@ class _PermissionsPageState extends State<PermissionsPage> {
                                 'pages.permissions.modulesTab.title',
                               ),
                             ),
-                          Tab(
-                            text: Localization.getText(
-                              'pages.permissions.usersTab.title',
+                          if (!isMainAppModule)
+                            Tab(
+                              text: Localization.getText(
+                                'pages.permissions.usersTab.title',
+                              ),
                             ),
-                          ),
-                          Tab(
-                            text: Localization.getText(
-                              'pages.permissions.rolesTab.title',
+                          if (!isMainAppModule)
+                            Tab(
+                              text: Localization.getText(
+                                'pages.permissions.rolesTab.title',
+                              ),
                             ),
-                          ),
                         ],
                       ),
                       // Tab content.
@@ -77,7 +87,7 @@ class _PermissionsPageState extends State<PermissionsPage> {
                         height: MediaQuery.of(context).size.height - 146,
                         child: TabBarView(
                           children: isMainAppModule
-                              ? [ModulesTab(), UsersTab(), RolesTab()]
+                              ? [ModulesTab()]
                               : [UsersTab(), RolesTab()],
                         ),
                       ),

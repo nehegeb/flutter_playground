@@ -30,7 +30,7 @@
         "home": {
             "title": "Home",
             "messageWelcome": "Welcome",
-            "messageLogin": "You are currently in guest mode. Click here to log in...",
+            "messageLogin": "Click here to log in...",
             "messageNoModules": "You currently do not have access to any module!\nAsk a module administrator for access."
         },
         "login": {
@@ -130,6 +130,12 @@
         "licenseSource": "Source"
     },
     "misc": {
+        "buttons": {
+            "close": "Close",
+            "closeAndCancel": "Close and Cancel",
+            "cancel": "Cancel",
+            "save": "Save"
+        },
         "months": {
             "january": "January",
             "february": "February",
@@ -148,6 +154,7 @@
     "errors": {
         "windowTooSmall": "Window too small!",
         "dataNotLoaded": "<<data>> could not be loaded. Try reloading the page (F5).",
+        "noViewPermission": "You do not have permission to view this page.",
         "missingRequiredFields": "Please fill in all required fields.",
         "passwordTooShort": "Password must be at least 8 characters long.",
         "passwordNoUppercase": "Password must contain at least one uppercase letter.",

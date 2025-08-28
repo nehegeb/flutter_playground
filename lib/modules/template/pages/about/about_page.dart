@@ -2,6 +2,8 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/app/app_helper/widgets/error_no_view_permission.dart';
+import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/changelog/changelog.dart';
 import 'package:flutter_playground/app/changelog/widgets/changelog_expansion_tile.dart';
@@ -30,6 +32,12 @@ class _TemplateAboutPageState extends State<TemplateAboutPage> {
 
   @override
   Widget build(BuildContext context) {
+    // If the [AppUser] has no '.view' permission for this page,
+    // show them an error message instead.
+    if (!Permissions.check(permission: Permissions.template.view)) {
+      return ErrorNoViewPermission();
+    }
+
     return SizedBox.expand(
       child: Padding(
         padding: const EdgeInsets.all(20.0),

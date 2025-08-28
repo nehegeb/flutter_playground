@@ -78,6 +78,17 @@ class _MainModuleButtonState extends State<MainModuleButton> {
         final bool expanded =
             hasSubModules && activeAppMainModule == appMainModule;
 
+        // Define the color of the icon and label for the [MainModuleButton].
+        final Color contentColor = widget.selected
+            // Selected button.
+            ? Theme.of(context).colorScheme.onPrimary
+            // Normal button.
+            : (appMainModule?.isAdministrative == true
+                  // When module is administrative.
+                  ? Colors.red
+                  // Normal module.
+                  : Theme.of(context).colorScheme.primary);
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -109,12 +120,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                                   iconPath,
                                   width: 32,
                                   height: 32,
-                                  color: widget.selected
-                                      ? Theme.of(context).colorScheme.onPrimary
-                                      : Modules.getColor(
-                                          appMainModule: appMainModule,
-                                          shade: 800,
-                                        ),
+                                  color: contentColor,
                                 )
                               : const SizedBox(width: 32, height: 32),
 
@@ -126,11 +132,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                                 label,
                                 style: TextStyle(
                                   fontSize: 18,
-                                  color: widget.selected
-                                      ? Theme.of(context).colorScheme.onPrimary
-                                      : Modules.getColor(
-                                          appMainModule: appMainModule,
-                                        ),
+                                  color: contentColor,
                                   fontWeight: widget.selected
                                       ? FontWeight.bold
                                       : FontWeight.normal,

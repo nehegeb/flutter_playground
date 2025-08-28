@@ -3,7 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/pages/permissions/logic/get_users_tab_data.dart';
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_users_tab_data.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/widgets/users_edit_dialog.dart';
 
 /// The users tab of the app permissions.
 class UsersTab extends StatefulWidget {
@@ -41,6 +43,7 @@ class _UsersTabState extends State<UsersTab> {
           child: SingleChildScrollView(
             child: DataTable(
               dataRowMaxHeight: double.infinity,
+              showCheckboxColumn: false,
               columns: [
                 DataColumn(
                   label: Text(
@@ -65,10 +68,22 @@ class _UsersTabState extends State<UsersTab> {
                 ),
               ],
               rows: _usersTableData!.map<DataRow>((userData) {
+                String userName = userData['name']?.toString() ?? '';
+
                 return DataRow(
+                  onSelectChanged: (selected) {
+                    if (selected == true) {
+                      // Open the edit dialog for the clicked-on table entry.
+                      AppHelper.showPopupDialog(
+                        context: context,
+                        title: userName,
+                        child: UsersEditDialog(userId: userData['userId']),
+                      );
+                    }
+                  },
                   cells: [
                     // Column for the user name.
-                    DataCell(Text(userData['name']?.toString() ?? '')),
+                    DataCell(Text(userName)),
                     // Column for the user eMail address.
                     DataCell(Text(userData['email']?.toString() ?? '')),
                     // Column for the user's roles.

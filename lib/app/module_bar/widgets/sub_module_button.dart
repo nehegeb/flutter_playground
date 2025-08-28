@@ -64,6 +64,17 @@ class SubModuleButton extends StatelessWidget {
         iconExists = appSubModule?.idTitle != null;
     }
 
+    // Define the color of the icon and label for the [SubModuleButton].
+    final Color contentColor = selected
+        // Selected button.
+        ? Theme.of(context).colorScheme.onPrimary
+        // Normal button.
+        : (appSubModule?.isAdministrative == true
+              // When module is administrative.
+              ? Colors.red
+              // Normal module.
+              : Theme.of(context).colorScheme.primary);
+
     return Material(
       color: Colors.transparent,
       child: Tooltip(
@@ -91,12 +102,7 @@ class SubModuleButton extends StatelessWidget {
                           iconPath,
                           width: 20,
                           height: 20,
-                          color: selected
-                              ? Theme.of(context).colorScheme.onPrimary
-                              : Modules.getColor(
-                                  appSubModule: appSubModule,
-                                  shade: 800,
-                                ),
+                          color: contentColor,
                         )
                       : const SizedBox(width: 20, height: 20),
                   const SizedBox(width: 6),
@@ -109,9 +115,7 @@ class SubModuleButton extends StatelessWidget {
                         label,
                         style: TextStyle(
                           fontSize: 14,
-                          color: selected
-                              ? Theme.of(context).colorScheme.onPrimary
-                              : Modules.getColor(appSubModule: appSubModule),
+                          color: contentColor,
                           fontWeight: selected
                               ? FontWeight.bold
                               : FontWeight.normal,

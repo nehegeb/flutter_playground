@@ -13,7 +13,6 @@ final ThemeData appThemeLight = (() {
     brightness: Brightness.light,
     colorScheme: colorScheme,
     useMaterial3: true,
-    scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
       backgroundColor: colorScheme.primary,
       foregroundColor: colorScheme.onPrimary,

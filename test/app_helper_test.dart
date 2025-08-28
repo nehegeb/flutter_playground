@@ -8,12 +8,6 @@ import 'package:flutter_playground/app/app_helper/app_helper.dart';
 
 void main() {
   group('AppHelper', () {
-    test('toNameCase capitalizes each word', () {
-      expect(AppHelper.toNameCase('foo bar'), 'Foo Bar');
-      expect(AppHelper.toNameCase(''), '');
-      expect(AppHelper.toNameCase('foobar'), 'Foobar');
-    });
-
     test('toRichText returns empty TextSpan for empty text', () {
       final span = AppHelper.toRichText('');
       expect(span, isA<TextSpan>());

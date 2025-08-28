@@ -17,7 +17,6 @@ import 'package:flutter_playground/app/modules/logic/set_active_app_main_module.
 import 'package:flutter_playground/app/modules/logic/set_active_app_sub_module.dart';
 import 'package:flutter_playground/app/modules/logic/get_app_main_module.dart';
 import 'package:flutter_playground/app/modules/logic/get_app_sub_module.dart';
-import 'package:flutter_playground/app/modules/logic/get_module_color.dart';
 import 'package:flutter_playground/app/modules/logic/set_permitted_app_modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_main_modules_data.dart';
 import 'package:flutter_playground/app/modules/logic/load_sub_modules_data.dart';
@@ -52,7 +51,6 @@ final ValueNotifier<List<AppSubModule>> subModulesNotifier =
 /// - [dbSubModulesData]: Get the sub modules data.
 /// - [getMainModule]: Gets a specific permitted [AppMainModule], according to its name.
 /// - [getSubModule]: Gets a specific permitted [AppSubModule], according to its name.
-/// - [getColor]: Gets a usable color of a specific [AppMainModule] or [AppSubModule].
 /// - [setActiveMainModule]: Sets the [AppMainModule] as active, according to its name.
 /// - [setActiveSubModule]: Sets the [AppSubModule] as active, according to its name.
 /// - [setPermittedModules]: Sets the [AppMainModule]s and [AppSubModule]s as permitted modules, returns boolean.
@@ -109,21 +107,6 @@ class Modules {
     return getAppSubModule(subModule: subModule);
   }
 
-  /// Returns a valid color of a module.
-  /// Only one [AppMainModule] OR [AppSubModule] can be given.
-  /// If no valid color could been found or none or both arguments are given, it returns null.
-  static Color? getColor({
-    AppMainModule? appMainModule,
-    AppSubModule? appSubModule,
-    int shade = 500, // 500 is the default shade.
-  }) {
-    return getModuleColor(
-      appMainModule: appMainModule,
-      appSubModule: appSubModule,
-      shade: shade,
-    );
-  }
-
   /// Set the currently active [AppMainModule].
   /// It uses the name of the main module to identify it.
   static void setActiveMainModule({required String mainModule}) {
@@ -166,19 +149,19 @@ class Modules {
 /// - [idTitle]: The unique title of the main module.
 /// - [isPublic]: Whether the main module is public. If true, it will only be shown for [AppUser]s with access to it.
 /// - [isHidden]: Whether the main module is hidden. If true, it won't show up for anyone.
-/// - [color]: The color of the main module, used for styling purposes. If null, it uses default colors.
+/// - [isAdministrative]: Whether the main module is administrative. If true, it will be displayed in another color.
 class AppMainModule {
   final String id;
   final String idTitle;
   final bool isPublic;
   final bool isHidden;
-  final String? color;
+  final bool isAdministrative;
   AppMainModule({
     required this.id,
     required this.idTitle,
     this.isPublic = false,
     this.isHidden = false,
-    this.color,
+    this.isAdministrative = false,
   });
 
   factory AppMainModule.fromMap(Map<String, dynamic> map) {
@@ -187,7 +170,7 @@ class AppMainModule {
       idTitle: map['idTitle'],
       isPublic: map['isPublic'] ?? false,
       isHidden: map['isHidden'] ?? false,
-      color: map['color'],
+      isAdministrative: map['isAdministrative'] ?? false,
     );
   }
 }
@@ -200,21 +183,21 @@ class AppMainModule {
 /// - [mainModuleIdTitle]: The unique title of the [AppMainModule] the sub module belongs.
 /// - [isPublic]: Whether the sub module is public. If true, it will only be shown for [AppUser]s with access to it.
 /// - [isHidden]: Whether the sub module is hidden. If true, it won't show up for anyone.
-/// - [color]: The color of the sub module, used for styling purposes. If null, it uses default colors.
+/// - [isAdministrative]: Whether the sub module is administrative. If true, it will be displayed in another color.
 class AppSubModule {
   final String id;
   final String idTitle;
   final String mainModuleIdTitle;
   final bool isPublic;
   final bool isHidden;
-  final String? color;
+  final bool isAdministrative;
   AppSubModule({
     required this.id,
     required this.idTitle,
     required this.mainModuleIdTitle,
     this.isPublic = false,
     this.isHidden = false,
-    this.color,
+    this.isAdministrative = false,
   });
 
   factory AppSubModule.fromMap(Map<String, dynamic> map) {
@@ -224,7 +207,7 @@ class AppSubModule {
       mainModuleIdTitle: map['mainModuleIdTitle'],
       isPublic: map['isPublic'] ?? false,
       isHidden: map['isHidden'] ?? false,
-      color: map['color'],
+      isAdministrative: map['isAdministrative'] ?? false,
     );
   }
 }

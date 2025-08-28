@@ -5,7 +5,7 @@ import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_main_modules_data.dart';
-import 'package:flutter_playground/pages/permissions/permissions_page_utils.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/permissions_page_utils.dart';
 
 /// Get the data for the modules permissions tab.
 Future<List<Map<String, dynamic>>?> getModulesTabData() async {

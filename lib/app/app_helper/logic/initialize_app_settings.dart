@@ -1,4 +1,4 @@
-// init_app_settings.dart
+// initialize_app_settings.dart
 //
 
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 /// Initializes the [MainApp] settings.
 /// If the settings exist in the local cache, it sets them accordingly.
 /// If the a setting cannot be determined, it defaults accordingly.
-Future<bool> initAppSettings() async {
+Future<bool> initializeAppSettings() async {
   // Initialize the supported languages of the app.
   await Localization.initDbLanguagesData();
 

@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/misc/widgets/popup_menu_entry_compact.dart';
+import 'package:flutter_playground/app/app_helper/widgets/popup_menu_entry_compact.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 

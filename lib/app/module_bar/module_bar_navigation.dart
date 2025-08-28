@@ -4,12 +4,14 @@
 import 'package:flutter/material.dart';
 
 // Main pages imports.
-import 'package:flutter_playground/pages/home/home_page.dart';
-import 'package:flutter_playground/pages/login/login_page.dart';
-import 'package:flutter_playground/pages/register/register_page.dart';
-import 'package:flutter_playground/pages/about/about_page.dart';
-import 'package:flutter_playground/pages/permissions/permissions_page.dart';
-import 'package:flutter_playground/pages/page_not_found/page_not_found_page.dart';
+import 'package:flutter_playground/modules/main/pages/home/home_page.dart';
+import 'package:flutter_playground/modules/main/pages/about/about_page.dart';
+import 'package:flutter_playground/modules/main/pages/login/login_page.dart';
+import 'package:flutter_playground/modules/main/pages/register/register_page.dart';
+import 'package:flutter_playground/modules/main/pages/page_not_found/page_not_found_page.dart';
+
+// Global settings pages imports.
+import 'package:flutter_playground/modules/settings/pages/permissions/permissions_page.dart';
 
 // Template main module pages imports.
 import 'package:flutter_playground/modules/template/pages/home/home_page.dart';
@@ -35,16 +37,18 @@ class ModuleBarNavigation extends StatelessWidget {
       // Main pages.
       case 'HomePage':
         return HomePage();
+      case 'AboutPage':
+        return AboutPage();
       case 'LoginPage':
         return LoginPage();
       case 'RegisterPage':
         return RegisterPage();
-      case 'AboutPage':
-        return AboutPage();
-      case 'PermissionsPage':
-        return PermissionsPage();
       case 'PageNotFoundPage':
         return PageNotFoundPage();
+
+      // Global settings pages.
+      case 'PermissionsPage':
+        return PermissionsPage();
 
       // Template module pages.
       case 'TemplateHomePage':
@@ -61,7 +65,7 @@ class ModuleBarNavigation extends StatelessWidget {
       case 'SettingsAboutPage':
         return SettingsAboutPage();
 
-      // NOTE: Add more pages here as needed.
+      // NOTE: Add more pages as needed.
       default:
         return HomePage();
     }

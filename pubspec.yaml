@@ -27,13 +27,13 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - lib/app/licensing/data/
     - lib/app/localization/data/
+    - lib/app/licensing/data/
     - lib/app/user/data/
     - lib/app/modules/data/
     - lib/app/roles/data/
     # Changelogs
-    - lib/app/changelog/data/
+    - lib/modules/main/changelog/
     - lib/modules/template/changelog/
     - lib/modules/settings/changelog/
     # Assets

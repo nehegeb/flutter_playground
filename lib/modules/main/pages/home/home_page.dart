@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/app/app_helper/app_helper.dart';
 
 /// The home page of the app.
 class HomePage extends StatelessWidget {
@@ -22,7 +21,7 @@ class HomePage extends StatelessWidget {
       return '${Localization.getText('pages.home.messageWelcome')}!';
     }
     // Otherwise, display the user name next to the welcome message.
-    return '${Localization.getText('pages.home.messageWelcome')} ${AppHelper.toNameCase(userName)}!';
+    return '${Localization.getText('pages.home.messageWelcome')} $userName!';
   }
 
   @override

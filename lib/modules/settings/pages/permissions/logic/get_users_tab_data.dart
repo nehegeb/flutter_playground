@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/pages/permissions/permissions_page_utils.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/permissions_page_utils.dart';
 
 /// Get the data for the users permissions tab.
 Future<List<Map<String, dynamic>>?> getUsersTabData() async {
@@ -24,6 +24,7 @@ Future<List<Map<String, dynamic>>?> getUsersTabData() async {
   final List<Map<String, dynamic>> usersTabData = [];
   for (final user in appUsers ?? []) {
     usersTabData.add({
+      'userId': user.id,
       'name': user.name,
       'email': user.email,
       'roles': (user.roles ?? [])

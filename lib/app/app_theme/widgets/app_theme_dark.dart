@@ -16,7 +16,6 @@ final ThemeData appThemeDark = (() {
     brightness: Brightness.dark,
     colorScheme: colorScheme,
     useMaterial3: true,
-    scaffoldBackgroundColor: Color.alphaBlend(Colors.black87, Colors.grey),
     appBarTheme: AppBarTheme(
       backgroundColor: colorScheme.primary,
       foregroundColor: colorScheme.onPrimary,

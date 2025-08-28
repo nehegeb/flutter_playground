@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter_playground/app/roles/roles.dart';
-import 'package:flutter_playground/pages/permissions/permissions_page_utils.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/permissions_page_utils.dart';
 
 /// Get the data for the roles permissions tab.
 Future<List<Map<String, dynamic>>?> getRolesTabData() async {
@@ -18,6 +18,7 @@ Future<List<Map<String, dynamic>>?> getRolesTabData() async {
   final List<Map<String, dynamic>> rolesTabData = [];
   for (final role in appRoles ?? []) {
     rolesTabData.add({
+      'roleId': role.id,
       'name': role.idTitle,
       'permissions': role.permissions,
       'mainModule': role.mainModuleIdTitle,

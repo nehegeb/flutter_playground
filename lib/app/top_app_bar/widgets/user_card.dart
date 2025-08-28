@@ -2,7 +2,6 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
 

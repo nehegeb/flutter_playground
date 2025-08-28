@@ -3,7 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/pages/permissions/logic/get_modules_tab_data.dart';
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_modules_tab_data.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/widgets/modules_edit_dialog.dart';
 
 /// The modules tab of the permissions.
 class ModulesTab extends StatefulWidget {
@@ -41,6 +43,7 @@ class _ModulesTabState extends State<ModulesTab> {
           child: SingleChildScrollView(
             child: DataTable(
               dataRowMaxHeight: double.infinity,
+              showCheckboxColumn: false,
               columns: [
                 DataColumn(
                   label: Text(
@@ -65,18 +68,28 @@ class _ModulesTabState extends State<ModulesTab> {
                 ),
               ],
               rows: _modulesTableData!.map<DataRow>((moduleData) {
+                String localizedModuleName = moduleData['moduleName'] == 'main'
+                    ? Localization.getText('appName')
+                    : Localization.getText(
+                        'modules.${moduleData['moduleName']}.title',
+                      );
+
                 return DataRow(
+                  onSelectChanged: (selected) {
+                    if (selected == true) {
+                      // Open the edit dialog for the clicked-on table entry.
+                      AppHelper.showPopupDialog(
+                        context: context,
+                        title: localizedModuleName,
+                        child: ModulesEditDialog(
+                          moduleId: moduleData['moduleId'],
+                        ),
+                      );
+                    }
+                  },
                   cells: [
                     // Column for the main module name.
-                    DataCell(
-                      Text(
-                        moduleData['moduleName'] == 'main'
-                            ? Localization.getText('appName')
-                            : Localization.getText(
-                                'modules.${moduleData['moduleName']}.title',
-                              ),
-                      ),
-                    ),
+                    DataCell(Text(localizedModuleName)),
                     // Column for the public flag.
                     DataCell(
                       Icon(

@@ -4,13 +4,13 @@
         "idTitle": "template",
         "isPublic": false,
         "isHidden": false,
-        "color": null
+        "isAdministrative": false
     },
     {
         "id": "6e9214d2-9539-4f2f-9642-6ea235440733",
         "idTitle": "settings",
-        "isPublic": true,
+        "isPublic": false,
         "isHidden": false,
-        "color": "red"
+        "isAdministrative": true
     }
 ]

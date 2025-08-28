@@ -3,8 +3,8 @@
 
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/misc/widgets/loading_overlay.dart';
 
 Map<String, dynamic>? changelogData;
 
@@ -19,18 +19,15 @@ Future<void> loadChangelogData(String? module) async {
     Localization.getText('changelog.changelogDataLoading'),
   );
 
-  // Specify the path to the changelog JSON file based on the given [module].
-  String modulePath = '';
-  if (module == null || module.isEmpty || module == 'main') {
-    modulePath = 'lib/app/changelog/data/changelog.json';
-  } else {
-    modulePath = 'lib/modules/$module/changelog/changelog.json';
-  }
+  // If no [module] is given, it defaults to the 'main' [AppMainModule].
+  module = module != null && module.isNotEmpty ? module : 'main';
 
   // Load the changelog JSON file from the given [module].
   try {
     // Load the changelog data.
-    final jsonData = await rootBundle.loadString(modulePath);
+    final jsonData = await rootBundle.loadString(
+      'lib/modules/$module/changelog/changelog.json',
+    );
     changelogData = json.decode(jsonData) as Map<String, dynamic>;
   } finally {
     // Dismiss the loading overlay after loading is complete.

@@ -3,7 +3,7 @@
 
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
-import 'package:flutter_playground/pages/permissions/permissions_page_utils.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/permissions_page_utils.dart';
 
 /// Get a list of all [AppUser]s for a specific [mainModule].
 /// If none are found, return null.

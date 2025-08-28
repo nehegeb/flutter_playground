@@ -31,7 +31,7 @@ Future<bool> setPermittedAppMainModules() async {
             idTitle: module['idTitle'],
             isPublic: module['isPublic'],
             isHidden: module['isHidden'],
-            color: module['color'],
+            isAdministrative: module['isAdministrative'],
           );
           appMainModules.add(appMainModule);
         }
@@ -48,7 +48,7 @@ Future<bool> setPermittedAppMainModules() async {
             idTitle: module['idTitle'],
             isPublic: module['isPublic'],
             isHidden: module['isHidden'],
-            color: module['color'],
+            isAdministrative: module['isAdministrative'],
           );
           appMainModules.add(appMainModule);
         }

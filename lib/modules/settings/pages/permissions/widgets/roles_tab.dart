@@ -3,7 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/pages/permissions/logic/get_roles_tab_data.dart';
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_roles_tab_data.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/widgets/roles_edit_dialog.dart';
 
 /// The roles tab of the app permissions.
 class RolesTab extends StatefulWidget {
@@ -41,6 +43,7 @@ class _RolesTabState extends State<RolesTab> {
           child: SingleChildScrollView(
             child: DataTable(
               dataRowMaxHeight: double.infinity,
+              showCheckboxColumn: false,
               columns: [
                 DataColumn(
                   label: Text(
@@ -58,17 +61,26 @@ class _RolesTabState extends State<RolesTab> {
                 ),
               ],
               rows: _rolesTableData!.map<DataRow>((roleData) {
+                String roleName =
+                    (roleData['subModule'] == null ||
+                        roleData['subModule'].toString().isEmpty)
+                    ? roleData['name']?.toString() ?? ''
+                    : '${roleData['subModule'].toString()} ${roleData['name']?.toString() ?? ''}';
+
                 return DataRow(
+                  onSelectChanged: (selected) {
+                    if (selected == true) {
+                      // Open the edit dialog for the clicked-on table entry.
+                      AppHelper.showPopupDialog(
+                        context: context,
+                        title: roleName,
+                        child: RolesEditDialog(roleId: roleData['roleId']),
+                      );
+                    }
+                  },
                   cells: [
                     // Column for the role name.
-                    DataCell(
-                      Text(
-                        (roleData['subModule'] == null ||
-                                roleData['subModule'].toString().isEmpty)
-                            ? roleData['name']?.toString() ?? ''
-                            : '${roleData['subModule'].toString()} ${roleData['name']?.toString() ?? ''}',
-                      ),
-                    ),
+                    DataCell(Text(roleName)),
                     // Column for the permissions.
                     DataCell(
                       Padding(

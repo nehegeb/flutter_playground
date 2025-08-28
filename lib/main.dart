@@ -1,7 +1,6 @@
 // main.dart
 //
 
-// TODO: BUG: The app diplays before the localization is loaded on initialization.
 // TODO: (?) Make the role permissions order by subModule?
 // TODO: (?) Maybe implement a filter feature for the users permissions?
 // TODO: Implement permissions for modules.
@@ -13,10 +12,10 @@
 // TODO: Add a page template in lib/modules/template/pages/.
 // TODO: Web page errors 404 etc.
 // TODO: Make the template module 'isHidden' in the end.
+// TODO: Remove the test-users in the end.
 // TODO: Implement tests for all major functions (utils).
 // TODO: Check all files and only 'show' the necessary import widgets.
-// TODO: Make a search for all TODOs and DEBUGs and clean up the code.^
-// TODO: Add tests for everything important - at least for all utils.
+// TODO: Make a search for all TODOs and clean up the code.^
 // TODO: Add more supported licenses. Apache, GPL, ...
 //       https://gist.github.com/nicolasdao/a7adda51f2f185e8d2700e1573d8a633
 // TODO: (?) Implement feedback feature.
@@ -35,7 +34,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_playground/screens/main_screen.dart';
 import 'package:flutter_playground/screens/splash_screen.dart';
-import 'package:flutter_playground/app/misc/logic/init_app_settings.dart';
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
@@ -92,7 +91,7 @@ class _MainAppState extends State<MainApp> {
 
   /// Initializes the app settings from local cache.
   Future<void> _initAppSettings() async {
-    await initAppSettings();
+    await AppHelper.initAppSettings();
     // Initialization is complete. Splash screen can now be hidden.
     setState(() {
       _isAppInitialized = true;

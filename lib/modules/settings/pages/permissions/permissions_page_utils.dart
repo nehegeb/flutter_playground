@@ -8,9 +8,9 @@ import 'package:flutter_playground/app/user/logic/get_user_permissions.dart';
 import 'package:flutter_playground/app/modules/logic/get_sub_modules_of_main_module.dart';
 import 'package:flutter_playground/app/permissions/logic/get_main_module_from_permission.dart';
 import 'package:flutter_playground/app/permissions/logic/get_sub_module_from_permission.dart';
-import 'package:flutter_playground/pages/permissions/logic/get_active_main_module.dart';
-import 'package:flutter_playground/pages/permissions/logic/get_main_module_app_roles.dart';
-import 'package:flutter_playground/pages/permissions/logic/get_main_module_app_users.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_active_main_module.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_main_module_app_roles.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_main_module_app_users.dart';
 
 /// Utility class for permissions management.
 /// Provides static methods for the permissions pages.

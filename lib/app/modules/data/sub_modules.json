@@ -6,7 +6,7 @@
         "mainModuleIdTitle": "template",
         "isPublic": true,
         "isHidden": false,
-        "color": null
+        "isAdministrative": false
     },
     {
         "id": "8fbf0c5c-0ab6-4bed-89da-4b68882437f8",
@@ -15,15 +15,15 @@
         "mainModuleIdTitle": "template",
         "isPublic": false,
         "isHidden": false,
-        "color": "red"
+        "isAdministrative": true
     },
     {
         "id": "b4547e43-6b9c-4ff5-a773-d3f79185c6d5",
         "idTitle": "permissions",
         "mainModuleId": "6e9214d2-9539-4f2f-9642-6ea235440733",
         "mainModuleIdTitle": "settings",
-        "isPublic": true,
+        "isPublic": false,
         "isHidden": false,
-        "color": "red"
+        "isAdministrative": true
     }
 ]

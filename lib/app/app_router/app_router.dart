@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/screens/main_screen.dart';
 import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/app/misc/widgets/loading_overlay.dart';
+import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_router/widgets/fade_page_transition.dart';
 

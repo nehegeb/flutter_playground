@@ -3,8 +3,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:country_flags/country_flags.dart';
+import 'package:flutter_playground/app/app_helper/widgets/popup_menu_entry_compact.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
-import 'package:flutter_playground/app/misc/widgets/popup_menu_entry_compact.dart';
 
 // The [LanguagesSelectOverlay] widget showing the flag of the current app language.
 // This is opened using the [showLanguagesSelectOverlay] function.

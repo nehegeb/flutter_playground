@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/changelog/widgets/changenote_info.dart';
 import 'package:flutter_playground/app/app_helper/app_helper.dart';
-import 'package:flutter_playground/app/misc/widgets/expansion_tile_compact.dart';
+import 'package:flutter_playground/app/app_helper/widgets/expansion_tile_compact.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 
 /// An expansion tile for a changelog entry with version, title, and date.
