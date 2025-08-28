@@ -1,6 +1,7 @@
 // get_modules_tab_data.dart
 //
 
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_main_modules_data.dart';
@@ -16,14 +17,19 @@ Future<List<Map<String, dynamic>>?> getModulesTabData() async {
 
   // Get all main modules, including the 'main' main module.
   final List<dynamic> mainModules = [
-    {'id': 0, 'idTitle': 'main', 'isPublic': true, 'isHidden': false},
+    {
+      'id': AppHelper.uuid,
+      'idTitle': 'main',
+      'isPublic': true,
+      'isHidden': false,
+    },
     ...?Modules.dbMainModulesData,
   ];
 
   // Prepare the data for the modules permissions tab.
   List<Map<String, dynamic>>? modulesTabData = [];
   for (final module in mainModules) {
-    final int mainModuleId = module['id'];
+    final String mainModuleId = module['id'];
     final String mainModuleName = module['idTitle'];
     final bool mainModuleIsPublic = module['isPublic'];
     final bool mainModuleIsHidden = module['isHidden'];
@@ -43,7 +49,7 @@ Future<List<Map<String, dynamic>>?> getModulesTabData() async {
     final Map<String, dynamic> administrators = {};
     if (moduleUsers != null) {
       for (final user in moduleUsers) {
-        final int userId = user.id;
+        final String userId = user.id;
         final String userName = user.name;
 
         // Check, if the user is an administrator for this main module.

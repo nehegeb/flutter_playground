@@ -40,12 +40,12 @@ class Roles {
 /// A role of the app.
 ///
 /// Arguments:
-/// - [id]: The unique identifier of the role, as an integer.
-/// - [idTitle]: The unique title of the role, as a string.
+/// - [id]: The unique identifier of the role, as an UUID.
+/// - [idTitle]: The unique title of the role.
 /// - [isDefaultRole]: Whether this is a default role or not. If true, this role cannot be modified.
 /// - [permissions]: A list of permissions granted to this role, as strings.
 class AppRole {
-  final int id;
+  final String id;
   final String idTitle;
   final String mainModuleIdTitle;
   final String subModuleIdTitle;
@@ -62,7 +62,7 @@ class AppRole {
 
   factory AppRole.fromMap(Map<String, dynamic> map) {
     return AppRole(
-      id: map['id'] is int ? map['id'] : int.tryParse(map['id'].toString()),
+      id: map['id'],
       idTitle: map['idTitle'],
       mainModuleIdTitle: map['mainModuleIdTitle'],
       subModuleIdTitle: map['subModuleIdTitle'],

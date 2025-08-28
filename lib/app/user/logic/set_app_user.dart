@@ -6,7 +6,6 @@ import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/user/logic/get_user_roles.dart';
 import 'package:flutter_playground/app/user/logic/get_user_permissions.dart';
-import 'package:flutter_playground/app/user/logic/get_user_title.dart';
 
 /// Sets the [AppUser] for the [appUserNotifier].
 /// If arguments are not given, it keeps the values already set for the currently logged in [AppUser], if any.
@@ -15,7 +14,7 @@ import 'package:flutter_playground/app/user/logic/get_user_title.dart';
 ///
 /// This is performed after the login and whenever the user's information changes.
 Future<void> setAppUser({
-  required int id,
+  required String id,
   String? email,
   String? name,
   String? passwordHash,
@@ -52,21 +51,21 @@ Future<void> setAppUser({
     permissions = userPermissions;
   }
 
-  // Get the user's title to display in the app.
-  String title = getUserTitle(appRoles: roles);
-
   // Set the [AppUser] for the [appUserNotifier].
   final AppUser user = AppUser(
     id: id,
     email: email,
     name: name,
-    title: title,
+    title: '', // Will be set afterwards.
     passwordHash: passwordHash,
     passwordSalt: passwordSalt,
     roles: roles,
     permissions: permissions,
   );
   appUserNotifier.value = user;
+
+  // Set the now logged in [AppUser]'s title.
+  User.setTitle();
 
   // Load the modules data (anew), to make sure changed modules are reflected.
   await Modules.initDbModulesData();

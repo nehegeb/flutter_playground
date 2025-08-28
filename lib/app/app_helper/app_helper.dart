@@ -2,6 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/app/app_helper/logic/generate_uuid.dart';
 import 'package:flutter_playground/app/app_helper/logic/convert_to_name_case.dart';
 import 'package:flutter_playground/app/app_helper/logic/convert_to_rich_text.dart';
 import 'package:flutter_playground/app/app_helper/logic/convert_date_to_text.dart';
@@ -10,11 +11,18 @@ import 'package:flutter_playground/app/app_helper/logic/convert_month_to_text.da
 /// A helper class containing methods for various logic widgets.
 ///
 /// Static Methods:
+/// - [uuid]: Generates a new UUID.
 /// - [toNameCase]: Converts a string to 'Name Case' (capitalize each word).
 /// - [toRichText]: Converts a string to a TextSpan with clickable URLs.
 /// - [dateToReadableText]: Converts a date string to a more readable format.
 /// - [monthNumberToText]: Converts a month number to its corresponding text representation.
 class AppHelper {
+  /// Generates a new UUID.
+  /// Returns a UUID like '00000000-aaaa-0000-aaaa-000000000000'.
+  static String get uuid {
+    return generateUuid();
+  }
+
   /// Converts a string to 'Name Case' (capitalize each word).
   static String toNameCase(String text) {
     // If the given [text] is empty, return an empty string.

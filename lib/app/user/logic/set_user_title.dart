@@ -19,10 +19,10 @@ void setUserTitle({String? mainModuleName}) {
     userRoles = User.user!.roles;
   }
 
+  List<AppRole>? titleRoles = [];
+
   // If the [AppUser] has any [AppRole]s, find the appropriate title.
   if (userRoles != null && userRoles.isNotEmpty) {
-    List<AppRole>? titleRoles = [];
-
     // Check, if the [AppUser] is an administrator.
     final AppRole adminRole = userRoles.firstWhere(
       (role) => role.permissions!.contains('*'),
@@ -49,10 +49,10 @@ void setUserTitle({String? mainModuleName}) {
           )
           .toList();
     }
-
-    // Get the user title from its filtered [AppRole]s.
-    userTitle = getUserTitle(appRoles: titleRoles);
   }
+
+  // Get the user title from its filtered [AppRole]s, if any.
+  userTitle = getUserTitle(appRoles: titleRoles);
 
   // Set the title for the [AppUser].
   final AppUser user = AppUser(

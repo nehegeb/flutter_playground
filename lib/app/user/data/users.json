@@ -1,69 +1,69 @@
 [
     {
-        "id": 1,
+        "id": "e9e19b2f-60c7-4042-9269-59f9c4b70a48",
         "email": "arthur.dent@megadodo.pub",
         "name": "Arthur Dent",
         "passwordHash": "61f7b676722a1b4a7c8eba16c781474fa1f6d14d9270e5e1c13f7c8b9bcc1651",
         "passwordSalt": "EjQY0gQbVWLxS8M_lVcLVg==",
         "rolesIds": [
-            1
+            "e1ea06f8-e361-428b-b871-50babaf5ada4"
         ]
     },
     {
-        "id": 2,
+        "id": "d4f99a24-d9ba-4c69-bd8f-30a7f4347128",
         "email": "ford.prefect@megadodo.pub",
         "name": "Ford Prefect",
         "passwordHash": "61f7b676722a1b4a7c8eba16c781474fa1f6d14d9270e5e1c13f7c8b9bcc1651",
         "passwordSalt": "EjQY0gQbVWLxS8M_lVcLVg==",
         "rolesIds": [
-            4,
-            7
+            "b2f08877-4faa-4662-9878-13760b6596a1",
+            "6b7d688c-6622-42e0-8426-46cf84c4b349"
         ]
     },
     {
-        "id": 10,
+        "id": "a1000000-0000-0000-0000-000000000000",
         "email": "lorem@megadodo.pub",
         "name": "Lorem",
         "passwordHash": "",
         "passwordSalt": "",
         "rolesIds": [
-            7,
-            10,
-            4
+            "6b7d688c-6622-42e0-8426-46cf84c4b349",
+            "e02aad41-09bc-407a-a429-63b8e2df542c",
+            "b2f08877-4faa-4662-9878-13760b6596a1"
         ]
     },
     {
-        "id": 11,
+        "id": "a2000000-0000-0000-0000-000000000000",
         "email": "ipsum@megadodo.pub",
         "name": "Ipsum",
         "passwordHash": "",
         "passwordSalt": "",
         "rolesIds": [
-            1,
-            7
+            "e1ea06f8-e361-428b-b871-50babaf5ada4",
+            "6b7d688c-6622-42e0-8426-46cf84c4b349"
         ]
     },
     {
-        "id": 12,
+        "id": "a3000000-0000-0000-0000-000000000000",
         "email": "dolor@megadodo.pub",
         "name": "Dolor",
         "passwordHash": "",
         "passwordSalt": "",
         "rolesIds": [
-            8
+            "e02aad41-09bc-407a-a429-63b8e2df542c"
         ]
     },
     {
-        "id": 13,
+        "id": "a4000000-0000-0000-0000-000000000000",
         "email": "sit@megadodo.pub",
         "name": "Sit",
         "passwordHash": "",
         "passwordSalt": "",
         "rolesIds": [
-            2,
-            6,
-            7,
-            8
+            "8cf11786-6a35-4187-b37d-d74ef59cd8ee",
+            "b5636138-fb95-44a1-80c6-d56513c1fc52",
+            "6b7d688c-6622-42e0-8426-46cf84c4b349",
+            "86778330-9867-4951-aac6-e5d0c43daef8"
         ]
     }
 ]

@@ -162,13 +162,13 @@ class Modules {
 /// A main module of the app.
 ///
 /// Arguments:
-/// - [id]: The unique identifier of the main module, as an integer.
-/// - [idTitle]: The unique title of the main module, as a string.
+/// - [id]: The unique identifier of the main module, as an UUID.
+/// - [idTitle]: The unique title of the main module.
 /// - [isPublic]: Whether the main module is public. If true, it will only be shown for [AppUser]s with access to it.
 /// - [isHidden]: Whether the main module is hidden. If true, it won't show up for anyone.
 /// - [color]: The color of the main module, used for styling purposes. If null, it uses default colors.
 class AppMainModule {
-  final int id;
+  final String id;
   final String idTitle;
   final bool isPublic;
   final bool isHidden;
@@ -195,14 +195,14 @@ class AppMainModule {
 /// A sub module of the app.
 ///
 /// Arguments:
-/// - [id]: The unique identifer of the sub module, as an integer.
-/// - [idTitle]: The unique title of the sub module, as a string.
+/// - [id]: The unique identifer of the sub module, as an UUID.
+/// - [idTitle]: The unique title of the sub module.
 /// - [mainModuleIdTitle]: The unique title of the [AppMainModule] the sub module belongs.
 /// - [isPublic]: Whether the sub module is public. If true, it will only be shown for [AppUser]s with access to it.
 /// - [isHidden]: Whether the sub module is hidden. If true, it won't show up for anyone.
 /// - [color]: The color of the sub module, used for styling purposes. If null, it uses default colors.
 class AppSubModule {
-  final int id;
+  final String id;
   final String idTitle;
   final String mainModuleIdTitle;
   final bool isPublic;

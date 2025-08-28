@@ -15,7 +15,8 @@
 // TODO: Make the template module 'isHidden' in the end.
 // TODO: Implement tests for all major functions (utils).
 // TODO: Check all files and only 'show' the necessary import widgets.
-// TODO: Make a search for all TODOs and DEBUGs and clean up the code.
+// TODO: Make a search for all TODOs and DEBUGs and clean up the code.^
+// TODO: Add tests for everything important - at least for all utils.
 // TODO: Add more supported licenses. Apache, GPL, ...
 //       https://gist.github.com/nicolasdao/a7adda51f2f185e8d2700e1573d8a633
 // TODO: (?) Implement feedback feature.

@@ -3,6 +3,7 @@
 
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 
@@ -11,7 +12,7 @@ import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 /// Otherwise it also sets the [AppUser] for the [appUserNotifier] afterwards.
 /// Returns true if the update was successful, false otherwise.
 Future<bool> updateUsersData({
-  int id = 0,
+  String id = '',
   String email = '',
   String name = '',
   String passwordHash = '',
@@ -25,7 +26,7 @@ Future<bool> updateUsersData({
     await User.initDbUsersData();
   }
 
-  bool isNewUser = id == 0 ? true : false;
+  bool isNewUser = id == '' ? true : false;
   bool usersDataUpdated = false;
 
   // If its a NEW USER, try to add it to the users data.
@@ -48,7 +49,7 @@ Future<bool> updateUsersData({
 
     // Add the new user to the users data.
     final newUser = {
-      'id': User.dbUsersData!.length + 1,
+      'id': AppHelper.uuid,
       'email': email,
       'name': name,
       'passwordHash': passwordHash,

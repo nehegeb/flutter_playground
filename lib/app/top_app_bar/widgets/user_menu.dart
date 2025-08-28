@@ -2,7 +2,6 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/top_app_bar/widgets/button_languages_mobile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_playground/app/misc/widgets/popup_menu_entry_compact.dar
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/top_app_bar/widgets/user_card.dart';
 import 'package:flutter_playground/app/top_app_bar/widgets/button_brightness_mobile.dart';
+import 'package:flutter_playground/app/top_app_bar/widgets/button_languages_mobile.dart';
 import 'package:flutter_playground/app/top_app_bar/logic/show_languages_select_overlay.dart';
 
 /// The user menu for the app.
@@ -52,7 +52,6 @@ class _UserMenuState extends State<UserMenu> {
       itemBuilder: (context) {
         final isUserLoggedIn = User.user != null;
         return [
-          // User Card.
           PopupMenuItem<String>(
             enabled: false,
             height: 80, // Bigger than default height (default is 48).

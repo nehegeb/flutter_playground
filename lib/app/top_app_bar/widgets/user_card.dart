@@ -39,7 +39,7 @@ class UserCard extends StatelessWidget {
                   // The currently logged in [AppUser]'s name.
                   Text(
                     appUser != null
-                        ? AppHelper.toNameCase(userName)
+                        ? userName
                         : Localization.getText('roles.guest'),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
@@ -50,7 +50,7 @@ class UserCard extends StatelessWidget {
                   // The currently logged in [AppUser]'s title.
                   Text(
                     appUser != null
-                        ? userTitle
+                        ? Localization.getText('roles.$userTitle')
                         : Localization.getText('roles.notLoggedIn'),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.normal,

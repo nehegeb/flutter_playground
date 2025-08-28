@@ -115,14 +115,15 @@ class User {
 /// A user of the app.
 ///
 /// Arguments:
-/// - [id]: The unique identifier of the user, as an integer.
+/// - [id]: The unique identifier of the user, as an UUID.
 /// - [email]: The email address of the user.
 /// - [name]: The name of the user.
 /// - [passwordHash]: The hashed password of the user.
 /// - [passwordSalt]: The salt used to hash the password.
 /// - [roles]: A list of [AppRole]s the user has.
+/// - [permissions]: A list of permissions the user has, as strings.
 class AppUser {
-  final int id;
+  final String id;
   final String email;
   final String name;
   final String title;

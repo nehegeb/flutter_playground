@@ -35,6 +35,12 @@
         "license": "MIT",
         "packageUrl": "https://pub.dev/packages/pointycastle"
     },
+    "uuid": {
+        "name": "uuid",
+        "copyright": "2021 Yulian Kuncheff",
+        "license": "MIT",
+        "packageUrl": "https://pub.dev/packages/uuid"
+    },
     "lorem_ipsum": {
         "name": "lorem_ipsum",
         "copyright": "2020 Damian Rincon",

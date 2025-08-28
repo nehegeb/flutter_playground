@@ -1,6 +1,7 @@
 // set_active_app_main_module.dart
 //
 
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 
 /// Sets the currently active [AppMainModule] for the [activeMainModuleNotifier].
@@ -19,7 +20,7 @@ void setActiveAppMainModule({required String mainModule}) {
     // This is a special case, as "home" is a default main module page and is not in the modules data.
     if (mainModule == 'home') {
       appMainModule = AppMainModule.fromMap({
-        'id': 0,
+        'id': AppHelper.uuid,
         'idTitle': 'home',
         'isPublic': true,
         'Hidden': false,

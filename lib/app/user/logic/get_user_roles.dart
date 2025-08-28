@@ -7,7 +7,7 @@ import 'package:flutter_playground/app/roles/roles.dart';
 /// Gets the user's [AppRole]s, according to their user ID.
 ///
 /// Gets the user roles directly from the users data, not from the currently logged in [AppUser].
-Future<List<AppRole>?> getUserRoles({required int userId}) async {
+Future<List<AppRole>?> getUserRoles({required String userId}) async {
   // Load the users data, if it's not already loaded.
   // If no users data could not be loaded, return an empty list.
   bool wasAlreadyLoaded = true;
@@ -37,7 +37,7 @@ Future<List<AppRole>?> getUserRoles({required int userId}) async {
   }
 
   // Get the user's role IDs from the users data.
-  List<int> userRoleIds = (userData['rolesIds'] as List<dynamic>).cast<int>();
+  List<dynamic> userRoleIds = userData['rolesIds'] as List<dynamic>;
 
   // If no role IDs are found, return an empty list.
   if (userRoleIds.isEmpty) {
@@ -56,7 +56,7 @@ Future<List<AppRole>?> getUserRoles({required int userId}) async {
   // Find all [AppRole]s of the user with the given [userId].
   List<AppRole> appRoles = [];
   for (var roleData in Roles.dbRolesData!) {
-    int? roleId = int.tryParse(roleData['id'].toString());
+    String? roleId = roleData['id'];
     if (roleId != null && userRoleIds.contains(roleId)) {
       appRoles.add(AppRole.fromMap(roleData));
     }

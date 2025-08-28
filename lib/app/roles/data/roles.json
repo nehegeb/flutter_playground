@@ -1,6 +1,6 @@
 [
     {
-        "id": 1,
+        "id": "e1ea06f8-e361-428b-b871-50babaf5ada4",
         "idTitle": "admin",
         "mainModuleIdTitle": "main",
         "subModuleIdTitle": "",
@@ -11,7 +11,7 @@
         ]
     },
     {
-        "id": 2,
+        "id": "8cf11786-6a35-4187-b37d-d74ef59cd8ee",
         "idTitle": "admin",
         "mainModuleIdTitle": "template",
         "subModuleIdTitle": "",
@@ -21,7 +21,7 @@
         ]
     },
     {
-        "id": 3,
+        "id": "19983d92-7248-4c10-950c-48c08ff5b28f",
         "idTitle": "viewer",
         "mainModuleIdTitle": "template",
         "subModuleIdTitle": "",
@@ -32,7 +32,7 @@
         ]
     },
     {
-        "id": 4,
+        "id": "b2f08877-4faa-4662-9878-13760b6596a1",
         "idTitle": "member",
         "mainModuleIdTitle": "template",
         "subModuleIdTitle": "",
@@ -44,7 +44,7 @@
         ]
     },
     {
-        "id": 5,
+        "id": "0e65cd8c-8280-4649-bae0-a45ccbb1a850",
         "idTitle": "moderator",
         "mainModuleIdTitle": "template",
         "subModuleIdTitle": "",
@@ -57,7 +57,7 @@
         ]
     },
     {
-        "id": 6,
+        "id": "b5636138-fb95-44a1-80c6-d56513c1fc52",
         "idTitle": "admin",
         "mainModuleIdTitle": "template",
         "subModuleIdTitle": "template",
@@ -67,7 +67,7 @@
         ]
     },
     {
-        "id": 7,
+        "id": "6b7d688c-6622-42e0-8426-46cf84c4b349",
         "idTitle": "viewer",
         "mainModuleIdTitle": "template",
         "subModuleIdTitle": "template",
@@ -78,7 +78,7 @@
         ]
     },
     {
-        "id": 8,
+        "id": "86778330-9867-4951-aac6-e5d0c43daef8",
         "idTitle": "member",
         "mainModuleIdTitle": "template",
         "subModuleIdTitle": "template",
@@ -90,7 +90,7 @@
         ]
     },
     {
-        "id": 9,
+        "id": "e02aad41-09bc-407a-a429-63b8e2df542c",
         "idTitle": "moderator",
         "mainModuleIdTitle": "template",
         "subModuleIdTitle": "template",

@@ -91,13 +91,13 @@ class Localization {
 /// A language of the app.
 ///
 /// Arguments:
-/// - [id]: The unique identifier of the language, as an integer.
+/// - [id]: The unique identifier of the language, as an UUID.
 /// - [idTitle]: The unique title of the language.
 /// - [name]: The name of the language.
 /// - [nativeName]: The native name of the language.
 /// - [countryCode]: The country code associated with the language.
 class AppLanguage {
-  final int id;
+  final String id;
   final String idTitle;
   final String name;
   final String? nativeName;
@@ -113,7 +113,7 @@ class AppLanguage {
 
   factory AppLanguage.fromMap(Map<String, dynamic> map) {
     return AppLanguage(
-      id: map['id'] is int ? map['id'] : int.tryParse(map['id'].toString()),
+      id: map['id'],
       idTitle: map['idTitle'],
       name: map['name'],
       nativeName: map['nativeName'] ?? map['name'],

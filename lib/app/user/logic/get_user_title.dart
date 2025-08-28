@@ -1,17 +1,14 @@
 // get_user_title.dart
 //
 
-import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/app/user/user.dart';
 
 /// Gets a user's title that is shown in the [UserCard], according to the given [appRoles].
 /// This only considers default [AppRole]s where its "isDefaultRole" is set to true.
 ///
-/// If no fitting [AppRole] could be found but
-/// an [AppUser] is currently logged in, it returns the localized 'noPermission' text.
-/// And if no fitting [AppRole] could be found and
-/// no [AppUser] is currently logged in, it returns the localized 'notLoggedIn' text.
+/// If no fitting [AppRole] could be found but an [AppUser] is currently logged in, it returns 'noPermission'.
+/// And if no fitting [AppRole] could be found and no [AppUser] is currently logged in, it returns 'notLoggedIn'.
 String getUserTitle({required List<AppRole>? appRoles}) {
   String roleTitleId = '';
 
@@ -33,18 +30,18 @@ String getUserTitle({required List<AppRole>? appRoles}) {
     }
   }
 
-  // Get the localized title for the user according to the role title ID, if any.
+  // Return the title for the user according to the role title ID, if any.
   if (roleTitleId.isNotEmpty) {
-    // A fitting [AppRole] was found, return its localized [titleId].
-    return Localization.getText('roles.$roleTitleId');
+    // A fitting [AppRole] was found, return [titleId].
+    return roleTitleId;
   } else {
     // No fitting [AppRole] was found.
     if (User.user == null) {
-      // If no [AppUser] is currently logged in, return the 'notLoggedIn' text.
-      return Localization.getText('roles.notLoggedIn');
+      // If no [AppUser] is currently logged in, return 'notLoggedIn'.
+      return 'notLoggedIn';
     } else {
-      // If an [AppUser] is currently logged in, return the 'noPermission' text.
-      return Localization.getText('roles.noPermission');
+      // If an [AppUser] is currently logged in, return 'noPermission'.
+      return 'noPermission';
     }
   }
 }

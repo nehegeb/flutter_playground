@@ -49,14 +49,16 @@ class PermissionsPageUtils {
   /// Get all the [AppRole]s of a specific [userId].
   ///
   /// This is a user function that is redistributed for the [PermissionsPageUtils] to make it easier to use.
-  static Future<List<AppRole>?> getRolesForUser({required int userId}) {
+  static Future<List<AppRole>?> getRolesForUser({required String userId}) {
     return getUserRoles(userId: userId);
   }
 
   /// Get all the permissions of a specific [userId].
   ///
   /// This is a user function that is redistributed for the [PermissionsPageUtils] to make it easier to use.
-  static Future<List<dynamic>?> getPermissionsForUser({required int userId}) {
+  static Future<List<dynamic>?> getPermissionsForUser({
+    required String userId,
+  }) {
     return getUserPermissions(userId: userId);
   }
 
