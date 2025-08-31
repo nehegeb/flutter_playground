@@ -59,9 +59,8 @@
             "modulesTab": {
                 "title": "Module",
                 "columnName": "Modulname",
-                "columnAdmins": "Administratoren",
                 "columnIsPublic": "Öffentlich",
-                "columnActions": ""
+                "columnAdmins": "Administratoren"
             },
             "usersTab": {
                 "title": "Benutzer",
@@ -136,11 +135,18 @@
             "closeAndCancel": "Schließen und Abbrechen",
             "cancel": "Abbrechen",
             "save": "Speichern",
+            "add": "Hinzufügen",
             "edit": "Bearbeiten",
-            "delete": "Löschen"
+            "delete": "Löschen",
+            "confirm": "Okay",
+            "deny": "Ablehnen",
+            "yes": "Ja",
+            "no": "Nein",
+            "deleteConfirmationMessage": "Sind Sie sicher, dass Sie das löschen möchten?\nDies kann nicht rückgängig gemacht werden!"
         },
         "messageTypes": {
             "success": "Erfolgreich",
+            "failed": "Fehlgeschlagen",
             "info": "Information",
             "warning": "Warnung",
             "error": "Fehler",

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_users_tab_data.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/save_user.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/delete_user.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/widgets/users_edit_dialog.dart';
 
 /// The users tab of the app permissions.
@@ -41,6 +43,7 @@ class _UsersTabState extends State<UsersTab> {
         return SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: DataTable(
               dataRowMaxHeight: double.infinity,
               showCheckboxColumn: false,
@@ -78,6 +81,9 @@ class _UsersTabState extends State<UsersTab> {
                         context: context,
                         title: userName,
                         widget: UsersEditDialog(userId: userData['userId']),
+                        onCancel: () {},
+                        onSave: (data) => saveUser(),
+                        onDelete: (id) => deleteUser(userId: id),
                       );
                     }
                   },

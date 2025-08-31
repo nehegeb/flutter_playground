@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_modules_tab_data.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/save_module.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/widgets/modules_edit_dialog.dart';
 
 /// The modules tab of the permissions.
@@ -41,6 +42,7 @@ class _ModulesTabState extends State<ModulesTab> {
         return SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: DataTable(
               dataRowMaxHeight: double.infinity,
               showCheckboxColumn: false,
@@ -84,6 +86,8 @@ class _ModulesTabState extends State<ModulesTab> {
                         widget: ModulesEditDialog(
                           moduleId: moduleData['moduleId'],
                         ),
+                        onCancel: () {},
+                        onSave: (data) => saveModule(moduleData: data),
                       );
                     }
                   },

@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/app_popup/logic/show_success_message.dart';
+import 'package:flutter_playground/app/app_popup/logic/show_failed_message.dart';
 import 'package:flutter_playground/app/app_popup/logic/show_information_message.dart';
 import 'package:flutter_playground/app/app_popup/logic/show_warning_message.dart';
 import 'package:flutter_playground/app/app_popup/logic/show_error_message.dart';
@@ -16,9 +17,13 @@ final ValueNotifier<bool> isPopupDialogDisplayedNotifier = ValueNotifier<bool>(
   false,
 );
 
-/// Notifier for the message displayed on the [PopupDialog].
+/// Notifier for the [message] displayed on the [PopupDialog].
 final ValueNotifier<String?> popupDialogMessageNotifier =
     ValueNotifier<String?>(null);
+
+/// Notifier for the data displayed on the [widget] of the [PopupDialog].
+final ValueNotifier<Map<String, dynamic>?> popupDialogDataNotifier =
+    ValueNotifier<Map<String, dynamic>?>(null);
 
 /// A helper class containing methods for various popup widgets.
 ///
@@ -27,6 +32,7 @@ final ValueNotifier<String?> popupDialogMessageNotifier =
 ///
 /// Static Methods:
 /// - [successMessage]: Shows a success message [PopupDialog].
+/// - [failedMessage]: Shows a failed message [PopupDialog].
 /// - [infoMessage]: Shows an informational message [PopupDialog].
 /// - [warningMessage]: Shows a warning message [PopupDialog].
 /// - [errorMessage]: Shows an error message [PopupDialog].
@@ -35,7 +41,9 @@ final ValueNotifier<String?> popupDialogMessageNotifier =
 /// - [updateMessage]: Updates the message of the currently displayed [PopupDialog].
 /// - [hide]: Hides the currently displayed [PopupDialog]. Mainly for [loadingDialog].
 class AppPopup {
-  /// Show an success message popup dialog.
+  /// Show a success message [PopupDialog] with the given [message].
+  ///
+  /// It always shows the 'confirm' button, but no close button.
   static void successMessage({
     required BuildContext context,
     required String message,
@@ -43,31 +51,76 @@ class AppPopup {
     showSuccessMessage(context: context, message: message);
   }
 
-  /// Show an informational message popup dialog.
+  /// Show a failed message [PopupDialog] with the given [message].
+  ///
+  /// It always shows the 'confirm' button, but no close button.
+  static void failedMessage({
+    required BuildContext context,
+    required String message,
+  }) {
+    showFailedMessage(context: context, message: message);
+  }
+
+  /// Show an informational message [PopupDialog] with the given [message].
+  ///
+  /// It allows for the 'confirm' and 'deny' buttons and/or the 'yes' and 'no' buttons.
+  /// If either pair is used, the close button at the top will be removed.
   static void infoMessage({
     required BuildContext context,
     required String message,
+    final VoidCallback? onConfirm,
+    final VoidCallback? onDeny,
+    final VoidCallback? onYes,
+    final VoidCallback? onNo,
   }) {
-    showInformationMessage(context: context, message: message);
+    showInformationMessage(
+      context: context,
+      message: message,
+      onConfirm: onConfirm,
+      onDeny: onDeny,
+      onYes: onYes,
+      onNo: onNo,
+    );
   }
 
-  /// Show a warning message popup dialog.
+  /// Show a warning message [PopupDialog] with the given [message].
+  ///
+  /// It allows for the 'confirm' and 'deny' buttons and/or the 'yes' and 'no' buttons.
+  /// If either pair is used, the close button at the top will be removed.
   static void warningMessage({
     required BuildContext context,
     required String message,
+    final VoidCallback? onConfirm,
+    final VoidCallback? onDeny,
+    final VoidCallback? onYes,
+    final VoidCallback? onNo,
   }) {
-    showWarningMessage(context: context, message: message);
+    showWarningMessage(
+      context: context,
+      message: message,
+      onConfirm: onConfirm,
+      onDeny: onDeny,
+      onYes: onYes,
+      onNo: onNo,
+    );
   }
 
-  /// Show a error message popup dialog.
+  /// Show a error message [PopupDialog] with the given [message].
+  ///
+  /// It always shows the 'confirm' button, but no close button.
   static void errorMessage({
     required BuildContext context,
     required String message,
+    final VoidCallback? onConfirm,
   }) {
-    showErrorMessage(context: context, message: message);
+    showErrorMessage(context: context, message: message, onConfirm: onConfirm);
   }
 
-  /// Show an loading popup dialog.
+  /// Show a loading [PopupDialog] with the given [message].
+  ///
+  /// It has no buttons at all, not even the close button.
+  /// - Use [AppPopup.hide] to close it.
+  /// - Use [AppPopup.updateMessage] to update the [message].
   static void loadingDialog({
     required BuildContext context,
     required String message,
@@ -75,13 +128,35 @@ class AppPopup {
     showLoadingDialog(context: context, message: message);
   }
 
-  /// Show a popup dialog with the given [widget] as content.
+  /// Show the [PopupDialog] with the given [widget] as content.
   static void widgetDialog({
     required BuildContext context,
     required String title,
     required Widget widget,
+    final bool hasCloseButton = true,
+    final VoidCallback? onClose,
+    final VoidCallback? onConfirm,
+    final VoidCallback? onDeny,
+    final VoidCallback? onYes,
+    final VoidCallback? onNo,
+    final Function(Map<String, dynamic>)? onSave,
+    final VoidCallback? onCancel,
+    final Function(String)? onDelete,
   }) {
-    showWidgetDialog(context: context, title: title, widget: widget);
+    showWidgetDialog(
+      context: context,
+      title: title,
+      widget: widget,
+      hasCloseButton: hasCloseButton,
+      onClose: onClose,
+      onConfirm: onConfirm,
+      onDeny: onDeny,
+      onYes: onYes,
+      onNo: onNo,
+      onSave: onSave,
+      onCancel: onCancel,
+      onDelete: onDelete,
+    );
   }
 
   /// Update the [message] displayed on the [PopupDialog].
@@ -90,7 +165,9 @@ class AppPopup {
   }
 
   /// Hide the [PopupDialog], if it's currently displayed.
-  static void hide({required BuildContext context}) {
-    hidePopupDialog(context: context);
+  ///
+  /// - A [onHide] callback can be provided to execute custom logic when the dialog is hidden.
+  static void hide({required BuildContext context, VoidCallback? onHide}) {
+    hidePopupDialog(context: context, onHide: onHide);
   }
 }

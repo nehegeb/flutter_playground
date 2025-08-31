@@ -58,9 +58,8 @@
             "modulesTab": {
                 "title": "Modules",
                 "columnName": "Module Name",
-                "columnAdmins": "Administrators",
                 "columnIsPublic": "Public",
-                "columnActions": ""
+                "columnAdmins": "Administrators"
             },
             "usersTab": {
                 "title": "Users",
@@ -135,11 +134,18 @@
             "closeAndCancel": "Close and Cancel",
             "cancel": "Cancel",
             "save": "Save",
+            "add": "Add",
             "edit": "Edit",
-            "delete": "Delete"
+            "delete": "Delete",
+            "confirm": "Okay",
+            "deny": "Deny",
+            "yes": "Yes",
+            "no": "No",
+            "deleteConfirmationMessage": "Are you sure you want to delete that?\nThis cannot be undone!"
         },
         "messageTypes": {
             "success": "Successful",
+            "failed": "Failed",
             "info": "Information",
             "warning": "Warning",
             "error": "Error",

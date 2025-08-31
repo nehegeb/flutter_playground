@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_roles_tab_data.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/save_role.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/delete_role.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/widgets/roles_edit_dialog.dart';
 
 /// The roles tab of the app permissions.
@@ -41,6 +43,7 @@ class _RolesTabState extends State<RolesTab> {
         return SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: DataTable(
               dataRowMaxHeight: double.infinity,
               showCheckboxColumn: false,
@@ -75,6 +78,9 @@ class _RolesTabState extends State<RolesTab> {
                         context: context,
                         title: roleName,
                         widget: RolesEditDialog(roleId: roleData['roleId']),
+                        onCancel: () {},
+                        onSave: (data) => saveRole(),
+                        onDelete: (id) => deleteRole(roleId: id),
                       );
                     }
                   },

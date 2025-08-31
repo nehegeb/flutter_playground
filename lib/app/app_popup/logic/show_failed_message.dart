@@ -1,11 +1,11 @@
-// show_success_message.dart
+// show_failed_message.dart
 //
 
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/app_popup/widgets/popup_dialog.dart';
 
-/// Show a success message [PopupDialog] with the given [message].
-void showSuccessMessage({
+/// Show a failed message [PopupDialog] with the given [message].
+void showFailedMessage({
   required BuildContext context,
   required String message,
 }) {
@@ -17,7 +17,7 @@ void showSuccessMessage({
       /// This makes sure the corresponding button is always displayed.
       return PopupDialog(
         message: message,
-        isSuccess: true,
+        isFailed: true,
         hasCloseButton: false,
         onConfirm: () {},
       );
