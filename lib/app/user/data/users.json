@@ -29,7 +29,8 @@
         "rolesIds": [
             "6b7d688c-6622-42e0-8426-46cf84c4b349",
             "e02aad41-09bc-407a-a429-63b8e2df542c",
-            "b2f08877-4faa-4662-9878-13760b6596a1"
+            "b2f08877-4faa-4662-9878-13760b6596a1",
+            "e02aad41-09bc-407a-a3b6-63b8e2df542c"
         ]
     },
     {
@@ -50,7 +51,8 @@
         "passwordHash": "",
         "passwordSalt": "",
         "rolesIds": [
-            "e02aad41-09bc-407a-a429-63b8e2df542c"
+            "e02aad41-09bc-407a-a429-63b8e2df542c",
+            "8cf11786-6a35-4187-b37d-d74ef59cd8ee"
         ]
     },
     {

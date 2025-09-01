@@ -7,19 +7,30 @@ import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/modules_edit_dialog_init.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/modules_edit_dialog_add_admin.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/modules_edit_dialog_delete_admin.dart';
 
-class ModulesEditDialog extends StatelessWidget {
+class ModulesEditDialog extends StatefulWidget {
   final String moduleId;
 
   const ModulesEditDialog({super.key, required this.moduleId});
 
   @override
-  Widget build(BuildContext context) {
+  State<ModulesEditDialog> createState() => _ModulesEditDialogState();
+}
+
+class _ModulesEditDialogState extends State<ModulesEditDialog> {
+  @override
+  void initState() {
+    super.initState();
     // Initialize the data for the [ModulesEditDialog].
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await modulesEditDialogInit(moduleId: moduleId);
+      await modulesEditDialogInit(moduleId: widget.moduleId);
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     double textSpacer = 12;
     double lineSpacer = 8;
 
@@ -33,7 +44,7 @@ class ModulesEditDialog extends StatelessWidget {
             final adminAppUsers =
                 data?['adminAppUsers'] as List<AppUser>? ?? [];
 
-            if (data == null) {
+            if (data == null || appMainModule == null) {
               return const Center(child: CircularProgressIndicator());
             }
 
@@ -51,7 +62,7 @@ class ModulesEditDialog extends StatelessWidget {
                     Text(':'),
                     SizedBox(width: textSpacer),
                     Switch(
-                      value: appMainModule!.isPublic,
+                      value: appMainModule.isPublic,
                       onChanged: null, // This deactivates the switch.
                     ),
                   ],
@@ -85,7 +96,7 @@ class ModulesEditDialog extends StatelessWidget {
                             child: IconButton(
                               icon: const Icon(Icons.add),
                               tooltip: Localization.getText('misc.buttons.add'),
-                              onPressed: () {},
+                              onPressed: () => modulesEditDialogAddAdmin(),
                             ),
                           ),
                           numeric: true,
@@ -110,7 +121,10 @@ class ModulesEditDialog extends StatelessWidget {
                                             tooltip: Localization.getText(
                                               'misc.buttons.delete',
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () =>
+                                                modulesEditDialogDeleteAdmin(
+                                                  userId: user.id,
+                                                ),
                                           ),
                                         ],
                                       ),

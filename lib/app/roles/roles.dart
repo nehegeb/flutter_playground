@@ -55,12 +55,12 @@ class Roles {
 /// - [isDefaultRole]: Whether this is a default role or not. If true, this role cannot be modified.
 /// - [permissions]: A list of permissions granted to this role, as strings.
 class AppRole {
-  final String id;
-  final String idTitle;
-  final String mainModuleIdTitle;
-  final String subModuleIdTitle;
-  final bool isDefaultRole;
-  final List<String>? permissions;
+  String id;
+  String idTitle;
+  String mainModuleIdTitle;
+  String subModuleIdTitle;
+  bool isDefaultRole;
+  List<String>? permissions;
   AppRole({
     required this.id,
     required this.idTitle,

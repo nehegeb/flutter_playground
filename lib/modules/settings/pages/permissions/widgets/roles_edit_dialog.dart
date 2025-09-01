@@ -6,22 +6,35 @@ import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/roles_edit_dialog_init.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/roles_edit_dialog_add_permission.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/roles_edit_dialog_delete_permission.dart';
 
-class RolesEditDialog extends StatelessWidget {
+class RolesEditDialog extends StatefulWidget {
   final String? roleId;
   final String mainModule;
 
   const RolesEditDialog({super.key, this.roleId, required this.mainModule});
 
   @override
-  Widget build(BuildContext context) {
-    bool isNewRole = roleId == null;
+  State<RolesEditDialog> createState() => _RolesEditDialogState();
+}
 
+class _RolesEditDialogState extends State<RolesEditDialog> {
+  @override
+  void initState() {
+    super.initState();
     // Initialize the data for the [RolesEditDialog].
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await rolesEditDialogInit(roleId: roleId, mainModule: mainModule);
+      await rolesEditDialogInit(
+        roleId: widget.roleId,
+        mainModule: widget.mainModule,
+      );
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    bool isNewRole = widget.roleId == null;
     double textSpacer = 12;
     double lineSpacer = 8;
 
@@ -41,7 +54,7 @@ class RolesEditDialog extends StatelessWidget {
                 appRole?.subModuleIdTitle != null &&
                 appRole?.subModuleIdTitle != '';
 
-            if (data == null) {
+            if (data == null || appRole == null) {
               return const Center(child: CircularProgressIndicator());
             }
 
@@ -61,14 +74,13 @@ class RolesEditDialog extends StatelessWidget {
                         Text(':'),
                         SizedBox(width: textSpacer),
                         Text(
-                          appRole?.mainModuleIdTitle == null ||
-                                  appRole?.mainModuleIdTitle == ''
+                          appRole.mainModuleIdTitle == ''
                               ? ''
-                              : appRole?.mainModuleIdTitle == 'main' ||
-                                    appRole?.mainModuleIdTitle == 'settings'
+                              : appRole.mainModuleIdTitle == 'main' ||
+                                    appRole.mainModuleIdTitle == 'settings'
                               ? Localization.getText('appName')
                               : Localization.getText(
-                                  'modules.${appRole?.mainModuleIdTitle}.title',
+                                  'modules.${appRole.mainModuleIdTitle}.title',
                                 ),
                         ),
                       ],
@@ -91,11 +103,10 @@ class RolesEditDialog extends StatelessWidget {
                           Text(':'),
                           SizedBox(width: textSpacer),
                           Text(
-                            appRole?.subModuleIdTitle == null ||
-                                    appRole?.subModuleIdTitle == ''
+                            appRole.subModuleIdTitle == ''
                                 ? ''
                                 : Localization.getText(
-                                    'modules.${appRole?.mainModuleIdTitle}.modules.${appRole?.subModuleIdTitle}.title',
+                                    'modules.${appRole.mainModuleIdTitle}.modules.${appRole.subModuleIdTitle}.title',
                                   ),
                           ),
                         ],
@@ -125,7 +136,7 @@ class RolesEditDialog extends StatelessWidget {
                         ),
 
                         // Column header for permission actions for custom [AppRole]s.
-                        if (!appRole!.isDefaultRole)
+                        if (!appRole.isDefaultRole)
                           DataColumn(
                             label: Align(
                               alignment: Alignment.centerRight,
@@ -134,7 +145,7 @@ class RolesEditDialog extends StatelessWidget {
                                 tooltip: Localization.getText(
                                   'misc.buttons.add',
                                 ),
-                                onPressed: () {},
+                                onPressed: () => usersEditDialogAddPermission(),
                               ),
                             ),
                             numeric: true,
@@ -160,7 +171,10 @@ class RolesEditDialog extends StatelessWidget {
                                               tooltip: Localization.getText(
                                                 'misc.buttons.delete',
                                               ),
-                                              onPressed: () {},
+                                              onPressed: () =>
+                                                  usersEditDialogDeletePermission(
+                                                    permission: perm,
+                                                  ),
                                             ),
                                           ],
                                         ),

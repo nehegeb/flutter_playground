@@ -101,5 +101,18 @@
             "template.template.edit",
             "template.template.delete"
         ]
+    },
+    {
+        "id": "e02aad41-09bc-407a-a3b6-63b8e2df542c",
+        "idTitle": "DeletionTest",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "template",
+        "isDefaultRole": false,
+        "permissions": [
+            "template.template.access",
+            "template.template.view",
+            "template.template.edit",
+            "template.template.delete"
+        ]
     }
 ]

@@ -133,14 +133,14 @@ class User {
 /// - [roles]: A list of [AppRole]s the user has.
 /// - [permissions]: A list of permissions the user has, as strings.
 class AppUser {
-  final String id;
-  final String email;
-  final String name;
-  final String? title;
-  final String? passwordHash;
-  final String? passwordSalt;
-  final List<AppRole>? roles;
-  final List<String>? permissions;
+  String id;
+  String email;
+  String name;
+  String? title;
+  String? passwordHash;
+  String? passwordSalt;
+  List<AppRole>? roles;
+  List<String>? permissions;
   AppUser({
     required this.id,
     required this.email,

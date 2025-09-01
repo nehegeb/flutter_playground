@@ -157,11 +157,11 @@ class Modules {
 /// - [isHidden]: Whether the main module is hidden. If true, it won't show up for anyone.
 /// - [isAdministrative]: Whether the main module is administrative. If true, it will be displayed in another color.
 class AppMainModule {
-  final String id;
-  final String idTitle;
-  final bool isPublic;
-  final bool isHidden;
-  final bool isAdministrative;
+  String id;
+  String idTitle;
+  bool isPublic;
+  bool isHidden;
+  bool isAdministrative;
   AppMainModule({
     required this.id,
     required this.idTitle,
@@ -191,12 +191,12 @@ class AppMainModule {
 /// - [isHidden]: Whether the sub module is hidden. If true, it won't show up for anyone.
 /// - [isAdministrative]: Whether the sub module is administrative. If true, it will be displayed in another color.
 class AppSubModule {
-  final String id;
-  final String idTitle;
-  final String mainModuleIdTitle;
-  final bool isPublic;
-  final bool isHidden;
-  final bool isAdministrative;
+  String id;
+  String idTitle;
+  String mainModuleIdTitle;
+  bool isPublic;
+  bool isHidden;
+  bool isAdministrative;
   AppSubModule({
     required this.id,
     required this.idTitle,

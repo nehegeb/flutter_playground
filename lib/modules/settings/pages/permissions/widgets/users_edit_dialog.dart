@@ -6,22 +6,35 @@ import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_init.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_add_role.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_delete_role.dart';
 
-class UsersEditDialog extends StatelessWidget {
+class UsersEditDialog extends StatefulWidget {
   final String? userId;
   final String mainModule;
 
   const UsersEditDialog({super.key, this.userId, required this.mainModule});
 
   @override
-  Widget build(BuildContext context) {
-    bool isNewUser = userId == null;
+  State<UsersEditDialog> createState() => _UsersEditDialogState();
+}
 
+class _UsersEditDialogState extends State<UsersEditDialog> {
+  @override
+  void initState() {
+    super.initState();
     // Initialize the data for the [UsersEditDialog].
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await usersEditDialogInit(userId: userId, mainModule: mainModule);
+      await usersEditDialogInit(
+        userId: widget.userId,
+        mainModule: widget.mainModule,
+      );
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    bool isNewUser = widget.userId == null;
     double textSpacer = 12;
     double lineSpacer = 8;
 
@@ -38,7 +51,7 @@ class UsersEditDialog extends StatelessWidget {
             final appUser = data?['appUser'] as AppUser?;
             final userAppRoles = appUser?.roles ?? [];
 
-            if (data == null) {
+            if (data == null || appUser == null) {
               return const Center(child: CircularProgressIndicator());
             }
 
@@ -57,7 +70,7 @@ class UsersEditDialog extends StatelessWidget {
                         ),
                         Text(':'),
                         SizedBox(width: textSpacer),
-                        Text(appUser?.email ?? ''),
+                        Text(appUser.email),
                       ],
                     ),
                   ],
@@ -94,7 +107,7 @@ class UsersEditDialog extends StatelessWidget {
                                 tooltip: Localization.getText(
                                   'misc.buttons.add',
                                 ),
-                                onPressed: () {},
+                                onPressed: () => usersEditDialogAddRole(),
                               ),
                             ),
                             numeric: true,
@@ -126,7 +139,10 @@ class UsersEditDialog extends StatelessWidget {
                                               tooltip: Localization.getText(
                                                 'misc.buttons.delete',
                                               ),
-                                              onPressed: () {},
+                                              onPressed: () =>
+                                                  usersEditDialogDeleteRole(
+                                                    roleId: role.id,
+                                                  ),
                                             ),
                                           ],
                                         ),
