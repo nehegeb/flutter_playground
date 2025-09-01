@@ -28,14 +28,7 @@ Future<bool> setPermittedAppSubModules() async {
         final permission =
             '${module['mainModuleIdTitle']}.${module['idTitle']}.access';
         if (Permissions.check(permission: permission)) {
-          AppSubModule appSubModule = AppSubModule(
-            id: module['id'],
-            idTitle: module['idTitle'],
-            mainModuleIdTitle: module['mainModuleIdTitle'],
-            isPublic: module['isPublic'],
-            isHidden: module['isHidden'],
-            isAdministrative: module['isAdministrative'],
-          );
+          AppSubModule appSubModule = AppSubModule.fromMap(module);
           appSubModules.add(appSubModule);
         }
       }
@@ -46,14 +39,7 @@ Future<bool> setPermittedAppSubModules() async {
     if (User.user == null) {
       for (final module in Modules.dbSubModulesData!) {
         if (module['isPublic']) {
-          AppSubModule appSubModule = AppSubModule(
-            id: module['id'],
-            idTitle: module['idTitle'],
-            mainModuleIdTitle: module['mainModuleIdTitle'],
-            isPublic: module['isPublic'],
-            isHidden: module['isHidden'],
-            isAdministrative: module['isAdministrative'],
-          );
+          AppSubModule appSubModule = AppSubModule.fromMap(module);
           appSubModules.add(appSubModule);
         }
       }

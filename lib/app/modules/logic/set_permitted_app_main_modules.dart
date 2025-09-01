@@ -26,13 +26,7 @@ Future<bool> setPermittedAppMainModules() async {
       for (final module in Modules.dbMainModulesData!) {
         final permission = '${module['idTitle']}.access';
         if (Permissions.check(permission: permission)) {
-          AppMainModule appMainModule = AppMainModule(
-            id: module['id'],
-            idTitle: module['idTitle'],
-            isPublic: module['isPublic'],
-            isHidden: module['isHidden'],
-            isAdministrative: module['isAdministrative'],
-          );
+          AppMainModule appMainModule = AppMainModule.fromMap(module);
           appMainModules.add(appMainModule);
         }
       }
@@ -43,13 +37,7 @@ Future<bool> setPermittedAppMainModules() async {
     if (User.user == null) {
       for (final module in Modules.dbMainModulesData!) {
         if (module['isPublic']) {
-          AppMainModule appMainModule = AppMainModule(
-            id: module['id'],
-            idTitle: module['idTitle'],
-            isPublic: module['isPublic'],
-            isHidden: module['isHidden'],
-            isAdministrative: module['isAdministrative'],
-          );
+          AppMainModule appMainModule = AppMainModule.fromMap(module);
           appMainModules.add(appMainModule);
         }
       }

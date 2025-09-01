@@ -2,8 +2,11 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
+import 'package:flutter_playground/app/modules/modules.dart';
+import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/modules_edit_dialog_init.dart';
 
 class ModulesEditDialog extends StatelessWidget {
   final String moduleId;
@@ -12,106 +15,116 @@ class ModulesEditDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Load the initial data for the [ModulesEditDialog].
-    initData() {
-      popupDialogDataNotifier.value = {'id': moduleId};
-    }
+    // Initialize the data for the [ModulesEditDialog].
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await modulesEditDialogInit(moduleId: moduleId);
+    });
 
-    initData();
+    double textSpacer = 12;
+    double lineSpacer = 8;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Whether the module is public.
-        Row(
-          children: [
-            Text('Module is public:'),
-            SizedBox(width: 24),
-            Switch(value: true, onChanged: null),
-          ],
-        ),
-        SizedBox(height: 8),
+        ValueListenableBuilder<Map<String, dynamic>?>(
+          valueListenable: popupDialogDataNotifier,
+          builder: (context, data, _) {
+            final appMainModule = data?['appMainModule'] as AppMainModule?;
+            final adminAppUsers =
+                data?['adminAppUsers'] as List<AppUser>? ?? [];
 
-        // The list of module administrators.
-        ConstrainedBox(
-          // This height constraint is needed to make list scrollable.
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.5,
-          ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: DataTable(
-              showCheckboxColumn: false,
-              columns: [
-                // Column header for module administrators.
-                DataColumn(
-                  label: Text(
-                    Localization.getText(
-                      'pages.permissions.modulesTab.columnAdmins',
+            if (data == null) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Whether the module is public.
+                Row(
+                  children: [
+                    Text(
+                      Localization.getText(
+                        'pages.permissions.modulesTab.editIsPublic',
+                      ),
                     ),
-                  ),
-                ),
-                // Column header for module actions.
-                DataColumn(
-                  label: Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.add),
-                      tooltip: Localization.getText('misc.buttons.add'),
-                      onPressed: () {},
+                    Text(':'),
+                    SizedBox(width: textSpacer),
+                    Switch(
+                      value: appMainModule!.isPublic,
+                      onChanged: null, // This deactivates the switch.
                     ),
-                  ),
-                  numeric: true,
+                  ],
                 ),
-              ],
-              rows: [
-                DataRow(
-                  cells: [
-                    // Column for module administrators.
-                    const DataCell(Text('Frodo Baggins')),
-                    // Column for module actions.
-                    DataCell(
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Row(
-                          children: [
-                            // Delete button.
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              tooltip: Localization.getText(
-                                'misc.buttons.delete',
-                              ),
+                SizedBox(height: lineSpacer),
+
+                // The list of module administrators.
+                ConstrainedBox(
+                  // This height constraint is needed to make list scrollable.
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.5,
+                  ),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: DataTable(
+                      showCheckboxColumn: false,
+                      columns: [
+                        // Column header for module administrators.
+                        DataColumn(
+                          label: Text(
+                            Localization.getText(
+                              'pages.permissions.modulesTab.columnAdmins',
+                            ),
+                          ),
+                        ),
+
+                        // Column header for module actions.
+                        DataColumn(
+                          label: Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: const Icon(Icons.add),
+                              tooltip: Localization.getText('misc.buttons.add'),
                               onPressed: () {},
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    // Column for module administrators.
-                    const DataCell(Text('Gandalf the White')),
-                    // Column for module actions.
-                    DataCell(
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.delete),
-                            tooltip: Localization.getText(
-                              'misc.buttons.delete',
-                            ),
-                            onPressed: () {},
                           ),
-                        ],
-                      ),
+                          numeric: true,
+                        ),
+                      ],
+                      rows: adminAppUsers.isEmpty
+                          ? []
+                          : adminAppUsers.map((user) {
+                              return DataRow(
+                                cells: [
+                                  // column for module administrators.
+                                  DataCell(Text(user.name)),
+
+                                  // Column for module actions.
+                                  DataCell(
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Row(
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.delete),
+                                            tooltip: Localization.getText(
+                                              'misc.buttons.delete',
+                                            ),
+                                            onPressed: () {},
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }).toList(),
                     ),
-                  ],
+                  ),
                 ),
               ],
-            ),
-          ),
+            );
+          },
         ),
       ],
     );

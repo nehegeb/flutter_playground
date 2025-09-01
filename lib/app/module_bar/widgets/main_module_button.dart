@@ -30,7 +30,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
   @override
   Widget build(BuildContext context) {
     final AppMainModule? appMainModule = Modules.getMainModule(
-      mainModule: widget.mainModule,
+      moduleName: widget.mainModule,
     );
 
     // Define the label of the [AppMainModule].
@@ -76,7 +76,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
       valueListenable: activeMainModuleNotifier,
       builder: (context, activeAppMainModule, _) {
         final bool expanded =
-            hasSubModules && activeAppMainModule == appMainModule;
+            hasSubModules && activeAppMainModule?.id == appMainModule?.id;
 
         // Define the color of the icon and label for the [MainModuleButton].
         final Color contentColor = widget.selected

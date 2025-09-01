@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/app/user/logic/get_empty_app_user.dart';
+import 'package:flutter_playground/app/user/logic/get_app_user_from_data.dart';
 import 'package:flutter_playground/app/user/logic/login_app_user.dart';
 import 'package:flutter_playground/app/user/logic/logout_app_user.dart';
 import 'package:flutter_playground/app/user/logic/set_user_title.dart';
@@ -25,6 +26,7 @@ final ValueNotifier<AppUser?> appUserNotifier = ValueNotifier<AppUser?>(null);
 /// - [user]: Gets the currently logged in [AppUser].
 /// - [emptyUser]: Gets an empty [AppUser].
 /// - [dbUsersData]: Gets the users data.
+/// - [getUser]: Gets a specific [AppUser], according to its ID or eMail.
 /// - [register]: Registers a new user. Returns an error message if it fails.
 /// - [login]: Logs in an [AppUser]. Returns an error message if it fails.
 /// - [logout]: Logs out the logged in [AppUser]. Returns Boolean.
@@ -47,6 +49,14 @@ class User {
   /// Get the loaded users data of the database.
   static List<dynamic>? get dbUsersData {
     return usersData;
+  }
+
+  /// Get a specific [AppUser] from the database.
+  /// It uses the ID or eMail of the user to identify it.
+  ///
+  /// This only works if the users data has already been loaded, otherwise returns null.
+  static Future<AppUser?> getUser({String? userId, String? userEmail}) async {
+    return await getAppUserFromData(userId: userId, userEmail: userEmail);
   }
 
   /// Register a new user for the app.
@@ -126,9 +136,9 @@ class AppUser {
   final String id;
   final String email;
   final String name;
-  final String title;
-  final String passwordHash;
-  final String passwordSalt;
+  final String? title;
+  final String? passwordHash;
+  final String? passwordSalt;
   final List<AppRole>? roles;
   final List<String>? permissions;
   AppUser({

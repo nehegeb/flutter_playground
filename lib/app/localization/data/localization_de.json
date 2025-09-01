@@ -60,14 +60,15 @@
                 "title": "Module",
                 "columnName": "Modulname",
                 "columnIsPublic": "Öffentlich",
-                "columnAdmins": "Administratoren"
+                "columnAdmins": "Administratoren",
+                "editIsPublic": "Modul ist öffentlich"
             },
             "usersTab": {
                 "title": "Benutzer",
                 "columnName": "Benutzername",
                 "columnEmail": "eMail",
                 "columnRoles": "Rollen",
-                "columnActions": "",
+                "addNew": "Neuer Benutzer",
                 "errorNoData": "Keine Benutzer für dieses Modul eingeladen."
             },
             "rolesTab": {
@@ -75,7 +76,9 @@
                 "columnName": "Rollenname",
                 "columnSubModule": "Untermodul",
                 "columnPermissions": "Berechtigungen",
-                "columnActions": "",
+                "editMainModule": "Hauptmodul",
+                "editSubModule": "Untermodul",
+                "addNew": "Neue Rolle",
                 "errorNoData": "Keine Rollen für dieses Modul definiert."
             }
         },

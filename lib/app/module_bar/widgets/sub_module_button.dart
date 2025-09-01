@@ -22,7 +22,7 @@ class SubModuleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppSubModule? appSubModule = Modules.getSubModule(
-      subModule: subModule,
+      moduleName: subModule,
     );
 
     // Define the label of the [AppSubModule].

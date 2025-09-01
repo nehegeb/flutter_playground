@@ -20,6 +20,7 @@ Future<List<Map<String, dynamic>>?> getRolesTabData() async {
     rolesTabData.add({
       'roleId': role.id,
       'name': role.idTitle,
+      'isDefaultRole': role.isDefaultRole,
       'permissions': role.permissions,
       'mainModule': role.mainModuleIdTitle,
       'subModule': role.subModuleIdTitle,

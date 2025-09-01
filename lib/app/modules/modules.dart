@@ -15,8 +15,8 @@ import 'package:flutter_playground/app/modules/logic/get_empty_app_main_module.d
 import 'package:flutter_playground/app/modules/logic/get_empty_app_sub_module.dart';
 import 'package:flutter_playground/app/modules/logic/set_active_app_main_module.dart';
 import 'package:flutter_playground/app/modules/logic/set_active_app_sub_module.dart';
-import 'package:flutter_playground/app/modules/logic/get_app_main_module.dart';
-import 'package:flutter_playground/app/modules/logic/get_app_sub_module.dart';
+import 'package:flutter_playground/app/modules/logic/get_app_main_module_from_data.dart';
+import 'package:flutter_playground/app/modules/logic/get_app_sub_module_from_data.dart';
 import 'package:flutter_playground/app/modules/logic/set_permitted_app_modules.dart';
 import 'package:flutter_playground/app/modules/logic/load_main_modules_data.dart';
 import 'package:flutter_playground/app/modules/logic/load_sub_modules_data.dart';
@@ -49,8 +49,8 @@ final ValueNotifier<List<AppSubModule>> subModulesNotifier =
 /// - [permittedSubModules]: Get the [AppSubModule]s the currently logged in [AppUser] has access to.
 /// - [dbMainModulesData]: Get the main modules data.
 /// - [dbSubModulesData]: Get the sub modules data.
-/// - [getMainModule]: Gets a specific permitted [AppMainModule], according to its name.
-/// - [getSubModule]: Gets a specific permitted [AppSubModule], according to its name.
+/// - [getMainModule]: Gets a specific [AppMainModule], according to its ID or name.
+/// - [getSubModule]: Gets a specific [AppSubModule], according to its ID or name.
 /// - [setActiveMainModule]: Sets the [AppMainModule] as active, according to its name.
 /// - [setActiveSubModule]: Sets the [AppSubModule] as active, according to its name.
 /// - [setPermittedModules]: Sets the [AppMainModule]s and [AppSubModule]s as permitted modules, returns boolean.
@@ -97,14 +97,20 @@ class Modules {
     return subModulesData;
   }
 
-  /// Get a specific permitted [AppMainModule], according to its name.
-  static AppMainModule? getMainModule({required String? mainModule}) {
-    return getAppMainModule(mainModule: mainModule);
+  /// Get a specific [AppMainModule] from the database.
+  /// It uses the ID or name of the main module to identify it.
+  ///
+  /// This only works if the main modules data has already been loaded, otherwise returns null.
+  static AppMainModule? getMainModule({String? moduleId, String? moduleName}) {
+    return getAppMainModuleFromData(moduleId: moduleId, moduleName: moduleName);
   }
 
-  /// Get a specific permitted [AppSubModule], according to its name.
-  static AppSubModule? getSubModule({required String? subModule}) {
-    return getAppSubModule(subModule: subModule);
+  /// Get a specific [AppSubModule] from the database.
+  /// It uses the ID or name of the sub module to identify it.
+  ///
+  /// This only works if the sub modules data has already been loaded, otherwise returns null.
+  static AppSubModule? getSubModule({String? moduleId, String? moduleName}) {
+    return getAppSubModuleFromData(moduleId: moduleId, moduleName: moduleName);
   }
 
   /// Set the currently active [AppMainModule].

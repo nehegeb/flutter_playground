@@ -5,6 +5,7 @@
 // - Provides a class for [AppRole].
 
 import 'package:flutter_playground/app/roles/logic/get_empty_app_role.dart';
+import 'package:flutter_playground/app/roles/logic/get_app_role_from_data.dart';
 import 'package:flutter_playground/app/roles/logic/load_roles_data.dart';
 
 /// Utility class for roles management.
@@ -13,6 +14,7 @@ import 'package:flutter_playground/app/roles/logic/load_roles_data.dart';
 /// Static Methods:
 /// - [emptyRole]: Gets an empty [AppRole].
 /// - [dbRolesData]: Gets the roles data.
+/// - [getRole]: Gets a specific [AppRole], according to its ID or name.
 /// - [initDbRolesData]: Initializes the user roles for the app.
 /// - [clearDbRolesData]: Clears the roles data from the app.
 class Roles {
@@ -24,6 +26,14 @@ class Roles {
   /// Get the loaded roles data of the database.
   static List<dynamic>? get dbRolesData {
     return rolesData;
+  }
+
+  /// Get a specific [AppRole] from the database.
+  /// It uses the ID or name of the role to identify it.
+  ///
+  /// This only works if the roles data has already been loaded, otherwise returns null.
+  static AppRole? getRole({String? roleId, String? roleName}) {
+    return getAppRoleFromData(roleId: roleId, roleName: roleName);
   }
 
   /// Loads the roles data from the database for the app.

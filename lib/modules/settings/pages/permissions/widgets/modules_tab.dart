@@ -2,10 +2,11 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
+import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_modules_tab_data.dart';
-import 'package:flutter_playground/modules/settings/pages/permissions/logic/save_module.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/modules_edit_dialog_save.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/widgets/modules_edit_dialog.dart';
 
 /// The modules tab of the permissions.
@@ -26,6 +27,8 @@ class _ModulesTabState extends State<ModulesTab> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = isMobileDeviceNotifier.value;
+
     return FutureBuilder<void>(
       future: _modulesTableData == null ? _loadModulesTableData() : null,
       builder: (context, snapshot) {
@@ -47,6 +50,7 @@ class _ModulesTabState extends State<ModulesTab> {
               dataRowMaxHeight: double.infinity,
               showCheckboxColumn: false,
               columns: [
+                // Column header for the [AppMainModule] name.
                 DataColumn(
                   label: Text(
                     Localization.getText(
@@ -54,13 +58,18 @@ class _ModulesTabState extends State<ModulesTab> {
                     ),
                   ),
                 ),
-                DataColumn(
-                  label: Text(
-                    Localization.getText(
-                      'pages.permissions.modulesTab.columnIsPublic',
+
+                // Column header for the public flag.
+                if (!isMobile)
+                  DataColumn(
+                    label: Text(
+                      Localization.getText(
+                        'pages.permissions.modulesTab.columnIsPublic',
+                      ),
                     ),
                   ),
-                ),
+
+                // Column for the [AppMainModule]'s administrators.
                 DataColumn(
                   label: Text(
                     Localization.getText(
@@ -84,29 +93,35 @@ class _ModulesTabState extends State<ModulesTab> {
                         context: context,
                         title: localizedModuleName,
                         widget: ModulesEditDialog(
-                          moduleId: moduleData['moduleId'],
+                          moduleId: moduleData['moduleName'] == 'main'
+                              ? 'main' // For the 'main' main module.
+                              : moduleData['moduleId'],
                         ),
                         onCancel: () {},
-                        onSave: (data) => saveModule(moduleData: data),
+                        onSave: (data) =>
+                            modulesEditDialogSave(moduleData: data),
                       );
                     }
                   },
                   cells: [
-                    // Column for the main module name.
+                    // Column for the [AppMainModule] name.
                     DataCell(Text(localizedModuleName)),
+
                     // Column for the public flag.
-                    DataCell(
-                      Icon(
-                        moduleData['moduleIsPublic'] == true
-                            ? Icons.check
-                            : Icons.close,
-                        color: moduleData['moduleIsPublic'] == true
-                            ? Colors.green
-                            : Colors.red,
-                        size: 20,
+                    if (!isMobile)
+                      DataCell(
+                        Icon(
+                          moduleData['moduleIsPublic'] == true
+                              ? Icons.check
+                              : Icons.close,
+                          color: moduleData['moduleIsPublic'] == true
+                              ? Colors.green
+                              : Colors.red,
+                          size: 20,
+                        ),
                       ),
-                    ),
-                    // Column for the main module's administrators.
+
+                    // Column for the [AppMainModule]'s administrators.
                     DataCell(
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),

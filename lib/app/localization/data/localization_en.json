@@ -57,24 +57,27 @@
             "title": "Permissions",
             "modulesTab": {
                 "title": "Modules",
-                "columnName": "Module Name",
+                "columnName": "Modulename",
                 "columnIsPublic": "Public",
-                "columnAdmins": "Administrators"
+                "columnAdmins": "Administrators",
+                "editIsPublic": "Module is public"
             },
             "usersTab": {
                 "title": "Users",
-                "columnName": "User Name",
+                "columnName": "Username",
                 "columnEmail": "eMail",
                 "columnRoles": "Roles",
-                "columnActions": "Actions",
+                "addNew": "New User",
                 "errorNoData": "No users invited for this module."
             },
             "rolesTab": {
                 "title": "Roles",
-                "columnName": "Role Name",
+                "columnName": "Rolename",
                 "columnSubModule": "Sub Module",
                 "columnPermissions": "Permissions",
-                "columnActions": "",
+                "editMainModule": "Main Module",
+                "editSubModule": "Sub Module",
+                "addNew": "New Role",
                 "errorNoData": "No roles defined for this module."
             }
         },
