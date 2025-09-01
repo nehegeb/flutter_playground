@@ -60,7 +60,17 @@ class RolesEditDialog extends StatelessWidget {
                         ),
                         Text(':'),
                         SizedBox(width: textSpacer),
-                        Text(appRole?.mainModuleIdTitle ?? ''),
+                        Text(
+                          appRole?.mainModuleIdTitle == null ||
+                                  appRole?.mainModuleIdTitle == ''
+                              ? ''
+                              : appRole?.mainModuleIdTitle == 'main' ||
+                                    appRole?.mainModuleIdTitle == 'settings'
+                              ? Localization.getText('appName')
+                              : Localization.getText(
+                                  'modules.${appRole?.mainModuleIdTitle}.title',
+                                ),
+                        ),
                       ],
                     ),
                   ],
@@ -80,7 +90,14 @@ class RolesEditDialog extends StatelessWidget {
                           ),
                           Text(':'),
                           SizedBox(width: textSpacer),
-                          Text(appRole?.subModuleIdTitle ?? ''),
+                          Text(
+                            appRole?.subModuleIdTitle == null ||
+                                    appRole?.subModuleIdTitle == ''
+                                ? ''
+                                : Localization.getText(
+                                    'modules.${appRole?.mainModuleIdTitle}.modules.${appRole?.subModuleIdTitle}.title',
+                                  ),
+                          ),
                         ],
                       ),
                     ],

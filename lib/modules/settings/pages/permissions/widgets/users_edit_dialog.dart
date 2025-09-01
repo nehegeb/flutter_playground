@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/modules/settings/pages/permissions/permissions_page_utils.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_init.dart';
 
 class UsersEditDialog extends StatelessWidget {
@@ -23,7 +22,6 @@ class UsersEditDialog extends StatelessWidget {
       await usersEditDialogInit(userId: userId, mainModule: mainModule);
     });
 
-    String activeMainModule = PermissionsPageUtils.activeMainModule;
     double textSpacer = 12;
     double lineSpacer = 8;
 
@@ -86,18 +84,21 @@ class UsersEditDialog extends StatelessWidget {
                           ),
                         ),
 
-                        // Column header for role actions.
-                        DataColumn(
-                          label: Align(
-                            alignment: Alignment.centerRight,
-                            child: IconButton(
-                              icon: const Icon(Icons.add),
-                              tooltip: Localization.getText('misc.buttons.add'),
-                              onPressed: () {},
+                        // Column header for role actions for normal [AppUser]s.
+                        if (!data['isAdmin'])
+                          DataColumn(
+                            label: Align(
+                              alignment: Alignment.centerRight,
+                              child: IconButton(
+                                icon: const Icon(Icons.add),
+                                tooltip: Localization.getText(
+                                  'misc.buttons.add',
+                                ),
+                                onPressed: () {},
+                              ),
                             ),
+                            numeric: true,
                           ),
-                          numeric: true,
-                        ),
                       ],
                       rows: userAppRoles.isEmpty
                           ? []
@@ -108,26 +109,18 @@ class UsersEditDialog extends StatelessWidget {
                                   ? role.idTitle.toString()
                                   : '${role.subModuleIdTitle.toString()} ${role.idTitle.toString()}';
 
-                              // Check whether this is an admin role.
-                              List<String>? rolePermissions = role.permissions;
-                              bool isAdminRole =
-                                  rolePermissions != null &&
-                                  rolePermissions.any(
-                                    (perm) => perm == ('$activeMainModule.*'),
-                                  );
-
                               return DataRow(
                                 cells: [
                                   // column for module roles.
                                   DataCell(Text(roleNameComplete)),
 
-                                  // Column for role actions.
-                                  DataCell(
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Row(
-                                        children: [
-                                          if (!isAdminRole)
+                                  // Column for role actions for normal [AppUser]s.
+                                  if (!data['isAdmin'])
+                                    DataCell(
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Row(
+                                          children: [
                                             IconButton(
                                               icon: const Icon(Icons.delete),
                                               tooltip: Localization.getText(
@@ -135,10 +128,10 @@ class UsersEditDialog extends StatelessWidget {
                                               ),
                                               onPressed: () {},
                                             ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
                                 ],
                               );
                             }).toList(),

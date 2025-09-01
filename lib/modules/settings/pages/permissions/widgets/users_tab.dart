@@ -45,6 +45,7 @@ class _UsersTabState extends State<UsersTab> {
             ),
           );
         }
+
         return Stack(
           children: [
             SizedBox(
@@ -84,24 +85,39 @@ class _UsersTabState extends State<UsersTab> {
                     ),
                   ],
                   rows: _usersTableData!.map<DataRow>((userData) {
-                    String userName = userData['name']?.toString() ?? '';
+                    final String userName = userData['name']?.toString() ?? '';
+                    final bool isAdminUser = userData['isAdmin'];
 
                     return DataRow(
                       onSelectChanged: (selected) {
                         if (selected == true) {
-                          // Open the edit dialog for the clicked-on table entry.
-                          AppPopup.widgetDialog(
-                            context: context,
-                            title: userName,
-                            widget: UsersEditDialog(
-                              userId: userData['userId'],
-                              mainModule: activeMainModule,
-                            ),
-                            onCancel: () {},
-                            onSave: (data) =>
-                                usersEditDialogSave(userData: data),
-                            onDelete: (id) => usersEditDialogDelete(userId: id),
-                          );
+                          if (isAdminUser) {
+                            // For admin [AppUser]s, open the view dialog for the clicked-on table entry.
+                            AppPopup.widgetDialog(
+                              context: context,
+                              title: userName,
+                              widget: UsersEditDialog(
+                                userId: userData['userId'],
+                                mainModule: activeMainModule,
+                              ),
+                              onConfirm: () {},
+                            );
+                          } else {
+                            // For normal [AppUser]s, open the edit dialog for the clicked-on table entry.
+                            AppPopup.widgetDialog(
+                              context: context,
+                              title: userName,
+                              widget: UsersEditDialog(
+                                userId: userData['userId'],
+                                mainModule: activeMainModule,
+                              ),
+                              onCancel: () {},
+                              onSave: (data) =>
+                                  usersEditDialogSave(userData: data),
+                              onDelete: (id) =>
+                                  usersEditDialogDelete(userId: id),
+                            );
+                          }
                         }
                       },
                       cells: [

@@ -43,6 +43,7 @@ class _RolesTabState extends State<RolesTab> {
             ),
           );
         }
+
         return Stack(
           children: [
             SizedBox(
@@ -72,16 +73,17 @@ class _RolesTabState extends State<RolesTab> {
                     ),
                   ],
                   rows: _rolesTableData!.map<DataRow>((roleData) {
-                    String roleName =
+                    final String roleName =
                         (roleData['subModule'] == null ||
                             roleData['subModule'].toString().isEmpty)
                         ? roleData['name']?.toString() ?? ''
                         : '${roleData['subModule'].toString()} ${roleData['name']?.toString() ?? ''}';
+                    final bool isDefaultRole = roleData['isDefaultRole'];
 
                     return DataRow(
                       onSelectChanged: (selected) {
                         if (selected == true) {
-                          if (roleData['isDefaultRole']) {
+                          if (isDefaultRole) {
                             // For default [AppRole]s, open the view dialog for the clicked-on table entry.
                             AppPopup.widgetDialog(
                               context: context,

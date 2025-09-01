@@ -42,6 +42,7 @@ class _ModulesTabState extends State<ModulesTab> {
             ),
           );
         }
+
         return SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
