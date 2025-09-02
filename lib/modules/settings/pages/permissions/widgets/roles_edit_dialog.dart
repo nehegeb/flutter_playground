@@ -2,12 +2,15 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/app/app_helper/widgets/dropdown_list.dart';
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/roles_edit_dialog_init.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/roles_edit_dialog_add_permission.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/roles_edit_dialog_delete_permission.dart';
+
+List<String>? availablePermissionsForAppRole;
 
 class RolesEditDialog extends StatefulWidget {
   final String? roleId;
@@ -20,6 +23,9 @@ class RolesEditDialog extends StatefulWidget {
 }
 
 class _RolesEditDialogState extends State<RolesEditDialog> {
+  bool isAddPermissionShown = false;
+  String? selectedPermission;
+
   @override
   void initState() {
     super.initState();
@@ -140,49 +146,131 @@ class _RolesEditDialogState extends State<RolesEditDialog> {
                           DataColumn(
                             label: Align(
                               alignment: Alignment.centerRight,
-                              child: IconButton(
-                                icon: const Icon(Icons.add),
-                                tooltip: Localization.getText(
-                                  'misc.buttons.add',
-                                ),
-                                onPressed: () => usersEditDialogAddPermission(),
-                              ),
+                              child: !isAddPermissionShown
+                                  ? IconButton(
+                                      icon: const Icon(Icons.add),
+                                      tooltip: Localization.getText(
+                                        'misc.buttons.add',
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          isAddPermissionShown = true;
+                                        });
+                                      },
+                                    )
+                                  : IconButton(
+                                      icon: const Icon(Icons.close),
+                                      tooltip: Localization.getText(
+                                        'misc.buttons.cancel',
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          isAddPermissionShown = false;
+                                          selectedPermission = null;
+                                        });
+                                      },
+                                    ),
                             ),
                             numeric: true,
                           ),
                       ],
-                      rows: rolePermissions.isEmpty
-                          ? []
-                          : rolePermissions.map((perm) {
-                              return DataRow(
-                                cells: [
-                                  // column for module roles.
-                                  DataCell(Text(perm)),
+                      rows: [
+                        // A row for a new entry to the list.
+                        if (isAddPermissionShown)
+                          DataRow(
+                            color: WidgetStateProperty.resolveWith<Color?>((
+                              Set<WidgetState> states,
+                            ) {
+                              return Theme.of(context).colorScheme.surface;
+                            }),
+                            cells: [
+                              // Column for module roles.
+                              DataCell(
+                                DropdownList<String>(
+                                  items: (availablePermissionsForAppRole ?? [])
+                                      // Only include the permissions that are not already in the [AppRole].
+                                      .where(
+                                        (availablePerm) =>
+                                            !(rolePermissions.any(
+                                              (rolePerm) =>
+                                                  rolePerm == availablePerm,
+                                            )),
+                                      )
+                                      .toList(),
+                                  filterEnabled: true,
+                                  itemLabel: (permission) => permission,
+                                  onChanged: (selectedPerm) {
+                                    setState(() {
+                                      selectedPermission = selectedPerm;
+                                    });
+                                  },
+                                ),
+                              ),
 
-                                  // Column for role actions for custom [AppRole]s.
-                                  if (!appRole.isDefaultRole)
-                                    DataCell(
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Row(
-                                          children: [
-                                            IconButton(
-                                              icon: const Icon(Icons.delete),
-                                              tooltip: Localization.getText(
-                                                'misc.buttons.delete',
-                                              ),
-                                              onPressed: () =>
-                                                  usersEditDialogDeletePermission(
-                                                    permission: perm,
-                                                  ),
-                                            ),
-                                          ],
+                              // Column for role actions for custom [AppRole]s.
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.check),
+                                        tooltip: Localization.getText(
+                                          'misc.buttons.add',
                                         ),
+                                        onPressed: selectedPermission == null
+                                            ? null
+                                            : () {
+                                                rolesEditDialogAddPermission(
+                                                  permission:
+                                                      selectedPermission,
+                                                );
+                                                setState(() {
+                                                  isAddPermissionShown = false;
+                                                  selectedPermission = null;
+                                                });
+                                              },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                        // All the list entries.
+                        if (rolePermissions.isNotEmpty)
+                          ...rolePermissions.map((perm) {
+                            return DataRow(
+                              cells: [
+                                // Column for module roles.
+                                DataCell(Text(perm)),
+
+                                // Column for role actions for custom [AppRole]s.
+                                if (!appRole.isDefaultRole)
+                                  DataCell(
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Row(
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.delete),
+                                            tooltip: Localization.getText(
+                                              'misc.buttons.delete',
+                                            ),
+                                            onPressed: () =>
+                                                rolesEditDialogDeletePermission(
+                                                  permission: perm,
+                                                ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                ],
-                              );
-                            }).toList(),
+                                  ),
+                              ],
+                            );
+                          }),
+                      ],
                     ),
                   ),
                 ),

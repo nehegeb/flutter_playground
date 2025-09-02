@@ -3,6 +3,8 @@
 
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
+import 'package:flutter_playground/app/permissions/permissions_utils.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/widgets/roles_edit_dialog.dart';
 
 Future<void> rolesEditDialogInit({
   String? roleId,
@@ -27,4 +29,15 @@ Future<void> rolesEditDialogInit({
 
   // Set the [popupDialogDataNotifier] with all data for the [ModulesEditDialog].
   popupDialogDataNotifier.value = data;
+
+  // GET ALL PERMISSIONS.
+
+  // Get all permissions of the given [mainModule].
+  // This uses the permission grouping defined in [PermissionsGroupedByModule].
+  List<String>? allPermissions = PermissionsUtils.getPermissionsforModule(
+    mainModule,
+  );
+
+  // Set [availablePermissionsForAppRole] for the [ModulesEditDialog].
+  availablePermissionsForAppRole = allPermissions;
 }

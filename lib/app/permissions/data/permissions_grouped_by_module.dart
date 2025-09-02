@@ -23,15 +23,13 @@ class PermissionsGroupedByModule {
       Permissions.template.edit,
       Permissions.template.delete,
       Permissions.template.restore,
-    ],
-    'template.template': [
+      // Template [AppSubModule].
       Permissions.template.template.access,
       Permissions.template.template.view,
       Permissions.template.template.edit,
       Permissions.template.template.delete,
       Permissions.template.template.restore,
-    ],
-    'template.permissions': [
+      // Permissions [AppSubModule].
       Permissions.template.permissions.access,
       Permissions.template.permissions.view,
       Permissions.template.permissions.edit,
@@ -46,8 +44,7 @@ class PermissionsGroupedByModule {
       Permissions.settings.edit,
       Permissions.settings.delete,
       Permissions.settings.restore,
-    ],
-    'settings.permissions': [
+      // Permissions [AppSubModule].
       Permissions.settings.permissions.access,
       Permissions.settings.permissions.view,
       Permissions.settings.permissions.edit,

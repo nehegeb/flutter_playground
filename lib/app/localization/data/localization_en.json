@@ -131,6 +131,13 @@
         "licenseDetails": "Show license details",
         "licenseSource": "Source"
     },
+    "appHelper": {
+        "dropdownList": {
+            "select": "Click to select",
+            "filter": "Filter...",
+            "noResults": "Nothing found"
+        }
+    },
     "misc": {
         "buttons": {
             "close": "Close",

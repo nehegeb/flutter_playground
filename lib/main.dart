@@ -2,7 +2,7 @@
 //
 
 // TODO: BUG: Ford has a "no permission" title...
-// TODO: BUG: Check the height overflow of the permissions PopupDialogs.
+// TODO: Add permission checks to the permissions pages.
 // TODO: Add tooltips to all TopAppBar buttons.
 // TODO: appLogo wiggles a bit when switching modules. Remvoe hero?
 // TODO: (?) Make the role permissions order by subModule?

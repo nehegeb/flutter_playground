@@ -132,6 +132,13 @@
         "licenseDetails": "Lizenzdetails anzeigen",
         "licenseSource": "Quelle"
     },
+    "appHelper": {
+        "dropdownList": {
+            "select": "Klicken zum Wählen",
+            "filter": "Filtern...",
+            "noResults": "Nichts gefunden"
+        }
+    },
     "misc": {
         "buttons": {
             "close": "Schließen",

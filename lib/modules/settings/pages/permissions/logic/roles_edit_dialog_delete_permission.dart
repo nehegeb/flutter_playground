@@ -4,7 +4,7 @@
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
 
-void usersEditDialogDeletePermission({required String permission}) {
+void rolesEditDialogDeletePermission({required String permission}) {
   // Get the data from the [popupDialogDataNotifier].
   Map<String, dynamic>? notifierData = popupDialogDataNotifier.value;
   if (notifierData == null) return;

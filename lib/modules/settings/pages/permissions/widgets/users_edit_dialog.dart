@@ -2,12 +2,16 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/app/app_helper/widgets/dropdown_list.dart';
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/app/roles/roles.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_init.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_add_role.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_delete_role.dart';
+
+List<AppRole>? availableAppRolesForAppUser;
 
 class UsersEditDialog extends StatefulWidget {
   final String? userId;
@@ -20,6 +24,9 @@ class UsersEditDialog extends StatefulWidget {
 }
 
 class _UsersEditDialogState extends State<UsersEditDialog> {
+  bool isAddRoleShown = false;
+  AppRole? selectedRole;
+
   @override
   void initState() {
     super.initState();
@@ -102,55 +109,140 @@ class _UsersEditDialogState extends State<UsersEditDialog> {
                           DataColumn(
                             label: Align(
                               alignment: Alignment.centerRight,
-                              child: IconButton(
-                                icon: const Icon(Icons.add),
-                                tooltip: Localization.getText(
-                                  'misc.buttons.add',
-                                ),
-                                onPressed: () => usersEditDialogAddRole(),
-                              ),
+                              child: !isAddRoleShown
+                                  ? IconButton(
+                                      icon: const Icon(Icons.add),
+                                      tooltip: Localization.getText(
+                                        'misc.buttons.add',
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          isAddRoleShown = true;
+                                        });
+                                      },
+                                    )
+                                  : IconButton(
+                                      icon: const Icon(Icons.close),
+                                      tooltip: Localization.getText(
+                                        'misc.buttons.cancel',
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          isAddRoleShown = false;
+                                          selectedRole = null;
+                                        });
+                                      },
+                                    ),
                             ),
                             numeric: true,
                           ),
                       ],
-                      rows: userAppRoles.isEmpty
-                          ? []
-                          : userAppRoles.map((role) {
-                              // Define the complete name of the [AppRole].
-                              String roleNameComplete =
-                                  (role.subModuleIdTitle.toString().isEmpty)
-                                  ? role.idTitle.toString()
-                                  : '${role.subModuleIdTitle.toString()} ${role.idTitle.toString()}';
+                      rows: [
+                        // A row for a new entry to the list.
+                        if (isAddRoleShown)
+                          DataRow(
+                            color: WidgetStateProperty.resolveWith<Color?>((
+                              Set<WidgetState> states,
+                            ) {
+                              return Theme.of(context).colorScheme.surface;
+                            }),
+                            cells: [
+                              // Column for module roles.
+                              DataCell(
+                                DropdownList<AppRole>(
+                                  items: (availableAppRolesForAppUser ?? [])
+                                      // Only include the [AppRole]s that are not already in the [AppUser].
+                                      .where(
+                                        (availableRole) => !(userAppRoles.any(
+                                          (userRole) =>
+                                              userRole.id == availableRole.id,
+                                        )),
+                                      )
+                                      .toList(),
+                                  filterEnabled: true,
+                                  itemLabel: (appRole) =>
+                                      (appRole.subModuleIdTitle
+                                          .toString()
+                                          .isEmpty)
+                                      ? appRole.idTitle.toString()
+                                      : '${appRole.subModuleIdTitle.toString()} ${appRole.idTitle.toString()}',
+                                  onChanged: (selectedAppRole) {
+                                    setState(() {
+                                      selectedRole = selectedAppRole;
+                                    });
+                                  },
+                                ),
+                              ),
 
-                              return DataRow(
-                                cells: [
-                                  // column for module roles.
-                                  DataCell(Text(roleNameComplete)),
-
-                                  // Column for role actions for normal [AppUser]s.
-                                  if (!data['isAdmin'])
-                                    DataCell(
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Row(
-                                          children: [
-                                            IconButton(
-                                              icon: const Icon(Icons.delete),
-                                              tooltip: Localization.getText(
-                                                'misc.buttons.delete',
-                                              ),
-                                              onPressed: () =>
-                                                  usersEditDialogDeleteRole(
-                                                    roleId: role.id,
-                                                  ),
-                                            ),
-                                          ],
+                              // Column for role actions for normal [AppUser]s.
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.check),
+                                        tooltip: Localization.getText(
+                                          'misc.buttons.add',
                                         ),
+                                        onPressed: selectedRole == null
+                                            ? null
+                                            : () {
+                                                usersEditDialogAddRole(
+                                                  appRole: selectedRole,
+                                                );
+                                                setState(() {
+                                                  isAddRoleShown = false;
+                                                  selectedRole = null;
+                                                });
+                                              },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                        // All the list entries.
+                        if (userAppRoles.isNotEmpty)
+                          ...userAppRoles.map((role) {
+                            // Define the complete name of the [AppRole].
+                            String roleNameComplete =
+                                (role.subModuleIdTitle.toString().isEmpty)
+                                ? role.idTitle.toString()
+                                : '${role.subModuleIdTitle.toString()} ${role.idTitle.toString()}';
+
+                            return DataRow(
+                              cells: [
+                                // Column for module roles.
+                                DataCell(Text(roleNameComplete)),
+
+                                // Column for role actions for normal [AppUser]s.
+                                if (!data['isAdmin'])
+                                  DataCell(
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Row(
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.delete),
+                                            tooltip: Localization.getText(
+                                              'misc.buttons.delete',
+                                            ),
+                                            onPressed: () =>
+                                                usersEditDialogDeleteRole(
+                                                  roleId: role.id,
+                                                ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                ],
-                              );
-                            }).toList(),
+                                  ),
+                              ],
+                            );
+                          }),
+                      ],
                     ),
                   ),
                 ),
