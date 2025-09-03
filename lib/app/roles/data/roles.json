@@ -114,5 +114,15 @@
             "template.template.edit",
             "template.template.delete"
         ]
+    },
+    {
+        "id": "df692fdb-560d-4a97-bc71-536695f856a1",
+        "idTitle": "admin",
+        "mainModuleIdTitle": "settings",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "settings.*"
+        ]
     }
 ]

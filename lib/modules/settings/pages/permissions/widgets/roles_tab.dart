@@ -23,7 +23,10 @@ class _RolesTabState extends State<RolesTab> {
 
   // Load the data for the roles tab.
   Future<void> _loadRolesTableData() async {
-    _rolesTableData = await getRolesTabData();
+    final data = await getRolesTabData();
+    setState(() {
+      _rolesTableData = data;
+    });
   }
 
   @override
@@ -37,10 +40,41 @@ class _RolesTabState extends State<RolesTab> {
           return const Center(child: CircularProgressIndicator());
         }
         if (_rolesTableData == null) {
-          return Center(
-            child: Text(
-              Localization.getText('pages.permissions.rolesTab.errorNoData'),
-            ),
+          return Stack(
+            children: [
+              // Centered message for when no data is available.
+              Center(
+                child: Text(
+                  Localization.getText(
+                    'pages.permissions.rolesTab.errorNoData',
+                  ),
+                ),
+              ),
+
+              // 'Add' button at bottom right.
+              Positioned(
+                bottom: 16,
+                right: 16,
+                child: FloatingActionButton(
+                  mini: true,
+                  tooltip: Localization.getText('misc.buttons.add'),
+                  onPressed: () => AppPopup.widgetDialog(
+                    context: context,
+                    title: Localization.getText(
+                      'pages.permissions.rolesTab.addNew',
+                    ),
+                    widget: RolesEditDialog(
+                      roleId: null,
+                      mainModule: activeMainModule,
+                    ),
+                    onCancel: () {},
+                    onSave: (data) async =>
+                        await rolesEditDialogSave(roleData: data),
+                  ),
+                  child: const Icon(Icons.add, size: 20),
+                ),
+              ),
+            ],
           );
         }
 
@@ -104,8 +138,10 @@ class _RolesTabState extends State<RolesTab> {
                                 mainModule: activeMainModule,
                               ),
                               onCancel: () {},
-                              onSave: (data) =>
-                                  rolesEditDialogSave(roleData: data),
+                              onSave: (data) async {
+                                await rolesEditDialogSave(roleData: data);
+                                await _loadRolesTableData();
+                              },
                               onDelete: (id) =>
                                   rolesEditDialogDelete(roleId: id),
                             );
@@ -157,7 +193,8 @@ class _RolesTabState extends State<RolesTab> {
                     mainModule: activeMainModule,
                   ),
                   onCancel: () {},
-                  onSave: (data) => rolesEditDialogSave(roleData: data),
+                  onSave: (data) async =>
+                      await rolesEditDialogSave(roleData: data),
                 ),
                 child: const Icon(Icons.add, size: 20),
               ),

@@ -1,8 +1,8 @@
 // load_main_modules_data.dart
 //
 
+import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
@@ -20,11 +20,15 @@ Future<void> loadMainModulesData() async {
 
   // Load the main modules JSON file.
   try {
+    final file = File('lib/app/modules/data/main_modules.json');
+
     // Load the main modules data.
-    final jsonData = await rootBundle.loadString(
-      'lib/app/modules/data/main_modules.json',
-    );
-    mainModulesData = json.decode(jsonData) as List<dynamic>;
+    if (await file.exists()) {
+      final jsonData = await file.readAsString();
+      mainModulesData = json.decode(jsonData) as List<dynamic>?;
+    } else {
+      mainModulesData = [];
+    }
   } finally {
     // Dismiss the loading overlay after loading is complete.
     LoadingOverlay.dismiss();

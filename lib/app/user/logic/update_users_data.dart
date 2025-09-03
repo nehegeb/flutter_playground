@@ -10,21 +10,30 @@ import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 /// Update the entry in the users data JSON file by the users ID.
 /// If no [id] is given, it assumes this is a new user for the app and adds it.
 /// Otherwise it also sets the [AppUser] for the [appUserNotifier] afterwards.
+///
 /// Returns true if the update was successful, false otherwise.
 Future<bool> updateUsersData({
-  String id = '',
-  String email = '',
-  String name = '',
-  String passwordHash = '',
-  String passwordSalt = '',
-  List<int> rolesIds = const [],
+  String? id,
+  String? email,
+  String? name,
+  String? passwordHash,
+  String? passwordSalt,
+  List<String>? rolesIds,
 }) async {
-  // Load the users data, if it's not already loaded.
+  // Define default values if not provided.
+  id ??= '';
+  email ??= '';
+  name ??= '';
+  passwordHash ??= '';
+  passwordSalt ??= '';
+  rolesIds ??= [];
+
+  // Load the users data to make sure it's the most current version.
   bool wasAlreadyLoaded = true;
   if (User.dbUsersData == null) {
     wasAlreadyLoaded = false;
-    await User.initDbUsersData();
   }
+  await User.initDbUsersData();
 
   bool isNewUser = id == '' ? true : false;
   bool usersDataUpdated = false;
@@ -65,15 +74,17 @@ Future<bool> updateUsersData({
   if (!isNewUser) {
     for (var user in User.dbUsersData!) {
       if (user['id'] == id) {
-        email = email.isNotEmpty ? email : user['email'];
-        name = name.isNotEmpty ? name : user['name'];
-        passwordHash = passwordHash.isNotEmpty
+        email = email != null && email.isNotEmpty ? email : user['email'];
+        name = name != null && name.isNotEmpty ? name : user['name'];
+        passwordHash = passwordHash != null && passwordHash.isNotEmpty
             ? passwordHash
             : user['passwordHash'];
-        passwordSalt = passwordSalt.isNotEmpty
+        passwordSalt = passwordSalt != null && passwordSalt.isNotEmpty
             ? passwordSalt
             : user['passwordSalt'];
-        rolesIds = rolesIds.isNotEmpty ? rolesIds : user['rolesIds'] ?? [];
+        rolesIds = rolesIds != null && rolesIds.isNotEmpty
+            ? rolesIds
+            : user['rolesIds'] ?? [];
 
         user['email'] = email;
         user['name'] = name;
@@ -102,8 +113,9 @@ Future<bool> updateUsersData({
     User.clearDbUsersData();
   }
 
-  // If its a KNOWN USER, set the [AppUser] for the [appUserNotifier].
-  if (!isNewUser) {
+  // If its a KNOWN USER and it's the one currently logged in,
+  // update the [AppUser] with the new data for the [appUserNotifier].
+  if (!isNewUser && User.user != null && User.user!.id == id) {
     await setAppUser(
       id: id,
       email: email,

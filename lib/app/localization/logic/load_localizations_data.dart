@@ -1,8 +1,8 @@
 // load_localizations_data.dart
 //
 
+import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
@@ -22,12 +22,18 @@ Future<void> loadLocalizationsData(String? languageId) async {
   try {
     String loadLanguageId = '';
 
-    // Load the primary localization data.
     loadLanguageId = defaultLanguageId;
-    final jsonData = await rootBundle.loadString(
+    final file = File(
       'lib/app/localization/data/localization_$loadLanguageId.json',
     );
-    localizationDataPrimary = json.decode(jsonData) as Map<String, dynamic>;
+
+    // Load the primary localization data.
+    if (await file.exists()) {
+      final jsonData = await file.readAsString();
+      localizationDataPrimary = json.decode(jsonData) as Map<String, dynamic>;
+    } else {
+      localizationDataPrimary = {};
+    }
 
     // Make sure the proper primary localization data is loaded.
     if (localizationDataPrimary == null ||
@@ -39,11 +45,18 @@ Future<void> loadLocalizationsData(String? languageId) async {
     localizationDataSecondary = null; // Reset secondary localization data.
     if (languageId != null && languageId != defaultLanguageId) {
       loadLanguageId = languageId;
-      // Load secondary localization data if requested.
-      final jsonData = await rootBundle.loadString(
+      final file = File(
         'lib/app/localization/data/localization_$loadLanguageId.json',
       );
-      localizationDataSecondary = json.decode(jsonData) as Map<String, dynamic>;
+
+      // Load secondary localization data if requested.
+      if (await file.exists()) {
+        final jsonData = await file.readAsString();
+        localizationDataSecondary =
+            json.decode(jsonData) as Map<String, dynamic>?;
+      } else {
+        localizationDataSecondary = {};
+      }
 
       // Make sure the proper secondary localization data is loaded.
       if (localizationDataSecondary == null ||

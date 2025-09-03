@@ -79,7 +79,7 @@ class _TopAppBarState extends State<TopAppBar> {
                   IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () => Navigator.of(context).maybePop(),
-                    tooltip: '',
+                    tooltip: Localization.getText('appBar.back'),
                   ),
                   SizedBox(width: spacingWidth),
                 ],
@@ -96,7 +96,7 @@ class _TopAppBarState extends State<TopAppBar> {
                       ModuleBarUtils.toggleWidth();
                     }
                   },
-                  tooltip: '', // Remove unnecessary tooltip.
+                  tooltip: Localization.getText('appBar.moduleBar'),
                 ),
               ],
             ),
@@ -105,14 +105,11 @@ class _TopAppBarState extends State<TopAppBar> {
                 // App logo.
                 GestureDetector(
                   onTap: () => context.go('/'),
-                  child: Hero(
-                    tag: 'logo',
-                    child: SizedBox(
-                      height: 35,
-                      child: Image.asset(
-                        'assets/app/images/appLogo.png',
-                        fit: BoxFit.contain,
-                      ),
+                  child: SizedBox(
+                    height: 35,
+                    child: Image.asset(
+                      'assets/app/images/appLogo.png',
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

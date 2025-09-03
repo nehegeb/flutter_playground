@@ -8,6 +8,7 @@ class Template {
   final template = const TemplateTemplate();
   final permissions = const TemplatePermissions();
 
+  final String admin = 'template.*';
   final String access = 'template.access';
   final String view = 'template.view';
   final String edit = 'template.edit';

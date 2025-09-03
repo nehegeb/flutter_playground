@@ -29,7 +29,7 @@ class _UserMenuState extends State<UserMenu> {
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
       icon: const Icon(Icons.more_vert),
-      tooltip: '', // Remove unnecessary tooltip.
+      tooltip: Localization.getText('appBar.userMenu'),
       onSelected: (selectedAction) async {
         if (selectedAction == 'login') {
           // Save the current url for redirection after login.

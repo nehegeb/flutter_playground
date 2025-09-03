@@ -11,6 +11,7 @@ import 'package:flutter_playground/app/permissions/logic/get_sub_module_from_per
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_active_main_module.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_main_module_app_roles.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_main_module_app_users.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_main_module_admin_app_role.dart';
 
 /// Utility class for permissions management.
 /// Provides static methods for the permissions pages.
@@ -19,7 +20,8 @@ import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_
 /// - [activeMainModule]: Gets the currently active main module.
 /// - [getAppRolesForMainModule]: Gets a list of all [AppRole]s for a specific [mainModule].
 /// - [getAppUsersForMainModule]: Gets a list of all [AppUser]s for a specific [mainModule].
-/// - [getRolesForUser]: Gets the [AppRole]s for a specific [userId].
+/// - [getAdminAppRoleForMainModule]: Gets the [AppRole] for administrators of a specific [mainModule].
+/// - [getAppRolesForUser]: Gets the [AppRole]s for a specific [userId].
 /// - [getPermissionsForUser]: Gets the permissions for a specific [userId].
 /// - [getSubModulesForMainModule]: Gets the sub modules for a specific [mainModule].
 /// - [getMainModuleForPermission]: Gets the main module of a specific [permission].
@@ -46,10 +48,17 @@ class PermissionsPageUtils {
     return await getMainModuleAppUsers(mainModule: mainModule);
   }
 
+  /// Get [AppRole] for administrators of a specific [mainModule].
+  static Future<AppRole?> getAdminAppRoleForMainModule({
+    required String mainModule,
+  }) {
+    return getMainModuleAdminAppRole(mainModule: mainModule);
+  }
+
   /// Get all the [AppRole]s of a specific [userId].
   ///
   /// This is a user function that is redistributed for the [PermissionsPageUtils] to make it easier to use.
-  static Future<List<AppRole>?> getRolesForUser({required String userId}) {
+  static Future<List<AppRole>?> getAppRolesForUser({required String userId}) {
     return getUserRoles(userId: userId);
   }
 

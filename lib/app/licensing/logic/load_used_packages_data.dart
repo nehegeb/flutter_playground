@@ -1,8 +1,8 @@
 // load_used_packages_data.dart
 //
 
+import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
@@ -17,11 +17,15 @@ Future<void> loadUsedPackagesData() async {
 
   // Load the used packages JSON file.
   try {
+    final file = File('lib/app/licensing/data/used_packages.json');
+
     // Load the used packages data.
-    final jsonData = await rootBundle.loadString(
-      'lib/app/licensing/data/used_packages.json',
-    );
-    packageData = json.decode(jsonData) as Map<String, dynamic>?;
+    if (await file.exists()) {
+      final jsonData = await file.readAsString();
+      packageData = json.decode(jsonData) as Map<String, dynamic>?;
+    } else {
+      packageData = {};
+    }
   } finally {
     // Dismiss the loading overlay after loading is complete.
     LoadingOverlay.dismiss();

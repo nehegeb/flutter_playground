@@ -24,7 +24,10 @@ class _UsersTabState extends State<UsersTab> {
 
   // Load the data for the users tab.
   Future<void> _loadUsersTableData() async {
-    _usersTableData = await getUsersTabData();
+    final data = await getUsersTabData();
+    setState(() {
+      _usersTableData = data;
+    });
   }
 
   @override
@@ -39,10 +42,41 @@ class _UsersTabState extends State<UsersTab> {
           return const Center(child: CircularProgressIndicator());
         }
         if (_usersTableData == null) {
-          return Center(
-            child: Text(
-              Localization.getText('pages.permissions.usersTab.errorNoData'),
-            ),
+          return Stack(
+            children: [
+              // Centered message for when no data is available.
+              Center(
+                child: Text(
+                  Localization.getText(
+                    'pages.permissions.usersTab.errorNoData',
+                  ),
+                ),
+              ),
+
+              // 'Add' button at bottom right.
+              Positioned(
+                bottom: 16,
+                right: 16,
+                child: FloatingActionButton(
+                  mini: true,
+                  tooltip: Localization.getText('misc.buttons.add'),
+                  onPressed: () => AppPopup.widgetDialog(
+                    context: context,
+                    title: Localization.getText(
+                      'pages.permissions.usersTab.addNew',
+                    ),
+                    widget: UsersEditDialog(
+                      userId: null,
+                      mainModule: activeMainModule,
+                    ),
+                    onCancel: () {},
+                    onSave: (data) async =>
+                        await usersEditDialogSave(userData: data),
+                  ),
+                  child: const Icon(Icons.add, size: 20),
+                ),
+              ),
+            ],
           );
         }
 
@@ -112,8 +146,10 @@ class _UsersTabState extends State<UsersTab> {
                                 mainModule: activeMainModule,
                               ),
                               onCancel: () {},
-                              onSave: (data) =>
-                                  usersEditDialogSave(userData: data),
+                              onSave: (data) async {
+                                await usersEditDialogSave(userData: data);
+                                await _loadUsersTableData();
+                              },
                               onDelete: (id) =>
                                   usersEditDialogDelete(userId: id),
                             );
@@ -186,7 +222,8 @@ class _UsersTabState extends State<UsersTab> {
                     mainModule: activeMainModule,
                   ),
                   onCancel: () {},
-                  onSave: (data) => usersEditDialogSave(userData: data),
+                  onSave: (data) async =>
+                      await usersEditDialogSave(userData: data),
                 ),
                 child: const Icon(Icons.add, size: 20),
               ),

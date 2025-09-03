@@ -1,8 +1,8 @@
 // load_license_descriptions_data.dart
 //
 
+import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
@@ -17,11 +17,15 @@ Future<void> loadLicenseDescriptionsData() async {
 
   // Load the license descriptions JSON file.
   try {
+    final file = File('lib/app/licensing/data/license_descriptions.json');
+
     // Load the license descriptions data.
-    final jsonData = await rootBundle.loadString(
-      'lib/app/licensing/data/license_descriptions.json',
-    );
-    licenseData = json.decode(jsonData) as Map<String, dynamic>;
+    if (await file.exists()) {
+      final jsonData = await file.readAsString();
+      licenseData = json.decode(jsonData) as Map<String, dynamic>?;
+    } else {
+      licenseData = {};
+    }
   } finally {
     // Dismiss the loading overlay after loading is complete.
     LoadingOverlay.dismiss();

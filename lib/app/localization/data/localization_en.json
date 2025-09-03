@@ -87,6 +87,9 @@
         }
     },
     "appBar": {
+        "back": "Back",
+        "moduleBar": "Module Bar",
+        "userMenu": "User Menu",
         "menu": {
             "login": "Login",
             "logout": "Logout",

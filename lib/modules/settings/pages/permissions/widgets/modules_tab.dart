@@ -22,7 +22,10 @@ class _ModulesTabState extends State<ModulesTab> {
 
   // Load the data for the modules tab.
   Future<void> _loadModulesTableData() async {
-    _modulesTableData = await getModulesTabData();
+    final data = await getModulesTabData();
+    setState(() {
+      _modulesTableData = data;
+    });
   }
 
   @override
@@ -99,8 +102,10 @@ class _ModulesTabState extends State<ModulesTab> {
                               : moduleData['moduleId'],
                         ),
                         onCancel: () {},
-                        onSave: (data) =>
-                            modulesEditDialogSave(moduleData: data),
+                        onSave: (data) async {
+                          await modulesEditDialogSave(moduleData: data);
+                          await _loadModulesTableData();
+                        },
                       );
                     }
                   },

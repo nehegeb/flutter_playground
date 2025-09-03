@@ -7,6 +7,7 @@ class Settings {
 
   final permissions = const SettingsPermissions();
 
+  final String admin = 'settings.*';
   final String access = 'settings.access';
   final String view = 'settings.view';
   final String edit = 'settings.edit';

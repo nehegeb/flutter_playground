@@ -1,8 +1,8 @@
 // load_changelog_data.dart
 //
 
+import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
@@ -24,11 +24,15 @@ Future<void> loadChangelogData(String? module) async {
 
   // Load the changelog JSON file from the given [module].
   try {
+    final file = File('lib/modules/$module/changelog/changelog.json');
+
     // Load the changelog data.
-    final jsonData = await rootBundle.loadString(
-      'lib/modules/$module/changelog/changelog.json',
-    );
-    changelogData = json.decode(jsonData) as Map<String, dynamic>;
+    if (await file.exists()) {
+      final jsonData = await file.readAsString();
+      changelogData = json.decode(jsonData) as Map<String, dynamic>;
+    } else {
+      changelogData = {};
+    }
   } finally {
     // Dismiss the loading overlay after loading is complete.
     LoadingOverlay.dismiss();

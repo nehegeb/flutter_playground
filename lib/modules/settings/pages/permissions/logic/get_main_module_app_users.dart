@@ -27,7 +27,7 @@ Future<List<AppUser>?> getMainModuleAppUsers({
   if (users != null) {
     List<AppUser> filteredAppUsers = [];
     for (var user in users) {
-      List<AppRole>? appRoles = await PermissionsPageUtils.getRolesForUser(
+      List<AppRole>? appRoles = await PermissionsPageUtils.getAppRolesForUser(
         userId: user['id'],
       );
 

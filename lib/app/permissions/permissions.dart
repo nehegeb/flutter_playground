@@ -20,6 +20,7 @@ import 'package:flutter_playground/app/permissions/data/permissions_settings.dar
 /// - [check]: Checks if the currently logged in [AppUser] has the given permission. Returns Boolean.
 /// - Get a specific permission like [Permissions.main.access].
 class Permissions {
+  static const String admin = '*';
   static const Main main = Main();
   static const Template template = Template();
   static const Settings settings = Settings();

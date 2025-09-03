@@ -1,8 +1,8 @@
 // load_languages_data.dart
 //
 
+import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
@@ -20,11 +20,15 @@ Future<void> loadLanguagesData() async {
 
   // Load the languages JSON file.
   try {
+    final file = File('lib/app/localization/data/languages.json');
+
     // Load the languages data.
-    final jsonData = await rootBundle.loadString(
-      'lib/app/localization/data/languages.json',
-    );
-    languagesData = json.decode(jsonData) as List<dynamic>?;
+    if (await file.exists()) {
+      final jsonData = await file.readAsString();
+      languagesData = json.decode(jsonData) as List<dynamic>?;
+    } else {
+      languagesData = [];
+    }
   } finally {
     // Dismiss the loading overlay after loading is complete.
     LoadingOverlay.dismiss();

@@ -88,6 +88,9 @@
         }
     },
     "appBar": {
+        "back": "Zurück",
+        "moduleBar": "Modul Leiste",
+        "userMenu": "Benutzermenü",
         "menu": {
             "login": "Anmelden",
             "logout": "Abmelden",

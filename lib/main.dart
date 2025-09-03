@@ -3,15 +3,10 @@
 
 // TODO: BUG: Ford has a "no permission" title...
 // TODO: Add permission checks to the permissions pages.
-// TODO: Add tooltips to all TopAppBar buttons.
-// TODO: appLogo wiggles a bit when switching modules. Remvoe hero?
 // TODO: (?) Make the role permissions order by subModule?
 // TODO: (?) Maybe implement a filter feature for the users permissions?
-// TODO: Implement permissions for modules.
 // TODO: Implement permissions for users.
 // TODO: Implement permissions for roles.
-// TODO: Implement permissions for assigning roles to users.
-// TODO: Make the permissions usable on mobile devices.
 // TODO: Finish the Template README file.
 // TODO: Add a page template in lib/modules/template/pages/.
 // TODO: Web page errors 404 etc.

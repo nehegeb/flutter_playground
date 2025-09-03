@@ -1,8 +1,8 @@
 // load_users_data.dart
 //
 
+import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
@@ -17,11 +17,15 @@ Future<void> loadUsersData() async {
 
   // Load the user data JSON file.
   try {
+    final file = File('lib/app/user/data/users.json');
+
     // Load the users data.
-    final jsonData = await rootBundle.loadString(
-      'lib/app/user/data/users.json',
-    );
-    usersData = json.decode(jsonData) as List<dynamic>?;
+    if (await file.exists()) {
+      final jsonData = await file.readAsString();
+      usersData = json.decode(jsonData) as List<dynamic>?;
+    } else {
+      usersData = [];
+    }
   } finally {
     // Dismiss the loading overlay after loading is complete.
     LoadingOverlay.dismiss();
