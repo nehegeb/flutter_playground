@@ -8,8 +8,11 @@ import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/user/logic/set_app_user.dart';
 
 /// Update the entry in the users data JSON file by the users ID.
+///
 /// If no [id] is given, it assumes this is a new user for the app and adds it.
 /// Otherwise it also sets the [AppUser] for the [appUserNotifier] afterwards.
+///
+/// If [doDelete] is true, it deletes the user with the given [id].
 ///
 /// Returns true if the update was successful, false otherwise.
 Future<bool> updateUsersData({
@@ -19,6 +22,7 @@ Future<bool> updateUsersData({
   String? passwordHash,
   String? passwordSalt,
   List<String>? rolesIds,
+  bool doDelete = false,
 }) async {
   // Define default values if not provided.
   id ??= '';
@@ -37,6 +41,12 @@ Future<bool> updateUsersData({
 
   bool isNewUser = id == '' ? true : false;
   bool usersDataUpdated = false;
+
+  // If [doDelete] is true, delete the user with the given [id].
+  if (doDelete && isNewUser == false) {
+    User.dbUsersData!.removeWhere((user) => user['id'] == id);
+    usersDataUpdated = true;
+  }
 
   // If its a NEW USER, try to add it to the users data.
   if (isNewUser) {
@@ -70,8 +80,8 @@ Future<bool> updateUsersData({
     usersDataUpdated = true;
   }
 
-  // If its a KNOWN USER, update the given values for the users id in the users data.
-  if (!isNewUser) {
+  // If its a KNOWN USER, update the given values for the users ID in the users data.
+  if (!isNewUser && doDelete == false) {
     for (var user in User.dbUsersData!) {
       if (user['id'] == id) {
         email = email != null && email.isNotEmpty ? email : user['email'];

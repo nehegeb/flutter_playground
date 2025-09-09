@@ -10,7 +10,7 @@ Future<void> modulesEditDialogSave({
   required Map<String, dynamic> moduleData,
 }) async {
   // Make sure, the users data is loaded.
-  // It should be loaded, because it has been used multiple times
+  // It should already be loaded, because it has been used multiple times
   // within the [ModulesEditDialog] till now. So this shouldn't trigger.
   if (User.dbUsersData == null) {
     await User.initDbUsersData();

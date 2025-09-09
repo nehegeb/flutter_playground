@@ -142,8 +142,10 @@ class _RolesTabState extends State<RolesTab> {
                                 await rolesEditDialogSave(roleData: data);
                                 await _loadRolesTableData();
                               },
-                              onDelete: (id) =>
-                                  rolesEditDialogDelete(roleId: id),
+                              onDelete: (id) async {
+                                await rolesEditDialogDelete(roleId: id);
+                                await _loadRolesTableData();
+                              },
                             );
                           }
                         }

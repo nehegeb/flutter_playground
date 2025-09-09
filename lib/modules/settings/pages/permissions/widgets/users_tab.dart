@@ -150,8 +150,10 @@ class _UsersTabState extends State<UsersTab> {
                                 await usersEditDialogSave(userData: data);
                                 await _loadUsersTableData();
                               },
-                              onDelete: (id) =>
-                                  usersEditDialogDelete(userId: id),
+                              onDelete: (id) async {
+                                await usersEditDialogDelete(userId: id);
+                                await _loadUsersTableData();
+                              },
                             );
                           }
                         }
