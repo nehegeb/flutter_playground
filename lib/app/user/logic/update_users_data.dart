@@ -30,7 +30,8 @@ Future<bool> updateUsersData({
   name ??= '';
   passwordHash ??= '';
   passwordSalt ??= '';
-  rolesIds ??= [];
+  // If [rolesIds] is null, take over the existing rolesIds from the user data.
+  // If [rolesIds] is an empty list, it means no roles should be assigned to the user.
 
   // Load the users data to make sure it's the most current version.
   bool wasAlreadyLoaded = true;
@@ -73,7 +74,7 @@ Future<bool> updateUsersData({
       'name': name,
       'passwordHash': passwordHash,
       'passwordSalt': passwordSalt,
-      'rolesIds': rolesIds.isNotEmpty ? rolesIds : [],
+      'rolesIds': rolesIds ?? [],
     };
     User.dbUsersData!.add(newUser);
 
@@ -92,9 +93,11 @@ Future<bool> updateUsersData({
         passwordSalt = passwordSalt != null && passwordSalt.isNotEmpty
             ? passwordSalt
             : user['passwordSalt'];
-        rolesIds = rolesIds != null && rolesIds.isNotEmpty
-            ? rolesIds
-            : user['rolesIds'] ?? [];
+        rolesIds =
+            rolesIds ??
+            (user['rolesIds'] != null
+                ? List<String>.from(user['rolesIds'])
+                : []);
 
         user['email'] = email;
         user['name'] = name;
@@ -121,6 +124,11 @@ Future<bool> updateUsersData({
   // NOTE: This is necessary to prevent unnecessary data for all users from being kept in memory.
   if (!wasAlreadyLoaded) {
     User.clearDbUsersData();
+  }
+
+  if (!usersDataUpdated) {
+    // No changes made to the users data.
+    return false;
   }
 
   // If its a KNOWN USER and it's the one currently logged in,

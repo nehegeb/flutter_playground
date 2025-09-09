@@ -149,8 +149,8 @@ class _ModulesEditDialogState extends State<ModulesEditDialog> {
                                         )),
                                       )
                                       .toList(),
-                                  filterEnabled: true,
                                   itemLabel: (appUser) => appUser.name,
+                                  filterEnabled: true,
                                   onChanged: (selectedAppUser) {
                                     setState(() {
                                       selectedAdmin = selectedAppUser;

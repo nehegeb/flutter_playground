@@ -7,8 +7,6 @@
 // TODO: (?) Revamp the loading overlay, so that it is possible to stack multiple loading processes in one call.
 // TODO: (?) Make the role permissions order by subModule?
 // TODO: (?) Maybe implement a filter feature for the users permissions?
-// TODO: Implement permissions for users.
-// TODO: Implement permissions for roles.
 // TODO: Finish the Template README file.
 // TODO: Add a page template in lib/modules/template/pages/.
 // TODO: Web page errors 404 etc.

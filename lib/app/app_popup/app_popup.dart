@@ -11,11 +11,17 @@ import 'package:flutter_playground/app/app_popup/logic/show_loading_dialog.dart'
 import 'package:flutter_playground/app/app_popup/logic/show_widget_dialog.dart';
 import 'package:flutter_playground/app/app_popup/logic/update_popup_dialog_message.dart';
 import 'package:flutter_playground/app/app_popup/logic/hide_popup_dialog.dart';
+import 'package:flutter_playground/app/app_popup/logic/set_confirmation_buttons_active.dart';
+import 'package:flutter_playground/app/app_popup/logic/set_confirmation_buttons_inactive.dart';
 
 /// Notifier whether the [PopupDialog] is currently displayed.
 final ValueNotifier<bool> isPopupDialogDisplayedNotifier = ValueNotifier<bool>(
   false,
 );
+
+/// Notifier whether the confirm, yes and save buttons are active on the [PopupDialog].
+final ValueNotifier<bool> isConfirmationButtonActiveNotifier =
+    ValueNotifier<bool>(true);
 
 /// Notifier for the [message] displayed on the [PopupDialog].
 final ValueNotifier<String?> popupDialogMessageNotifier =
@@ -40,6 +46,8 @@ final ValueNotifier<Map<String, dynamic>?> popupDialogDataNotifier =
 /// - [widgetDialog]: Shows a [PopupDialog] with the given [widget] as content.
 /// - [updateMessage]: Updates the message of the currently displayed [PopupDialog].
 /// - [hide]: Hides the currently displayed [PopupDialog]. Mainly for [loadingDialog].
+/// - [activateConfirmationButton]: Activates of the confirm, yes and save buttons.
+/// - [deactivateConfirmationButton]: Deactivates the confirm, yes and save buttons.
 class AppPopup {
   /// Show a success message [PopupDialog] with the given [message].
   ///
@@ -169,5 +177,15 @@ class AppPopup {
   /// - A [onHide] callback can be provided to execute custom logic when the dialog is hidden.
   static void hide({required BuildContext context, VoidCallback? onHide}) {
     hidePopupDialog(context: context, onHide: onHide);
+  }
+
+  /// Activate the confirm, yes and save buttons on the [PopupDialog].
+  static void activateConfirmationButton() {
+    setConfirmationButtonsActive();
+  }
+
+  /// Deactivate the confirm, yes and save buttons on the [PopupDialog].
+  static void deactivateConfirmationButton() {
+    setConfirmationButtonsInactive();
   }
 }

@@ -145,13 +145,16 @@ class _UsersTabState extends State<UsersTab> {
                                 userId: userData['userId'],
                                 mainModule: activeMainModule,
                               ),
-                              onCancel: () {},
+                              onCancel: () async => await _loadUsersTableData(),
                               onSave: (data) async {
                                 await usersEditDialogSave(userData: data);
                                 await _loadUsersTableData();
                               },
                               onDelete: (id) async {
-                                await usersEditDialogDelete(userId: id);
+                                await usersEditDialogDelete(
+                                  userId: id,
+                                  mainModule: activeMainModule,
+                                );
                                 await _loadUsersTableData();
                               },
                             );
@@ -224,8 +227,10 @@ class _UsersTabState extends State<UsersTab> {
                     mainModule: activeMainModule,
                   ),
                   onCancel: () {},
-                  onSave: (data) async =>
-                      await usersEditDialogSave(userData: data),
+                  onSave: (data) async {
+                    await usersEditDialogSave(userData: data);
+                    await _loadUsersTableData();
+                  },
                 ),
                 child: const Icon(Icons.add, size: 20),
               ),

@@ -21,6 +21,9 @@ void hidePopupDialog({required BuildContext context, VoidCallback? onHide}) {
     // Set the [isPopupDialogDisplayedNotifier] to false.
     isPopupDialogDisplayedNotifier.value = false;
 
+    // Set the [isConfirmationButtonActiveNotifier] to true.
+    isConfirmationButtonActiveNotifier.value = true;
+
     // Set the [popupDialogDataNotifier] to null.
     popupDialogDataNotifier.value = null;
 

@@ -137,7 +137,7 @@ class _RolesTabState extends State<RolesTab> {
                                 roleId: roleData['roleId'],
                                 mainModule: activeMainModule,
                               ),
-                              onCancel: () {},
+                              onCancel: () async => await _loadRolesTableData(),
                               onSave: (data) async {
                                 await rolesEditDialogSave(roleData: data);
                                 await _loadRolesTableData();
@@ -195,8 +195,10 @@ class _RolesTabState extends State<RolesTab> {
                     mainModule: activeMainModule,
                   ),
                   onCancel: () {},
-                  onSave: (data) async =>
-                      await rolesEditDialogSave(roleData: data),
+                  onSave: (data) async {
+                    await rolesEditDialogSave(roleData: data);
+                    await _loadRolesTableData();
+                  },
                 ),
                 child: const Icon(Icons.add, size: 20),
               ),

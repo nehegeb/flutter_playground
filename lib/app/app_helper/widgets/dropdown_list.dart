@@ -67,86 +67,105 @@ class _DropdownListState<T> extends State<DropdownList<T>> {
     final extraWidth = 48.0;
 
     return OverlayEntry(
-      builder: (context) => Positioned(
-        width: size.width + extraWidth,
-        child: CompositedTransformFollower(
-          link: _layerLink,
-          showWhenUnlinked: false,
-          offset: Offset(-(extraWidth / 2), size.height + 2),
-          child: Material(
-            elevation: 4,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Filter field pinned at the top, if enabled.
-                if (widget.filterEnabled)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 8,
-                    ),
-                    child: TextField(
-                      controller: _searchController,
-                      focusNode: _searchFocusNode,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        hintText: Localization.getText(
-                          'appHelper.dropdownList.filter',
-                        ),
-                        border: OutlineInputBorder(),
-                        isDense: true,
-                        contentPadding: EdgeInsets.all(8),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _filteredItems = widget.items
-                              .where(
-                                (item) => widget
-                                    .itemLabel(item)
-                                    .toLowerCase()
-                                    .contains(value.toLowerCase()),
-                              )
-                              .toList();
-                        });
-                        _overlayEntry?.markNeedsBuild();
-                      },
-                    ),
-                  ),
-
-                // The entries, scrollable.
-                ConstrainedBox(
-                  // Only show a maximum amount of entries at once.
-                  constraints: BoxConstraints(maxHeight: maxEntryAmount * 48.0),
-                  child: _filteredItems.isEmpty
-                      ? ListTile(
-                          title: Text(
-                            Localization.getText(
-                              'appHelper.dropdownList.noResults',
-                            ),
-                          ),
-                        )
-                      : ListView(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          children: _filteredItems.map((item) {
-                            return ListTile(
-                              title: Text(widget.itemLabel(item)),
-                              onTap: () {
-                                setState(() {
-                                  _selectedItem = item;
-                                });
-                                widget.onChanged?.call(item);
-                                _closeDropdown();
-                              },
-                            );
-                          }).toList(),
-                        ),
-                ),
-              ],
+      builder: (context) {
+        return Stack(
+          children: [
+            // Full-screen transparent GestureDetector to catch clicks outside.
+            // This is necessary to collapse the [DropdownList] when clicking next to it.
+            Positioned.fill(
+              child: GestureDetector(
+                onTap: _closeDropdown,
+                behavior: HitTestBehavior.translucent,
+                child: Container(), // transparent
+              ),
             ),
-          ),
-        ),
-      ),
+
+            // The dropdown list overlay itself.
+            Positioned(
+              width: size.width + extraWidth,
+              child: CompositedTransformFollower(
+                link: _layerLink,
+                showWhenUnlinked: false,
+                offset: Offset(-(extraWidth / 2), size.height + 2),
+                child: Material(
+                  elevation: 4,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Filter field pinned at the top, if enabled.
+                      if (widget.filterEnabled)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 8,
+                          ),
+                          child: TextField(
+                            controller: _searchController,
+                            focusNode: _searchFocusNode,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              hintText: Localization.getText(
+                                'appHelper.dropdownList.filter',
+                              ),
+                              border: OutlineInputBorder(),
+                              isDense: true,
+                              contentPadding: EdgeInsets.all(8),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                _filteredItems = widget.items
+                                    .where(
+                                      (item) => widget
+                                          .itemLabel(item)
+                                          .toLowerCase()
+                                          .contains(value.toLowerCase()),
+                                    )
+                                    .toList();
+                              });
+                              _overlayEntry?.markNeedsBuild();
+                            },
+                          ),
+                        ),
+
+                      // The entries, scrollable.
+                      ConstrainedBox(
+                        // Only show a maximum amount of entries at once.
+                        constraints: BoxConstraints(
+                          maxHeight: maxEntryAmount * 48.0,
+                        ),
+                        child: _filteredItems.isEmpty
+                            ? ListTile(
+                                title: Text(
+                                  Localization.getText(
+                                    'appHelper.dropdownList.noResults',
+                                  ),
+                                ),
+                              )
+                            : ListView(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                children: _filteredItems.map((item) {
+                                  return ListTile(
+                                    title: Text(widget.itemLabel(item)),
+                                    onTap: () {
+                                      setState(() {
+                                        _selectedItem = item;
+                                      });
+                                      widget.onChanged?.call(item);
+                                      _closeDropdown();
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

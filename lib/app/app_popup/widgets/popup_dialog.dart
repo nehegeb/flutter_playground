@@ -300,8 +300,8 @@ class _PopupDialogState extends State<PopupDialog> {
               Padding(
                 padding: const EdgeInsets.only(
                   top: 0,
-                  right: 14,
-                  left: 14,
+                  right: 18,
+                  left: 18,
                   bottom: 18,
                 ),
                 child: Row(
@@ -337,20 +337,27 @@ class _PopupDialogState extends State<PopupDialog> {
 
                     // Save button, if [onSave] is given.
                     if (widget.onSave != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Perform the [onSave] function before hiding the [PopupDialog].
-                            widget.onSave?.call(
-                              popupDialogDataNotifier.value ?? {},
-                            );
-                            AppPopup.hide(context: context);
-                          },
-                          child: Text(
-                            Localization.getText('misc.buttons.save'),
-                          ),
-                        ),
+                      ValueListenableBuilder<bool>(
+                        valueListenable: isConfirmationButtonActiveNotifier,
+                        builder: (context, isActive, _) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: ElevatedButton(
+                              onPressed: isActive
+                                  ? () {
+                                      // Perform the [onSave] function before hiding the [PopupDialog].
+                                      widget.onSave?.call(
+                                        popupDialogDataNotifier.value ?? {},
+                                      );
+                                      AppPopup.hide(context: context);
+                                    }
+                                  : null,
+                              child: Text(
+                                Localization.getText('misc.buttons.save'),
+                              ),
+                            ),
+                          );
+                        },
                       ),
 
                     // Deny button, if [onDeny] is given.
@@ -370,17 +377,24 @@ class _PopupDialogState extends State<PopupDialog> {
 
                     // Confirm button, if [onConfirm] is given.
                     if (widget.onConfirm != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: ElevatedButton(
-                          onPressed: () => AppPopup.hide(
-                            context: context,
-                            onHide: widget.onConfirm,
-                          ),
-                          child: Text(
-                            Localization.getText('misc.buttons.confirm'),
-                          ),
-                        ),
+                      ValueListenableBuilder<bool>(
+                        valueListenable: isConfirmationButtonActiveNotifier,
+                        builder: (context, isActive, _) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: ElevatedButton(
+                              onPressed: isActive
+                                  ? () => AppPopup.hide(
+                                      context: context,
+                                      onHide: widget.onConfirm,
+                                    )
+                                  : null,
+                              child: Text(
+                                Localization.getText('misc.buttons.confirm'),
+                              ),
+                            ),
+                          );
+                        },
                       ),
 
                     // No button, if [onNo] is given.
@@ -398,15 +412,24 @@ class _PopupDialogState extends State<PopupDialog> {
 
                     // Yes button, if [onYes] is given.
                     if (widget.onYes != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: ElevatedButton(
-                          onPressed: () => AppPopup.hide(
-                            context: context,
-                            onHide: widget.onYes,
-                          ),
-                          child: Text(Localization.getText('misc.buttons.yes')),
-                        ),
+                      ValueListenableBuilder<bool>(
+                        valueListenable: isConfirmationButtonActiveNotifier,
+                        builder: (context, isActive, _) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: ElevatedButton(
+                              onPressed: isActive
+                                  ? () => AppPopup.hide(
+                                      context: context,
+                                      onHide: widget.onYes,
+                                    )
+                                  : null,
+                              child: Text(
+                                Localization.getText('misc.buttons.yes'),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                   ],
                 ),

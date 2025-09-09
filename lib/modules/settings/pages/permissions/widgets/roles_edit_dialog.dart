@@ -2,10 +2,13 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/app_helper/widgets/dropdown_list.dart';
 import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
+import 'package:flutter_playground/app/roles/logic/update_roles_data.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/permissions_page_utils.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/roles_edit_dialog_init.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/roles_edit_dialog_add_permission.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/roles_edit_dialog_delete_permission.dart';
@@ -23,13 +26,19 @@ class RolesEditDialog extends StatefulWidget {
 }
 
 class _RolesEditDialogState extends State<RolesEditDialog> {
-  bool isAddPermissionShown = false;
+  final TextEditingController _newRoleName = TextEditingController();
+  final TextEditingController _newRoleSubModule = TextEditingController();
   String? selectedPermission;
+  bool isAddPermissionShown = false;
+  bool isAddRoleActive = false;
+  bool isNewRole = false;
 
   @override
   void initState() {
     super.initState();
-    // Initialize the data for the [RolesEditDialog].
+    isNewRole = widget.roleId == null;
+
+    // Load the roles data for the [RolesEditDialog].
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await rolesEditDialogInit(
         roleId: widget.roleId,
@@ -39,15 +48,168 @@ class _RolesEditDialogState extends State<RolesEditDialog> {
   }
 
   @override
+  void dispose() {
+    _newRoleName.dispose();
+    _newRoleSubModule.dispose();
+    super.dispose();
+  }
+
+  // Add a new [AppRole] for the given [mainModule].
+  Future<void> addNewRole() async {
+    // Generate an UUID for the new role.
+    String newRoleId = AppHelper.uuid;
+
+    // Add the new role to the roles data.
+    await updateRolesData(
+      id: newRoleId,
+      idTitle: _newRoleName.text,
+      mainModuleIdTitle: widget.mainModule,
+      subModuleIdTitle: _newRoleSubModule.text,
+      permissions: [],
+      isNewRole: true,
+    );
+
+    // Load the updated roles data.
+    await Roles.initDbRolesData();
+
+    // Reload the roles data to include the new role.
+    await rolesEditDialogInit(roleId: newRoleId, mainModule: widget.mainModule);
+
+    // Switch from add new role form to edit role dialog.
+    setState(() {
+      isNewRole = false;
+    });
+
+    // Activate the save button until the required fields are filled.
+    AppPopup.activateConfirmationButton();
+  }
+
+  // Get all sub modules of the given [mainModule] for adding a new role.
+  Future<List<dynamic>?> getSubModules() async {
+    return await PermissionsPageUtils.getSubModulesForMainModule(
+      mainModule: widget.mainModule,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool isNewRole = widget.roleId == null;
     double textSpacer = 12;
     double lineSpacer = 8;
 
+    // Display the add new role form.
     if (isNewRole) {
-      return Text('UNDER DEVELOPMENT');
+      // Deactivate the save button until the required fields are filled.
+      AppPopup.deactivateConfirmationButton();
+
+      return Column(
+        children: [
+          Row(
+            children: [
+              // An input box for the role name.
+              Text(
+                Localization.getText('pages.permissions.rolesTab.columnName'),
+              ),
+              Text(':'),
+              SizedBox(width: textSpacer),
+              SizedBox(
+                width: 200,
+                child: TextField(
+                  controller: _newRoleName,
+                  onChanged: (role) {
+                    // If any role is selected, activate the add button, otherwise deactivate it.
+                    if (role != '') {
+                      setState(() {
+                        isAddRoleActive = true;
+                      });
+                    } else {
+                      setState(() {
+                        isAddRoleActive = false;
+                      });
+                    }
+                  },
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: lineSpacer),
+
+          // The main module for the new role.
+          Row(
+            children: [
+              Text(
+                Localization.getText(
+                  'pages.permissions.rolesTab.editMainModule',
+                ),
+              ),
+              Text(':'),
+              SizedBox(width: textSpacer),
+              Text(widget.mainModule),
+            ],
+          ),
+          SizedBox(height: lineSpacer),
+
+          // A [DropdownList] for selecting a sub module for the new role.
+          Row(
+            children: [
+              Text(
+                Localization.getText(
+                  'pages.permissions.rolesTab.editSubModule',
+                ),
+              ),
+              Text(':'),
+              SizedBox(width: textSpacer),
+              SizedBox(
+                width: 200,
+                child: FutureBuilder<List<dynamic>?>(
+                  future: getSubModules(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const SizedBox(
+                        height: 40,
+                        child: Center(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      );
+                    }
+                    final subModules = snapshot.data ?? [];
+                    return DropdownList<dynamic>(
+                      items: subModules,
+                      itemLabel: (subModule) => subModule.toString(),
+                      onChanged: (selectedSubModule) {
+                        _newRoleSubModule.text =
+                            selectedSubModule?.toString() ?? '';
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: lineSpacer),
+
+          // The add button.
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
+              onPressed: isAddRoleActive
+                  ? () async => await addNewRole()
+                  : null,
+              child: Text(Localization.getText('misc.buttons.add')),
+            ),
+          ),
+        ],
+      );
     }
 
+    // Display the edit role dialog.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

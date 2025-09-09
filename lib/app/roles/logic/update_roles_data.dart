@@ -20,6 +20,7 @@ Future<bool> updateRolesData({
   String? subModuleIdTitle,
   List<String>? permissions,
   bool doDelete = false,
+  bool isNewRole = false,
 }) async {
   // Define default values if not provided.
   id ??= '';
@@ -32,7 +33,7 @@ Future<bool> updateRolesData({
   // Load the roles data to make sure it's the most current version.
   await Roles.initDbRolesData();
 
-  bool isNewRole = id == '' ? true : false;
+  isNewRole = (id == '' || isNewRole) ? true : false;
   bool rolesDataUpdated = false;
 
   // If [doDelete] is true, delete the role with the given [id].
@@ -56,7 +57,7 @@ Future<bool> updateRolesData({
 
     // Add the new role to the roles data.
     final newRole = {
-      'id': AppHelper.uuid,
+      'id': id.isNotEmpty ? id : AppHelper.uuid,
       'idTitle': idTitle,
       'mainModuleIdTitle': mainModuleIdTitle,
       'subModuleIdTitle': subModuleIdTitle,
@@ -106,6 +107,9 @@ Future<bool> updateRolesData({
     final file = File('lib/app/roles/data/roles.json');
     final jsonString = jsonEncode(Roles.dbRolesData);
     await file.writeAsString(jsonString);
+  } else {
+    // No changes made to the roles data.
+    return false;
   }
 
   return true;

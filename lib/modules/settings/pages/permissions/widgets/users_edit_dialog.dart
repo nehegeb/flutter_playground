@@ -7,6 +7,7 @@ import 'package:flutter_playground/app/app_popup/app_popup.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
+import 'package:flutter_playground/modules/settings/pages/permissions/logic/get_users_tab_data.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_init.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_add_role.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/logic/users_edit_dialog_delete_role.dart';
@@ -24,13 +25,18 @@ class UsersEditDialog extends StatefulWidget {
 }
 
 class _UsersEditDialogState extends State<UsersEditDialog> {
-  bool isAddRoleShown = false;
+  final TextEditingController _newUserId = TextEditingController();
   AppRole? selectedRole;
+  bool isAddRoleShown = false;
+  bool isAddUserActive = false;
+  bool isNewUser = false;
 
   @override
   void initState() {
     super.initState();
-    // Initialize the data for the [UsersEditDialog].
+    isNewUser = widget.userId == null;
+
+    // Load the users data for the [UsersEditDialog].
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await usersEditDialogInit(
         userId: widget.userId,
@@ -40,15 +46,122 @@ class _UsersEditDialogState extends State<UsersEditDialog> {
   }
 
   @override
+  void dispose() {
+    _newUserId.dispose();
+    super.dispose();
+  }
+
+  // Add a new [AppUser] to the given [mainModule].
+  Future<void> addNewUser({required String userId}) async {
+    // Reload the users data to include the new user.
+    await usersEditDialogInit(userId: userId, mainModule: widget.mainModule);
+
+    // Switch from add new user form to edit user dialog.
+    setState(() {
+      isNewUser = false;
+    });
+
+    // Activate the save button until the required fields are filled.
+    AppPopup.activateConfirmationButton();
+  }
+
+  // Get all [AppUser]s that are not yet added to the given [mainModule].
+  Future<List<dynamic>?> getUsers() async {
+    List<dynamic>? allUsers = User.dbUsersData;
+    List<Map<String, dynamic>>? mainModuleUsers = await getUsersTabData();
+
+    // Get all users that are not yet assigned to the given [mainModule].
+    List<dynamic>? eligibleUsers = [];
+    if (allUsers != null) {
+      for (var user in allUsers) {
+        bool isUserInTabData =
+            mainModuleUsers?.any(
+              (tabUser) => tabUser['userId'] == user['id'],
+            ) ??
+            false;
+        if (!isUserInTabData) {
+          eligibleUsers.add(user);
+        }
+      }
+    }
+
+    return eligibleUsers;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool isNewUser = widget.userId == null;
     double textSpacer = 12;
     double lineSpacer = 8;
 
+    // Display the add new user form.
     if (isNewUser) {
-      return Text('UNDER DEVELOPMENT');
+      // Deactivate the save button until the required fields are filled.
+      AppPopup.deactivateConfirmationButton();
+
+      return Column(
+        children: [
+          // A [DropdownList] for the new user.
+          Row(
+            children: [
+              Text(
+                Localization.getText('pages.permissions.usersTab.columnName'),
+              ),
+              Text(':'),
+              SizedBox(width: textSpacer),
+              SizedBox(
+                width: 200,
+                child: FutureBuilder<List<dynamic>?>(
+                  future: getUsers(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const SizedBox(
+                        height: 40,
+                        child: Center(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      );
+                    }
+                    final users = snapshot.data ?? [];
+                    return DropdownList<dynamic>(
+                      items: users,
+                      itemLabel: (user) => user['name'],
+                      filterEnabled: true,
+                      onChanged: (selectedUser) {
+                        _newUserId.text = selectedUser['id'];
+                        // If any user is selected, activate the add button, otherwise deactivate it.
+                        if (selectedUser != null) {
+                          setState(() {
+                            isAddUserActive = true;
+                          });
+                        } else {
+                          setState(() {
+                            isAddUserActive = false;
+                          });
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: lineSpacer),
+
+          // The add button.
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
+              onPressed: isAddUserActive
+                  ? () async => await addNewUser(userId: _newUserId.text)
+                  : null,
+              child: Text(Localization.getText('misc.buttons.add')),
+            ),
+          ),
+        ],
+      );
     }
 
+    // Display the edit user dialog.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
