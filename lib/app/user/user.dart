@@ -88,8 +88,8 @@ class User {
   }
 
   /// Logout the currently logged in user.
-  static Future<void> logout(BuildContext context) async {
-    await logoutAppUser(context);
+  static Future<void> logout() async {
+    await logoutAppUser();
   }
 
   /// Set the current title for the currently logged in [AppUser].

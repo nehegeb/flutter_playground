@@ -1,8 +1,15 @@
 // update_roles_data.dart
 //
+// This updates the roles data in a JSON file.
+// NOTE: This must be read and write, because the data might change during runtime.
+// NOTE: This won't work for web apps, because web apps cannot access local files!
+//
+// DEV: For web apps, the JSON file needs to be outsourced into a proper database!
 
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/app_helper/app_helper.dart';
 import 'package:flutter_playground/app/roles/roles.dart';
 
@@ -22,6 +29,12 @@ Future<bool> updateRolesData({
   bool doDelete = false,
   bool isNewRole = false,
 }) async {
+  if (kIsWeb) {
+    // Web apps cannot access local files! Remove this exception after switching to a proper database.
+    appRouter.go('/500-internal-server-error');
+    throw Exception('Web platform is not supported for "dart:io".');
+  }
+
   // Define default values if not provided.
   id ??= '';
   idTitle ??= '';

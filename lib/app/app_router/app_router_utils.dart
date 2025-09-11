@@ -48,7 +48,7 @@ class AppRouterUtils {
 
   /// Opens the saved redirect URL.
   /// If none is set, go to the [HomePage].
-  static void gotoRedirectUrl(BuildContext context) {
-    gotoPendingRedirectUrl(context);
+  static void gotoRedirectUrl() {
+    gotoPendingRedirectUrl();
   }
 }

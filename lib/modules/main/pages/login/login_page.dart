@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
 
@@ -165,10 +165,7 @@ class _LoginPageState extends State<LoginPage> {
             TextButton(
               onPressed: () {
                 // Navigate to the registration page.
-                context.go(
-                  '/register',
-                  extra: DateTime.now().millisecondsSinceEpoch,
-                );
+                appRouter.go('/register');
               },
               child: Text(Localization.getText('pages.login.linkToRegister')),
             ),

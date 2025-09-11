@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
@@ -104,7 +104,7 @@ class _TopAppBarState extends State<TopAppBar> {
               children: [
                 // App logo.
                 GestureDetector(
-                  onTap: () => context.go('/'),
+                  onTap: () => appRouter.go('/'),
                   child: SizedBox(
                     height: 35,
                     child: Image.asset(

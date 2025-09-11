@@ -58,7 +58,7 @@ Future<String> loginAppUser(
   // Redirect the user.
   // If the user wanted to go to a specific page, redirect there.
   // Otherwise, navigate to the [HomePage].
-  AppRouterUtils.gotoRedirectUrl(context);
+  AppRouterUtils.gotoRedirectUrl();
 
   // If the login was successful, return no error message.
   return '';

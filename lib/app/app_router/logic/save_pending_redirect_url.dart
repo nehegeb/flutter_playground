@@ -12,8 +12,8 @@ void savePendingRedirectUrl(BuildContext? context) {
 
   // If [context] is given, try using the GoRouter to get the current url.
   if (context != null) {
-    final router = GoRouter.of(context);
-    currentUrl = router.routerDelegate.currentConfiguration.fullPath;
+    final router = GoRouter.maybeOf(context);
+    currentUrl = router?.routerDelegate.currentConfiguration.fullPath ?? '';
   }
 
   // If above did not work, try using the Uri.base to get the current url.

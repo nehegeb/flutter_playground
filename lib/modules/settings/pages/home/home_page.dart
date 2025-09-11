@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/app_helper/widgets/error_no_view_permission.dart';
 import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
@@ -54,7 +54,7 @@ class SettingsHomePage extends StatelessWidget {
               'modules.$mainModule.pages.about.title',
             ),
             onPressed: () {
-              context.go('/$mainModule/about');
+              appRouter.go('/$mainModule/about');
             },
             child: const Icon(Icons.info_outline, size: 20),
           ),

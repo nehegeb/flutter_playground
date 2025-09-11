@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/modules/modules.dart';
 import 'package:flutter_playground/app/module_bar/widgets/main_module_button.dart';
 
@@ -44,7 +44,7 @@ class ModuleBarWidget extends StatelessWidget {
                               // [HomePage] button.
                               MainModuleButton(
                                 mainModule: 'home',
-                                onTap: () => context.go('/home'),
+                                onTap: () => appRouter.go('/home'),
                                 selected:
                                     activeAppMainModule?.idTitle == 'home',
                               ),
@@ -54,7 +54,7 @@ class ModuleBarWidget extends StatelessWidget {
                                 (appMainModule) => MainModuleButton(
                                   mainModule: appMainModule.idTitle,
                                   onTap: () =>
-                                      context.go('/${appMainModule.idTitle}'),
+                                      appRouter.go('/${appMainModule.idTitle}'),
                                   selected:
                                       activeAppMainModule == appMainModule,
                                 ),

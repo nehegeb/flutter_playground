@@ -2,19 +2,14 @@
 //
 
 // TODO: BUG: Ford has a "no permission" title...
-// TODO: Add permission checks to the permissions pages.
 // TODO: (!?) Replace old loading modal with the AppPopup.
 // TODO: (?) Revamp the loading overlay, so that it is possible to stack multiple loading processes in one call.
-// TODO: (?) Make the role permissions order by subModule?
-// TODO: (?) Maybe implement a filter feature for the users permissions?
 // TODO: Finish the Template README file.
 // TODO: Add a page template in lib/modules/template/pages/.
-// TODO: Web page errors 404 etc.
 // TODO: Make the template module 'isHidden' in the end.
-// TODO: Remove the test-users in the end.
 // TODO: Implement tests for all major functions (utils).
 // TODO: Check all files and only 'show' the necessary import widgets.
-// TODO: Make a search for all TODOs and clean up the code.S
+// TODO: Make a search for all TODOs and clean up the code.
 // TODO: Add more supported licenses. Apache, GPL, ...
 //       https://gist.github.com/nicolasdao/a7adda51f2f185e8d2700e1573d8a633
 // TODO: (?) Implement feedback feature.

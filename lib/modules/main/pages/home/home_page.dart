@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
 
@@ -45,13 +45,13 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  // A notification with a link to the login page if the user is not logged in.
+                  // A notification with a link to the [LoginPage] if the user is not logged in.
                   if (User.user == null)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Center(
                         child: TextButton(
-                          onPressed: () => context.go('/login'),
+                          onPressed: () => appRouter.go('/login'),
                           child: Text(
                             Localization.getText('pages.home.messageLogin'),
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -96,7 +96,7 @@ class HomePage extends StatelessWidget {
             mini: true,
             tooltip: Localization.getText('pages.about.title'),
             onPressed: () {
-              context.go('/about');
+              appRouter.go('/about');
             },
             child: const Icon(Icons.info_outline, size: 20),
           ),

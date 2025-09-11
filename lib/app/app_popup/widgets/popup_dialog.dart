@@ -98,6 +98,9 @@ class _PopupDialogState extends State<PopupDialog> {
 
   @override
   Widget build(BuildContext context) {
+    // Show the [PopupDialog].
+    AppPopup.show();
+
     // Determine if the close button should be shown.
     bool showCloseButton = widget.hasCloseButton;
     if (widget.isSuccess ||
@@ -121,12 +124,12 @@ class _PopupDialogState extends State<PopupDialog> {
           if (widget.onCancel != null) {
             widget.onCancel!();
           }
-          AppPopup.hide(context: context, onHide: widget.onClose);
+          AppPopup.dismiss(context: context, onDismiss: widget.onClose);
         };
       } else {
         closeButtonTooltip = Localization.getText('misc.buttons.close');
         closeButtonBehaviour = () =>
-            AppPopup.hide(context: context, onHide: widget.onClose);
+            AppPopup.dismiss(context: context, onDismiss: widget.onClose);
       }
     }
 
@@ -184,300 +187,328 @@ class _PopupDialogState extends State<PopupDialog> {
     // Set the [isPopupDialogDisplayedNotifier] to true.
     isPopupDialogDisplayedNotifier.value = true;
 
-    return Dialog(
-      insetPadding: const EdgeInsets.all(24),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: IntrinsicWidth(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Top bar with close button.
-            Container(
-              padding: const EdgeInsets.only(
-                top: 12,
-                right: 16,
-                bottom: 12,
-                left: 24,
-              ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
-              ),
-              child: Row(
-                children: [
-                  // Title of the [PopupDialog].
-                  Text(
-                    dialogTitle,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Theme.of(context).colorScheme.onPrimary,
+    return ValueListenableBuilder<bool>(
+      valueListenable: isPopupDialogVisibleNotifier,
+      builder: (context, isVisible, child) {
+        if (!isVisible) return const SizedBox.shrink();
+        return Dialog(
+          insetPadding: const EdgeInsets.all(24),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: IntrinsicWidth(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Top bar with close button.
+                Container(
+                  padding: const EdgeInsets.only(
+                    top: 12,
+                    right: 16,
+                    bottom: 12,
+                    left: 24,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(12),
                     ),
                   ),
-
-                  const Spacer(),
-
-                  // Close button.
-                  if (showCloseButton) ...[
-                    IconButton(
-                      icon: Icon(
-                        Icons.close,
-                        color: Theme.of(context).colorScheme.onPrimary,
+                  child: Row(
+                    children: [
+                      // Title of the [PopupDialog].
+                      Text(
+                        dialogTitle!,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
-                      tooltip: closeButtonTooltip,
-                      onPressed: closeButtonBehaviour,
-                    ),
-                  ],
-                ],
-              ),
-            ),
 
-            // Dialog content as given per [message].
-            // This message can be updated using [AppPopup.updateMessage].
-            ValueListenableBuilder<String?>(
-              valueListenable: popupDialogMessageNotifier,
-              builder: (context, dialogMessage, _) {
-                if (dialogMessage != null) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 18,
-                      horizontal: 24,
+                      const Spacer(),
+
+                      // Close button.
+                      if (showCloseButton) ...[
+                        IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                          tooltip: closeButtonTooltip,
+                          onPressed: closeButtonBehaviour,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+
+                // Dialog content as given per [message].
+                // This message can be updated using [AppPopup.updateMessage].
+                ValueListenableBuilder<String?>(
+                  valueListenable: popupDialogMessageNotifier,
+                  builder: (context, dialogMessage, _) {
+                    if (dialogMessage != null) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 24,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // The dialog icon to the left, if any.
+                            if (dialogIcon != null) ...[
+                              Icon(
+                                dialogIcon,
+                                color: dialogIconColor,
+                                size: 28,
+                              ),
+                              const SizedBox(width: 18),
+                            ],
+                            // The message.
+                            Expanded(
+                              child: Text(
+                                dialogMessage,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                ),
+
+                // If a [message] and a [widget] are shown together, add a divider inbetween.
+                if (popupDialogMessageNotifier.value != null &&
+                    widget.widget != null &&
+                    !isDeleteConfirmationShown) ...[
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: Theme.of(context).dividerColor,
+                  ),
+                ],
+
+                // Dialog content as given per [widget].
+                if (widget.widget != null && !isDeleteConfirmationShown) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 24,
+                      right: 24,
+                      bottom: 24,
+                      top: 18,
+                    ),
+                    child: widget.widget,
+                  ),
+                ],
+
+                // Button area aligned to the right, if any.
+                if (hasButtons && !isDeleteConfirmationShown) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 0,
+                      right: 18,
+                      left: 18,
+                      bottom: 18,
                     ),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        // The dialog icon to the left, if any.
-                        if (dialogIcon != null) ...[
-                          Icon(dialogIcon, color: dialogIconColor, size: 28),
-                          const SizedBox(width: 18),
-                        ],
-                        // The message.
-                        Expanded(
-                          child: Text(
-                            dialogMessage,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Theme.of(context).colorScheme.onSurface,
+                        // Cancel button, if [onDelete] is given.
+                        if (widget.onDelete != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: TextButton(
+                              onPressed: () => showDeleteConfirmation(),
+                              child: Text(
+                                Localization.getText('misc.buttons.delete'),
+                                style: const TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ),
+
+                        // Cancel button, if [onCancel] is given.
+                        if (widget.onCancel != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: TextButton(
+                              onPressed: () => AppPopup.dismiss(
+                                context: context,
+                                onDismiss: widget.onCancel,
+                              ),
+                              child: Text(
+                                Localization.getText('misc.buttons.cancel'),
+                              ),
+                            ),
+                          ),
+
+                        // Save button, if [onSave] is given.
+                        if (widget.onSave != null)
+                          ValueListenableBuilder<bool>(
+                            valueListenable: isConfirmationButtonActiveNotifier,
+                            builder: (context, isActive, _) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: isActive
+                                      ? () {
+                                          // Perform the [onSave] function before hiding the [PopupDialog].
+                                          widget.onSave?.call(
+                                            popupDialogDataNotifier.value ?? {},
+                                          );
+                                          AppPopup.dismiss(context: context);
+                                        }
+                                      : null,
+                                  child: Text(
+                                    Localization.getText('misc.buttons.save'),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+
+                        // Deny button, if [onDeny] is given.
+                        if (widget.onDeny != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: TextButton(
+                              onPressed: () => AppPopup.dismiss(
+                                context: context,
+                                onDismiss: widget.onDeny,
+                              ),
+                              child: Text(
+                                Localization.getText('misc.buttons.deny'),
+                              ),
+                            ),
+                          ),
+
+                        // Confirm button, if [onConfirm] is given.
+                        if (widget.onConfirm != null)
+                          ValueListenableBuilder<bool>(
+                            valueListenable: isConfirmationButtonActiveNotifier,
+                            builder: (context, isActive, _) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: isActive
+                                      ? () => AppPopup.dismiss(
+                                          context: context,
+                                          onDismiss: widget.onConfirm,
+                                        )
+                                      : null,
+                                  child: Text(
+                                    Localization.getText(
+                                      'misc.buttons.confirm',
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+
+                        // No button, if [onNo] is given.
+                        if (widget.onNo != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: TextButton(
+                              onPressed: () => AppPopup.dismiss(
+                                context: context,
+                                onDismiss: widget.onNo,
+                              ),
+                              child: Text(
+                                Localization.getText('misc.buttons.no'),
+                              ),
+                            ),
+                          ),
+
+                        // Yes button, if [onYes] is given.
+                        if (widget.onYes != null)
+                          ValueListenableBuilder<bool>(
+                            valueListenable: isConfirmationButtonActiveNotifier,
+                            builder: (context, isActive, _) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: isActive
+                                      ? () => AppPopup.dismiss(
+                                          context: context,
+                                          onDismiss: widget.onYes,
+                                        )
+                                      : null,
+                                  child: Text(
+                                    Localization.getText('misc.buttons.yes'),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+
+                // Yes/No buttons before [onDelete] is triggered.
+                if (isDeleteConfirmationShown) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 0,
+                      right: 14,
+                      left: 14,
+                      bottom: 18,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        // No button for deletion confirmation.
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: TextButton(
+                            onPressed: () => hideDeleteConfirmation(),
+                            child: Text(
+                              Localization.getText('misc.buttons.no'),
+                            ),
+                          ),
+                        ),
+
+                        // Yes button for deletion confirmation.
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Perform the [onDelete] function before hiding the [PopupDialog].
+                              widget.onDelete?.call(
+                                popupDialogDataNotifier.value?['id'] ?? '',
+                              );
+                              AppPopup.dismiss(context: context);
+                            },
+                            child: Text(
+                              Localization.getText('misc.buttons.yes'),
                             ),
                           ),
                         ),
                       ],
                     ),
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
+                  ),
+                ],
+              ],
             ),
-
-            // If a [message] and a [widget] are shown together, add a divider inbetween.
-            if (popupDialogMessageNotifier.value != null &&
-                widget.widget != null &&
-                !isDeleteConfirmationShown) ...[
-              Divider(
-                height: 1,
-                thickness: 1,
-                color: Theme.of(context).dividerColor,
-              ),
-            ],
-
-            // Dialog content as given per [widget].
-            if (widget.widget != null && !isDeleteConfirmationShown) ...[
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 24,
-                  right: 24,
-                  bottom: 24,
-                  top: 18,
-                ),
-                child: widget.widget,
-              ),
-            ],
-
-            // Button area aligned to the right, if any.
-            if (hasButtons && !isDeleteConfirmationShown) ...[
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 0,
-                  right: 18,
-                  left: 18,
-                  bottom: 18,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    // Cancel button, if [onDelete] is given.
-                    if (widget.onDelete != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: TextButton(
-                          onPressed: () => showDeleteConfirmation(),
-                          child: Text(
-                            Localization.getText('misc.buttons.delete'),
-                            style: const TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      ),
-
-                    // Cancel button, if [onCancel] is given.
-                    if (widget.onCancel != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: TextButton(
-                          onPressed: () => AppPopup.hide(
-                            context: context,
-                            onHide: widget.onCancel,
-                          ),
-                          child: Text(
-                            Localization.getText('misc.buttons.cancel'),
-                          ),
-                        ),
-                      ),
-
-                    // Save button, if [onSave] is given.
-                    if (widget.onSave != null)
-                      ValueListenableBuilder<bool>(
-                        valueListenable: isConfirmationButtonActiveNotifier,
-                        builder: (context, isActive, _) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: ElevatedButton(
-                              onPressed: isActive
-                                  ? () {
-                                      // Perform the [onSave] function before hiding the [PopupDialog].
-                                      widget.onSave?.call(
-                                        popupDialogDataNotifier.value ?? {},
-                                      );
-                                      AppPopup.hide(context: context);
-                                    }
-                                  : null,
-                              child: Text(
-                                Localization.getText('misc.buttons.save'),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-
-                    // Deny button, if [onDeny] is given.
-                    if (widget.onDeny != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: TextButton(
-                          onPressed: () => AppPopup.hide(
-                            context: context,
-                            onHide: widget.onDeny,
-                          ),
-                          child: Text(
-                            Localization.getText('misc.buttons.deny'),
-                          ),
-                        ),
-                      ),
-
-                    // Confirm button, if [onConfirm] is given.
-                    if (widget.onConfirm != null)
-                      ValueListenableBuilder<bool>(
-                        valueListenable: isConfirmationButtonActiveNotifier,
-                        builder: (context, isActive, _) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: ElevatedButton(
-                              onPressed: isActive
-                                  ? () => AppPopup.hide(
-                                      context: context,
-                                      onHide: widget.onConfirm,
-                                    )
-                                  : null,
-                              child: Text(
-                                Localization.getText('misc.buttons.confirm'),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-
-                    // No button, if [onNo] is given.
-                    if (widget.onNo != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: TextButton(
-                          onPressed: () => AppPopup.hide(
-                            context: context,
-                            onHide: widget.onNo,
-                          ),
-                          child: Text(Localization.getText('misc.buttons.no')),
-                        ),
-                      ),
-
-                    // Yes button, if [onYes] is given.
-                    if (widget.onYes != null)
-                      ValueListenableBuilder<bool>(
-                        valueListenable: isConfirmationButtonActiveNotifier,
-                        builder: (context, isActive, _) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: ElevatedButton(
-                              onPressed: isActive
-                                  ? () => AppPopup.hide(
-                                      context: context,
-                                      onHide: widget.onYes,
-                                    )
-                                  : null,
-                              child: Text(
-                                Localization.getText('misc.buttons.yes'),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                  ],
-                ),
-              ),
-            ],
-
-            // Yes/No buttons before [onDelete] is triggered.
-            if (isDeleteConfirmationShown) ...[
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 0,
-                  right: 14,
-                  left: 14,
-                  bottom: 18,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    // No button for deletion confirmation.
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: TextButton(
-                        onPressed: () => hideDeleteConfirmation(),
-                        child: Text(Localization.getText('misc.buttons.no')),
-                      ),
-                    ),
-
-                    // Yes button for deletion confirmation.
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Perform the [onDelete] function before hiding the [PopupDialog].
-                          widget.onDelete?.call(
-                            popupDialogDataNotifier.value?['id'] ?? '',
-                          );
-                          AppPopup.hide(context: context);
-                        },
-                        child: Text(Localization.getText('misc.buttons.yes')),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -15,13 +15,17 @@ import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_router/widgets/fade_page_transition.dart';
 
+export 'package:go_router/go_router.dart';
+
 /// The main router for the application, using GoRouter for declarative routing.
 final GoRouter appRouter = GoRouter(
   navigatorKey: LoadingOverlay.navigatorKey,
-  refreshListenable:
-      appUserNotifier, // Listen to changes to the user for permission management.
-  initialLocation: "/home", // Set the initial route to the [HomePage].
-  errorBuilder: (context, state) => MainScreen(routedPage: 'PageNotFoundPage'),
+  // Listen to changes to the user for permission management.
+  refreshListenable: appUserNotifier,
+  // Set the initial route to the [HomePage].
+  initialLocation: "/home",
+  // If the URL has no site, redirect to the [ErrorNotFoundPage].
+  errorBuilder: (context, state) => MainScreen(routedPage: 'ErrorNotFoundPage'),
   routes: <RouteBase>[
     // The home page needs to be on the first layer of the stack.
     GoRoute(
@@ -67,10 +71,60 @@ final GoRouter appRouter = GoRouter(
             state: state,
           ),
         ),
+        // HTML error pages.
         GoRoute(
-          path: "page-not-found",
+          path: "400-bad-request",
           pageBuilder: (context, state) => fadePageTransition(
-            child: MainScreen(routedPage: 'PageNotFoundPage'),
+            child: MainScreen(routedPage: 'ErrorBadRequestPage'),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: "401-unauthorized",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'ErrorUnauthorizedPage'),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: "403-forbidden",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'ErrorForbiddenPage'),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: "404-not-found",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'ErrorNotFoundPage'),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: "500-internal-server-error",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'ErrorInternalServerErrorPage'),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: "502-bad-gateway",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'ErrorBadGatewayPage'),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: "503-service-unavailable",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'ErrorServiceUnavailablePage'),
+            state: state,
+          ),
+        ),
+        GoRoute(
+          path: "504-gateway-timeout",
+          pageBuilder: (context, state) => fadePageTransition(
+            child: MainScreen(routedPage: 'ErrorGatewayTimeoutPage'),
             state: state,
           ),
         ),

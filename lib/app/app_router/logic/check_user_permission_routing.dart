@@ -18,8 +18,9 @@ String? checkUserPermissionRouting(
     // Check if the user has the required permission.
     // This should only allow .access and .read [permissionName]s to public modules.
     if (!Permissions.check(permission: permissionName)) {
-      // Access denied. Redirect to the login page.
+      // Access denied. Redirect to the [LoginPage].
       // But save the URL the user was trying to access for redirecting after login.
+      // NOTE: Alternatively, this could redirect to the [ErrorUnauthorizedPage] instead.
       AppRouterUtils.saveRedirectUrl(context);
       return '/login';
     }
@@ -29,8 +30,8 @@ String? checkUserPermissionRouting(
   if (User.user != null) {
     // Check if the user has the required permission.
     if (!Permissions.check(permission: permissionName)) {
-      // Access denied. Redirect to the page-not-found page.
-      return '/page-not-found';
+      // Access denied. Redirect to the [ErrorForbiddenPage].
+      return '/403-forbidden';
     }
   }
 

@@ -2,8 +2,8 @@
 //
 
 import 'package:flutter/material.dart';
-// import 'package:flutter_playground/app/app_helper/widgets/error_no_view_permission.dart';
-// import 'package:flutter_playground/app/permissions/permissions.dart';
+import 'package:flutter_playground/app/app_helper/widgets/error_no_view_permission.dart';
+import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/user/user.dart';
 import 'package:flutter_playground/modules/settings/pages/permissions/permissions_page_utils.dart';
@@ -35,11 +35,12 @@ class _PermissionsPageState extends State<PermissionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // // If the [AppUser] has no '.view' permission for this page,
-    // // show them an error message instead.
-    // if (!Permissions.check(permission: Permissions.settings.view)) {
-    //   return ErrorNoViewPermission();
-    // }
+    // If the [AppUser] has no '.view' permission for this page,
+    // show them an error message instead.
+    String activeMainModule = PermissionsPageUtils.activeMainModule;
+    if (!Permissions.check(permission: '$activeMainModule.permissions.view')) {
+      return ErrorNoViewPermission();
+    }
 
     final String activeModule = PermissionsPageUtils.activeMainModule;
     final bool isMainAppModule = activeModule == "main";

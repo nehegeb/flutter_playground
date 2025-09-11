@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/user/logic/generate_password_salt.dart';
 import 'package:flutter_playground/app/user/logic/generate_password_hash.dart';
 import 'package:flutter_playground/app/user/logic/update_users_data.dart';
@@ -46,7 +46,7 @@ Future<String> registerNewUser(
   }
 
   // Redirect the new user to the [LoginPage].
-  context.go('/login', extra: DateTime.now().millisecondsSinceEpoch);
+  appRouter.go('/login');
 
   // If the registration was successful, return no error message.
   return '';

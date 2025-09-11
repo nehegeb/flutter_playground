@@ -1,8 +1,11 @@
 // load_changelog_data.dart
 //
+// This loads the changelog data from a JSON file.
+// NOTE: This is read only! The JSON file cannot be modified during runtime.
+// This is okay, because the changelog won't change during runtime.
 
-import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
@@ -24,15 +27,11 @@ Future<void> loadChangelogData(String? module) async {
 
   // Load the changelog JSON file from the given [module].
   try {
-    final file = File('lib/modules/$module/changelog/changelog.json');
+    final file = 'lib/modules/$module/changelog/changelog.json';
 
     // Load the changelog data.
-    if (await file.exists()) {
-      final jsonData = await file.readAsString();
-      changelogData = json.decode(jsonData) as Map<String, dynamic>;
-    } else {
-      changelogData = {};
-    }
+    final jsonData = await rootBundle.loadString(file);
+    changelogData = json.decode(jsonData) as Map<String, dynamic>;
   } finally {
     // Dismiss the loading overlay after loading is complete.
     LoadingOverlay.dismiss();

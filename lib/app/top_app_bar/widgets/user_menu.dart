@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_theme/app_theme.dart';
 import 'package:flutter_playground/app/app_helper/widgets/popup_menu_entry_compact.dart';
@@ -35,10 +35,10 @@ class _UserMenuState extends State<UserMenu> {
           // Save the current url for redirection after login.
           AppRouterUtils.saveRedirectUrl(context);
           // Navigate to the [LoginPage].
-          await context.push('/login');
+          appRouter.go('/login');
         } else if (selectedAction == 'logout') {
           // Logout the currently logged in [AppUser].
-          await User.logout(context);
+          await User.logout();
         } else if (selectedAction == 'toggleAppBrightness') {
           // Switch the app brightness.
           setState(() {

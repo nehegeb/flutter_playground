@@ -1,8 +1,11 @@
 // load_localizations_data.dart
 //
+// This loads the localizations data from JSON files.
+// NOTE: This is read only! The JSON files cannot be modified during runtime.
+// This is okay, because the localizations won't change during runtime.
 
-import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
@@ -23,17 +26,11 @@ Future<void> loadLocalizationsData(String? languageId) async {
     String loadLanguageId = '';
 
     loadLanguageId = defaultLanguageId;
-    final file = File(
-      'lib/app/localization/data/localization_$loadLanguageId.json',
-    );
+    final file = 'lib/app/localization/data/localization_$loadLanguageId.json';
 
     // Load the primary localization data.
-    if (await file.exists()) {
-      final jsonData = await file.readAsString();
-      localizationDataPrimary = json.decode(jsonData) as Map<String, dynamic>;
-    } else {
-      localizationDataPrimary = {};
-    }
+    final jsonData = await rootBundle.loadString(file);
+    localizationDataPrimary = json.decode(jsonData) as Map<String, dynamic>;
 
     // Make sure the proper primary localization data is loaded.
     if (localizationDataPrimary == null ||
@@ -45,18 +42,13 @@ Future<void> loadLocalizationsData(String? languageId) async {
     localizationDataSecondary = null; // Reset secondary localization data.
     if (languageId != null && languageId != defaultLanguageId) {
       loadLanguageId = languageId;
-      final file = File(
-        'lib/app/localization/data/localization_$loadLanguageId.json',
-      );
+      final file =
+          'lib/app/localization/data/localization_$loadLanguageId.json';
 
       // Load secondary localization data if requested.
-      if (await file.exists()) {
-        final jsonData = await file.readAsString();
-        localizationDataSecondary =
-            json.decode(jsonData) as Map<String, dynamic>?;
-      } else {
-        localizationDataSecondary = {};
-      }
+      final jsonData = await rootBundle.loadString(file);
+      localizationDataSecondary =
+          json.decode(jsonData) as Map<String, dynamic>?;
 
       // Make sure the proper secondary localization data is loaded.
       if (localizationDataSecondary == null ||

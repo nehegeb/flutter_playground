@@ -2,7 +2,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:flutter_playground/app/module_bar/module_bar_utils.dart';
 import 'package:flutter_playground/app/module_bar/widgets/sub_module_button.dart';
@@ -158,7 +158,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
                         .map(
                           (entry) => SubModuleButton(
                             subModule: entry.idTitle,
-                            onTap: () => context.go(
+                            onTap: () => appRouter.go(
                               '/${widget.mainModule}/${entry.idTitle}',
                             ),
                             selected: Modules.activeSubModule == entry,
