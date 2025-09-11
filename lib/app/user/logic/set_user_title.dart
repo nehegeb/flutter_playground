@@ -25,10 +25,10 @@ void setUserTitle({String? mainModuleName}) {
   if (userRoles != null && userRoles.isNotEmpty) {
     // Check, if the [AppUser] is an administrator.
     final AppRole adminRole = userRoles.firstWhere(
-      (role) => role.permissions!.contains('*'),
+      (role) => role.permissions!.any((permission) => permission == '*'),
       orElse: () => Roles.emptyRole,
     );
-    bool isAdmin = adminRole != Roles.emptyRole;
+    bool isAdmin = adminRole.idTitle != '';
 
     if (isAdmin) {
       // If the [AppUser] is an administrator, use that admin [AppRole].

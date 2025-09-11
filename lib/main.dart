@@ -1,7 +1,6 @@
 // main.dart
 //
 
-// TODO: BUG: Ford has a "no permission" title...
 // TODO: (!?) Replace old loading modal with the AppPopup.
 // TODO: (?) Revamp the loading overlay, so that it is possible to stack multiple loading processes in one call.
 // TODO: Finish the Template README file.
@@ -10,7 +9,6 @@
 // TODO: Implement tests for all major functions (utils).
 // TODO: Check all files and only 'show' the necessary import widgets.
 // TODO: Make a search for all TODOs and clean up the code.
-// TODO: Add more supported licenses. Apache, GPL, ...
 //       https://gist.github.com/nicolasdao/a7adda51f2f185e8d2700e1573d8a633
 // TODO: (?) Implement feedback feature.
 // TODO: (?) "forgot password" feature on login page.

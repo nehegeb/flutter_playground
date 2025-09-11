@@ -39,7 +39,9 @@ Future<String> registerNewUser(
     name: name,
     passwordHash: hash,
     passwordSalt: salt,
-    rolesIds: [], // New users don't have any roles in the beginning.
+    rolesIds: [
+      "8fdd8d35-da28-4a23-9c40-d0f22d155145",
+    ], // New users start as a basic member.
   );
   if (!isSuccess) {
     return 'errors.registrationFailed';

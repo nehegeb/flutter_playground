@@ -11,6 +11,42 @@
         ]
     },
     {
+        "id": "1ddb9417-54f0-4b24-90aa-d4763926896f",
+        "idTitle": "viewer",
+        "mainModuleIdTitle": "main",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "main.access",
+            "main.view"
+        ]
+    },
+    {
+        "id": "8fdd8d35-da28-4a23-9c40-d0f22d155145",
+        "idTitle": "member",
+        "mainModuleIdTitle": "main",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "main.access",
+            "main.view",
+            "main.edit"
+        ]
+    },
+    {
+        "id": "d61e628a-011e-428a-8e58-69b0ed6187ea",
+        "idTitle": "moderator",
+        "mainModuleIdTitle": "main",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "main.access",
+            "main.view",
+            "main.edit",
+            "main.delete"
+        ]
+    },
+    {
         "id": "8cf11786-6a35-4187-b37d-d74ef59cd8ee",
         "idTitle": "admin",
         "mainModuleIdTitle": "template",
