@@ -194,7 +194,7 @@
     "errors": {
         "windowTooSmall": "Window too small!",
         "dataNotLoaded": "<<data>> could not be loaded. Try reloading the page (F5).",
-        "noViewPermission": "You do not have permission to view this page.\nAsk the modules administrator for permission.",
+        "noViewPermission": "You do not have permission to view this page.\nAsk the modules administrator.",
         "missingRequiredFields": "Please fill in all required fields.",
         "passwordTooShort": "Password must be at least 8 characters long.",
         "passwordNoUppercase": "Password must contain at least one uppercase letter.",

@@ -35,15 +35,17 @@ class _PermissionsPageState extends State<PermissionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // If the [AppUser] has no '.view' permission for this page,
-    // show them an error message instead.
-    String activeMainModule = PermissionsPageUtils.activeMainModule;
-    if (!Permissions.check(permission: '$activeMainModule.permissions.view')) {
-      return ErrorNoViewPermission();
-    }
-
     final String activeModule = PermissionsPageUtils.activeMainModule;
     final bool isMainAppModule = activeModule == "main";
+
+    // If the [AppUser] has no '.view' permission for this page,
+    // show them an error message instead.
+    final String permissionToCheck = isMainAppModule
+        ? 'settings.permissions.view' // The 'settings' module belongs to the 'main' [AppMainModule].
+        : '$activeModule.permissions.view';
+    if (!Permissions.check(permission: permissionToCheck)) {
+      return ErrorNoViewPermission();
+    }
 
     return Stack(
       children: [

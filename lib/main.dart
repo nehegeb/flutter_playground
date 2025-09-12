@@ -1,15 +1,12 @@
 // main.dart
 //
 
-// TODO: (!?) Replace old loading modal with the AppPopup.
-// TODO: (?) Revamp the loading overlay, so that it is possible to stack multiple loading processes in one call.
+// TODO: For the user registration, get the 'member' role properly.
 // TODO: Finish the Template README file.
 // TODO: Add a page template in lib/modules/template/pages/.
-// TODO: Make the template module 'isHidden' in the end.
 // TODO: Implement tests for all major functions (utils).
 // TODO: Check all files and only 'show' the necessary import widgets.
 // TODO: Make a search for all TODOs and clean up the code.
-//       https://gist.github.com/nicolasdao/a7adda51f2f185e8d2700e1573d8a633
 // TODO: (?) Implement feedback feature.
 // TODO: (?) "forgot password" feature on login page.
 // TODO: (?) Implement a global error handler for the app.

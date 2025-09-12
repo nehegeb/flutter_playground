@@ -6,8 +6,6 @@
 
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
-import 'package:flutter_playground/app/localization/localization.dart';
 
 Map<String, dynamic>? changelogData;
 
@@ -15,13 +13,6 @@ Map<String, dynamic>? changelogData;
 /// It loads the changelog for the specified [module].
 /// If no module is specified, it loads the changelog for the main framework.
 Future<void> loadChangelogData(String? module) async {
-  // Display a loading overlay while changelog is being loaded.
-  // But before displaying the loading overlay, wait for the UI to settle.
-  await Future.delayed(const Duration(milliseconds: 10));
-  LoadingOverlay.initiate(
-    Localization.getText('changelog.changelogDataLoading'),
-  );
-
   // If no [module] is given, it defaults to the 'main' [AppMainModule].
   module = module != null && module.isNotEmpty ? module : 'main';
 
@@ -32,9 +23,8 @@ Future<void> loadChangelogData(String? module) async {
     // Load the changelog data.
     final jsonData = await rootBundle.loadString(file);
     changelogData = json.decode(jsonData) as Map<String, dynamic>;
-  } finally {
-    // Dismiss the loading overlay after loading is complete.
-    LoadingOverlay.dismiss();
+  } catch (e) {
+    throw Exception('Loading changelog data failed: $e');
   }
 
   // Make sure the changelog data is loaded.

@@ -4,14 +4,12 @@
 //
 // Features:
 // - Centralizes all route definitions for modular navigation and deep linking.
-// - Uses a global [LoadingOverlay.navigatorKey] for placing the [LoadingOverlay].
 // - Designed for robust, declarative navigation across web and desktop, with URL-driven state.
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/screens/main_screen.dart';
 import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/user/user.dart';
-import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_router/widgets/fade_page_transition.dart';
 
@@ -19,7 +17,6 @@ export 'package:go_router/go_router.dart';
 
 /// The main router for the application, using GoRouter for declarative routing.
 final GoRouter appRouter = GoRouter(
-  navigatorKey: LoadingOverlay.navigatorKey,
   // Listen to changes to the user for permission management.
   refreshListenable: appUserNotifier,
   // Set the initial route to the [HomePage].

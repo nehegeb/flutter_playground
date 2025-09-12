@@ -6,7 +6,6 @@
 
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
 import 'package:flutter_playground/app/localization/localization.dart';
 
 Map<String, dynamic>?
@@ -17,10 +16,6 @@ localizationDataSecondary; // Secondary language data for localization.
 /// Loads localization JSON files and parses them into maps.
 /// Only loads the primary language and the given secondary [languageId], if any.
 Future<void> loadLocalizationsData(String? languageId) async {
-  // Display a loading overlay while localizations are being loaded.
-  // NOTE: Cannot use localized text here as it is not loaded yet.
-  LoadingOverlay.initiate('Loading localizations...');
-
   // Load the localization JSON files.
   try {
     String loadLanguageId = '';
@@ -59,8 +54,6 @@ Future<void> loadLocalizationsData(String? languageId) async {
     }
   } catch (e) {
     // NOTE: This 'catch' is necessary to handle localization data files that do not exist (yet).
-  } finally {
-    // Dismiss the loading overlay after loading is complete.
-    LoadingOverlay.dismiss();
+    // NOTE: Do not throw an exception here, because the app should still run without secondary localization data!
   }
 }

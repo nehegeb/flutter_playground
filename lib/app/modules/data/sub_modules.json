@@ -5,7 +5,7 @@
         "mainModuleId": "ed691cb2-f1c7-4aa0-9dc3-ca5ba1855530",
         "mainModuleIdTitle": "template",
         "isPublic": true,
-        "isHidden": false,
+        "isHidden": true,
         "isAdministrative": false
     },
     {
@@ -14,7 +14,7 @@
         "mainModuleId": "ed691cb2-f1c7-4aa0-9dc3-ca5ba1855530",
         "mainModuleIdTitle": "template",
         "isPublic": false,
-        "isHidden": false,
+        "isHidden": true,
         "isAdministrative": true
     },
     {

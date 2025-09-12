@@ -10,8 +10,6 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_playground/app/app_router/app_router.dart';
-import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
-import 'package:flutter_playground/app/localization/localization.dart';
 
 List<dynamic>? usersData;
 
@@ -22,11 +20,6 @@ Future<void> loadUsersData() async {
     appRouter.go('/500-internal-server-error');
     throw Exception('Web platform is not supported for "dart:io".');
   }
-
-  // Display a loading overlay while user data is being loaded.
-  // But before displaying the loading overlay, wait for the UI to settle.
-  await Future.delayed(const Duration(milliseconds: 10));
-  LoadingOverlay.initiate(Localization.getText('users.usersDataLoading'));
 
   // Load the user data JSON file.
   try {
@@ -39,9 +32,8 @@ Future<void> loadUsersData() async {
     } else {
       usersData = [];
     }
-  } finally {
-    // Dismiss the loading overlay after loading is complete.
-    LoadingOverlay.dismiss();
+  } catch (e) {
+    throw Exception('Loading user data failed: $e');
   }
 
   // Make sure the user data is loaded.

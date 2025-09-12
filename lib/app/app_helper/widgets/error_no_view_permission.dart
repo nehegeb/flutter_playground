@@ -13,6 +13,7 @@ class ErrorNoViewPermission extends StatelessWidget {
       child: Text(
         Localization.getText('errors.noViewPermission'),
         style: TextStyle(fontSize: 18),
+        textAlign: TextAlign.center,
       ),
     );
   }

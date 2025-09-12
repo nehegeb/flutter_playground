@@ -10,8 +10,6 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_playground/app/app_router/app_router.dart';
-import 'package:flutter_playground/app/app_helper/widgets/loading_overlay.dart';
-import 'package:flutter_playground/app/localization/localization.dart';
 
 List<dynamic>? languagesData;
 
@@ -24,13 +22,6 @@ Future<void> loadLanguagesData() async {
     throw Exception('Web platform is not supported for "dart:io".');
   }
 
-  // Display a loading overlay while languages are being loaded.
-  // But before displaying the loading overlay, wait for the UI to settle.
-  await Future.delayed(const Duration(milliseconds: 10));
-  LoadingOverlay.initiate(
-    Localization.getText('localization.languagesDataLoading'),
-  );
-
   // Load the languages JSON file.
   try {
     final file = File('lib/app/localization/data/languages.json');
@@ -42,9 +33,8 @@ Future<void> loadLanguagesData() async {
     } else {
       languagesData = [];
     }
-  } finally {
-    // Dismiss the loading overlay after loading is complete.
-    LoadingOverlay.dismiss();
+  } catch (e) {
+    throw Exception('Loading languages data failed: $e');
   }
 
   // Make sure the languages data is loaded.
