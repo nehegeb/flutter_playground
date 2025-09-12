@@ -5,11 +5,14 @@
 // Features:
 // - Centralizes all route definitions for modular navigation and deep linking.
 // - Designed for robust, declarative navigation across web and desktop, with URL-driven state.
+// - Implements the HTML errors 401 (redirects to [LoginPage]), 403 and 404.
+// - Also implements HTML errors 400, 500, 502, 503 and 504 via [appRouterErrorBuilder].
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter_playground/screens/main_screen.dart';
 import 'package:flutter_playground/app/permissions/permissions.dart';
 import 'package:flutter_playground/app/user/user.dart';
+import 'package:flutter_playground/app/app_router/app_router_error_builder.dart';
 import 'package:flutter_playground/app/app_router/app_router_utils.dart';
 import 'package:flutter_playground/app/app_router/widgets/fade_page_transition.dart';
 
@@ -21,8 +24,8 @@ final GoRouter appRouter = GoRouter(
   refreshListenable: appUserNotifier,
   // Set the initial route to the [HomePage].
   initialLocation: "/home",
-  // If the URL has no site, redirect to the [ErrorNotFoundPage].
-  errorBuilder: (context, state) => MainScreen(routedPage: 'ErrorNotFoundPage'),
+  // Manage all HTML error pages.
+  errorBuilder: appRouterErrorBuilder,
   routes: <RouteBase>[
     // The home page needs to be on the first layer of the stack.
     GoRoute(

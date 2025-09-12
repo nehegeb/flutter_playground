@@ -24,7 +24,8 @@ import 'package:flutter_playground/app/module_bar/module_bar_navigation.dart';
 /// On mobile devices, it can be hidden or shown based, always displaying the wide state.
 class ModuleBar extends StatefulWidget {
   final String routedPage;
-  const ModuleBar({super.key, required this.routedPage});
+  final String? errorMessage;
+  const ModuleBar({super.key, required this.routedPage, this.errorMessage});
 
   @override
   State<ModuleBar> createState() => _ModuleBarState();
@@ -71,7 +72,10 @@ class _ModuleBarState extends State<ModuleBar> {
                       // Hide [ModuleBar] when clicked beside it.
                       onTap: () => ModuleBarUtils.setHidden(),
                       child: Center(
-                        child: ModuleBarNavigation(module: routedPage),
+                        child: ModuleBarNavigation(
+                          module: routedPage,
+                          errorMessage: widget.errorMessage,
+                        ),
                       ),
                     ),
                     // ... and display the module bar as a floating side bar to the left.
@@ -94,7 +98,10 @@ class _ModuleBarState extends State<ModuleBar> {
                     // ... and to its right the module area that fills the remaining space.
                     Expanded(
                       child: Center(
-                        child: ModuleBarNavigation(module: routedPage),
+                        child: ModuleBarNavigation(
+                          module: routedPage,
+                          errorMessage: widget.errorMessage,
+                        ),
                       ),
                     ),
                   ],

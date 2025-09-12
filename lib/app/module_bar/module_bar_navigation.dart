@@ -36,7 +36,13 @@ import 'package:flutter_playground/modules/settings/pages/about/about_page.dart'
 /// A widget to display the content for the selected module.
 class ModuleBarNavigation extends StatelessWidget {
   final String module;
-  const ModuleBarNavigation({super.key, required this.module});
+  final String? errorMessage;
+
+  const ModuleBarNavigation({
+    super.key,
+    required this.module,
+    this.errorMessage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +58,21 @@ class ModuleBarNavigation extends StatelessWidget {
         return RegisterPage();
       // Error pages.
       case 'ErrorBadRequestPage':
-        return ErrorBadRequestPage();
+        return ErrorBadRequestPage(errorMessage: errorMessage);
       case 'ErrorUnauthorizedPage':
-        return ErrorUnauthorizedPage();
+        return ErrorUnauthorizedPage(errorMessage: errorMessage);
       case 'ErrorForbiddenPage':
-        return ErrorForbiddenPage();
+        return ErrorForbiddenPage(errorMessage: errorMessage);
       case 'ErrorNotFoundPage':
-        return ErrorNotFoundPage();
+        return ErrorNotFoundPage(errorMessage: errorMessage);
       case 'ErrorInternalServerErrorPage':
-        return ErrorInternalServerErrorPage();
+        return ErrorInternalServerErrorPage(errorMessage: errorMessage);
       case 'ErrorBadGatewayPage':
-        return ErrorBadGatewayPage();
+        return ErrorBadGatewayPage(errorMessage: errorMessage);
       case 'ErrorServiceUnavailablePage':
-        return ErrorServiceUnavailablePage();
+        return ErrorServiceUnavailablePage(errorMessage: errorMessage);
       case 'ErrorGatewayTimeoutPage':
-        return ErrorGatewayTimeoutPage();
+        return ErrorGatewayTimeoutPage(errorMessage: errorMessage);
 
       // Global settings pages.
       case 'PermissionsPage':

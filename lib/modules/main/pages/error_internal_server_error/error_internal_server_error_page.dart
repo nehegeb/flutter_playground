@@ -6,7 +6,9 @@ import 'package:flutter_playground/app/localization/localization.dart';
 
 /// The '500 - Internal Server Error' HTML error page.
 class ErrorInternalServerErrorPage extends StatelessWidget {
-  const ErrorInternalServerErrorPage({super.key});
+  final String? errorMessage;
+
+  const ErrorInternalServerErrorPage({super.key, this.errorMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +22,23 @@ class ErrorInternalServerErrorPage extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 16),
+
         // Message explaining the error.
         Text(
           Localization.getText('pages.errorInternalServerError.message'),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
+
+        // Display the [errorMessage] if given.
+        if (errorMessage != null) ...[
+          SizedBox(height: 32),
+          Text(
+            errorMessage!,
+            style: TextStyle(color: Colors.grey),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ],
     );
   }

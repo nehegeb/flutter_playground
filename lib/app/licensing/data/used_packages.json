@@ -35,6 +35,12 @@
         "license": "MIT",
         "packageUrl": "https://pub.dev/packages/pointycastle"
     },
+    "http": {
+        "name": "http",
+        "copyright": "2014 The Dart project authors",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/http"
+    },
     "uuid": {
         "name": "uuid",
         "copyright": "2021 Yulian Kuncheff",

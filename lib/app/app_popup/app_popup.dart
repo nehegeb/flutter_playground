@@ -42,6 +42,7 @@ final ValueNotifier<Map<String, dynamic>?> popupDialogDataNotifier =
 /// while the app behind is faded out and not interactable.
 ///
 /// Static Methods:
+/// - [isActive]: Returns whether a [PopupDialog] is currently active, even if hidden, as boolean.
 /// - [successMessage]: Shows a success message [PopupDialog].
 /// - [failedMessage]: Shows a failed message [PopupDialog].
 /// - [infoMessage]: Shows an informational message [PopupDialog].
@@ -56,6 +57,9 @@ final ValueNotifier<Map<String, dynamic>?> popupDialogDataNotifier =
 /// - [activateConfirmationButton]: Activates of the confirm, yes and save buttons.
 /// - [deactivateConfirmationButton]: Deactivates the confirm, yes and save buttons.
 class AppPopup {
+  /// Return whether the [PopupDialog] is currently active, even if hidden.
+  static bool get isActive => isPopupDialogDisplayedNotifier.value;
+
   /// Show a success message [PopupDialog] with the given [message].
   ///
   /// It always shows the 'confirm' button, but no close button.

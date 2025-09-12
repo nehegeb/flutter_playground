@@ -7,7 +7,9 @@ import 'package:flutter_playground/app/localization/localization.dart';
 
 /// The '401 - Unauthorized' HTML error page.
 class ErrorUnauthorizedPage extends StatelessWidget {
-  const ErrorUnauthorizedPage({super.key});
+  final String? errorMessage;
+
+  const ErrorUnauthorizedPage({super.key, this.errorMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +23,26 @@ class ErrorUnauthorizedPage extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 16),
+
         // Message explaining the error.
         Text(
           Localization.getText('pages.errorUnauthorized.message'),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 16),
-        // A notification with a link to the [LoginPage].
+        const SizedBox(height: 32),
+
+        // Display the [errorMessage] if given.
+        if (errorMessage != null) ...[
+          Text(
+            errorMessage!,
+            style: TextStyle(color: Colors.grey),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 32),
+        ],
+
+        // A button to the [LoginPage].
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Center(

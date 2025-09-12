@@ -6,7 +6,9 @@ import 'package:flutter_playground/app/localization/localization.dart';
 
 /// The '504 - Gateway Timeout' HTML error page.
 class ErrorGatewayTimeoutPage extends StatelessWidget {
-  const ErrorGatewayTimeoutPage({super.key});
+  final String? errorMessage;
+
+  const ErrorGatewayTimeoutPage({super.key, this.errorMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +22,23 @@ class ErrorGatewayTimeoutPage extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 16),
+
         // Message explaining the error.
         Text(
           Localization.getText('pages.errorGatewayTimeout.message'),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
+
+        // Display the [errorMessage] if given.
+        if (errorMessage != null) ...[
+          SizedBox(height: 32),
+          Text(
+            errorMessage!,
+            style: TextStyle(color: Colors.grey),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ],
     );
   }
