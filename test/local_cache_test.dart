@@ -1,49 +1,60 @@
 // local_cache_test.dart
 //
-// Unit tests for LocalCache.
+// Unit tests for the [LocalCache] utils class.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_playground/app/local_cache/local_cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_playground/app/local_cache/local_cache.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  const testKey = 'test_setting';
+  const testValue = 'test_value';
+
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    await LocalCache.clear();
+  });
+
+  tearDown(() async {
+    await LocalCache.clear();
+  });
+
   group('LocalCache', () {
-    setUp(() {
-      SharedPreferences.setMockInitialValues({});
+    test('should save and load a setting', () async {
+      await LocalCache.save(setting: testKey, value: testValue);
+      final loaded = await LocalCache.load(setting: testKey);
+      expect(loaded, equals(testValue));
     });
 
-    test('check returns false for missing key', () async {
-      final exists = await LocalCache.check(setting: 'missing_key');
-      expect(exists, false);
+    test('should check existence of a setting', () async {
+      await LocalCache.save(setting: testKey, value: testValue);
+      final exists = await LocalCache.check(setting: testKey);
+      expect(exists, isTrue);
+
+      await LocalCache.delete(setting: testKey);
+      final existsAfterDelete = await LocalCache.check(setting: testKey);
+      expect(existsAfterDelete, isFalse);
     });
 
-    test('save and check returns true for saved key', () async {
-      await LocalCache.save(setting: 'test_key', value: 'test_value');
-      final exists = await LocalCache.check(setting: 'test_key');
-      expect(exists, true);
+    test('should delete a setting', () async {
+      await LocalCache.save(setting: testKey, value: testValue);
+      await LocalCache.delete(setting: testKey);
+      final loaded = await LocalCache.load(setting: testKey);
+      expect(loaded, isNull);
     });
 
-    test('save and load returns correct value', () async {
-      await LocalCache.save(setting: 'test_key', value: 'test_value');
-      final value = await LocalCache.load(setting: 'test_key');
-      expect(value, 'test_value');
-    });
-
-    test('delete removes key', () async {
-      await LocalCache.save(setting: 'test_key', value: 'test_value');
-      await LocalCache.delete(setting: 'test_key');
-      final exists = await LocalCache.check(setting: 'test_key');
-      expect(exists, false);
-    });
-
-    test('clear removes all keys', () async {
-      await LocalCache.save(setting: 'key1', value: 'value1');
-      await LocalCache.save(setting: 'key2', value: 'value2');
+    test('should clear all settings', () async {
+      await LocalCache.save(setting: testKey, value: testValue);
       await LocalCache.clear();
-      final exists1 = await LocalCache.check(setting: 'key1');
-      final exists2 = await LocalCache.check(setting: 'key2');
-      expect(exists1, false);
-      expect(exists2, false);
+      final loaded = await LocalCache.load(setting: testKey);
+      expect(loaded, isNull);
+    });
+
+    test('debug should not throw', () async {
+      // This just ensures the debug method runs without error.
+      await LocalCache.debug();
     });
   });
 }

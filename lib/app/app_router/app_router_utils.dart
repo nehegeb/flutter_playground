@@ -17,13 +17,13 @@ String? pendingRedirectUrl;
 /// Provides access to routing information.
 ///
 /// Static Methods:
-/// - [getMainModuleTitle]: Gets the title of the current module.
+/// - [getMainModuleTitle]: Gets the localized title of the current module.
 /// - [getMainModule]: Gets the current main module.
 /// - [checkUserPermission]: Checks if the user has the required permission for a module.
 /// - [saveRedirectUrl]: Save the current URL for later redirects.
 /// - [gotoRedirectUrl]: Opens the saved redirect URL.
 class AppRouterUtils {
-  /// Get the main module title from the [appRouter].
+  /// Get the localized main module title from the [appRouter].
   static String getMainModuleTitle(BuildContext context) {
     return getMainModuleLocalized(context);
   }

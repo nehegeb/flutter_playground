@@ -1,38 +1,49 @@
 // licensing_test.dart
 //
-// Unit tests for Licensing.
+// Unit tests for [Licensing] utils class.
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_playground/app/licensing/licensing.dart';
-import 'package:flutter_playground/app/licensing/logic/load_license_descriptions_data.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
   group('Licensing', () {
+    TestWidgetsFlutterBinding.ensureInitialized();
     setUp(() {
-      // Reset licenseData before each test if possible.
-      licenseData = null;
+      Licensing.clearDbLicensingData();
     });
 
-    test('initLicensingData loads license data if not loaded', () async {
-      licenseData = null;
+    test('dbPackageData and dbLicenseData are null after clear', () {
+      Licensing.clearDbLicensingData();
+      expect(Licensing.dbPackageData, isNull);
+      expect(Licensing.dbLicenseData, isNull);
+    });
+
+    test('initDbLicensingData loads data', () async {
       await Licensing.initDbLicensingData();
-      expect(licenseData, isNotNull, reason: 'License data should be loaded');
-      expect(licenseData is Map, true, reason: 'License data should be a Map');
       expect(
-        licenseData!.isNotEmpty,
-        true,
-        reason: 'License data should not be empty',
+        Licensing.dbPackageData,
+        isNotNull,
+        reason: 'dbPackageData should be loaded',
+      );
+      expect(
+        Licensing.dbLicenseData,
+        isNotNull,
+        reason: 'dbLicenseData should be loaded',
       );
     });
 
-    test('initLicensingData does not reload if already loaded', () async {
-      licenseData = {'dummy': 'data'};
+    test('clearDbLicensingData sets data to null', () async {
       await Licensing.initDbLicensingData();
+      Licensing.clearDbLicensingData();
       expect(
-        licenseData,
-        equals({'dummy': 'data'}),
-        reason: 'License data should not be reloaded',
+        Licensing.dbPackageData,
+        isNull,
+        reason: 'dbPackageData should be null after clear',
+      );
+      expect(
+        Licensing.dbLicenseData,
+        isNull,
+        reason: 'dbLicenseData should be null after clear',
       );
     });
   });

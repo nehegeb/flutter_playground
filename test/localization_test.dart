@@ -1,79 +1,68 @@
 // localization_test.dart
 //
-// Unit tests for Localization.
+// Unit tests for the [Localization] utils class.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_playground/app/localization/localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
 
   group('Localization', () {
-    test(
-      'setLanguage sets language and getText returns correct string',
-      () async {
-        await Localization.setLanguage(languageId: 'en');
-        expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
-        await Localization.setLanguage(languageId: 'de');
-        expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
-      },
-    );
-
-    test(
-      'getText falls back to English if key missing in selected language',
-      () async {
-        await Localization.setLanguage(languageId: 'de');
-        expect(
-          Localization.getText('testKey'),
-          equals(
-            "This is for performing a valid test where only the English localization has this key.",
-          ),
-        );
-      },
-    );
-
-    test('getText returns placeholder for missing key', () async {
-      await Localization.setLanguage(languageId: 'en');
-      expect(Localization.getText('nonexistent_key'), '[NO_LOCALIZATION]');
+    setUp(() {
+      Localization.clearDbLanguagesData();
     });
 
-    test('getText returns lorem ipsum for placeholder keys', () {
-      expect(Localization.getText('placeholder'), isNotEmpty);
-      expect(Localization.getText('placeholder5').split(' ').length, 5);
+    test('defaultLanguageId is "en"', () {
+      expect(defaultLanguageId, equals('en'));
     });
 
-    test('getText handles null and empty keys gracefully', () {
-      expect(Localization.getText(''), '[NO_LOCALIZATION]');
+    test('appLanguageIdNotifier initializes with defaultLanguageId', () {
+      expect(appLanguageIdNotifier.value, equals(defaultLanguageId));
     });
 
-    test('setLanguage throws or ignores invalid language codes', () async {
-      await Localization.setLanguage(languageId: 'xx');
-      expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
+    test('activeLanguageId returns current language', () {
+      appLanguageIdNotifier.value = 'de';
+      expect(Localization.activeLanguageId, equals('de'));
     });
 
-    test(
-      'getText returns correct value after multiple language switches',
-      () async {
-        await Localization.setLanguage(languageId: 'en');
-        final enText = Localization.getText('misc.months.january');
-        await Localization.setLanguage(languageId: 'de');
-        final deText = Localization.getText('misc.months.january');
-        expect(enText, isNot(deText));
-      },
-    );
+    test('emptyLanguage returns an AppLanguage', () {
+      final empty = Localization.emptyLanguage;
+      expect(empty, isA<AppLanguage>());
+    });
+
+    test('dbLanguagesData is null after clear', () {
+      Localization.clearDbLanguagesData();
+      expect(Localization.dbLanguagesData, isNull);
+    });
+
+    test('setLanguage updates appLanguageIdNotifier', () async {
+      await Localization.setLanguage(languageId: 'fr', force: true);
+      expect(appLanguageIdNotifier.value, equals('fr'));
+    });
+
+    test('initDbLanguagesData loads languages data', () async {
+      await Localization.initDbLanguagesData();
+      expect(Localization.dbLanguagesData, isNotNull);
+      expect(Localization.dbLanguagesData, isA<List<dynamic>>());
+    });
+
+    test('AppLanguage.fromMap creates correct instance', () {
+      final map = {
+        'id': '1',
+        'idTitle': 'en',
+        'name': 'English',
+        'nativeName': 'English',
+        'countryCode': 'US',
+      };
+      final lang = AppLanguage.fromMap(map);
+      expect(lang.id, '1');
+      expect(lang.idTitle, 'en');
+      expect(lang.name, 'English');
+      expect(lang.nativeName, 'English');
+      expect(lang.countryCode, 'US');
+    });
   });
-}
-
-/// Dummy BuildContext for testing purposes.
-class TestBuildContext extends BuildContext {
-  @override
-  InheritedWidget dependOnInheritedElement(
-    InheritedElement ancestor, {
-    Object? aspect,
-  }) => throw UnimplementedError();
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

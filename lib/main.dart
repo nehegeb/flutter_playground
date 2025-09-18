@@ -5,8 +5,8 @@
 // TODO: Finish the Template README file.
 // TODO: Add a page template in lib/modules/template/pages/.
 // TODO: Implement tests for all major functions (utils).
-// TODO: Check all files and only 'show' the necessary import widgets.
 // TODO: Make a search for all TODOs and clean up the code.
+// TODO: Check the 'problems' tab and try to fix everything there.
 // TODO: (?) Implement feedback feature.
 // TODO: (?) "forgot password" feature on login page.
 // TODO: (?) Implement a global error handler for the app.

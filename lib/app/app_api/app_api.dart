@@ -11,9 +11,10 @@ import 'package:flutter_playground/app/app_api/logic/api_exception.dart';
 /// Provides static methods for API requests.
 ///
 /// Static Methods:
-/// - [get]: Make a GET request to the given [url].
+/// - [get]: Makes a GET request to the given [url].
+/// - [post]: Makes a POST request to the given [url] with the provided [body].
 class AppApi {
-  /// Makes a GET request to the given [url].
+  /// Make a GET request to the given [url].
   Future<dynamic> get(BuildContext context, String url) async {
     dynamic data;
     try {
