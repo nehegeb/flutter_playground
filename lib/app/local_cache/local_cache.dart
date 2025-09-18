@@ -60,14 +60,18 @@ class LocalCache {
   /// Prints out all settings in SharedPreferences for debugging purposes.
   ///
   /// NOTE: This is meant for debugging purposes only!
+  /// NOTE: The "ignore: avoid_print" comments prevent lint warnings about using print statements in production code.
   static Future<void> debug() async {
     final allSettings = await LocalCache.load(setting: 'allSettings');
     if (allSettings is Map<String, dynamic>) {
+      // ignore: avoid_print
       print('DEBUG: All settings in local cache:');
       allSettings.forEach((key, value) {
+        // ignore: avoid_print
         print('  $key - $value');
       });
     } else {
+      // ignore: avoid_print
       print('DEBUG: No settings found in local cache.');
     }
   }

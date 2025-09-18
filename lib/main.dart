@@ -4,12 +4,8 @@
 // TODO: For the user registration, get the 'member' role properly.
 // TODO: Finish the Template README file.
 // TODO: Add a page template in lib/modules/template/pages/.
-// TODO: Implement tests for all major functions (utils).
-// TODO: Make a search for all TODOs and clean up the code.
-// TODO: Check the 'problems' tab and try to fix everything there.
 // TODO: (?) Implement feedback feature.
 // TODO: (?) "forgot password" feature on login page.
-// TODO: (?) Implement a global error handler for the app.
 // TODO: (?) Implement a profile page to change username, password and delete account.
 // TODO: (?) Add "Privacy Policy", "Terms of Service" and "Cookie Notice" for internet usage.
 //       Cookie Banner: "This app stores your UI preferences (such as dark or light mode) in your browser to improve your experience. No personal or tracking data is collected."
@@ -18,6 +14,7 @@
 // TODO: home_widget for mobile widgets?!
 // TODO: Widgets to keep in mind: CircleAvatar, SnackBar, SelectableText
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_playground/screens/main_screen.dart';
@@ -29,8 +26,8 @@ import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/i
 
 /// The main function that starts the Flutter app.
 void main() {
-  WidgetsFlutterBinding.ensureInitialized(); // Needed for SystemChrome.
   // Set the system UI overlay style for the app.
+  WidgetsFlutterBinding.ensureInitialized(); // Needed for [SystemChrome].
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -39,7 +36,39 @@ void main() {
     ),
   );
 
-  runApp(const MainApp());
+  // Set up global error handling for Flutter related errors.
+  FlutterError.onError = (FlutterErrorDetails details) {
+    // Handle all uncaught Flutter errors.
+    FlutterError.presentError(details); // Print to console.
+    // NOTE: Using the [AppPopup] here does not work because the context is not available.
+    // AppPopup.errorMessage(context: context, message: details.exceptionAsString());
+    // DEV: A custom logging service could be used here to report Flutter errors.
+  };
+
+  // Set up global error handling for all other Dart related errors.
+  runZonedGuarded(
+    () {
+      // Set system UI overlay style, then run the app
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: Colors.transparent,
+        ),
+      );
+
+      // Run the [MainApp] widget.
+      runApp(const MainApp());
+    },
+    (error, stack) {
+      // Handle all uncaught Dart errors.
+      // ignore: avoid_print
+      print('Uncaught Dart error: $error'); // Print to console.
+      // NOTE: Using the [AppPopup] here does not work because the context is not available.
+      // AppPopup.errorMessage(context: context, message: error.toString());
+      // DEV: A custom logging service could be used here to report Dart errors.
+    },
+  );
 }
 
 /// The root widget of the app.

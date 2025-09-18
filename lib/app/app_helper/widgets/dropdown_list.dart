@@ -181,11 +181,12 @@ class _DropdownListState<T> extends State<DropdownList<T>> {
   @override
   Widget build(BuildContext context) {
     // Measure the width of the selected text.
-    final text = _selectedItem != null
-        ? widget.itemLabel(_selectedItem!)
+    final selected = _selectedItem;
+    final text = selected != null
+        ? widget.itemLabel(selected)
         : Localization.getText('appHelper.dropdownList.select');
     final textStyle = TextStyle(
-      color: _selectedItem != null ? null : Colors.grey.shade600,
+      color: selected != null ? null : Colors.grey.shade600,
     );
     final textPainter = TextPainter(
       text: TextSpan(text: text, style: textStyle),
