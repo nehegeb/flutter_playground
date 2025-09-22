@@ -1,18 +1,61 @@
-/// main.dart
-///
-/// Entry point and main app widget for the app.
-/// Handles localization loading, theme, and the [MainAppBar].
-library main;
+// main.dart
+//
 
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'localization/localization.dart';
-import 'helpers/loading_overlay.dart';
-import 'app_bar.dart';
-import 'module_bar.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_playground/screens/main_screen.dart';
+import 'package:flutter_playground/screens/splash_screen.dart';
+import 'package:flutter_playground/app/app_helper/app_helper.dart';
+import 'package:flutter_playground/app/app_theme/app_theme.dart';
+import 'package:flutter_playground/app/app_router/app_router.dart';
+import 'package:flutter_playground/app/app_notifiers/is_mobile_device_notifier/is_mobile_device_notifier.dart';
 
 /// The main function that starts the Flutter app.
 void main() {
-  runApp(const MainApp());
+  // Set the system UI overlay style for the app.
+  WidgetsFlutterBinding.ensureInitialized(); // Needed for [SystemChrome].
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.transparent,
+    ),
+  );
+
+  // Set up global error handling for Flutter related errors.
+  FlutterError.onError = (FlutterErrorDetails details) {
+    // Handle all uncaught Flutter errors.
+    FlutterError.presentError(details); // Print to console.
+    // NOTE: Using the [AppPopup] here does not work because the context is not available.
+    // AppPopup.errorMessage(context: context, message: details.exceptionAsString());
+    // DEV: A custom logging service could be used here to report Flutter errors.
+  };
+
+  // Set up global error handling for all other Dart related errors.
+  runZonedGuarded(
+    () {
+      // Set system UI overlay style, then run the app
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: Colors.transparent,
+        ),
+      );
+
+      // Run the [MainApp] widget.
+      runApp(const MainApp());
+    },
+    (error, stack) {
+      // Handle all uncaught Dart errors.
+      // ignore: avoid_print
+      print('Uncaught Dart error: $error'); // Print to console.
+      // NOTE: Using the [AppPopup] here does not work because the context is not available.
+      // AppPopup.errorMessage(context: context, message: error.toString());
+      // DEV: A custom logging service could be used here to report Dart errors.
+    },
+  );
 }
 
 /// The root widget of the app.
@@ -25,109 +68,67 @@ class MainApp extends StatefulWidget {
 
 /// State for [MainApp].
 ///
-/// Loads localization files on startup, manages the current language,
-/// and rebuilds the app when the language changes.
+/// A [SplashScreen] is shown while the app is initializing.
+/// After that, the [MainScreen] provided by the [appRouter] is shown.
 class _MainAppState extends State<MainApp> {
   bool _isAppInitialized = false; // Track if app initialization is complete.
 
   @override
   void initState() {
     super.initState();
-    // Get the language the user uses and initialize localization.
-    _initLocalization();
-    // Listen to language changes and rebuild UI when changed.
-    currentLanguageNotifier.addListener(_onLanguageChanged);
+    // Initialize the app settings.
+    _initAppSettings();
+    // Listen for app theme changes to rebuild the app when it changes.
+    appThemeNotifier.addListener(_refreshUi);
   }
 
   @override
   void dispose() {
-    currentLanguageNotifier.removeListener(_onLanguageChanged);
+    appThemeNotifier.removeListener(_refreshUi);
     super.dispose();
   }
 
-  /// Load localization JSON files and set the initial language for the whole app.
-  Future<void> _initLocalization() async {
-    final initialLanguage = Localization.getUserLanguage();
-    await Localization.setCurrentLanguage(initialLanguage, force: true);
+  /// Refresh the UI.
+  void _refreshUi() {
+    setState(() {});
+  }
+
+  /// Initializes the app settings from local cache.
+  Future<void> _initAppSettings() async {
+    await AppHelper.initAppSettings();
+    // Initialization is complete. Splash screen can now be hidden.
     setState(() {
       _isAppInitialized = true;
     });
   }
 
-  /// Called when the language notifier changes.
-  void _onLanguageChanged() {
-    // Rebuild whole app to update all localization.
-    setState(() {});
-  }
-
+  /// The [MainApp] using the app theme and displaying a screen provided by the [appRouter].
   @override
   Widget build(BuildContext context) {
-    // Define a seed color for the theme of the app.
-    Color seedColor = Colors.teal;
-    // Show a white screen with a loading indicator until initialization is complete.
-    if (!_isAppInitialized) {
-      // The [SplashScreen] doesn't have a theme, therefore the seedColor is passed.
-      return SplashScreen(seedColor: seedColor);
-    }
-    // Main app with theme and home screen.
-    return MaterialApp(
-      // Set the navigator key for the [LoadingOverlay].
-      // This allows the [LoadingOverlay] to be shown from anywhere in the app.
-      navigatorKey: LoadingOverlay.navigatorKey,
-      // The theme of the app.
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color.alphaBlend(
-            Colors.black26,
-            ColorScheme.fromSeed(seedColor: seedColor).primary,
-          ),
-          foregroundColor: Colors.white,
-        ),
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(fontSize: 18, color: Colors.black87),
-        ),
-        progressIndicatorTheme: ProgressIndicatorThemeData(color: seedColor),
-      ),
-      home: MainScreen(),
-    );
-  }
-}
+    return MaterialApp.router(
+      theme: AppTheme.appTheme,
+      routerConfig: appRouter,
+      builder: (context, child) {
+        // Check if the device type has changed. Updates while resizing.
+        IsMobileDeviceNotifier.checkAndSet(context);
 
-/// The main home screen of the app.
-class MainScreen extends StatelessWidget {
-  MainScreen({super.key});
-  // NOTE: The MainScreen cannot be 'const' in order to update localization.
+        // If the app is not initialized, show the [SplashScreen].
+        if (!_isAppInitialized) {
+          return SplashScreen();
+        }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // The upper app bar.
-      appBar: MainAppBar(title: Localization.getText('appName')),
-      // The lower body with a module bar and the module content area.
-      body: ModuleBar(),
-    );
-  }
-}
-
-/// A splash screen shown during app initialization.
-class SplashScreen extends StatelessWidget {
-  final Color seedColor;
-  const SplashScreen({super.key, required this.seedColor});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(seedColor),
-          ),
-        ),
-      ),
+        // Show [SplashScreen] if window is too small.
+        // Otherwise, show [MainScreen] provided by the [appRouter].
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth < 400 || constraints.maxHeight < 300) {
+              return SplashScreen(isTooSmall: true);
+            }
+            // If the app is initialized, show whatever the [appRouter] provides.
+            return child!;
+          },
+        );
+      },
     );
   }
 }

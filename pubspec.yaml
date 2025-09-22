@@ -1,7 +1,7 @@
 name: flutter_playground
-description: "A new Flutter project."
+description: "A Flutter playground for testing new stuff."
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: ^3.8.1
@@ -9,6 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter 
+  go_router: ^13.2.2
+  shared_preferences: ^2.2.3
+  url_launcher: ^6.2.6
+  pointycastle: ^4.0.0
+  http: ^1.1.0
+  uuid: ^4.3.3
   lorem_ipsum: ^0.0.3
   country_flags: ^3.3.0
 
@@ -20,4 +28,16 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - lib/localization/
+    - lib/app/localization/data/
+    - lib/app/licensing/data/
+    - lib/app/user/data/
+    - lib/app/modules/data/
+    - lib/app/roles/data/
+    # Changelogs
+    - lib/modules/main/changelog/
+    - lib/modules/template/changelog/
+    - lib/modules/settings/changelog/
+    # Assets
+    - assets/app/images/
+    - assets/modules/template/images/
+    - assets/modules/settings/images/

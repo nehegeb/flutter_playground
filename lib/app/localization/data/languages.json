@@ -1,0 +1,16 @@
+[
+    {
+        "id": "fa2794c8-ae75-4b89-af75-dddaa981c414",
+        "idTitle": "en",
+        "name": "English",
+        "nativeName": "English",
+        "countryCode": "us"
+    },
+    {
+        "id": "a7e68ab3-3f6e-42c7-8463-c998a7901bae",
+        "idTitle": "de",
+        "name": "German",
+        "nativeName": "Deutsch",
+        "countryCode": "de"
+    }
+]

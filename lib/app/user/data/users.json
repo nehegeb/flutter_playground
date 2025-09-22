@@ -1,0 +1,24 @@
+[
+    {
+        "id": "e9e19b2f-60c7-4042-9269-59f9c4b70a48",
+        "email": "arthur.dent@megadodo.pub",
+        "name": "Arthur Dent",
+        "passwordHash": "61f7b676722a1b4a7c8eba16c781474fa1f6d14d9270e5e1c13f7c8b9bcc1651",
+        "passwordSalt": "EjQY0gQbVWLxS8M_lVcLVg==",
+        "rolesIds": [
+            "e1ea06f8-e361-428b-b871-50babaf5ada4"
+        ]
+    },
+    {
+        "id": "d4f99a24-d9ba-4c69-bd8f-30a7f4347128",
+        "email": "ford.prefect@megadodo.pub",
+        "name": "Ford Prefect",
+        "passwordHash": "61f7b676722a1b4a7c8eba16c781474fa1f6d14d9270e5e1c13f7c8b9bcc1651",
+        "passwordSalt": "EjQY0gQbVWLxS8M_lVcLVg==",
+        "rolesIds": [
+            "8fdd8d35-da28-4a23-9c40-d0f22d155145",
+            "b2f08877-4faa-4662-9878-13760b6596a1",
+            "6b7d688c-6622-42e0-8426-46cf84c4b349"
+        ]
+    }
+]

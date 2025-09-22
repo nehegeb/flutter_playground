@@ -1,75 +1,68 @@
+// localization_test.dart
+//
+// Unit tests for the [Localization] utils class.
+
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_playground/localization/localization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_playground/app/localization/localization.dart';
 
 void main() {
-  // Ensure the Flutter test environment is initialized.
   TestWidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.setMockInitialValues({});
 
   group('Localization', () {
-    // Test that getUserLanguage returns a valid language code.
-    test('getUserLanguage returns a valid language code', () {
-      final lang = Localization.getUserLanguage();
-      expect(lang, isNotNull);
-      expect(['en', 'de'], contains(lang));
+    setUp(() {
+      Localization.clearDbLanguagesData();
     });
 
-    // Test setting and getting the current language using the notifier.
-    test('setCurrentLanguage and currentLanguageNotifier', () async {
-      await Localization.setCurrentLanguage('de');
-      expect(currentLanguageNotifier.value, 'de');
-      expect(Localization.getCurrentLanguage, 'de');
-      await Localization.setCurrentLanguage('en');
-      expect(currentLanguageNotifier.value, 'en');
-      expect(Localization.getCurrentLanguage, 'en');
+    test('defaultLanguageId is "en"', () {
+      expect(defaultLanguageId, equals('en'));
     });
 
-    // Test that the 'of' method returns a Localization instance with the correct language.
-    test('of returns correct instance', () {
-      final loc = Localization.of(TestBuildContext());
-      expect(loc.language, currentLanguageNotifier.value);
+    test('appLanguageIdNotifier initializes with defaultLanguageId', () {
+      expect(appLanguageIdNotifier.value, equals(defaultLanguageId));
     });
 
-    // Test that getText returns a valid localized string for both languages.
-    test('getText returns correct localized string', () async {
-      await Localization.setCurrentLanguage('en');
-      expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
-      await Localization.setCurrentLanguage('de');
-      expect(Localization.getText('appName'), isNot('[NO_LOCALIZATION]'));
+    test('activeLanguageId returns current language', () {
+      appLanguageIdNotifier.value = 'de';
+      expect(Localization.activeLanguageId, equals('de'));
     });
 
-    // Test that getText falls back to English if the key is missing in German.
-    test('getText falls back to English if key missing in German', () async {
-      await Localization.setCurrentLanguage('de');
-      expect(
-        Localization.getText('testKey'),
-        equals(
-          "This is for performing a valid test where only the English localization has this key.",
-        ),
-      );
+    test('emptyLanguage returns an AppLanguage', () {
+      final empty = Localization.emptyLanguage;
+      expect(empty, isA<AppLanguage>());
     });
 
-    // Test that getText returns a placeholder for a missing key.
-    test('getText returns placeholder for missing key', () async {
-      await Localization.setCurrentLanguage('en');
-      expect(Localization.getText('nonexistent_key'), '[NO_LOCALIZATION]');
+    test('dbLanguagesData is null after clear', () {
+      Localization.clearDbLanguagesData();
+      expect(Localization.dbLanguagesData, isNull);
     });
 
-    // Test that getText returns lorem ipsum for placeholder keys.
-    test('getText returns lorem ipsum for placeholder keys', () {
-      expect(Localization.getText('placeholder'), isNotEmpty);
-      expect(Localization.getText('placeholder5').split(' ').length, 5);
+    test('setLanguage updates appLanguageIdNotifier', () async {
+      await Localization.setLanguage(languageId: 'fr', force: true);
+      expect(appLanguageIdNotifier.value, equals('fr'));
+    });
+
+    test('initDbLanguagesData loads languages data', () async {
+      await Localization.initDbLanguagesData();
+      expect(Localization.dbLanguagesData, isNotNull);
+      expect(Localization.dbLanguagesData, isA<List<dynamic>>());
+    });
+
+    test('AppLanguage.fromMap creates correct instance', () {
+      final map = {
+        'id': '1',
+        'idTitle': 'en',
+        'name': 'English',
+        'nativeName': 'English',
+        'countryCode': 'US',
+      };
+      final lang = AppLanguage.fromMap(map);
+      expect(lang.id, '1');
+      expect(lang.idTitle, 'en');
+      expect(lang.name, 'English');
+      expect(lang.nativeName, 'English');
+      expect(lang.countryCode, 'US');
     });
   });
-}
-
-/// Dummy BuildContext for testing purposes.
-class TestBuildContext extends BuildContext {
-  @override
-  InheritedWidget dependOnInheritedElement(
-    InheritedElement ancestor, {
-    Object? aspect,
-  }) => throw UnimplementedError();
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

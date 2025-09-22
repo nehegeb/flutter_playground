@@ -1,0 +1,235 @@
+{
+    "languageId": "en",
+    "modules": {
+        "main": {
+            "title": "Flutter Playground",
+            "pages": {
+                "home": {
+                    "title": "Home",
+                    "messageWelcome": "Welcome",
+                    "messageLogin": "Click here to log in...",
+                    "messageNoModules": "You currently do not have access to any module!\nAsk a module administrator for access."
+                },
+                "login": {
+                    "title": "Login",
+                    "email": "eMail address",
+                    "password": "Password",
+                    "loginButton": "Login",
+                    "messageInvalidLogin": "Invalid eMail address or password",
+                    "linkToRegister": "Don't have an account? Register now!"
+                },
+                "register": {
+                    "title": "Register",
+                    "username": "Username",
+                    "email": "eMail address",
+                    "password": "Password",
+                    "confirmPassword": "Confirm password",
+                    "registerButton": "Register",
+                    "messageInvalidRegister": "This eMail address is already in use."
+                },
+                "about": {
+                    "title": "About this app"
+                },
+                "permissions": {
+                    "title": "Permissions",
+                    "modulesTab": {
+                        "title": "Modules",
+                        "columnName": "Modulename",
+                        "columnIsPublic": "Public",
+                        "columnAdmins": "Administrators",
+                        "editIsPublic": "Module is public"
+                    },
+                    "usersTab": {
+                        "title": "Users",
+                        "columnName": "Username",
+                        "columnEmail": "eMail",
+                        "columnRoles": "Roles",
+                        "addNew": "New User",
+                        "errorNoData": "No users invited for this module."
+                    },
+                    "rolesTab": {
+                        "title": "Roles",
+                        "columnName": "Rolename",
+                        "columnSubModule": "Sub Module",
+                        "columnPermissions": "Permissions",
+                        "editMainModule": "Main Module",
+                        "editSubModule": "Sub Module",
+                        "addNew": "New Role",
+                        "errorNoData": "No roles defined for this module."
+                    }
+                },
+                "errorBadRequest": {
+                    "title": "400 - Bad Request",
+                    "message": "The request is invalid."
+                },
+                "errorUnauthorized": {
+                    "title": "401 - Unauthorized",
+                    "message": "You are not authorized to access this.\nPlease log in first."
+                },
+                "errorForbidden": {
+                    "title": "403 - Forbidden",
+                    "message": "You do not have the permission to access this."
+                },
+                "errorNotFound": {
+                    "title": "404 - Not Found",
+                    "message": "The page you are looking for does not exist."
+                },
+                "errorInternalServerError": {
+                    "title": "500 - Internal Server Error",
+                    "message": "An unexpected error occurred on the server."
+                },
+                "errorBadGateway": {
+                    "title": "502 - Bad Gateway",
+                    "message": "The server received an invalid response from the upstream server."
+                },
+                "errorServiceUnavailable": {
+                    "title": "503 - Service Unavailable",
+                    "message": "The service is currently unavailable.\nPlease try again later."
+                },
+                "errorGatewayTimeout": {
+                    "title": "504 - Gateway Timeout",
+                    "message": "The service did not receive a timely response from the upstream server."
+                }
+            }
+        },
+        "template": {
+            "title": "Module Template",
+            "modules": {
+                "template": {
+                    "title": "Submodule Template",
+                    "pages": {
+                        "template": {
+                            "title": "Sub Module Template Page"
+                        }
+                    }
+                }
+            },
+            "pages": {
+                "about": {
+                    "title": "About the Module Template"
+                },
+                "template": {
+                    "title": "Main Module Template Page"
+                }
+            }
+        },
+        "settings": {
+            "title": "Settings",
+            "pages": {
+                "about": {
+                    "title": "About the Settings"
+                }
+            }
+        }
+    },
+    "appBar": {
+        "back": "Back",
+        "moduleBar": "Module Bar",
+        "userMenu": "User Menu",
+        "menu": {
+            "login": "Login",
+            "logout": "Logout",
+            "switchAppBrightness": "Switch brightness",
+            "switchAppLanguage": "Switch language"
+        },
+        "languageSelector": {
+            "english": "English",
+            "german": "German"
+        }
+    },
+    "users": {
+        "usersDataLoading": "Loading users..."
+    },
+    "roles": {
+        "rolesDataLoading": "Loading roles data...",
+        "admin": "Administrator",
+        "moderator": "Moderator",
+        "member": "Member",
+        "viewer": "Viewer",
+        "guest": "Guest",
+        "notLoggedIn": "Not logged in",
+        "noPermission": "No permission"
+    },
+    "permissions": {
+        "permissionsDataLoading": "Loading permissions data..."
+    },
+    "localization": {
+        "languagesDataLoading": "Loading languages data..."
+    },
+    "changelog": {
+        "title": "Changelog for <<module>>",
+        "changelogDataLoading": "Loading changelog data...",
+        "notLoadedError": "Changelog could not be loaded. Try reloading the page (F5)."
+    },
+    "licensing": {
+        "title": "Packages used in this app",
+        "packageDataLoading": "Loading used packages data...",
+        "packageNotLoadedError": "Packages could not be loaded. Try reloading the page (F5).",
+        "licenseDataLoading": "Loading licenses data...",
+        "licenseNotLoadedError": "Licenses could not be loaded. Try reloading the page (F5).",
+        "licenseDetails": "Show license details",
+        "licenseSource": "Source"
+    },
+    "appHelper": {
+        "dropdownList": {
+            "select": "Click to select",
+            "filter": "Filter...",
+            "noResults": "Nothing found"
+        }
+    },
+    "misc": {
+        "buttons": {
+            "close": "Close",
+            "closeAndCancel": "Close and Cancel",
+            "cancel": "Cancel",
+            "save": "Save",
+            "add": "Add",
+            "edit": "Edit",
+            "delete": "Delete",
+            "confirm": "Okay",
+            "deny": "Deny",
+            "yes": "Yes",
+            "no": "No",
+            "deleteConfirmationMessage": "Are you sure you want to delete that?\nThis cannot be undone!",
+            "showPassword": "Show password",
+            "hidePassword": "Hide password"
+        },
+        "messageTypes": {
+            "success": "Successful",
+            "failed": "Failed",
+            "info": "Information",
+            "warning": "Warning",
+            "error": "Error",
+            "loading": "Loading..."
+        },
+        "months": {
+            "january": "January",
+            "february": "February",
+            "march": "March",
+            "april": "April",
+            "may": "May",
+            "june": "June",
+            "july": "July",
+            "august": "August",
+            "september": "September",
+            "october": "October",
+            "november": "November",
+            "december": "December"
+        }
+    },
+    "errors": {
+        "windowTooSmall": "Window too small!",
+        "dataNotLoaded": "<<data>> could not be loaded. Try reloading the page (F5).",
+        "noViewPermission": "You do not have permission to view this page.\nAsk the modules administrator.",
+        "missingRequiredFields": "Please fill in all required fields.",
+        "passwordTooShort": "Password must be at least 8 characters long.",
+        "passwordNoUppercase": "Password must contain at least one uppercase letter.",
+        "passwordNoLowercase": "Password must contain at least one lowercase letter.",
+        "passwordNoNumber": "Password must contain at least one number.",
+        "passwordNoSpecial": "Password must contain at least one special character.",
+        "passwordsDoNotMatch": "Passwords do not match.",
+        "registrationFailed": "Registration failed.",
+        "loginFailed": "eMail unknown or password incorrect."
+    },
+    "testKey": "This is for performing a valid test where only the English localization has this key."
+}

@@ -1,0 +1,83 @@
+// role.dart
+//
+// Features:
+// - Provides a class [Roles] with static methods to manipulate [AppRole].
+// - Provides a class for [AppRole].
+
+import 'package:flutter_playground/app/roles/logic/get_empty_app_role.dart';
+import 'package:flutter_playground/app/roles/logic/get_app_role_from_data.dart';
+import 'package:flutter_playground/app/roles/logic/load_roles_data.dart';
+
+/// Utility class for roles management.
+/// Provides static methods manage the user roles.
+///
+/// Static Methods:
+/// - [emptyRole]: Gets an empty [AppRole].
+/// - [dbRolesData]: Gets the roles data.
+/// - [getRole]: Gets a specific [AppRole], according to its ID or name.
+/// - [initDbRolesData]: Initializes the user roles for the app.
+/// - [clearDbRolesData]: Clears the roles data from the app.
+class Roles {
+  /// Get an empty [AppRole].
+  static AppRole get emptyRole {
+    return getEmptyAppRole();
+  }
+
+  /// Get the loaded roles data of the database.
+  static List<dynamic>? get dbRolesData {
+    return rolesData;
+  }
+
+  /// Get a specific [AppRole] from the database.
+  /// It uses the ID or name of the role to identify it.
+  ///
+  /// This only works if the roles data has already been loaded, otherwise returns null.
+  static AppRole? getRole({String? roleId, String? roleName}) {
+    return getAppRoleFromData(roleId: roleId, roleName: roleName);
+  }
+
+  /// Loads the roles data from the database for the app.
+  static Future<void> initDbRolesData() async {
+    await loadRolesData();
+  }
+
+  /// Clear the loaded roles data of the database from the app.
+  static void clearDbRolesData() {
+    rolesData = null;
+  }
+}
+
+/// A role of the app.
+///
+/// Arguments:
+/// - [id]: The unique identifier of the role, as an UUID.
+/// - [idTitle]: The unique title of the role.
+/// - [isDefaultRole]: Whether this is a default role or not. If true, this role cannot be modified.
+/// - [permissions]: A list of permissions granted to this role, as strings.
+class AppRole {
+  String id;
+  String idTitle;
+  String mainModuleIdTitle;
+  String subModuleIdTitle;
+  bool isDefaultRole;
+  List<String>? permissions;
+  AppRole({
+    required this.id,
+    required this.idTitle,
+    required this.mainModuleIdTitle,
+    required this.subModuleIdTitle,
+    this.isDefaultRole = false,
+    this.permissions = const [],
+  });
+
+  factory AppRole.fromMap(Map<String, dynamic> map) {
+    return AppRole(
+      id: map['id'],
+      idTitle: map['idTitle'],
+      mainModuleIdTitle: map['mainModuleIdTitle'],
+      subModuleIdTitle: map['subModuleIdTitle'],
+      isDefaultRole: map['isDefaultRole'] ?? false,
+      permissions: List<String>.from(map['permissions'] ?? []),
+    );
+  }
+}

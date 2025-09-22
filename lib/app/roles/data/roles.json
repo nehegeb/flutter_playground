@@ -1,0 +1,151 @@
+[
+    {
+        "id": "e1ea06f8-e361-428b-b871-50babaf5ada4",
+        "idTitle": "admin",
+        "mainModuleIdTitle": "main",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "*",
+            "main.*"
+        ]
+    },
+    {
+        "id": "1ddb9417-54f0-4b24-90aa-d4763926896f",
+        "idTitle": "viewer",
+        "mainModuleIdTitle": "main",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "main.access",
+            "main.view"
+        ]
+    },
+    {
+        "id": "8fdd8d35-da28-4a23-9c40-d0f22d155145",
+        "idTitle": "member",
+        "mainModuleIdTitle": "main",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "main.access",
+            "main.view",
+            "main.edit"
+        ]
+    },
+    {
+        "id": "d61e628a-011e-428a-8e58-69b0ed6187ea",
+        "idTitle": "moderator",
+        "mainModuleIdTitle": "main",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "main.access",
+            "main.view",
+            "main.edit",
+            "main.delete"
+        ]
+    },
+    {
+        "id": "8cf11786-6a35-4187-b37d-d74ef59cd8ee",
+        "idTitle": "admin",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "template.*"
+        ]
+    },
+    {
+        "id": "19983d92-7248-4c10-950c-48c08ff5b28f",
+        "idTitle": "viewer",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "template.access",
+            "template.view"
+        ]
+    },
+    {
+        "id": "b2f08877-4faa-4662-9878-13760b6596a1",
+        "idTitle": "member",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "template.access",
+            "template.view",
+            "template.edit"
+        ]
+    },
+    {
+        "id": "0e65cd8c-8280-4649-bae0-a45ccbb1a850",
+        "idTitle": "moderator",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "template.access",
+            "template.view",
+            "template.edit",
+            "template.delete"
+        ]
+    },
+    {
+        "id": "b5636138-fb95-44a1-80c6-d56513c1fc52",
+        "idTitle": "admin",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "template",
+        "isDefaultRole": true,
+        "permissions": [
+            "template.template.*"
+        ]
+    },
+    {
+        "id": "6b7d688c-6622-42e0-8426-46cf84c4b349",
+        "idTitle": "viewer",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "template",
+        "isDefaultRole": true,
+        "permissions": [
+            "template.template.access",
+            "template.template.view"
+        ]
+    },
+    {
+        "id": "86778330-9867-4951-aac6-e5d0c43daef8",
+        "idTitle": "member",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "template",
+        "isDefaultRole": true,
+        "permissions": [
+            "template.template.access",
+            "template.template.view",
+            "template.template.edit"
+        ]
+    },
+    {
+        "id": "e02aad41-09bc-407a-a429-63b8e2df542c",
+        "idTitle": "moderator",
+        "mainModuleIdTitle": "template",
+        "subModuleIdTitle": "template",
+        "isDefaultRole": true,
+        "permissions": [
+            "template.template.access",
+            "template.template.view",
+            "template.template.edit",
+            "template.template.delete"
+        ]
+    },
+    {
+        "id": "df692fdb-560d-4a97-bc71-536695f856a1",
+        "idTitle": "admin",
+        "mainModuleIdTitle": "settings",
+        "subModuleIdTitle": "",
+        "isDefaultRole": true,
+        "permissions": [
+            "settings.*"
+        ]
+    }
+]

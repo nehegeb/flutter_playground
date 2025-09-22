@@ -1,0 +1,16 @@
+[
+    {
+        "id": "ed691cb2-f1c7-4aa0-9dc3-ca5ba1855530",
+        "idTitle": "template",
+        "isPublic": false,
+        "isHidden": true,
+        "isAdministrative": false
+    },
+    {
+        "id": "6e9214d2-9539-4f2f-9642-6ea235440733",
+        "idTitle": "settings",
+        "isPublic": false,
+        "isHidden": false,
+        "isAdministrative": true
+    }
+]

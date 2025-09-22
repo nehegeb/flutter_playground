@@ -1,0 +1,62 @@
+{
+    "flutter": {
+        "name": "flutter",
+        "copyright": "2014 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/flutter"
+    },
+    "flutter_web_plugins": {
+        "name": "flutter_web_plugins",
+        "copyright": "2014 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/flutter_web_plugins"
+    },
+    "go_router": {
+        "name": "go_router",
+        "copyright": "2013 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/go_router"
+    },
+    "shared_preferences": {
+        "name": "shared_preferences",
+        "copyright": "2013 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/shared_preferences"
+    },
+    "url_launcher": {
+        "name": "url_launcher",
+        "copyright": "2013 The Flutter Authors. All rights reserved.",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/url_launcher"
+    },
+    "pointycastle": {
+        "name": "pointycastle",
+        "copyright": "2000 - 2019 The Legion of the Bouncy Castle Inc. (https://www.bouncycastle.org)",
+        "license": "MIT",
+        "packageUrl": "https://pub.dev/packages/pointycastle"
+    },
+    "http": {
+        "name": "http",
+        "copyright": "2014 The Dart project authors",
+        "license": "BSD-3-Clause",
+        "packageUrl": "https://pub.dev/packages/http"
+    },
+    "uuid": {
+        "name": "uuid",
+        "copyright": "2021 Yulian Kuncheff",
+        "license": "MIT",
+        "packageUrl": "https://pub.dev/packages/uuid"
+    },
+    "lorem_ipsum": {
+        "name": "lorem_ipsum",
+        "copyright": "2020 Damian Rincon",
+        "license": "MIT",
+        "packageUrl": "https://pub.dev/packages/lorem_ipsum"
+    },
+    "country_flags": {
+        "name": "country_flags",
+        "copyright": "Arturo Grau",
+        "license": "MIT",
+        "packageUrl": "https://pub.dev/packages/country_flags"
+    }
+}
