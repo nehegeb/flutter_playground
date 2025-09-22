@@ -1,18 +1,6 @@
 // main.dart
 //
 
-// TODO: 'app/users/logic/register_new_user.dart', get the 'member' role properly.
-// TODO: 'modules/main/pages/home/home_page.dart', display "no Roles" message when only main module roles are present.
-// TODO: (?) Implement feedback feature.
-// TODO: (?) "forgot password" feature on login page.
-// TODO: (?) Implement a profile page to change username, password and delete account.
-// TODO: (?) Add "Privacy Policy", "Terms of Service" and "Cookie Notice" for internet usage.
-//       Cookie Banner: "This app stores your UI preferences (such as dark or light mode) in your browser to improve your experience. No personal or tracking data is collected."
-// ----
-// TODO: Feedback widget!
-// TODO: home_widget for mobile widgets?!
-// TODO: Widgets to keep in mind: CircleAvatar, SnackBar, SelectableText
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
