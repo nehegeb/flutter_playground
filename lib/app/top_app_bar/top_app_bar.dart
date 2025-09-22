@@ -37,7 +37,7 @@ class _TopAppBarState extends State<TopAppBar> {
 
   // Generate the title to display in the app bar.
   String getAppBarTitle(bool isMobile) {
-    final appName = Localization.getText('appName');
+    final appName = Localization.getText('modules.main.title');
 
     // Get the module title.
     final moduleName = AppRouterUtils.getMainModuleTitle(context);

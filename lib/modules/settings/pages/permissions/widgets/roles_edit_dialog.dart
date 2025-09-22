@@ -107,7 +107,9 @@ class _RolesEditDialogState extends State<RolesEditDialog> {
             children: [
               // An input box for the role name.
               Text(
-                Localization.getText('pages.permissions.rolesTab.columnName'),
+                Localization.getText(
+                  'modules.main.pages.permissions.rolesTab.columnName',
+                ),
               ),
               Text(':'),
               SizedBox(width: textSpacer),
@@ -146,7 +148,7 @@ class _RolesEditDialogState extends State<RolesEditDialog> {
             children: [
               Text(
                 Localization.getText(
-                  'pages.permissions.rolesTab.editMainModule',
+                  'modules.main.pages.permissions.rolesTab.editMainModule',
                 ),
               ),
               Text(':'),
@@ -161,7 +163,7 @@ class _RolesEditDialogState extends State<RolesEditDialog> {
             children: [
               Text(
                 Localization.getText(
-                  'pages.permissions.rolesTab.editSubModule',
+                  'modules.main.pages.permissions.rolesTab.editSubModule',
                 ),
               ),
               Text(':'),
@@ -236,7 +238,7 @@ class _RolesEditDialogState extends State<RolesEditDialog> {
                       children: [
                         Text(
                           Localization.getText(
-                            'pages.permissions.rolesTab.editMainModule',
+                            'modules.main.pages.permissions.rolesTab.editMainModule',
                           ),
                         ),
                         Text(':'),
@@ -246,7 +248,7 @@ class _RolesEditDialogState extends State<RolesEditDialog> {
                               ? ''
                               : appRole.mainModuleIdTitle == 'main' ||
                                     appRole.mainModuleIdTitle == 'settings'
-                              ? Localization.getText('appName')
+                              ? Localization.getText('modules.main.title')
                               : Localization.getText(
                                   'modules.${appRole.mainModuleIdTitle}.title',
                                 ),
@@ -265,7 +267,7 @@ class _RolesEditDialogState extends State<RolesEditDialog> {
                         children: [
                           Text(
                             Localization.getText(
-                              'pages.permissions.rolesTab.editSubModule',
+                              'modules.main.pages.permissions.rolesTab.editSubModule',
                             ),
                           ),
                           Text(':'),
@@ -298,7 +300,7 @@ class _RolesEditDialogState extends State<RolesEditDialog> {
                         DataColumn(
                           label: Text(
                             Localization.getText(
-                              'pages.permissions.rolesTab.columnPermissions',
+                              'modules.main.pages.permissions.rolesTab.columnPermissions',
                             ),
                           ),
                         ),

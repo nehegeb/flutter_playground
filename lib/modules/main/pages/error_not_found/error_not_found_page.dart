@@ -17,7 +17,7 @@ class ErrorNotFoundPage extends StatelessWidget {
       children: [
         // Title of the error.
         Text(
-          Localization.getText('pages.errorNotFound.title'),
+          Localization.getText('modules.main.pages.errorNotFound.title'),
           style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -25,7 +25,7 @@ class ErrorNotFoundPage extends StatelessWidget {
 
         // Message explaining the error.
         Text(
-          Localization.getText('pages.errorNotFound.message'),
+          Localization.getText('modules.main.pages.errorNotFound.message'),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),

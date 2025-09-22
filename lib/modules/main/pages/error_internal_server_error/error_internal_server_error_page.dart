@@ -17,7 +17,9 @@ class ErrorInternalServerErrorPage extends StatelessWidget {
       children: [
         // Title of the error.
         Text(
-          Localization.getText('pages.errorInternalServerError.title'),
+          Localization.getText(
+            'modules.main.pages.errorInternalServerError.title',
+          ),
           style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -25,7 +27,9 @@ class ErrorInternalServerErrorPage extends StatelessWidget {
 
         // Message explaining the error.
         Text(
-          Localization.getText('pages.errorInternalServerError.message'),
+          Localization.getText(
+            'modules.main.pages.errorInternalServerError.message',
+          ),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),

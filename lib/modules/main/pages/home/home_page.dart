@@ -18,10 +18,10 @@ class HomePage extends StatelessWidget {
 
     // If no user is logged in, return a generic welcome message.
     if (user == null || userName.isEmpty) {
-      return '${Localization.getText('pages.home.messageWelcome')}!';
+      return '${Localization.getText('modules.main.pages.home.messageWelcome')}!';
     }
     // Otherwise, display the user name next to the welcome message.
-    return '${Localization.getText('pages.home.messageWelcome')} $userName!';
+    return '${Localization.getText('modules.main.pages.home.messageWelcome')} $userName!';
   }
 
   @override
@@ -53,7 +53,9 @@ class HomePage extends StatelessWidget {
                         child: TextButton(
                           onPressed: () => appRouter.go('/login'),
                           child: Text(
-                            Localization.getText('pages.home.messageLogin'),
+                            Localization.getText(
+                              'modules.main.pages.home.messageLogin',
+                            ),
                             style: Theme.of(context).textTheme.bodyMedium,
                             textAlign: TextAlign.center,
                           ),
@@ -75,7 +77,9 @@ class HomePage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           child: Text(
-                            Localization.getText('pages.home.messageNoModules'),
+                            Localization.getText(
+                              'modules.main.pages.home.messageNoModules',
+                            ),
                             style: Theme.of(context).textTheme.bodyMedium,
                             textAlign: TextAlign.center,
                           ),
@@ -94,7 +98,7 @@ class HomePage extends StatelessWidget {
           right: 16,
           child: FloatingActionButton(
             mini: true,
-            tooltip: Localization.getText('pages.about.title'),
+            tooltip: Localization.getText('modules.main.pages.about.title'),
             onPressed: () {
               appRouter.go('/about');
             },

@@ -62,7 +62,7 @@ class _ModulesEditDialogState extends State<ModulesEditDialog> {
                   children: [
                     Text(
                       Localization.getText(
-                        'pages.permissions.modulesTab.editIsPublic',
+                        'modules.main.pages.permissions.modulesTab.editIsPublic',
                       ),
                     ),
                     Text(':'),
@@ -90,7 +90,7 @@ class _ModulesEditDialogState extends State<ModulesEditDialog> {
                         DataColumn(
                           label: Text(
                             Localization.getText(
-                              'pages.permissions.modulesTab.columnAdmins',
+                              'modules.main.pages.permissions.modulesTab.columnAdmins',
                             ),
                           ),
                         ),

@@ -107,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             // Title of the register page.
             Text(
-              Localization.getText('pages.register.title'),
+              Localization.getText('modules.main.pages.register.title'),
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
@@ -121,7 +121,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 focusNode: _usernameFocus,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  labelText: Localization.getText('pages.register.username'),
+                  labelText: Localization.getText(
+                    'modules.main.pages.register.username',
+                  ),
                   border: const OutlineInputBorder(),
                 ),
                 onSubmitted: (_) {
@@ -139,7 +141,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 focusNode: _emailFocus,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  labelText: Localization.getText('pages.register.email'),
+                  labelText: Localization.getText(
+                    'modules.main.pages.register.email',
+                  ),
                   border: const OutlineInputBorder(),
                 ),
                 onSubmitted: (_) {
@@ -158,7 +162,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 obscureText: !_showPassword,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  labelText: Localization.getText('pages.register.password'),
+                  labelText: Localization.getText(
+                    'modules.main.pages.register.password',
+                  ),
                   border: const OutlineInputBorder(),
                   suffixIcon: FocusScope(
                     canRequestFocus: false,
@@ -166,6 +172,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       icon: Icon(
                         _showPassword ? Icons.visibility : Icons.visibility_off,
                       ),
+                      tooltip: _showPassword
+                          ? Localization.getText('misc.buttons.hidePassword')
+                          : Localization.getText('misc.buttons.showPassword'),
                       onPressed: () {
                         setState(() {
                           _showPassword = !_showPassword;
@@ -191,7 +200,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   labelText: Localization.getText(
-                    'pages.register.confirmPassword',
+                    'modules.main.pages.register.confirmPassword',
                   ),
                   border: const OutlineInputBorder(),
                   suffixIcon: FocusScope(
@@ -202,6 +211,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
+                      tooltip: _showConfirmPassword
+                          ? Localization.getText('misc.buttons.hidePassword')
+                          : Localization.getText('misc.buttons.showPassword'),
                       onPressed: () {
                         setState(() {
                           _showConfirmPassword = !_showConfirmPassword;
@@ -223,7 +235,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: ElevatedButton(
                   onPressed: _register,
                   child: Text(
-                    Localization.getText('pages.register.registerButton'),
+                    Localization.getText(
+                      'modules.main.pages.register.registerButton',
+                    ),
                   ),
                 ),
               ),

@@ -48,7 +48,7 @@ class _SettingsAboutPageState extends State<SettingsAboutPage> {
             children: [
               // Title of the about page.
               Text(
-                Localization.getText('pages.about.title'),
+                Localization.getText('modules.main.pages.about.title'),
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 16),

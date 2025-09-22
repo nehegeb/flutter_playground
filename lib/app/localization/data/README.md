@@ -16,11 +16,11 @@ All localization data file names must have this structure: `localization_<langua
 
 ## Choosing the default and fallback language of the app
 
-*I would recommend sticking to English as the default language, as it is the most used worldwide. But you can choose whatever you like.*
+*HINT: I would recommend sticking to English as the default language, as it is the most used worldwide. But you can choose whatever you like.*
 
 At the very top of the file `app/localization/localization.dart` you'll find the variable `defaultLanguageId` which determines the default and fallback language of the app. Just change that language ID to any one you like.
 
-NOTE: There has to exist a localization file corresponding to the default language ID! For English it would be the language ID `en` with the localization file `app/localization/data/localization_en.json`. If no such file exists, there'll be an error while launching the app!
+**NOTE: There has to exist a localization file corresponding to the default language ID! For English it would be the language ID `en` with the localization file `app/localization/data/localization_en.json`. If no such file exists, there'll be an error while launching the app!**
 
 ## How to add a new language
 
@@ -32,13 +32,18 @@ Then duplicate the localization file of your default language and rename it with
 
 After that, you can start changing all values within that new localization file to match that language.
 
-NOTE: The key `languageId` at the very top of the localization data file has to be that languages ID! This will be checked upon language initialization (e.g. when switching to that language). If it doesn't match, the localization data of that language won't be loaded, but no error should occur during runtime.
+**NOTE: The key `languageId` at the very top of the localization data file has to be that languages ID! This will be checked upon language initialization (e.g. when switching to that language). If it doesn't match, the localization data of that language won't be loaded, but no error should occur during runtime.**
 
 ## Structure of the `languages.json` file
 
 Every language needs to have the following keys defined:
-- **id** | The unique numerical ID for the table entry.
+
+- **id** | The unique UUID for the table entry.
+
 - **idTitle** | The language ID for that language. **THIS KEY MUST BE UNIQUE BETWEEN ALL LANGUAGES WITHIN THIS FILE!** Also it must be exactly the same language ID you named the localization data file after. For example for English with language ID `en` this key must be `en` and the file called `localization_en.json`.
+
 - **name** | The name of that language. Best would be to keep all the language names in the default language.
+
 - **nativeName** | The name of that language as spelled in that language. This will be displayed in the language selector within the app, which is visible to the user.
+
 - **countryCode** | The proper country code of that language. This determines the flag displayed in the language selector within the app, which is visible to the user.

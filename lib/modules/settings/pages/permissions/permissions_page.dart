@@ -68,19 +68,19 @@ class _PermissionsPageState extends State<PermissionsPage> {
                           if (isMainAppModule)
                             Tab(
                               text: Localization.getText(
-                                'pages.permissions.modulesTab.title',
+                                'modules.main.pages.permissions.modulesTab.title',
                               ),
                             ),
                           if (!isMainAppModule)
                             Tab(
                               text: Localization.getText(
-                                'pages.permissions.usersTab.title',
+                                'modules.main.pages.permissions.usersTab.title',
                               ),
                             ),
                           if (!isMainAppModule)
                             Tab(
                               text: Localization.getText(
-                                'pages.permissions.rolesTab.title',
+                                'modules.main.pages.permissions.rolesTab.title',
                               ),
                             ),
                         ],

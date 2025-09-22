@@ -17,7 +17,7 @@ class ErrorForbiddenPage extends StatelessWidget {
       children: [
         // Title of the error.
         Text(
-          Localization.getText('pages.errorForbidden.title'),
+          Localization.getText('modules.main.pages.errorForbidden.title'),
           style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -25,7 +25,7 @@ class ErrorForbiddenPage extends StatelessWidget {
 
         // Message explaining the error.
         Text(
-          Localization.getText('pages.errorForbidden.message'),
+          Localization.getText('modules.main.pages.errorForbidden.message'),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),

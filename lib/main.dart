@@ -1,9 +1,8 @@
 // main.dart
 //
 
-// TODO: For the user registration, get the 'member' role properly.
-// TODO: Finish the Template README file.
-// TODO: Add a page template in lib/modules/template/pages/.
+// TODO: 'app/users/logic/register_new_user.dart', get the 'member' role properly.
+// TODO: 'modules/main/pages/home/home_page.dart', display "no Roles" message when only main module roles are present.
 // TODO: (?) Implement feedback feature.
 // TODO: (?) "forgot password" feature on login page.
 // TODO: (?) Implement a profile page to change username, password and delete account.

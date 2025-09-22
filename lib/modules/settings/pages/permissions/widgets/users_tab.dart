@@ -48,7 +48,7 @@ class _UsersTabState extends State<UsersTab> {
               Center(
                 child: Text(
                   Localization.getText(
-                    'pages.permissions.usersTab.errorNoData',
+                    'modules.main.pages.permissions.usersTab.errorNoData',
                   ),
                 ),
               ),
@@ -63,7 +63,7 @@ class _UsersTabState extends State<UsersTab> {
                   onPressed: () => AppPopup.widgetDialog(
                     context: context,
                     title: Localization.getText(
-                      'pages.permissions.usersTab.addNew',
+                      'modules.main.pages.permissions.usersTab.addNew',
                     ),
                     widget: UsersEditDialog(
                       userId: null,
@@ -94,7 +94,7 @@ class _UsersTabState extends State<UsersTab> {
                     DataColumn(
                       label: Text(
                         Localization.getText(
-                          'pages.permissions.usersTab.columnName',
+                          'modules.main.pages.permissions.usersTab.columnName',
                         ),
                       ),
                     ),
@@ -104,7 +104,7 @@ class _UsersTabState extends State<UsersTab> {
                       DataColumn(
                         label: Text(
                           Localization.getText(
-                            'pages.permissions.usersTab.columnEmail',
+                            'modules.main.pages.permissions.usersTab.columnEmail',
                           ),
                         ),
                       ),
@@ -113,7 +113,7 @@ class _UsersTabState extends State<UsersTab> {
                     DataColumn(
                       label: Text(
                         Localization.getText(
-                          'pages.permissions.usersTab.columnRoles',
+                          'modules.main.pages.permissions.usersTab.columnRoles',
                         ),
                       ),
                     ),
@@ -220,7 +220,7 @@ class _UsersTabState extends State<UsersTab> {
                 onPressed: () => AppPopup.widgetDialog(
                   context: context,
                   title: Localization.getText(
-                    'pages.permissions.usersTab.addNew',
+                    'modules.main.pages.permissions.usersTab.addNew',
                   ),
                   widget: UsersEditDialog(
                     userId: null,

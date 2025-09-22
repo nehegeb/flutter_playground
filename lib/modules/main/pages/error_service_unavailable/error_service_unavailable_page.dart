@@ -17,7 +17,9 @@ class ErrorServiceUnavailablePage extends StatelessWidget {
       children: [
         // Title of the error.
         Text(
-          Localization.getText('pages.errorServiceUnavailable.title'),
+          Localization.getText(
+            'modules.main.pages.errorServiceUnavailable.title',
+          ),
           style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -25,7 +27,9 @@ class ErrorServiceUnavailablePage extends StatelessWidget {
 
         // Message explaining the error.
         Text(
-          Localization.getText('pages.errorServiceUnavailable.message'),
+          Localization.getText(
+            'modules.main.pages.errorServiceUnavailable.message',
+          ),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),

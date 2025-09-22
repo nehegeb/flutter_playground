@@ -8,6 +8,8 @@ import 'package:flutter_playground/modules/main/pages/home/home_page.dart';
 import 'package:flutter_playground/modules/main/pages/about/about_page.dart';
 import 'package:flutter_playground/modules/main/pages/login/login_page.dart';
 import 'package:flutter_playground/modules/main/pages/register/register_page.dart';
+
+// HTML error pages imports.
 import 'package:flutter_playground/modules/main/pages/error_bad_request/error_bad_request_page.dart';
 import 'package:flutter_playground/modules/main/pages/error_unauthorized/error_unauthorized_page.dart';
 import 'package:flutter_playground/modules/main/pages/error_forbidden/error_forbidden_page.dart';
@@ -56,7 +58,8 @@ class ModuleBarNavigation extends StatelessWidget {
         return LoginPage();
       case 'RegisterPage':
         return RegisterPage();
-      // Error pages.
+
+      // HTML error pages, supporting [errorMessage].
       case 'ErrorBadRequestPage':
         return ErrorBadRequestPage(errorMessage: errorMessage);
       case 'ErrorUnauthorizedPage':
@@ -78,6 +81,8 @@ class ModuleBarNavigation extends StatelessWidget {
       case 'PermissionsPage':
         return PermissionsPage();
 
+      // DEV: Add more pages as needed.
+
       // Template module pages.
       case 'TemplateHomePage':
         return TemplateHomePage();
@@ -93,7 +98,7 @@ class ModuleBarNavigation extends StatelessWidget {
       case 'SettingsAboutPage':
         return SettingsAboutPage();
 
-      // NOTE: Add more pages as needed.
+      // Display the apps [HomePage] as a fallback.
       default:
         return HomePage();
     }

@@ -1,19 +1,116 @@
 {
     "languageId": "de",
-    "appName": "Flutter Playground",
     "modules": {
-        "mainModulesDataLoading": "Hauptmodule Daten werden geladen...",
-        "subModulesDataLoading": "Untermodule Daten werden geladen...",
+        "main": {
+            "title": "Flutter Playground",
+            "pages": {
+                "home": {
+                    "title": "Startseite",
+                    "messageWelcome": "Willkommen",
+                    "messageLogin": "Klicken Sie hier, um sich anzumelden...",
+                    "messageNoModules": "Sie haben derzeit keinen Zugriff auf ein Modul!\nFragen Sie einen Modul Administrator nach Zugriff."
+                },
+                "login": {
+                    "title": "Anmelden",
+                    "email": "eMail Adresse",
+                    "password": "Passwort",
+                    "loginButton": "Anmelden",
+                    "messageInvalidLogin": "Ungültige eMail Adresse oder Passwort",
+                    "linkToRegister": "Sie haben noch kein Konto? Jetzt registrieren!"
+                },
+                "register": {
+                    "title": "Registrieren",
+                    "username": "Benutzername",
+                    "email": "eMail Adresse",
+                    "password": "Passwort",
+                    "confirmPassword": "Passwort bestätigen",
+                    "registerButton": "Registrieren",
+                    "messageInvalidRegister": "Diese eMail Adresse ist bereits vergeben."
+                },
+                "about": {
+                    "title": "Über diese App",
+                    "titleModule": "Über dieses Modul"
+                },
+                "permissions": {
+                    "title": "Berechtigungen",
+                    "modulesTab": {
+                        "title": "Module",
+                        "columnName": "Modulname",
+                        "columnIsPublic": "Öffentlich",
+                        "columnAdmins": "Administratoren",
+                        "editIsPublic": "Modul ist öffentlich"
+                    },
+                    "usersTab": {
+                        "title": "Benutzer",
+                        "columnName": "Benutzername",
+                        "columnEmail": "eMail",
+                        "columnRoles": "Rollen",
+                        "addNew": "Neuer Benutzer",
+                        "errorNoData": "Keine Benutzer für dieses Modul eingeladen."
+                    },
+                    "rolesTab": {
+                        "title": "Rollen",
+                        "columnName": "Rollenname",
+                        "columnSubModule": "Untermodul",
+                        "columnPermissions": "Berechtigungen",
+                        "editMainModule": "Hauptmodul",
+                        "editSubModule": "Untermodul",
+                        "addNew": "Neue Rolle",
+                        "errorNoData": "Keine Rollen für dieses Modul definiert."
+                    }
+                },
+                "errorBadRequest": {
+                    "title": "400 - Ungültige Anfrage",
+                    "message": "Die Anfrage ist ungültig."
+                },
+                "errorUnauthorized": {
+                    "title": "401 - Nicht autorisiert",
+                    "message": "Sie sind nicht berechtigt, hierauf  zuzugreifen.\nBitte loggen Sie sich ein."
+                },
+                "errorForbidden": {
+                    "title": "403 - Verboten",
+                    "message": "Sie haben keine Berechtigung, hierauf zuzugreifen."
+                },
+                "errorNotFound": {
+                    "title": "404 - Nicht gefunden",
+                    "message": "Die angeforderte Seite konnte nicht gefunden werden."
+                },
+                "errorInternalServerError": {
+                    "title": "500 - Interner Serverfehler",
+                    "message": "Ein unerwarteter Fehler ist auf dem Server aufgetreten."
+                },
+                "errorBadGateway": {
+                    "title": "502 - Ungültiger Gateway",
+                    "message": "Der Server hat eine ungültige Antwort vom Upstream-Server erhalten."
+                },
+                "errorServiceUnavailable": {
+                    "title": "503 - Dienst nicht verfügbar",
+                    "message": "Der Dienst ist vorübergehend nicht verfügbar.\nBitte versuchen Sie es später erneut."
+                },
+                "errorGatewayTimeout": {
+                    "title": "504 - Gateway Zeitüberschreitung",
+                    "message": "Der Server hat nicht rechtzeitig eine Antwort vom Upstream-Server erhalten."
+                }
+            }
+        },
         "template": {
             "title": "Modul Vorlage",
             "modules": {
                 "template": {
-                    "title": "Untermodul Vorlage"
+                    "title": "Untermodul Vorlage",
+                    "pages": {
+                        "template": {
+                            "title": "Untermodul Vorlage Seite"
+                        }
+                    }
                 }
             },
             "pages": {
                 "about": {
-                    "title": "Über dieses Modul"
+                    "title": "Über die Modul Vorlage"
+                },
+                "template": {
+                    "title": "Hauptmodul Vorlage Seite"
                 }
             }
         },
@@ -21,82 +118,9 @@
             "title": "Einstellungen",
             "pages": {
                 "about": {
-                    "title": "Über dieses Modul"
+                    "title": "Über die Einstellungen"
                 }
             }
-        }
-    },
-    "pages": {
-        "home": {
-            "title": "Startseite",
-            "messageWelcome": "Willkommen",
-            "messageLogin": "Klicken Sie hier, um sich anzumelden...",
-            "messageNoModules": "Sie haben derzeit keinen Zugriff auf ein Modul!\nFragen Sie einen Modul Administrator nach Zugriff."
-        },
-        "login": {
-            "title": "Anmelden",
-            "email": "eMail Adresse",
-            "password": "Passwort",
-            "loginButton": "Anmelden",
-            "messageInvalidLogin": "Ungültige eMail Adresse oder Passwort",
-            "linkToRegister": "Sie haben noch kein Konto? Jetzt registrieren!"
-        },
-        "register": {
-            "title": "Registrieren",
-            "username": "Benutzername",
-            "email": "eMail Adresse",
-            "password": "Passwort",
-            "confirmPassword": "Passwort bestätigen",
-            "registerButton": "Registrieren",
-            "messageInvalidRegister": "Diese eMail Adresse ist bereits vergeben."
-        },
-        "about": {
-            "title": "Über diese App",
-            "titleModule": "Über dieses Modul"
-        },
-        "permissions": {
-            "title": "Berechtigungen",
-            "modulesTab": {
-                "title": "Module",
-                "columnName": "Modulname",
-                "columnIsPublic": "Öffentlich",
-                "columnAdmins": "Administratoren",
-                "editIsPublic": "Modul ist öffentlich"
-            },
-            "usersTab": {
-                "title": "Benutzer",
-                "columnName": "Benutzername",
-                "columnEmail": "eMail",
-                "columnRoles": "Rollen",
-                "addNew": "Neuer Benutzer",
-                "errorNoData": "Keine Benutzer für dieses Modul eingeladen."
-            },
-            "rolesTab": {
-                "title": "Rollen",
-                "columnName": "Rollenname",
-                "columnSubModule": "Untermodul",
-                "columnPermissions": "Berechtigungen",
-                "editMainModule": "Hauptmodul",
-                "editSubModule": "Untermodul",
-                "addNew": "Neue Rolle",
-                "errorNoData": "Keine Rollen für dieses Modul definiert."
-            }
-        },
-        "errorBadRequest": {
-            "title": "400 - Ungültige Anfrage",
-            "message": "Die Anfrage ist ungültig."
-        },
-        "errorUnauthorized": {
-            "title": "401 - Nicht autorisiert",
-            "message": "Sie sind nicht berechtigt, hierauf  zuzugreifen.\nBitte loggen Sie sich ein."
-        },
-        "errorForbidden": {
-            "title": "403 - Verboten",
-            "message": "Sie haben keine Berechtigung, hierauf zuzugreifen."
-        },
-        "errorNotFound": {
-            "title": "404 - Nicht gefunden",
-            "message": "Die angeforderte Seite konnte nicht gefunden werden."
         }
     },
     "appBar": {
@@ -167,7 +191,9 @@
             "deny": "Ablehnen",
             "yes": "Ja",
             "no": "Nein",
-            "deleteConfirmationMessage": "Sind Sie sicher, dass Sie das löschen möchten?\nDies kann nicht rückgängig gemacht werden!"
+            "deleteConfirmationMessage": "Sind Sie sicher, dass Sie das löschen möchten?\nDies kann nicht rückgängig gemacht werden!",
+            "showPassword": "Passwort anzeigen",
+            "hidePassword": "Passwort verbergen"
         },
         "messageTypes": {
             "success": "Erfolgreich",

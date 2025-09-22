@@ -41,7 +41,9 @@ class _ModulesTabState extends State<ModulesTab> {
         if (_modulesTableData == null) {
           return Center(
             child: Text(
-              Localization.getText('pages.permissions.modulesTab.errorNoData'),
+              Localization.getText(
+                'modules.main.pages.permissions.modulesTab.errorNoData',
+              ),
             ),
           );
         }
@@ -58,7 +60,7 @@ class _ModulesTabState extends State<ModulesTab> {
                 DataColumn(
                   label: Text(
                     Localization.getText(
-                      'pages.permissions.modulesTab.columnName',
+                      'modules.main.pages.permissions.modulesTab.columnName',
                     ),
                   ),
                 ),
@@ -68,7 +70,7 @@ class _ModulesTabState extends State<ModulesTab> {
                   DataColumn(
                     label: Text(
                       Localization.getText(
-                        'pages.permissions.modulesTab.columnIsPublic',
+                        'modules.main.pages.permissions.modulesTab.columnIsPublic',
                       ),
                     ),
                   ),
@@ -77,14 +79,14 @@ class _ModulesTabState extends State<ModulesTab> {
                 DataColumn(
                   label: Text(
                     Localization.getText(
-                      'pages.permissions.modulesTab.columnAdmins',
+                      'modules.main.pages.permissions.modulesTab.columnAdmins',
                     ),
                   ),
                 ),
               ],
               rows: _modulesTableData!.map<DataRow>((moduleData) {
                 String localizedModuleName = moduleData['moduleName'] == 'main'
-                    ? Localization.getText('appName')
+                    ? Localization.getText('modules.main.title')
                     : Localization.getText(
                         'modules.${moduleData['moduleName']}.title',
                       );

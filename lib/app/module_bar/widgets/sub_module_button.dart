@@ -30,11 +30,11 @@ class SubModuleButton extends StatelessWidget {
     switch (subModule) {
       case 'home':
         // Use the global home page for the home page of the [AppSubModule].
-        label = Localization.getText('pages.home.title');
+        label = Localization.getText('modules.main.pages.home.title');
         break;
       case 'permissions':
         // Use the global permissions page for the permissions page of the [AppSubModule].
-        label = Localization.getText('pages.permissions.title');
+        label = Localization.getText('modules.main.pages.permissions.title');
         break;
       default:
         // Use the individual text of the [AppSubModule], if it exists.

@@ -17,7 +17,7 @@ class ErrorGatewayTimeoutPage extends StatelessWidget {
       children: [
         // Title of the error.
         Text(
-          Localization.getText('pages.errorGatewayTimeout.title'),
+          Localization.getText('modules.main.pages.errorGatewayTimeout.title'),
           style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -25,7 +25,9 @@ class ErrorGatewayTimeoutPage extends StatelessWidget {
 
         // Message explaining the error.
         Text(
-          Localization.getText('pages.errorGatewayTimeout.message'),
+          Localization.getText(
+            'modules.main.pages.errorGatewayTimeout.message',
+          ),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),

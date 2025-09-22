@@ -104,7 +104,9 @@ class _UsersEditDialogState extends State<UsersEditDialog> {
           Row(
             children: [
               Text(
-                Localization.getText('pages.permissions.usersTab.columnName'),
+                Localization.getText(
+                  'modules.main.pages.permissions.usersTab.columnName',
+                ),
               ),
               Text(':'),
               SizedBox(width: textSpacer),
@@ -185,7 +187,7 @@ class _UsersEditDialogState extends State<UsersEditDialog> {
                       children: [
                         Text(
                           Localization.getText(
-                            'pages.permissions.usersTab.columnEmail',
+                            'modules.main.pages.permissions.usersTab.columnEmail',
                           ),
                         ),
                         Text(':'),
@@ -212,7 +214,7 @@ class _UsersEditDialogState extends State<UsersEditDialog> {
                         DataColumn(
                           label: Text(
                             Localization.getText(
-                              'pages.permissions.usersTab.columnRoles',
+                              'modules.main.pages.permissions.usersTab.columnRoles',
                             ),
                           ),
                         ),

@@ -33,8 +33,7 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => fadePageTransition(
         child: MainScreen(routedPage: 'HomePage'),
         state: state,
-        mainModule: 'home',
-        subModule: 'home',
+        mainModule: 'main',
       ),
     ),
 
@@ -53,8 +52,7 @@ final GoRouter appRouter = GoRouter(
           pageBuilder: (context, state) => fadePageTransition(
             child: MainScreen(routedPage: 'AboutPage'),
             state: state,
-            mainModule: 'home',
-            subModule: 'about',
+            mainModule: 'main',
           ),
         ),
         GoRoute(
@@ -131,6 +129,8 @@ final GoRouter appRouter = GoRouter(
       ],
     ),
 
+    // DEV: Add more page routes as needed.
+
     // Template module.
     GoRoute(
       path: "/template",
@@ -138,7 +138,6 @@ final GoRouter appRouter = GoRouter(
         child: MainScreen(routedPage: 'TemplateHomePage'),
         state: state,
         mainModule: 'template',
-        subModule: 'home',
       ),
       redirect: (context, state) {
         return AppRouterUtils.checkUserPermission(
@@ -153,7 +152,6 @@ final GoRouter appRouter = GoRouter(
             child: MainScreen(routedPage: 'TemplateAboutPage'),
             state: state,
             mainModule: 'template',
-            subModule: 'about',
           ),
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
@@ -202,7 +200,6 @@ final GoRouter appRouter = GoRouter(
         child: MainScreen(routedPage: 'SettingsHomePage'),
         state: state,
         mainModule: 'settings',
-        subModule: 'home',
       ),
       redirect: (context, state) {
         return AppRouterUtils.checkUserPermission(
@@ -217,7 +214,6 @@ final GoRouter appRouter = GoRouter(
             child: MainScreen(routedPage: 'SettingsAboutPage'),
             state: state,
             mainModule: 'settings',
-            subModule: 'about',
           ),
           redirect: (context, state) {
             return AppRouterUtils.checkUserPermission(
@@ -243,7 +239,5 @@ final GoRouter appRouter = GoRouter(
         ),
       ],
     ),
-
-    // NOTE: Add more pages as needed. Preferably before the 'settings' main module.
   ],
 );

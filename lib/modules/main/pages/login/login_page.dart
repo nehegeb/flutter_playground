@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             // Title of the login page.
             Text(
-              Localization.getText('pages.login.title'),
+              Localization.getText('modules.main.pages.login.title'),
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
@@ -96,7 +96,9 @@ class _LoginPageState extends State<LoginPage> {
                 focusNode: _emailFocus,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  labelText: Localization.getText('pages.login.email'),
+                  labelText: Localization.getText(
+                    'modules.main.pages.login.email',
+                  ),
                   border: const OutlineInputBorder(),
                 ),
                 onSubmitted: (_) {
@@ -115,7 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: !_showPassword,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
-                  labelText: Localization.getText('pages.login.password'),
+                  labelText: Localization.getText(
+                    'modules.main.pages.login.password',
+                  ),
                   border: const OutlineInputBorder(),
                   suffixIcon: FocusScope(
                     canRequestFocus: false,
@@ -123,6 +127,9 @@ class _LoginPageState extends State<LoginPage> {
                       icon: Icon(
                         _showPassword ? Icons.visibility : Icons.visibility_off,
                       ),
+                      tooltip: _showPassword
+                          ? Localization.getText('misc.buttons.hidePassword')
+                          : Localization.getText('misc.buttons.showPassword'),
                       onPressed: () {
                         setState(() {
                           _showPassword = !_showPassword;
@@ -143,7 +150,11 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _login,
-                  child: Text(Localization.getText('pages.login.loginButton')),
+                  child: Text(
+                    Localization.getText(
+                      'modules.main.pages.login.loginButton',
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -167,7 +178,9 @@ class _LoginPageState extends State<LoginPage> {
                 // Navigate to the registration page.
                 appRouter.go('/register');
               },
-              child: Text(Localization.getText('pages.login.linkToRegister')),
+              child: Text(
+                Localization.getText('modules.main.pages.login.linkToRegister'),
+              ),
             ),
           ],
         ),

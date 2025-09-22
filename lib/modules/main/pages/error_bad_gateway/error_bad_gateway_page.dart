@@ -17,7 +17,7 @@ class ErrorBadGatewayPage extends StatelessWidget {
       children: [
         // Title of the error.
         Text(
-          Localization.getText('pages.errorBadGateway.title'),
+          Localization.getText('modules.main.pages.errorBadGateway.title'),
           style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -25,7 +25,7 @@ class ErrorBadGatewayPage extends StatelessWidget {
 
         // Message explaining the error.
         Text(
-          Localization.getText('pages.errorBadGateway.message'),
+          Localization.getText('modules.main.pages.errorBadGateway.message'),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),

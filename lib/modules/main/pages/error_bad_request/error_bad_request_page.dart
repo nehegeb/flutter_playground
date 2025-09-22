@@ -17,7 +17,7 @@ class ErrorBadRequestPage extends StatelessWidget {
       children: [
         // Title of the error.
         Text(
-          Localization.getText('pages.errorBadRequest.title'),
+          Localization.getText('modules.main.pages.errorBadRequest.title'),
           style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -25,7 +25,7 @@ class ErrorBadRequestPage extends StatelessWidget {
 
         // Message explaining the error.
         Text(
-          Localization.getText('pages.errorBadRequest.message'),
+          Localization.getText('modules.main.pages.errorBadRequest.message'),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),

@@ -46,7 +46,7 @@ class _RolesTabState extends State<RolesTab> {
               Center(
                 child: Text(
                   Localization.getText(
-                    'pages.permissions.rolesTab.errorNoData',
+                    'modules.main.pages.permissions.rolesTab.errorNoData',
                   ),
                 ),
               ),
@@ -61,7 +61,7 @@ class _RolesTabState extends State<RolesTab> {
                   onPressed: () => AppPopup.widgetDialog(
                     context: context,
                     title: Localization.getText(
-                      'pages.permissions.rolesTab.addNew',
+                      'modules.main.pages.permissions.rolesTab.addNew',
                     ),
                     widget: RolesEditDialog(
                       roleId: null,
@@ -92,7 +92,7 @@ class _RolesTabState extends State<RolesTab> {
                     DataColumn(
                       label: Text(
                         Localization.getText(
-                          'pages.permissions.rolesTab.columnName',
+                          'modules.main.pages.permissions.rolesTab.columnName',
                         ),
                       ),
                     ),
@@ -101,7 +101,7 @@ class _RolesTabState extends State<RolesTab> {
                     DataColumn(
                       label: Text(
                         Localization.getText(
-                          'pages.permissions.rolesTab.columnPermissions',
+                          'modules.main.pages.permissions.rolesTab.columnPermissions',
                         ),
                       ),
                     ),
@@ -188,7 +188,7 @@ class _RolesTabState extends State<RolesTab> {
                 onPressed: () => AppPopup.widgetDialog(
                   context: context,
                   title: Localization.getText(
-                    'pages.permissions.rolesTab.addNew',
+                    'modules.main.pages.permissions.rolesTab.addNew',
                   ),
                   widget: RolesEditDialog(
                     roleId: null,

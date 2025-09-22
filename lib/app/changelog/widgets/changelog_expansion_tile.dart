@@ -34,7 +34,7 @@ class ChangelogExpansionTile extends StatelessWidget {
 
     // Define the title text based on the module name.
     final moduleTitle = (module == '' || module == 'main')
-        ? Localization.getText('appName')
+        ? Localization.getText('modules.main.title')
         : Localization.getText('modules.$module.title');
     final title = Localization.getText(
       'changelog.title',

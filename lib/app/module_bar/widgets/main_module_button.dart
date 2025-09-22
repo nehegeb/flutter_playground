@@ -38,7 +38,7 @@ class _MainModuleButtonState extends State<MainModuleButton> {
     switch (widget.mainModule) {
       case 'home':
         // Use the global home page for the 'main' main module.
-        label = Localization.getText('pages.home.title');
+        label = Localization.getText('modules.main.pages.home.title');
         break;
       default:
         // Use the individual text of the [AppMainModule], if it exists.

@@ -18,7 +18,7 @@ class ErrorUnauthorizedPage extends StatelessWidget {
       children: [
         // Title of the error.
         Text(
-          Localization.getText('pages.errorUnauthorized.title'),
+          Localization.getText('modules.main.pages.errorUnauthorized.title'),
           style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -26,7 +26,7 @@ class ErrorUnauthorizedPage extends StatelessWidget {
 
         // Message explaining the error.
         Text(
-          Localization.getText('pages.errorUnauthorized.message'),
+          Localization.getText('modules.main.pages.errorUnauthorized.message'),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
@@ -49,7 +49,7 @@ class ErrorUnauthorizedPage extends StatelessWidget {
             child: TextButton(
               onPressed: () => appRouter.go('/login'),
               child: Text(
-                Localization.getText('pages.home.messageLogin'),
+                Localization.getText('modules.main.pages.home.messageLogin'),
                 style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
